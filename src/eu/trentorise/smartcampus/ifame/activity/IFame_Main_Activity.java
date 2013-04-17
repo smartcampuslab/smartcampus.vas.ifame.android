@@ -23,8 +23,8 @@ public class IFame_Main_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 			
-			//Intent i = new Intent (IFame_Main_Activity.this, IFretta.class);
-			//startActivity(i);
+			Intent i = new Intent (IFame_Main_Activity.this, IFretta.class);
+			startActivity(i);
 				
 			}
 
