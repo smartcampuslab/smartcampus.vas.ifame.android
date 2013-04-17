@@ -95,23 +95,23 @@
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticatorActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="smartcampus.android.template.standalone.IFame_Main_Activity"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFame_Main_Activity"
             android:label="@string/title_activity_ifame__main_" >
         </activity>
         <activity
-            android:name="smartcampus.android.template.standalone.IFretta"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFretta"
             android:label="@string/title_activity_ifretta" >
         </activity>
         <activity
-            android:name="smartcampus.android.template.standalone.IDeciso"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IDeciso"
             android:label="@string/title_activity_ideciso" >
         </activity>
         <activity
-            android:name="smartcampus.android.template.standalone.IGradito"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IGradito"
             android:label="@string/title_activity_igradito" >
         </activity>
         <activity
-            android:name="smartcampus.android.template.standalone.ISoldi"
+            android:name="eu.trentorise.smartcampus.ifame.activity.ISoldi"
             android:label="@string/title_activity_isoldi" >
         </activity>
     </application>
