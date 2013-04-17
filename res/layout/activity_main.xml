@@ -115,13 +115,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/remote_file_storage_demo_label"
+        android:text="@string/iFame"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <Button
-        android:id="@+id/file_button"
+        android:id="@+id/iFame_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/remote_file_storage_demo_label" />
+        android:text="@string/iFame" />
     
 </LinearLayout>

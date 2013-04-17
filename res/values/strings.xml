@@ -28,7 +28,17 @@
     <string name="tv_from_profile_service">From profile service:</string>
     <string name="tv_name">Name</string>
     <string name="title_activity_file">FileActivity</string>
-    <string name="remote_file_storage_demo_label">Remote file storage demo</string>
+    <string name="iFame">iFame</string>
     <string name="photo_btn_label">Upload a photo!</string>
+    <string name="title_activity_ifame__main_">IFame_Main_Activity</string>
+    <string name="action_settings">Settings</string>
+    <string name="iFretta">iFretta</string>
+    <string name="iDeciso">iDeciso</string>
+    <string name="iGradito">iGradito</string>
+    <string name="iSoldi">iSoldi</string>
+    <string name="title_activity_ifretta">IFretta</string>
+    <string name="title_activity_ideciso">IDeciso</string>
+    <string name="title_activity_igradito">IGradito</string>
+    <string name="title_activity_isoldi">ISoldi</string>
 
 </resources>

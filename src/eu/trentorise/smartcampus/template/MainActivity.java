@@ -26,10 +26,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings.Global;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.ACService;
@@ -39,6 +39,7 @@ import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.authenticator.AMSCAccessProvider;
 import eu.trentorise.smartcampus.ac.model.Attribute;
 import eu.trentorise.smartcampus.ac.model.UserData;
+import eu.trentorise.smartcampus.ifame.activity.IFame_Main_Activity;
 import eu.trentorise.smartcampus.profileservice.ProfileService;
 import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
@@ -77,15 +78,6 @@ public class MainActivity extends Activity {
 			finish();
 		}
 		
-		findViewById(R.id.file_button).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, FileActivity.class);
-				MainActivity.this.startActivity(intent);
-			}
-		});
-		
 		// Initialize the access provider
 		mAccessProvider = new AMSCAccessProvider();
 		// if the authentication is necessary, use the provided operations to
@@ -100,6 +92,20 @@ public class MainActivity extends Activity {
 				new LoadUserDataFromACServiceTask().execute(mToken);
 				// access the basic user profile data remotely
 				new LoadUserDataFromProfileServiceTask().execute(mToken);
+				
+				Button btn = (Button)findViewById(R.id.iFame_button);
+				btn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+					
+					Intent i = new Intent (MainActivity.this, IFame_Main_Activity.class);
+					startActivity(i);
+						
+					}
+
+				});
+				
 			}
 		} catch (OperationCanceledException e) {
 			Log.e(TAG, "Login cancelled.");
