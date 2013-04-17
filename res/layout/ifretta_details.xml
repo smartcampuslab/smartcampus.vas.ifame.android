@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewID"
+        android:layout_centerHorizontal="true"
+        android:text="@string/refresh_button"
+        android:layout_marginTop="5dp"
+        android:background="#228B22" />
+
+    <TextView
+        android:id="@+id/textViewID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageViewID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/mensa_view"
+        android:textColor="#228B22"
+        android:textSize="20sp" />
+<!--
+    <ImageView
+        android:id="@+id/imageViewID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:contentDescription="@drawable/jj8Ov"
+        android:src="@drawable/jj8Ov" /> -->
+        
+
+</RelativeLayout>

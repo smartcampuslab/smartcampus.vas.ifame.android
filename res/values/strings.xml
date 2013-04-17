@@ -40,5 +40,17 @@
     <string name="title_activity_ideciso">IDeciso</string>
     <string name="title_activity_igradito">IGradito</string>
     <string name="title_activity_isoldi">ISoldi</string>
+    <string name="povo_1">POVO 1</string>
+    <string name="mesiano_button">MESIANO</string>
+    <string name="tom_gar_button">TOMMASO GAR</string>
+    <string name="povo_0">POVO 0</string>
+    <string name="maggio_button">XXIV MAGGIO</string>
+    <string name="zanella_button">ZANELLA</string>
+    <string name="fbk_button">FBK</string>
+    <string name="mensa_view">Mensa XXX - 00:00</string>
+    <string name="refresh_button">Refresh</string>
+    <string name="button_1">Button1</string>
+    <string name="button_2">Button2</string>
+    <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
 
 </resources>
