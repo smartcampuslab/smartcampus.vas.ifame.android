@@ -39,10 +39,10 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="SHARED_PACKAGE"
-            android:value="smartcampus.android.template.standalone" />
+            android:value="eu.trentorise.smartcampus.ifame" />
         <meta-data
             android:name="ACCOUNT_TYPE"
-            android:value="smartcampus.android.template.standalone" />
+            android:value="eu.trentorise.smartcampus.ifame" />
         <meta-data
             android:name="ACCOUNT_NAME"
             android:value="SmartCampus Android Template" />
