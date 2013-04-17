@@ -1,6 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import smartcampus.android.template.standalone.R;
+import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.template.MainActivity;
 import android.os.Bundle;
 import android.app.Activity;

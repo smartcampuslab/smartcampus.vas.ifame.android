@@ -17,7 +17,7 @@ package eu.trentorise.smartcampus.template;
 
 import java.io.IOException;
 
-import smartcampus.android.template.standalone.R;
+import eu.trentorise.smartcampus.ifame.R;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
