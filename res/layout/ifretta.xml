@@ -1,90 +1,93 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp" 
-    >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/povo_0"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="#008000"
-        android:text="@string/povo_0"
-        android:textColor="#191919" />
+        android:layout_height="match_parent"
+        android:padding="10dp" >
 
-    <Button
-        android:id="@+id/povo_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/povo_0"
-        android:layout_marginTop="15dp"
-        android:background="#D2691E"
-        android:text="@string/povo_1"
-        android:textColor="#191919" />
+        <Button
+            android:id="@+id/povo_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:background="#008000"
+            android:text="@string/povo_0"
+            android:textColor="#191919" />
 
-    <Button
-        android:id="@+id/mesiano"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/povo_1"
-        android:layout_marginTop="15dp"
-        android:background="#B22222"
-        android:text="@string/mesiano_button"
-        android:textColor="#191919" />
+        <Button
+            android:id="@+id/povo_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/povo_0"
+            android:layout_marginTop="15dp"
+            android:background="#D2691E"
+            android:text="@string/povo_1"
+            android:textColor="#191919" />
 
-    <Button
-        android:id="@+id/tommaso_gar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/mesiano"
-        android:layout_marginTop="15dp"
-        android:background="#4169E1"
-        android:text="@string/tom_gar_button"
-        android:textColor="#191919" />
+        <Button
+            android:id="@+id/mesiano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/povo_1"
+            android:layout_marginTop="15dp"
+            android:background="#B22222"
+            android:text="@string/mesiano_button"
+            android:textColor="#191919" />
 
-    <Button
-        android:id="@+id/xxiv_magggio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tommaso_gar"
-        android:layout_marginTop="15dp"
-        android:background="#483D8B"
-        android:text="@string/maggio_button"
-        android:textColor="#191919" />
+        <Button
+            android:id="@+id/tommaso_gar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/mesiano"
+            android:layout_marginTop="15dp"
+            android:background="#4169E1"
+            android:text="@string/tom_gar_button"
+            android:textColor="#191919" />
 
-    <Button
-        android:id="@+id/zanella"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/xxiv_magggio"
-        android:layout_marginTop="15dp"
-        android:background="#FFFF00"
-        android:text="@string/zanella_button"
-        android:textColor="#191919" />
+        <Button
+            android:id="@+id/xxiv_magggio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tommaso_gar"
+            android:layout_marginTop="15dp"
+            android:background="#483D8B"
+            android:text="@string/maggio_button"
+            android:textColor="#191919" />
 
-    <Button
-        android:id="@+id/fbk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/zanella"
-        android:layout_marginTop="15dp"
-        android:background="#87CEEB"
-        android:text="@string/fbk_button"
-        android:textColor="#191919" />
-		
-</RelativeLayout>
+        <Button
+            android:id="@+id/zanella"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/xxiv_magggio"
+            android:layout_marginTop="15dp"
+            android:background="#FFFF00"
+            android:text="@string/zanella_button"
+            android:textColor="#191919" />
+
+        <Button
+            android:id="@+id/fbk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/zanella"
+            android:layout_marginTop="15dp"
+            android:background="#87CEEB"
+            android:text="@string/fbk_button"
+            android:textColor="#191919" />
+    </RelativeLayout>
+
+</ScrollView>
