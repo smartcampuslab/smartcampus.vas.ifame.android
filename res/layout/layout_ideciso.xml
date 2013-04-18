@@ -2,11 +2,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".IDeciso" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button 
+        android:id="@+id/daily_menu_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:background="#FFFF00"
+        android:text="@string/iDeciso_home_daily_menu" />
+
+    <Button
+        android:id="@+id/menu_types_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4169E1"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/daily_menu_btn"
+        android:text="@string/iDeciso_home_menu_types" />
+    <Button
+        android:id="@+id/compose_menu_btn"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:background="#B22222"
+        android:layout_below="@+id/menu_types_btn"
+        android:text="@string/iDeciso_home_compose_menu" />
+    <Button
+        android:id="@+id/monthly_menu_btn"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:background="#008000"
+        android:layout_below="@+id/compose_menu_btn"
+        android:text="@string/iDeciso_home_monthly_menu" />
+    
 
 </RelativeLayout>

@@ -52,5 +52,14 @@
     <string name="button_1">Button1</string>
     <string name="button_2">Button2</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
+    <!-- iDeciso -->
+    <string name="iDeciso_home_daily_menu">Menu del giorno</string>
+    <string name="iDeciso_home_menu_types">Tipologie di menu</string>
+    <string name="iDeciso_home_compose_menu">Fai il tuo menu</string>
+    <string name="iDeciso_home_monthly_menu">Menu del mese</string>
+    <string name="title_activity_menu_giorno">Menu_giorno</string>
+    <string name="title_activity_fai_il_tuo_menu">Fai_il_tuo_menu</string>
+    <string name="title_activity_tipologie_menu">Tipologie_menu</string>
+    <string name="title_activity_menu_mese">Menu_mese</string>
 
 </resources>

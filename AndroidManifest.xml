@@ -114,6 +114,22 @@
             android:name="eu.trentorise.smartcampus.ifame.activity.ISoldi"
             android:label="@string/title_activity_isoldi" >
         </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno"
+            android:label="@string/title_activity_menu_giorno" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu"
+            android:label="@string/title_activity_fai_il_tuo_menu" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu"
+            android:label="@string/title_activity_tipologie_menu" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_mese"
+            android:label="@string/title_activity_menu_mese" >
+        </activity>
     </application>
 
 </manifest>
