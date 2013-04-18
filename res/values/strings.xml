@@ -52,7 +52,7 @@
     <string name="button_1">Button1</string>
     <string name="button_2">Button2</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
-    <string name="title_activity_ifretta_details">Sono i fretta details</string>
+    <string name="title_activity_ifretta_details">IFretta Webcam</string>
     <!-- iDeciso -->
     <string name="iDeciso_home_daily_menu">Menu del giorno</string>
     <string name="iDeciso_home_menu_types">Tipologie di menu</string>
