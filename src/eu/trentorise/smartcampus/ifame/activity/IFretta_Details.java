@@ -4,8 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
@@ -24,12 +27,22 @@ public class IFretta_Details extends Activity {
 
 		Mensa m = (Mensa) extras.get("mensa");
 		TextView mensa_name = (TextView) findViewById(R.id.mensa_name_textview);
-		TextView date = (TextView) findViewById(R.id.date_text_view);
-
-		Button btn = (Button) findViewById(R.id.refresh_button);
+		final TextView date = (TextView) findViewById(R.id.date_text_view);
 
 		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		String date_s = s.format(new Date());
+
+		Button btn = (Button) findViewById(R.id.refresh_button);
+		btn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+				String date_s = s.format(new Date());
+				date.setText(date_s);
+			}
+		});
 
 		switch (m) {
 		case POVO_O:
@@ -101,5 +114,4 @@ public class IFretta_Details extends Activity {
 		}
 
 	}
-
 }
