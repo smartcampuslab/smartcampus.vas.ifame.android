@@ -130,6 +130,9 @@
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_mese"
             android:label="@string/title_activity_menu_mese" >
         </activity>
+        <activity 
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Details"
+            android:label="@string/title_activity_ifretta_details"></activity>
     </application>
 
 </manifest>

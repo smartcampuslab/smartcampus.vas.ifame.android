@@ -5,32 +5,37 @@
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/textViewID"
+        android:id="@+id/mensa_name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="@string/mensa_view"
-        android:textColor="#228B22"
+        android:text="ciaociao1"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/imageViewID"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/date_text_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@drawable/sfondo_camera"
-        android:scaleType="fitCenter"
-        android:src="@drawable/sfondo_camera" />
+        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/mensa_name_textview"
+        android:layout_marginBottom="20dp"
+        android:text="ciaociao2"
+        android:textSize="20sp" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/refresh_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#228B22"
         android:text="@string/refresh_button" />
+
+    <fragment
+        android:id="@+id/webcam_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        class="eu.trentorise.smartcampus.ifame.fragment.IFretta_Details" />
 
 </RelativeLayout>
