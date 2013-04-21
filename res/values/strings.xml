@@ -62,5 +62,13 @@
     <string name="title_activity_fai_il_tuo_menu">Fai_il_tuo_menu</string>
     <string name="title_activity_tipologie_menu">Tipologie_menu</string>
     <string name="title_activity_menu_mese">Menu_mese</string>
+    <string name="iDeciso_compose_menu_checkbox_first">Primo Piatto</string>
+    <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno Caldo</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno freddo</string>
+    <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
+    <string name="iDeciso_compose_menu_checkbox_bread">Pane</string>
+    <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
+    
 
 </resources>
