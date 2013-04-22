@@ -2,11 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".Tipologie_menu" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button 
+        android:id="@+id/menu_intero_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:background="#008000"
+        android:text="@string/iDeciso_menu_types_intero" />
+    
+    <Button 
+        android:id="@+id/menu_ridotto_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFF00"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/menu_intero_btn"
+        android:text="@string/iDeciso_menu_types_ridotto" />
+        
+    <Button 
+        android:id="@+id/menu_snack_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B22222"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/menu_ridotto_btn"
+        android:text="@string/iDeciso_menu_types_snack" />
 
 </RelativeLayout>

@@ -70,8 +70,13 @@
     <string name="iDeciso_compose_menu_checkbox_bread">Pane</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
     <string name="credito_residuo_isoldi">Il tuo credito residuo è:</string>
+    <string name="iDeciso_menu_types_intero">Menu Intero</string>
+    <string name="iDeciso_menu_types_ridotto">Menu Ridotto</string>
+    <string name="iDeciso_menu_types_snack">Menu Snack</string>
+    <string name="title_activity_menu__intero">Menu_Intero</string>
+    <string name="title_activity_menu__ridotto">Menu_Ridotto</string>
+    <string name="title_activity_menu_snack">Menu_snack</string>
     <string name="title_activity_show_menu_composition">Show Menu Composition</string>
     <string name="title_activity_mostra_composizione_menu">Mostra Composizione Menu</string>
-    
 
 </resources>

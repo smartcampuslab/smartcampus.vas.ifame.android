@@ -130,9 +130,22 @@
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_mese"
             android:label="@string/title_activity_menu_mese" >
         </activity>
-        <activity 
+        <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Details"
-            android:label="@string/title_activity_ifretta_details"></activity>
+            android:label="@string/title_activity_ifretta_details" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_Intero"
+            android:label="@string/title_activity_menu__intero" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_Ridotto"
+            android:label="@string/title_activity_menu__ridotto" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_snack"
+            android:label="@string/title_activity_menu_snack" >
+        </activity>
     </application>
 
 </manifest>
