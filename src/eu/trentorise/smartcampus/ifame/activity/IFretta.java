@@ -1,101 +1,60 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.model.WebcamMensa;
 
 //import eu.trentorise.smartcampus.ifame.fragment.IFretta_Details;
 
 public class IFretta extends Activity {
+	
+	/*@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Toast.makeText(IFretta.this, "HelloWorld", Toast.LENGTH_LONG).show();
+	} */
+
+	ArrayList<WebcamMensa> mensa_list; 
+	ListView ifretta_listView; 
+	private ArrayAdapter<WebcamMensa> adapter; 
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ifretta);
+		setContentView(R.layout.ifretta); 
+		
+		ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
+		mensa_list = new ArrayList<WebcamMensa>(); 
+		
+		int resID = android.R.layout.simple_list_item_1;
+		adapter = new ArrayAdapter<WebcamMensa>(this, resID, mensa_list); 
+		
+		ifretta_listView.setAdapter(adapter);
+		
+		mensa_list.add(new WebcamMensa(Mensa.POVO_O, "LINK..."));
+		mensa_list.add(new WebcamMensa(Mensa.POVO_1, "LINK..."));
+		mensa_list.add(new WebcamMensa(Mensa.FBK, "LINK..."));
+		mensa_list.add(new WebcamMensa(Mensa.TOMMASO_GAR, "LINK..."));
+		mensa_list.add(new WebcamMensa(Mensa.XXIV_MAGGIO, "LINK..."));
+		mensa_list.add(new WebcamMensa(Mensa.ZANELLA, "LINK..."));
+		
+		
+		ifretta_listView.setOnItemClickListener(new OnItemClickListener() {
 
-		findViewById(R.id.povo_0).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method
-				Intent i = new Intent(IFretta.this, IFretta_Details.class);
-				i.putExtra("mensa", Mensa.POVO_O);
-				startActivity(i);
-			}
+			   public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
 
-		});
+				   Toast.makeText(IFretta.this, "Hello World", Toast.LENGTH_LONG).show(); 
 
-		findViewById(R.id.povo_1).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(IFretta.this, IFretta_Details.class);
-				i.putExtra("mensa", Mensa.POVO_1);
-				startActivity(i);
-			}
-		});
-
-		findViewById(R.id.tommaso_gar).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						Intent i = new Intent(IFretta.this, IFretta_Details.class);
-						i.putExtra("mensa", Mensa.TOMMASO_GAR);
-						startActivity(i);
-					}
-				});
-
-		findViewById(R.id.mesiano).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(IFretta.this, IFretta_Details.class);
-				i.putExtra("mensa", Mensa.MESIANO);
-				startActivity(i);
 			}
 		});
-
-		findViewById(R.id.zanella).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(IFretta.this, IFretta_Details.class);
-				i.putExtra("mensa", Mensa.ZANELLA);
-				startActivity(i);
-			}
-		});
-
-		findViewById(R.id.fbk).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(IFretta.this, IFretta_Details.class);
-				i.putExtra("mensa", Mensa.FBK);
-				startActivity(i);
-			}
-		});
-
-		findViewById(R.id.xxiv_magggio).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						Intent i = new Intent(IFretta.this, IFretta_Details.class);
-						i.putExtra("mensa", Mensa.XXIV_MAGGIO);
-						startActivity(i);
-					}
-				});
-
-	}
+	}	
 }

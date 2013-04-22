@@ -1,12 +1,9 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:padding="10dp" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp" >
-
+    <!--
         <Button
             android:id="@+id/povo_0"
             android:layout_width="match_parent"
@@ -82,12 +79,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+        
+            android:id="@+id/fbk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/zanella"
+            android:layout_marginTop="15dp"
+            android:background="#87CEEB"    android:layout_alignParentRight="true"
             android:layout_below="@+id/zanella"
             android:layout_marginTop="15dp"
             android:background="#87CEEB"
             android:text="@string/fbk_button"
             android:textColor="#191919" />
-    </RelativeLayout>
+    -->
 
-</ScrollView>
+    <ListView
+        android:id="@+id/ifretta_page_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</RelativeLayout>
