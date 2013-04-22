@@ -70,6 +70,8 @@
     <string name="iDeciso_compose_menu_checkbox_bread">Pane</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
     <string name="credito_residuo_isoldi">Il tuo credito residuo è:</string>
+    <string name="title_activity_show_menu_composition">Show Menu Composition</string>
+    <string name="title_activity_mostra_composizione_menu">Mostra Composizione Menu</string>
     
 
 </resources>
