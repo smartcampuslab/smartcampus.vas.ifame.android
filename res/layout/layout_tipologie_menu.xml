@@ -15,32 +15,35 @@
     		android:layout_width="match_parent"
     		android:layout_height="match_parent">
     		
-        <Button 
+    <Button 
         android:id="@+id/menu_intero_btn"
         android:showAsAction="ifRoom"
-        android:layout_width="match_parent"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#008000"
-        android:layout_marginTop="15dp"
-        android:text="@string/iDeciso_menu_types_intero" />
+        android:background="@drawable/intero_menu"
+        android:layout_marginTop="100dp" />
     
     <Button 
         android:id="@+id/menu_ridotto_btn"
         android:showAsAction="ifRoom"
-        android:layout_width="match_parent"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFF00"
-        android:layout_marginTop="15dp"
-        android:text="@string/iDeciso_menu_types_ridotto" />
+        android:background="@drawable/ridotto_menu"
+        android:layout_marginTop="100dp" />
         
     <Button 
         android:id="@+id/menu_snack_btn"
         android:showAsAction="ifRoom"
-        android:layout_width="match_parent"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#B22222"
-        android:layout_marginTop="15dp"
-        android:text="@string/iDeciso_menu_types_snack" />
+        android:background="@drawable/snack_menu"
+        android:layout_marginTop="100dp" />
             
         </FrameLayout>
     </LinearLayout>

@@ -23,7 +23,7 @@ public class Tipologie_menu extends TabActivity {
 		setContentView(R.layout.layout_tipologie_menu);
 		
 		TabHost menu = (TabHost)findViewById(android.R.id.tabhost);
-        TabSpec spec = menu.newTabSpec("menu_intero_btn");
+        TabSpec spec = menu.newTabSpec("tabcontent");
         spec.setContent(R.id.menu_intero_btn);
         spec.setIndicator("Intero");
         menu.addTab(spec);
@@ -36,40 +36,6 @@ public class Tipologie_menu extends TabActivity {
         spec.setIndicator("Snack");
         menu.addTab(spec);
 		
-//		Button iDeciso_menu_intero_btn = (Button)findViewById(R.id.menu_intero_btn);
-//		iDeciso_menu_intero_btn.setOnClickListener(new OnClickListener(){
-//
-//			@Override
-//			public void onClick(View arg0) {
-//				
-//				Intent i = new Intent(Tipologie_menu.this, Menu_Intero.class);
-//				startActivity(i);
-//				
-//			}});
-//		
-//		Button iDeciso_menu_ridotto_btn = (Button)findViewById(R.id.menu_ridotto_btn);
-//		iDeciso_menu_ridotto_btn.setOnClickListener(new OnClickListener(){
-//
-//			@Override
-//			public void onClick(View arg0) {
-//				
-//				Intent i = new Intent(Tipologie_menu.this, Menu_Ridotto.class);
-//				startActivity(i);
-//				
-//			}});
-//		
-//		Button iDeciso_menu_snack_btn = (Button)findViewById(R.id.menu_snack_btn);
-//		iDeciso_menu_snack_btn.setOnClickListener(new OnClickListener(){
-//
-//			@Override
-//			public void onClick(View arg0) {
-//				
-//				Intent i = new Intent(Tipologie_menu.this, Menu_snack.class);
-//				startActivity(i);
-//				
-//			}});	
-//		
-//		
 	}
 
 	@Override
