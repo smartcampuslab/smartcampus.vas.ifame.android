@@ -13,51 +13,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
-        
+
         <Button
-	    	android:id="@+id/iFretta_button"
-	    	android:layout_width="0px"
-	    	android:padding="5dp"
-	    	android:layout_weight="1"
-	    	android:background="#008000"
-	    	android:layout_height="fill_parent"
-	    	
-	    	android:text="@string/iFretta" />
+            android:id="@+id/iFretta_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ifretta_red"
+            android:padding="5dp" />
 	
 		<Button 
 	    	android:id="@+id/iDeciso_button"
-	  	  	android:layout_width="0px"
-		    android:layout_weight="1"
-		    android:background="#0000ff"
-		    android:padding="5dp"
-			android:layout_height="fill_parent"
-		    android:text="@string/iDeciso" />
+			android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+	    	android:background="@drawable/ideciso_red"
+	    	android:layout_weight="1"
+		    android:padding="5dp" />
+		
 	</LinearLayout>
 		
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1">
-
-		<Button
+        android:layout_weight="1" >
+		
+        <Button
 		    android:id="@+id/iGradito_button"
-		    android:layout_width="0px"
-		    android:layout_height="fill_parent"
-		    android:layout_weight="1"
-		    android:background="#ff0050"
-		    android:padding="5dp"
-		    android:text="@string/iGradito" />
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+	    	android:background="@drawable/igradito_red"
+	    	android:layout_weight="1"
+		    android:padding="5dp"/>
 	
 		<Button 
 	    	android:id="@+id/iSoldi_button"
-	  	  	android:layout_width="0px"
-		    android:layout_weight="1"
-		    android:background="#ffff00"
-		    android:padding="5dp"
-			android:layout_height="fill_parent"
-		    android:text="@string/iSoldi" />
-	</LinearLayout>
+			android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+	    	android:background="@drawable/isoldi_red"
+	    	android:layout_weight="1"
+		    android:padding="5dp" />
+        
+    </LinearLayout>
 	
     </LinearLayout> 
 	
