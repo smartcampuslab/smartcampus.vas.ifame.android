@@ -64,10 +64,10 @@ public class IFame_Main_Activity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				float[] values = new float[] { 4.10f, 2.7f, 1.8f, 13.0f, 5.10f,
+				float[] values = new float[] { 4.10f, 4.30F, 2.7f, 1.8f, 13.0f, 5.10f,
 						7.15f, 3.77f, 3.50f, 2.60f, 2.90f };
 				for (int i = 0; i < values.length; i++) {
-					card_val = values[new Random().nextInt(values.length)];
+					card_val = values[new Random().nextInt(values.length) % 60];
 				}
 				Intent i = new Intent(IFame_Main_Activity.this, ISoldi.class);
 				i.putExtra("iSoldi", card_val);
