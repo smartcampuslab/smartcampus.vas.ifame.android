@@ -1,33 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost" 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context=".Tipologie_menu" >
-
-    <Button 
+    android:layout_height="match_parent">
+    <LinearLayout 
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TabWidget android:id="@android:id/tabs"
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content">
+        </TabWidget>
+        <FrameLayout 
+            android:id="@android:id/tabcontent"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent">
+    		
+        <Button 
         android:id="@+id/menu_intero_btn"
+        android:showAsAction="ifRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#008000"
+        android:layout_marginTop="15dp"
         android:text="@string/iDeciso_menu_types_intero" />
     
     <Button 
         android:id="@+id/menu_ridotto_btn"
+        android:showAsAction="ifRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFF00"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/menu_intero_btn"
         android:text="@string/iDeciso_menu_types_ridotto" />
         
     <Button 
         android:id="@+id/menu_snack_btn"
+        android:showAsAction="ifRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#B22222"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/menu_ridotto_btn"
         android:text="@string/iDeciso_menu_types_snack" />
-
-</RelativeLayout>
+            
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>
