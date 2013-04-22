@@ -7,9 +7,9 @@ import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
 
 public class ISoldi extends Activity {
-	
-	TextView centerText; 
-	TextView bottomText; 
+
+	TextView centerText;
+	TextView bottomText;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -34,21 +34,35 @@ public class ISoldi extends Activity {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
-			bottomText.setText("Puoi acquistare tutte le tipologie di menu!");
+			String acquisti_possibili = "Puoi acquistare: \n -Intero \n -Ridotto \n -Snack";
+
+			bottomText.setText(acquisti_possibili);
 			bottomText.setTextColor(Color.parseColor("#228B22"));
-		} else if (amount >= 2.90 && amount < 4.90) {
+		} else if (amount >= 4.20 && amount < 4.90) {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#D2691E"));
 
+			String acquisti_possibili = "Puoi acquistare:  \n -Ridotto \n -Snack";
+
+			bottomText.setText(acquisti_possibili);
+			bottomText.setTextColor(Color.parseColor("#D2691E"));
+		} else if (amount >= 2.90 && amount < 4.20) {
+			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setTextColor(Color.parseColor("#D2691E"));
+
+			String acquisti_possibili = "Puoi acquistare: \n -Snack";
+
 			bottomText
-					.setText("Non puoi acquistare tutte le tipologie di menu!");
+					.setText(acquisti_possibili);
 			bottomText.setTextColor(Color.parseColor("#D2691E"));
 		} else {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF0000"));
 
+			String acquisti_possibili = "Non puoi acquistare nessuna tipologia di menu";
+
 			bottomText
-					.setText("Non puoi acquistare nessuna tipologia di menu!");
+					.setText(acquisti_possibili);
 			bottomText.setTextColor(Color.parseColor("#FF0000"));
 		}
 	}

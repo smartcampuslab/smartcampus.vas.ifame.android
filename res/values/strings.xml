@@ -69,6 +69,7 @@
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
     <string name="iDeciso_compose_menu_checkbox_bread">Pane</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
+    <string name="credito_residuo_isoldi">Il tuo credito residuo è:</string>
     
 
 </resources>
