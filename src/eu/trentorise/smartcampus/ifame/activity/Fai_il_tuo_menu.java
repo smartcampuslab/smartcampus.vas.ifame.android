@@ -12,12 +12,13 @@ import eu.trentorise.smartcampus.ifame.R;
 
 public class Fai_il_tuo_menu extends Activity {
 
-	boolean isPrimoPiatto;
-	boolean isSecondoPiatto;
-	boolean isContornoCaldo;
-	boolean isContornoFreddo;
-	boolean isDessert;
-	boolean isPane;
+	private boolean isPrimoPiatto;
+	private boolean isSecondoPiatto;
+	private boolean isContornoCaldo;
+	private boolean isContornoFreddo;
+	private boolean isInsalatona;
+	private boolean isDessert;
+	private boolean isPane;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class Fai_il_tuo_menu extends Activity {
 				CheckBox contorno_freddo = (CheckBox)findViewById(R.id.contorno_freddo);
 				CheckBox dessert = (CheckBox)findViewById(R.id.dessert);
 				CheckBox pane = (CheckBox)findViewById(R.id.pane);
+				CheckBox insalatona = (CheckBox)findViewById(R.id.insalatona);
 				
 				isPrimoPiatto = primo.isChecked();
 				isSecondoPiatto = secondo.isChecked();
@@ -43,8 +45,9 @@ public class Fai_il_tuo_menu extends Activity {
 				isContornoFreddo = contorno_freddo.isChecked();
 				isDessert = dessert.isChecked();
 				isPane = pane.isChecked();
+				isInsalatona = insalatona.isChecked();
 				
-				Intent i = new Intent(Fai_il_tuo_menu.this, MostraComposizioneMenu.class);
+				Intent i = new Intent(Fai_il_tuo_menu.this, MostraMenuComposto.class);
 				
 				i.putExtra("isPrimoPiatto", isPrimoPiatto);
 				i.putExtra("isSecondoPiatto", isSecondoPiatto);
@@ -52,8 +55,9 @@ public class Fai_il_tuo_menu extends Activity {
 				i.putExtra("isContornoFreddo", isContornoFreddo);
 				i.putExtra("isDessert", isDessert);
 				i.putExtra("isPane", isPane);
+				i.putExtra("isInsalatona", isInsalatona);
 				
-				startActivity(i);		
+				startActivity(i);	
 				
 			}
 		});

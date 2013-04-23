@@ -34,8 +34,15 @@
         android:text="@string/iDeciso_compose_menu_checkbox_contorno_freddo"
         />
     <CheckBox 
-        android:id="@+id/dessert"
+        android:id="@+id/insalatona"
         android:layout_below="@+id/contorno_freddo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/iDeciso_compose_menu_checkbox_insalatona"
+        />
+    <CheckBox 
+        android:id="@+id/dessert"
+        android:layout_below="@+id/insalatona"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"	
         android:text="@string/iDeciso_compose_menu_checkbox_dessert"

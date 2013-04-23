@@ -146,6 +146,10 @@
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_snack"
             android:label="@string/title_activity_menu_snack" >
         </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.MostraMenuComposto"
+            android:label="@string/title_activity_mostra_menu_composto" >
+        </activity>
     </application>
 
 </manifest>

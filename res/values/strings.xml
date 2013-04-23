@@ -78,6 +78,10 @@
     <string name="title_activity_menu_snack">Menu_snack</string>
     <string name="title_activity_show_menu_composition">Show Menu Composition</string>
     <string name="title_activity_mostra_composizione_menu">Mostra Composizione Menu</string>
-    
-    
+    <string name="title_activity_mostra_menu_composto">Menu personalizzato</string>
+    <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
+    <string name="IDeciso_MostraMenuComposto_week_radio_btn">Settimana </string>
+    <string name="IDeciso_MostraMenuComposto_visualizza_per">SCHERMATA FITTIZIA, VERRÀ CAMBIATA DOPO LA SINCRONIZZAZIONE DI TUTTI E QUATTRO!!! </string>
+    <string name="IDeciso_MostraMenuComposto_day_radio_btn"> Giorno</string>
+
 </resources>

@@ -1,8 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.R.layout;
-import eu.trentorise.smartcampus.ifame.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
