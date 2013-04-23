@@ -1,12 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Menu_giorno" >
+    android:layout_height="wrap_content"
+    android:padding="10dp" >
 
     <TextView
+        android:id="@+id/date_daily_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentLeft="true"
+        android:text="dailymenu"
+        android:textSize="20sp"/>
+    
 </RelativeLayout>
