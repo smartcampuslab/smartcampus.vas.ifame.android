@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.model.WebcamMensa;
 
 public class IFretta_Details extends Activity {
 
@@ -34,17 +35,24 @@ public class IFretta_Details extends Activity {
 
 		Button btn = (Button) findViewById(R.id.refresh_button);
 		btn.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 				String date_s = s.format(new Date());
 				date.setText(date_s);
-			}
+			}			
 		});
+		
+		mensa_name.setText(String.valueOf(m));
+		date.setText(date_s);
 
-		switch (m) {
+		mensa_name.setTextColor(Color.parseColor("#228B22"));
+		date.setTextColor(Color.parseColor("#228B22"));
+
+		btn.setBackgroundColor(Color.parseColor("#228B22"));
+
+		/*switch (m) {
 		case POVO_O:
 			mensa_name.setText("POVO 0");
 			date.setText(date_s);
@@ -111,7 +119,7 @@ public class IFretta_Details extends Activity {
 		default:
 			break;
 
-		}
+		}*/
 
 	}
 }
