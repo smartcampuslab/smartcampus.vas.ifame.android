@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,6 +154,8 @@ public class IFretta extends Activity {
 
 			TextView nome_mensa = (TextView) convertView
 					.findViewById(R.id.mensa_nameView);
+			//Typeface myTypeface = Typeface.createFromAsset(getAssets(), "segoeuil.ttf");
+			//nome_mensa.setTypeface(myTypeface);
 			//TextView url_mensa = (TextView) convertView
 				//	.findViewById(R.id.mensa_urlView);
 
