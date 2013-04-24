@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/date_daily_menu"
                 android:layout_alignParentRight="true"
-                android:background="#FF0000"
+                android:background="#FAF600"
                 android:text="@string/iDeciso_in_piu_btn" />
         </RelativeLayout>
     </LinearLayout>
@@ -55,9 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#F7A305"
+                    android:layout_marginTop="5dp"
+                    android:background="#FF0000"
                     android:text="@string/iDeciso_menu_del_giorno_primi"
                     android:textSize="20sp" />
 
@@ -75,9 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/list_view_primi"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#F7A305"
+                    android:background="#FF0000"
                     android:text="@string/iDeciso_menu_del_giorno_secondi"
                     android:textSize="20sp" />
 
@@ -95,9 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/list_view_secondi"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#F7A305"
+                    android:background="#FF0000"
                     android:text="@string/iDeciso_menu_del_giorno_contorni"
                     android:textSize="20sp" />
 
