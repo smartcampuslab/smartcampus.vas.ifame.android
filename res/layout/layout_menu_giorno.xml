@@ -1,15 +1,114 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/date_daily_menu"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentLeft="true"
-        android:text="dailymenu"
-        android:textSize="20sp"/>
-    
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/date_daily_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="20dp"
+                android:text="dailymenu"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/in_più"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/date_daily_menu"
+                android:layout_alignParentRight="true"
+                android:background="#FF0000"
+                android:text="@string/iDeciso_in_piu_btn" />
+        </RelativeLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/piatti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/header"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/primi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#F7A305"
+                    android:text="@string/iDeciso_menu_del_giorno_primi"
+                    android:textSize="20sp" />
+
+                <ListView
+                    android:id="@+id/list_view_primi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/primi" >
+                </ListView>
+
+                <TextView
+                    android:id="@+id/secondi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/list_view_primi"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#F7A305"
+                    android:text="@string/iDeciso_menu_del_giorno_secondi"
+                    android:textSize="20sp" />
+
+                <ListView
+                    android:id="@+id/list_view_secondi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/secondi" >
+                </ListView>
+
+                <TextView
+                    android:id="@+id/contorni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/list_view_secondi"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#F7A305"
+                    android:text="@string/iDeciso_menu_del_giorno_contorni"
+                    android:textSize="20sp" />
+
+                <ListView
+                    android:id="@+id/list_view_contorni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/contorni" >
+                </ListView>
+            </RelativeLayout>
+        </LinearLayout>
+
 </RelativeLayout>

@@ -19,7 +19,7 @@
                 android:weightSum="1"
                 android:paddingTop="40dp"
                 android:paddingLeft="30dp"
-                android:paddingRight="30dp" >
+                android:paddingRight="15dp" >
 
                 <Button
                     android:id="@+id/iFretta_button"
@@ -29,7 +29,7 @@
                     android:background="@drawable/ifretta_red" />
                 
                 <TextView
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.15"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content" />
                 
@@ -37,7 +37,7 @@
                     android:id="@+id/iDeciso_button"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.35"
+                    android:layout_weight="0.50"
                     android:background="@drawable/ideciso_red" />
                 
             </LinearLayout>

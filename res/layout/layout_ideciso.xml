@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
-        android:background="#B22222"
+        android:background="#FF0000"
         android:layout_below="@+id/menu_types_btn"
         android:text="@string/iDeciso_home_compose_menu" />
     <Button

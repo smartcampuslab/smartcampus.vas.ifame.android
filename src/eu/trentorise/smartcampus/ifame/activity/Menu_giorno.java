@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 			final TextView date = (TextView) findViewById(R.id.date_daily_menu);
 
-			SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
 			String daily_menu = s.format(new Date());
 			date.setText(daily_menu); 
 			
