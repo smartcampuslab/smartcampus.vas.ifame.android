@@ -78,7 +78,7 @@ public class ISoldi extends Activity {
 			centerText.setTextColor(Color.parseColor("#D2691E"));
 
 			bottomText
-					.setText("Puoi acquistare:  ");
+					.setText("Puoi acquistare: ");
 			bottomText.setTextColor(Color.parseColor("#D2691E")); 
 			
 			acquisti_possibili.add("Snack"); 
@@ -87,8 +87,7 @@ public class ISoldi extends Activity {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF0000"));
 
-			bottomText
-					.setText("No puoi acquistare nessuna tipologia di menu");
+			bottomText.setText("Devi ricaricare!");
 			bottomText.setTextColor(Color.parseColor("#FF0000")); 
 			
 		}
