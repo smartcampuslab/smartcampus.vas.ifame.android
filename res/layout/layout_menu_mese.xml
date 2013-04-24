@@ -1,50 +1,49 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Menu_mese" >
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:isScrollContainer="true" >
 
-    <TextView 
-        android:id ="@+id/visualizza_per"
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:text="@string/IDeciso_MostraMenuComposto_visualizza_per" />
-    
-    <RadioButton 
-        android:id = "@+id/week_radiobtn"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@+id/visualizza_per"
-    	android:text = "@string/IDeciso_MostraMenuComposto_week_radio_btn" 
-    	android:checked="true" />
-    
-    <LinearLayout 
-       	android:id="@+id/under_week_btn_layout"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content" 
-    	android:layout_below="@+id/week_radiobtn">
-        
-        
-    </LinearLayout>
-    
-    
-    <RadioButton 
-        android:id = "@+id/day_radiobtn"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@+id/week_radiobtn"
-    	android:text = "@string/IDeciso_MostraMenuComposto_day_radio_btn" 
-    	android:checked="false" />
-    
-    <LinearLayout 
-       	android:id="@+id/under_day_btn_layout"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content" 
-    	android:layout_below="@+id/day_radiobtn">
-        
-        
-    </LinearLayout>
-    
-    
-    
+        <TextView
+            android:id="@+id/day_of_the_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            android:background="#FF0000"
+            android:text="day"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/menu_of_the_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/day_of_the_week"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp" >
+        </ListView>
+
+        <TextView
+            android:id="@+id/next_day_of_the_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/menu_of_the_day"
+            android:layout_marginTop="5dp"
+            android:background="#FF0000"
+            android:text="day"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/menu_of_the_next_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/next_day_of_the_week"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusableInTouchMode="true" >
+        </ListView>
+
 </RelativeLayout>
