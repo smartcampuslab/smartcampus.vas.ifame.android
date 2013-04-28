@@ -47,10 +47,10 @@ public class IFretta_Details extends Activity {
 		mensa_name.setText(String.valueOf(m));
 		date.setText(date_s);
 
-		mensa_name.setTextColor(Color.parseColor("#228B22"));
-		date.setTextColor(Color.parseColor("#228B22"));
-
-		btn.setBackgroundColor(Color.parseColor("#228B22"));
+//		mensa_name.setTextColor(Color.parseColor("#228B22"));
+//		date.setTextColor(Color.parseColor("#228B22"));
+//
+//		btn.setBackgroundColor(Color.parseColor("#228B22"));
 
 		/*switch (m) {
 		case POVO_O:

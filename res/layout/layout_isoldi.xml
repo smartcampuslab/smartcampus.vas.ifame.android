@@ -1,40 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp" >
 
+    <TextView
+        android:id="@+id/isoldi_upper_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/credito_residuo_isoldi"
+        android:textSize="20sp" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView
+        android:id="@+id/isoldi_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" >
+        android:layout_below="@+id/isoldi_bottom_text"
+        android:layout_marginTop="5sp" />
 
-        <TextView
-            android:id="@+id/isoldi_upper_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/credito_residuo_isoldi"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/isoldi_center_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/isoldi_upper_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="49"
+        android:textSize="35sp" />
 
-        <ListView
-            android:id="@+id/isoldi_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/isoldi_bottom_text" />
+    <Button
+        android:id="@+id/statistics_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/isoldi_listview"
+        android:text="@string/statistic_button_text " />
 
-        <TextView
-            android:id="@+id/isoldi_center_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/isoldi_upper_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="49dp"
-            android:text=""
-            android:textSize="70sp" />
+    <TextView
+        android:id="@+id/isoldi_bottom_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/isoldi_center_text"
+        android:layout_marginTop="16dp"
+        android:text="puoi acquistare"
+        android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/isoldi_bottom_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/isoldi_listview"
-            android:layout_below="@+id/isoldi_center_text"
-            android:layout_marginTop="16dp"
-            android:text=""
-            android:textSize="25sp" />
-    </RelativeLayout>
+</RelativeLayout>

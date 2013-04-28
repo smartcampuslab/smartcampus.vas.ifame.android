@@ -2,6 +2,14 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="10dp" >
+    
+    <TextView 
+        android:id="@+id/mensa_text_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:text="@string/mensa_text"
+        android:background="#696969"/>
 
     <ListView
         android:id="@+id/ifretta_page_list"
@@ -9,6 +17,8 @@
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_below="@+id/mensa_text_id"
+        android:layout_marginTop="5sp"
         android:focusableInTouchMode="true"
         android:isScrollContainer="true" >
     </ListView>

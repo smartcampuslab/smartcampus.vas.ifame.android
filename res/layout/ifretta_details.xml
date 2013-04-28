@@ -22,14 +22,6 @@
         android:text=""
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/refresh_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/refresh_button" />
-
     <fragment
         android:id="@+id/webcam_fragment"
         android:layout_width="wrap_content"
@@ -37,5 +29,15 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         class="eu.trentorise.smartcampus.ifame.fragment.IFretta_Details" />
+
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:drawableRight="@drawable/right_grey"
+        android:gravity="center_vertical|end"
+        android:text="@string/location_button" />
 
 </RelativeLayout>
