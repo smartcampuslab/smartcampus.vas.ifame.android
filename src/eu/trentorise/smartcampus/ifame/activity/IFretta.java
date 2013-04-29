@@ -24,11 +24,11 @@ import eu.trentorise.smartcampus.ifame.model.WebcamMensa;
 
 public class IFretta extends Activity {
 
-	public final String url_povo_0 = "http://www.operauni.tn.it/upload/cms/456_x/mensa-povo1.jpg";
-	public final String url_povo_1 = "http://www.operauni.tn.it/upload/cms/456_x/mensa-povo2.jpg";;
-	public final String url_tom_gar = "http://www.operauni.tn.it/upload/cms/456_x/gar-offline.jpg";;
-	public final String url_zanella = "http://www.operauni.tn.it/upload/cms/456_x/mensa-zanella.jpg";;
-	public final String url_mesiano = "http://www.operauni.tn.it/upload/cms/456_x/mesiano-offline.jpg";;
+	public final String url_povo_0 = "http://www.operauni.tn.it/upload/Webcam/Povo01.jpg";
+	public final String url_povo_1 = "http://www.operauni.tn.it/upload/Webcam/Povo02.jpg";
+	public final String url_tom_gar = "http://www.operauni.tn.it/upload/Webcam/MensaUni.jpg";
+	public final String url_zanella = "http://www.operauni.tn.it/upload/Webcam/mensa_zanella.jpg";
+	public final String url_mesiano = "http://www.operauni.tn.it/upload/Webcam/MensaMes01.jpg";
 
 	ArrayList<WebcamMensa> mensa_list;
 	ListView ifretta_listView;
