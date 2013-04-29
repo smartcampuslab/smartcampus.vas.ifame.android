@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.connector.IFrettaConnector;
 
 public class IFame_Main_Activity extends Activity {
 
@@ -17,6 +18,8 @@ public class IFame_Main_Activity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
+		
+		new IFrettaConnector().execute();
 
 		Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 		iFretta_btn.setOnClickListener(new OnClickListener() {
