@@ -21,9 +21,9 @@ public class ISoldi extends Activity {
 
 	TextView centerText;
 	TextView bottomText;
-	ListView isoldi_listview; 
-	ArrayList<String> acquisti_possibili; 
-	private ArrayAdapter<String> adapter; 
+	ListView isoldi_listview;
+	ArrayList<String> acquisti_possibili;
+	private ArrayAdapter<String> adapter;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,28 +36,27 @@ public class ISoldi extends Activity {
 			return;
 		}
 
-	
-
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
 		isoldi_listview = (ListView) findViewById(R.id.isoldi_listview);
-		
-		acquisti_possibili = new ArrayList<String>(); 
-		
+
+		acquisti_possibili = new ArrayList<String>();
+
 		int resID = android.R.layout.simple_list_item_1;
-		adapter = new ArrayAdapter<String>(this, resID, acquisti_possibili); 
-		
+		adapter = new ArrayAdapter<String>(this, resID, acquisti_possibili);
+
 		isoldi_listview.setAdapter(adapter);
 		DecimalFormat money = new DecimalFormat("$0.00");
-		
+
 		try {
-			Saldo saldoReturn=(Saldo) new ISoldiConnector(getApplicationContext()).execute().get();
-			if(saldoReturn==null){
+			Saldo saldoReturn = (Saldo) new ISoldiConnector(
+					getApplicationContext()).execute().get();
+			if (saldoReturn == null) {
 				getAmount(0);
-			}else{
-				getAmount(saldoReturn.getCredit());
+			} else {
+				getAmount(Float.parseFloat(saldoReturn.getCredit()));
 			}
-			
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +65,6 @@ public class ISoldi extends Activity {
 			e.printStackTrace();
 		}
 
-		
 	}
 
 	public void getAmount(float amount) {
@@ -75,43 +73,40 @@ public class ISoldi extends Activity {
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
 			bottomText.setText("Puoi acquistare:  ");
-			bottomText.setTextColor(Color.parseColor("#228B22")); 
-		 
-			acquisti_possibili.add("Intero"); 
-			acquisti_possibili.add("Ridotto"); 
-			acquisti_possibili.add("Snack"); 
+			bottomText.setTextColor(Color.parseColor("#228B22"));
+
+			acquisti_possibili.add("Intero");
+			acquisti_possibili.add("Ridotto");
+			acquisti_possibili.add("Snack");
 			adapter.notifyDataSetChanged();
-			
-			
+
 		} else if (amount >= 4.20 && amount < 4.90) {
 			centerText.setText("E " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#D2691E"));
 
 			bottomText.setText("Puoi acquistare:  ");
-			bottomText.setTextColor(Color.parseColor("#D2691E")); 
-			
-			acquisti_possibili.add("Ridotto"); 
-			acquisti_possibili.add("Snack"); 
+			bottomText.setTextColor(Color.parseColor("#D2691E"));
+
+			acquisti_possibili.add("Ridotto");
+			acquisti_possibili.add("Snack");
 			adapter.notifyDataSetChanged();
-			
-			
+
 		} else if (amount >= 2.90 && amount < 4.20) {
 			centerText.setText("E " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#D2691E"));
 
-			bottomText
-					.setText("Puoi acquistare: ");
-			bottomText.setTextColor(Color.parseColor("#D2691E")); 
-			
-			acquisti_possibili.add("Snack"); 
+			bottomText.setText("Puoi acquistare: ");
+			bottomText.setTextColor(Color.parseColor("#D2691E"));
+
+			acquisti_possibili.add("Snack");
 			adapter.notifyDataSetChanged();
 		} else {
 			centerText.setText("E " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF0000"));
 
 			bottomText.setText("Devi ricaricare!");
-			bottomText.setTextColor(Color.parseColor("#FF0000")); 
-			
+			bottomText.setTextColor(Color.parseColor("#FF0000"));
+
 		}
 	}
 }
