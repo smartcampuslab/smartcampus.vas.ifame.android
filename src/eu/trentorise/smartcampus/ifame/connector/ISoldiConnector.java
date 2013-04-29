@@ -30,7 +30,7 @@ import android.util.Log;
 
 //import eu.trentorise.smartcampus.android.common.Utils;
 
-public class IFrettaConnector extends AsyncTask {
+public class ISoldiConnector extends AsyncTask {
 
 	private ProtocolCarrier mProtocolCarrier;
 	private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getmense";
@@ -40,7 +40,7 @@ public class IFrettaConnector extends AsyncTask {
 	public String appToken = "test smartcampus";
 	public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
-	public IFrettaConnector(Context applicationContext) {
+	public ISoldiConnector(Context applicationContext) {
 		context = applicationContext;
 	}
 
@@ -50,7 +50,7 @@ public class IFrettaConnector extends AsyncTask {
 		mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 		MessageRequest request = new MessageRequest(
-				"http://smartcampuswebifame.app.smartcampuslab.it", "getmense");
+				"http://smartcampuswebifame.app.smartcampuslab.it", "getsoldi");
 		request.setMethod(Method.GET);
 
 		MessageResponse response;
@@ -69,7 +69,7 @@ public class IFrettaConnector extends AsyncTask {
 				 * System.out.println(iso.toString());
 				 */
 
-				//list = Utils.convertJSONToObject(body,  );
+			//	list = Utils.convertJSONToObject(body,  );
 
 				Iterator<Mensa> i = list.iterator();
 				while (i.hasNext()) {
