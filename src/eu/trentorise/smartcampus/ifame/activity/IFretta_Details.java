@@ -1,9 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.Mensa;
 
 public class IFretta_Details extends Activity {
 
@@ -34,7 +30,7 @@ public class IFretta_Details extends Activity {
 		}
 
 		//Get mensa intent from activity:ifretta
-		Mensa m = (Mensa) extras.get("mensa");
+	//	Mensa m = (Mensa) extras.get("mensa");
 		TextView mensa_name = (TextView) findViewById(R.id.mensa_name_textview);
 		final TextView date = (TextView) findViewById(R.id.date_text_view);
 
@@ -53,7 +49,7 @@ public class IFretta_Details extends Activity {
 			}
 		});
 
-		mensa_name.setText(String.valueOf(m));
+		//mensa_name.setText(String.valueOf(m));
 		date.setText(date_s);
 
 		String img_url = (String) extras.get("img_url"); //Get the mensa url  from activity:ifretta

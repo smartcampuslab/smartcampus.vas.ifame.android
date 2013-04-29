@@ -1,9 +1,14 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.connector.IFrettaConnector;
+import eu.trentorise.smartcampus.ifame.model.ListaMense;
 
 //import eu.trentorise.smartcampus.ifame.fragment.IFretta_Details;
 
@@ -22,6 +27,20 @@ public class IFretta extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta);
 
+		try {
+			AsyncTask execute = new IFrettaConnector(getApplicationContext()).execute();
+			ListaMense list=(ListaMense) execute.get();
+			
+			
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		/*
 		 * mensa_list = new ArrayList<WebcamMensa>();
 		 * 

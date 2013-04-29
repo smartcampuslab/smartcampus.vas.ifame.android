@@ -46,7 +46,7 @@ public class ISoldi extends Activity {
 		adapter = new ArrayAdapter<String>(this, resID, acquisti_possibili);
 
 		isoldi_listview.setAdapter(adapter);
-		DecimalFormat money = new DecimalFormat("$0.00");
+	
 
 		try {
 			Saldo saldoReturn = (Saldo) new ISoldiConnector(
