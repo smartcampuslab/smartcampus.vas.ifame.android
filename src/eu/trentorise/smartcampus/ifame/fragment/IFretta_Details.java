@@ -21,23 +21,7 @@ public class IFretta_Details extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater
 				.inflate(R.layout.webcam_fragment, container, false);
-		
-		/*
-		Drawable drawable = LoadImageFromWebOperations("http://www.operauni.tn.it/upload/cms/456_x/mensa-povo1.jpg");
-		ImageView img_view = (ImageView) view.findViewById(R.id.imageViewID);
-		
-		img_view.setImageDrawable(drawable);
-*/
-		return view; 
+
+		return view;
 	}
-	
-	/*public static Drawable LoadImageFromWebOperations(String url) {
-	    try {
-	        InputStream is = (InputStream) new URL(url).getContent();
-	        Drawable d = Drawable.createFromStream(is, "src name");
-	        return d;
-	    } catch (Exception e) {
-	        return null;
-	    }
-	} */
 }
