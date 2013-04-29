@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.model.Saldo;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.FileRequestParam;
@@ -33,7 +34,7 @@ import android.util.Log;
 public class ISoldiConnector extends AsyncTask {
 
 	private ProtocolCarrier mProtocolCarrier;
-	private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getmense";
+	private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
 	private static final String auth_token = "AUTH_TOKEN";
 	private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 	public Context context;
@@ -44,7 +45,7 @@ public class ISoldiConnector extends AsyncTask {
 		context = applicationContext;
 	}
 
-	private void connect() {
+	private Saldo getSaldo() {
 		// try {
 
 		mProtocolCarrier = new ProtocolCarrier(context, appToken);
@@ -60,21 +61,9 @@ public class ISoldiConnector extends AsyncTask {
 
 			if (response.getHttpStatus() == 200) {
 
-				List<Mensa> list = null;
 				String body = response.getBody();
-				System.out.println("body:" + body);
-				/*
-				 * Saldo iso = Utils.convertJSONToObject(body, Saldo.class);
-				 * 
-				 * System.out.println(iso.toString());
-				 */
 
-			//	list = Utils.convertJSONToObject(body,  );
-
-				Iterator<Mensa> i = list.iterator();
-				while (i.hasNext()) {
-					System.out.println(((Mensa) i.next()).toString());
-				}
+				return Utils.convertJSONToObject(body, Saldo.class);
 
 			} else {
 
@@ -89,39 +78,15 @@ public class ISoldiConnector extends AsyncTask {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 
-		/*
-		 * 
-		 * DefaultHttpClient client = new DefaultHttpClient(); HttpGet request =
-		 * new HttpGet(URL); request.setHeader(auth_token, token_value);
-		 * 
-		 * HttpResponse response = client.execute(request);
-		 * 
-		 * if (response.getStatusLine().getStatusCode() == 200) { HttpEntity
-		 * entity = response.getEntity();
-		 * 
-		 * if (entity != null) {
-		 * 
-		 * List<Mensa> list = null;
-		 * System.out.println(EntityUtils.toString(entity));
-		 * 
-		 * // List<Mensa> list = list =
-		 * Utils.convertJSONToObjects(EntityUtils.toString(entity),Mensa.class);
-		 * 
-		 * 
-		 * Iterator<Mensa> i = list.iterator(); while (i.hasNext()) {
-		 * System.out.println(((Mensa) i.next()).toString()); } } } } catch
-		 * (ClientProtocolException e) { Log.d("HTTPCLIENT",
-		 * e.getLocalizedMessage()); } catch (IOException e) {
-		 * Log.d("HTTPCLIENT", e.getLocalizedMessage()); } catch (Exception e) {
-		 * // TODO: handle exception }
-		 */
+		
 	}
 
 	@Override
 	protected Object doInBackground(Object... params) {
 		// TODO Auto-generated method stub
-		connect();
-		return null;
+
+		return getSaldo();
 	}
 }
