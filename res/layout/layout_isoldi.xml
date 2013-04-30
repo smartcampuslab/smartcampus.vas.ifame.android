@@ -28,7 +28,7 @@
         android:textSize="35sp" />
 
     <Button
-        android:id="@+id/statistics_button"
+        android:id="@+id/isoldi_statistics_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/isoldi_listview"

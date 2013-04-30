@@ -1,28 +1,34 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
-
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Adapter;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.connector.IFrettaConnector;
 import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
+import eu.trentorise.smartcampus.ifame.model.Transaction;
 
 public class ISoldi extends Activity {
 
+	Button stats_button;
+	Saldo saldoReturn;
 	TextView centerText;
 	TextView bottomText;
 	ListView isoldi_listview;
 	ArrayList<String> acquisti_possibili;
+	Long transaction_time;
+	String transaction_value;
 	private ArrayAdapter<String> adapter;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class ISoldi extends Activity {
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
 		isoldi_listview = (ListView) findViewById(R.id.isoldi_listview);
+		stats_button = (Button) findViewById(R.id.isoldi_statistics_button);
 
 		acquisti_possibili = new ArrayList<String>();
 
@@ -46,11 +53,10 @@ public class ISoldi extends Activity {
 		adapter = new ArrayAdapter<String>(this, resID, acquisti_possibili);
 
 		isoldi_listview.setAdapter(adapter);
-	
 
 		try {
-			Saldo saldoReturn = (Saldo) new ISoldiConnector(
-					getApplicationContext()).execute().get();
+			saldoReturn = (Saldo) new ISoldiConnector(getApplicationContext())
+					.execute().get();
 			if (saldoReturn == null) {
 				getAmount(0);
 			} else {
@@ -65,6 +71,27 @@ public class ISoldi extends Activity {
 			e.printStackTrace();
 		}
 
+		/*Iterator<Transaction> i = saldoReturn.getTransactions().iterator();
+
+		while (i.hasNext()) {
+			//Transaction t = (Transaction) i.next();
+			Transaction t = new Transaction(); 
+			t = (Transaction)i.next(); 
+			transaction_time = t.getTimemillis();
+			transaction_value = t.getValue();
+		}
+
+		stats_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(
+						ISoldi.this,
+						String.valueOf(transaction_time) + " "
+								+ transaction_value, Toast.LENGTH_LONG).show();
+
+			}
+		});*/
 	}
 
 	public void getAmount(float amount) {
