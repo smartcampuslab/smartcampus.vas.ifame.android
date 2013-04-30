@@ -1,9 +1,13 @@
 package eu.trentorise.smartcampus.ifame.connector;
 
+import java.util.Iterator;
+import java.util.List;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.model.ListaMense;
+import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -43,15 +47,14 @@ public class IFrettaConnector extends AsyncTask {
 					.invokeSync(request, appToken, authToken);
 
 			if (response.getHttpStatus() == 200) {
-
 				String body = response.getBody();
 				ListaMense list = Utils.convertJSONToObject(body,
 						ListaMense.class);
 				return list;
-
 			} else {
 				return null;
 			}
+
 		} catch (ConnectionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
