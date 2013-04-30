@@ -2,9 +2,11 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
@@ -29,13 +30,15 @@ public class ISoldi extends Activity {
 	ArrayList<String> acquisti_possibili;
 	Long transaction_time;
 	String transaction_value;
+	ArrayList<Long> t_list;
+	ArrayList<String> v_list;
 	private ArrayAdapter<String> adapter;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_isoldi);
-		setContentView(R.layout.layout_isoldi);
+		// setContentView(R.layout.layout_isoldi);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
@@ -71,27 +74,37 @@ public class ISoldi extends Activity {
 			e.printStackTrace();
 		}
 
-		/*Iterator<Transaction> i = saldoReturn.getTransactions().iterator();
+		Iterator<Transaction> i = saldoReturn.getTransactions().iterator();
+		t_list = new ArrayList<Long>();
+		v_list = new ArrayList<String>();
 
 		while (i.hasNext()) {
 			//Transaction t = (Transaction) i.next();
-			Transaction t = new Transaction(); 
-			t = (Transaction)i.next(); 
-			transaction_time = t.getTimemillis();
-			transaction_value = t.getValue();
+			Transaction t = new Transaction();
+			t = (Transaction) i.next();
+			// transaction_time = t.getTimemillis();
+			// transaction_value = t.getValue();
+			t_list.add(t.getTimemillis());
+			v_list.add(t.getValue());
 		}
 
+		
 		stats_button.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(
-						ISoldi.this,
-						String.valueOf(transaction_time) + " "
-								+ transaction_value, Toast.LENGTH_LONG).show();
+				/*ListView lt = (ListView) findViewById(R.id.test_listview); 
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						ISoldi.this, android.R.layout.simple_list_item_1,
+						v_list);
+				lt.setAdapter(adapter); */
 
+				Intent intent = new Intent(ISoldi.this, Stats_Activity.class); 
+				intent.putExtra("values", v_list.toArray());
+				intent.putExtra("time_value", t_list.toArray());
+				startActivity(intent); 
 			}
-		});*/
+		}); 
 	}
 
 	public void getAmount(float amount) {

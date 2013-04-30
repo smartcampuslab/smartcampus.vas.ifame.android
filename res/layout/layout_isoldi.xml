@@ -24,7 +24,7 @@
         android:layout_below="@+id/isoldi_upper_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="49"
+        android:text=""
         android:textSize="35sp" />
 
     <Button
@@ -40,7 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/isoldi_center_text"
         android:layout_marginTop="16dp"
-        android:text="puoi acquistare"
+        android:text=""
         android:textSize="25sp" />
+    
+    <ListView 
+        android:id="@+id/test_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/isoldi_statistics_button"/>
 
 </RelativeLayout>
