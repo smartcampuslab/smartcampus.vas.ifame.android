@@ -39,7 +39,7 @@ public class IFretta extends Activity {
 					getApplicationContext()).execute().get();
 
 			if (list != null) {
-				createWebcamList(list);
+				// createWebcamList(list);
 			}
 
 		} catch (InterruptedException e) {
@@ -50,18 +50,16 @@ public class IFretta extends Activity {
 			e.printStackTrace();
 		}
 	}
-
-	private void createWebcamList(ListaMense list) {
-		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
-
-		MyArrayAdapter adapter = new MyArrayAdapter(this, R.layout.mensa_text,list);
-		ifretta_listView.setAdapter(adapter);
-		
-		
-		
-	}
 	/*
-	 * mensa_list = new ArrayList<WebcamMensa>();
+	 * private void createWebcamList(ListaMense list) { ListView
+	 * ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
+	 * 
+	 * MyArrayAdapter adapter = new MyArrayAdapter(this,
+	 * R.layout.mensa_text,list); ifretta_listView.setAdapter(adapter);
+	 * 
+	 * 
+	 * 
+	 * } /* mensa_list = new ArrayList<WebcamMensa>();
 	 * 
 	 * ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
 	 * 
