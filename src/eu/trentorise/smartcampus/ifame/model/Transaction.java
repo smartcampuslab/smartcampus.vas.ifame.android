@@ -5,6 +5,9 @@ public class Transaction {
 	private Long timemillis;
 	private String value;
 
+	public Transaction() {
+	}
+
 	public Long getTimemillis() {
 		return timemillis;
 	}

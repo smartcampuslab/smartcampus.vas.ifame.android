@@ -2,8 +2,10 @@ package eu.trentorise.smartcampus.ifame.model;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
 
 public class Saldo {
 
@@ -13,28 +15,7 @@ public class Saldo {
 	private List<Transaction> transactions;
 
 	public Saldo() {
-		Random rand = new Random();
-
-		this.user_id = Math.abs(rand.nextLong());
-		this.card_id = Math.abs(rand.nextLong());
-
-		DecimalFormat df = new DecimalFormat("###.##");
-		double number = rand.nextDouble() + rand.nextInt(10);
-		this.credit = df.format(number);
-
-		this.transactions = new ArrayList<Transaction>();
-		for (int i = 0; i < 5; i++) {
-
-			double n = rand.nextDouble() + rand.nextInt(10);
-			Transaction t = new Transaction();
-
-			t.setValue(df.format(n));
-			t.setTimemillis(System.currentTimeMillis());
-
-			transactions.add(t);
-		}
-
-	};
+	}
 
 	public List<Transaction> getTransactions() {
 		return transactions;
@@ -69,4 +50,3 @@ public class Saldo {
 	}
 
 }
-
