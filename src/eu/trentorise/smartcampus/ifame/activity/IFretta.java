@@ -1,25 +1,18 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
@@ -30,6 +23,7 @@ import eu.trentorise.smartcampus.ifame.model.Mensa;
 //import eu.trentorise.smartcampus.ifame.fragment.IFretta_Details;
 
 public class IFretta extends Activity {
+
 	/*
 	 * public final String url_povo_0 =
 	 * "http://www.operauni.tn.it/upload/Webcam/Povo01.jpg"; public final String
@@ -68,47 +62,72 @@ public class IFretta extends Activity {
 	private void createWebcamList(ListaMense list) {
 		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
 
-		Adapter adapter = new WebArrayAdapter(this,
-				android.R.layout.simple_list_item_1, list.getList());
+		List<Mensa> mense = list.getList();
 
-		ifretta_listView.setAdapter((ListAdapter) adapter);
+		MyArrayAdapter adapter = new MyArrayAdapter(this,
+				android.R.layout.simple_list_item_1, mense);
+
+		// MyArrayAdapter adapter = new MyArrayAdapter(this,
+		// R.layout.mensa_text, list.getList());
+
+		ifretta_listView.setAdapter(adapter);
+
+		/*
+		 * mensa_list = new ArrayList<WebcamMensa>();
+		 * 
+		 * ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
+		 * 
+		 * MyArrayAdapter adapter = new MyArrayAdapter(this,
+		 * R.layout.mensa_text, mensa_list);
+		 * ifretta_listView.setAdapter(adapter);
+		 * 
+		 * mensa_list.add(0, new WebcamMensa(Mensa.POVO_O, url_povo_0));
+		 * mensa_list.add(1, new WebcamMensa(Mensa.POVO_1, url_povo_1));
+		 * mensa_list.add(2, new WebcamMensa(Mensa.FBK, "")); mensa_list.add(3,
+		 * new WebcamMensa(Mensa.TOMMASO_GAR, url_tom_gar)); mensa_list.add(4,
+		 * new WebcamMensa(Mensa.XXIV_MAGGIO, "")); mensa_list.add(5, new
+		 * WebcamMensa(Mensa.ZANELLA, url_zanella)); mensa_list.add(6, new
+		 * WebcamMensa(Mensa.MESIANO, url_mesiano));
+		 */
 
 		ifretta_listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View view,
-					int position, long arg3) {
+
+			public void onItemClick(AdapterView<?> adapter, View v,
+					int position, long id) {
 				Mensa m = (Mensa) adapter.getItemAtPosition(position);
+
 				Intent i = new Intent(IFretta.this, IFretta_Details.class);
 				i.putExtra("mensa", m.getMensa_name());
 				i.putExtra("img_url", m.getMensa_link());
 				startActivity(i);
+
 			}
 		});
-	}
-}
 
-class WebArrayAdapter extends ArrayAdapter<Mensa> {
-
-	// HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-	Context context;
-	List<Mensa> mlist;
-
-	public WebArrayAdapter(Context context, int textViewResourceId,
-			List<Mensa> mlist) {
-		super(context, textViewResourceId, mlist);
-		this.context = context;
-		this.mlist = mlist;
 	}
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	private class MyArrayAdapter extends ArrayAdapter<Mensa> {
 
-		TextView tv = new TextView(context);
-		// setPadding(top, left, right, bottom)
-		tv.setPadding(10, 20, 10, 20);
-		tv.setTextSize(15);
-		tv.setText(mlist.get(position).getMensa_name());
+		public MyArrayAdapter(Context context, int textViewResourceId,
+				List<Mensa> objects) {
+			super(context, textViewResourceId, objects);
+			// TODO Auto-generated constructor stub
+		}
 
-		return tv;
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			
+			convertView = inflater.inflate(R.layout.mensa_text, null);
+
+			TextView nome_mensa = (TextView) convertView.findViewById(R.id.mensa_nameView);
+			Mensa m = getItem(position); 
+			
+			nome_mensa.setText(m.getMensa_name()); 
+
+			return convertView;
+		}
+
 	}
 }
