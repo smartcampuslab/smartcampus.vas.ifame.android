@@ -2,15 +2,24 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.connector.IGraditoConnector;
+import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
+import eu.trentorise.smartcampus.ifame.model.PiattiList;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.model.Saldo;
 
 public class IGradito extends Activity {
 
@@ -19,21 +28,21 @@ public class IGradito extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito);
 
-		String[] values = { "Pasta Aglio olio e peperoncino", "Pasta al ragu",
-				"Risotto ai funghi", "Scaloppine al limone",
-				"Ossobuco alla romana", "Fagioli", "Patatine fritte",
-				"Stinco con Patate", "Anatre all'arancia",
-				"Insalata di stagione" };
-		
-		final ArrayList<String> food_list = new ArrayList<String>();
-		for (int i = 0; i < values.length; ++i) {
-			food_list.add(values[i]);
-		}
 		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
-		
-		final MyArrayAdapter adapter = new MyArrayAdapter(this,
-				android.R.layout.simple_list_item_1, food_list);
-		list_view.setAdapter(adapter);
+
+		try {
+			PiattiList pl = (PiattiList) new IGraditoConnector(
+					getApplicationContext()).execute().get();
+
+			setPiattiList(pl.getPiatti(), list_view);
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -42,6 +51,22 @@ public class IGradito extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.igradito, menu);
 		return true;
+	}
+
+	private void setPiattiList(List<Piatto> plist, ListView lw) {
+
+		List<String> pname = new ArrayList<String>();
+		Iterator i = plist.iterator();
+
+		while (i.hasNext()) {
+			Piatto p = (Piatto) i.next();
+			pname.add(p.getPiatto_name());
+		}
+
+		Adapter a = new ArrayAdapter(this, android.R.layout.simple_list_item_1,
+				pname);
+
+		lw.setAdapter((ListAdapter) a);
 	}
 
 }
