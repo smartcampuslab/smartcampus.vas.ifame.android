@@ -54,9 +54,6 @@ public class IGraditoConnector extends AsyncTask {
 				PiattiList pl = Utils.convertJSONToObject(body,
 						PiattiList.class);
 
-				if (pl != null) {
-					System.out.println("ce l'ho fatta");
-				}
 				return pl;
 
 			} else {
