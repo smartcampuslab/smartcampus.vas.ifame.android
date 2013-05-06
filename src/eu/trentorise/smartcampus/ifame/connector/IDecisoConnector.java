@@ -22,7 +22,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class IDecisoConnector extends AsyncTask {
 
 	private ProtocolCarrier mProtocolCarrier;
-	private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
+	private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getmenudelgiorno";
 	private static final String auth_token = "AUTH_TOKEN";
 	private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 	public Context context;
@@ -40,7 +40,7 @@ public class IDecisoConnector extends AsyncTask {
 
 		MessageRequest request = new MessageRequest(
 				"http://smartcampuswebifame.app.smartcampuslab.it",
-				"getallpiatti");
+				"getmenudelgiorno");
 		request.setMethod(Method.GET);
 
 		MessageResponse response;
