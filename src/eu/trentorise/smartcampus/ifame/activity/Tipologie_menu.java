@@ -3,6 +3,7 @@ package eu.trentorise.smartcampus.ifame.activity;
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import eu.trentorise.smartcampus.ifame.R;

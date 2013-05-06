@@ -27,13 +27,13 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/in_piu"
+                android:id="@+id/alternative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/date_daily_menu"
+                android:layout_alignBottom="@id/date_daily_menu"
                 android:layout_alignParentRight="true"
-                android:background="#FAF600"
-                android:text="@string/iDeciso_in_piu_btn" />
+                android:background="#21DC1A"
+                android:text="@string/iDeciso_alternative_btn" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -52,6 +52,7 @@
 
                 <TextView
                     android:id="@+id/primi"
+                    android:textColor="#FFFFFF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -71,6 +72,7 @@
                 <TextView
                     android:id="@+id/secondi"
                     android:layout_width="match_parent"
+                    android:textColor="#FFFFFF"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/list_view_primi"
@@ -89,6 +91,7 @@
                 <TextView
                     android:id="@+id/contorni"
                     android:layout_width="match_parent"
+                    android:textColor="#FFFFFF"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/list_view_secondi"

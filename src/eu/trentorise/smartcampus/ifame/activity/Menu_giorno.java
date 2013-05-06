@@ -26,7 +26,7 @@ import android.widget.TextView;
 			
 			//riempio la ListView per i primi piatti
 			
-			String[] primi = { "Pasta Aglio olio e peperoncino", "Pasta al ragu",
+			String[] primi = { "Pasta A.O.P", "Pasta al ragu",
 					"Risotto ai funghi"};
 			
 			final ArrayList<String> lista_primi = new ArrayList<String>();

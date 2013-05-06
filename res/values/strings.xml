@@ -80,7 +80,7 @@
     <string name="title_activity_mostra_composizione_menu">Mostra Composizione Menu</string>
     <string name="title_activity_mostra_menu_composto">Menu personalizzato</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
-    <string name="iDeciso_in_piu_btn">IN PIU</string>
+    <string name="iDeciso_alternative_btn">Alternative</string>
     <string name="iDeciso_menu_del_giorno_primi">PRIMI PIATTI</string>
     <string name="iDeciso_menu_del_giorno_secondi">SECONDI PIATTI</string>
     <string name="iDeciso_menu_del_giorno_contorni">CONTORNI CALDI</string>
