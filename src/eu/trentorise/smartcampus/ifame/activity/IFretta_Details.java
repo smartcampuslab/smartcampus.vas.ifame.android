@@ -38,7 +38,7 @@ public class IFretta_Details extends Activity {
 		String date_s = s.format(new Date());
 
 		//the onclick method is for a demonstraive purpose, time is updated when the button is clicked
-		Button btn = (Button) findViewById(R.id.refresh_button);
+		Button btn = (Button) findViewById(R.id.location_button);
 		btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

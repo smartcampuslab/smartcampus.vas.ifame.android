@@ -28,7 +28,7 @@ import eu.trentorise.smartcampus.ifame.R.layout;
 			
 			//riempio la ListView per i primi piatti
 			
-			String[] primi = { "Pasta A.O.P", "Pasta al ragu",
+			String[] primi = { "Pasta A.O.P.", "Pasta al ragu",
 					"Risotto ai funghi"};
 			
 			final ArrayList<String> lista_primi = new ArrayList<String>();
@@ -44,7 +44,7 @@ import eu.trentorise.smartcampus.ifame.R.layout;
 			//riempio la ListView per i secondi piatti
 			
 			String[] secondi = { "Scaloppine al limone",
-					"Ossobuco alla romana", "Stinco con Patate" };
+					"Ossobuco alla romana" };
 			
 			final ArrayList<String> lista_secondi = new ArrayList<String>();
 			for (int i = 0; i < secondi.length; ++i) {
