@@ -1,16 +1,18 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.R.layout;
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.R.layout;
 
 	public class Menu_giorno extends Activity {
 
@@ -67,6 +69,42 @@ import android.widget.TextView;
 			final MyArrayAdapter adapter_contorni = new MyArrayAdapter(this,
 					layout.layout_list_view, lista_contorni);
 			listacontorni.setAdapter(adapter_contorni);
+			
+
+			//RISOLUZIONE PROBLEMA LISTVIEW IN SCROLLCONTAINER
+			
+			//listaprimi
+			ListAdapter listAdapterPrimi =  listaprimi.getAdapter();
+
+		    int rowsPrimi = listAdapterPrimi.getCount() ;
+		    int heightPrimi = 60 * rowsPrimi; 
+		    ViewGroup.LayoutParams paramsPrimi = listaprimi.getLayoutParams();
+		    paramsPrimi.height = heightPrimi;
+		    listaprimi.setLayoutParams(paramsPrimi);
+		    listaprimi.requestLayout();
+		    
+		  //listasecondi
+			ListAdapter listAdapterSecondi =  listasecondi.getAdapter();
+
+		    int rowsSecondi = listAdapterSecondi.getCount() ;
+		    int heightSecondi = 60 * rowsSecondi; 
+		    ViewGroup.LayoutParams paramsSecondi = listasecondi.getLayoutParams();
+		    paramsSecondi.height = heightSecondi;
+		    listasecondi.setLayoutParams(paramsSecondi);
+		    listasecondi.requestLayout();
+		    
+		  //listacontorni
+			ListAdapter listAdapterContorni =  listacontorni.getAdapter();
+
+		    int rowsContorni = listAdapterContorni.getCount() ;
+		    int heightContorni = 60 * rowsContorni; 
+
+		    ViewGroup.LayoutParams paramsContorni = listacontorni.getLayoutParams();
+		    paramsContorni.height = heightContorni;
+		    listacontorni.setLayoutParams(paramsContorni);
+		    listacontorni.requestLayout();
+		    
+
 			
 		}
 	@Override

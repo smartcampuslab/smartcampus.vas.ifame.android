@@ -1,67 +1,75 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="15dp"
-    tools:context=".Fai_il_tuo_menu" >
+    android:layout_height="match_parent" >
 
-    <CheckBox 
-        android:id="@+id/primo_piatto"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"	
-        android:text="@string/iDeciso_compose_menu_checkbox_first"
-        />
-    <CheckBox 
-        android:id="@+id/secondo_piatto"
-        android:layout_below="@+id/primo_piatto"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"	
-        android:text="@string/iDeciso_compose_menu_checkbox_second"
-        />
-    <CheckBox 
-        android:id="@+id/contorno_caldo"
-        android:layout_below="@+id/secondo_piatto"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"	
-        android:text="@string/iDeciso_compose_menu_checkbox_contorno_caldo"    />
-        
-    <CheckBox 
-        android:id="@+id/contorno_freddo"
-        android:layout_below="@+id/contorno_caldo"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/iDeciso_compose_menu_checkbox_contorno_freddo"
-        />
-    <CheckBox 
-        android:id="@+id/insalatona"
-        android:layout_below="@+id/contorno_freddo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/iDeciso_compose_menu_checkbox_insalatona"
-        />
-    <CheckBox 
-        android:id="@+id/dessert"
-        android:layout_below="@+id/insalatona"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"	
-        android:text="@string/iDeciso_compose_menu_checkbox_dessert"
-        />
-    <CheckBox 
-        android:id="@+id/pane"
-        android:layout_below="@+id/dessert"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/iDeciso_compose_menu_checkbox_bread"
-        />
-	<Button
+        android:orientation="vertical"
+        android:padding="15dp"
+        tools:context=".Fai_il_tuo_menu" >
+
+        <CheckBox
+            android:id="@+id/primo_piatto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/iDeciso_compose_menu_checkbox_first" />
+
+        <CheckBox
+            android:id="@+id/secondo_piatto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/primo_piatto"
+            android:text="@string/iDeciso_compose_menu_checkbox_second" />
+
+        <CheckBox
+            android:id="@+id/contorno_caldo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/secondo_piatto"
+            android:text="@string/iDeciso_compose_menu_checkbox_contorno_caldo" />
+
+        <CheckBox
+            android:id="@+id/contorno_freddo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contorno_caldo"
+            android:text="@string/iDeciso_compose_menu_checkbox_contorno_freddo" />
+
+        <CheckBox
+            android:id="@+id/insalatona"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contorno_freddo"
+            android:text="@string/iDeciso_compose_menu_checkbox_insalatona" />
+
+        <CheckBox
+            android:id="@+id/dessert"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/insalatona"
+            android:text="@string/iDeciso_compose_menu_checkbox_dessert" />
+
+        <CheckBox
+            android:id="@+id/pane"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dessert"
+            android:text="@string/iDeciso_compose_menu_checkbox_bread" />
+
+        <Button
             android:id="@+id/confirm_menu_btn"
-            android:layout_below="@+id/pane"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/pane"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="20dp"
+            android:background="#2BA63B"
+            android:textColor="#FFFFFF"
             android:text="@string/iDeciso_compose_menu_calcola_btn" />
+    </RelativeLayout>
 
-    
-</RelativeLayout>
+</ScrollView>

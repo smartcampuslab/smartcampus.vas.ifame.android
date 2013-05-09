@@ -1,9 +1,9 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import eu.trentorise.smartcampus.ifame.R;
@@ -14,6 +14,9 @@ public class Tipologie_menu extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_tipologie_menu);
+		
+		Intent i = getIntent();
+		String selected_item = i.getStringExtra("selected_item");
 		
 		TabHost menu = (TabHost)findViewById(android.R.id.tabhost);
         TabSpec spec = menu.newTabSpec("tabcontent");
@@ -29,6 +32,14 @@ public class Tipologie_menu extends TabActivity {
         spec.setIndicator("Snack");
         menu.addTab(spec);
 		
+        
+        if (selected_item!=null){
+        	
+        	if (selected_item.equals("Intero")){
+        		menu.setCurrentTab(0);}
+        	else if (selected_item.equals("Ridotto")){menu.setCurrentTab(1);}
+        	else {menu.setCurrentTab(2);}
+        }
 	}
 
 	@Override

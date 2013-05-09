@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp" >
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/mensa_name_textview"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text=""
-        android:textSize="20sp" />
+        android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/date_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignRight="@+id/mensa_name_textview"
-        android:layout_marginBottom="20dp"
-        android:text=""
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/mensa_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text=""
+            android:textSize="20sp" />
 
-    <fragment
-        android:id="@+id/webcam_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        class="eu.trentorise.smartcampus.ifame.fragment.IFretta_Details" />
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/mensa_name_textview"
+            android:layout_marginBottom="20dp"
+            android:text=""
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/refresh_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:drawableRight="@drawable/right_grey"
-        android:gravity="center_vertical|end"
-        android:text="@string/location_button" />
+        <fragment
+            android:id="@+id/webcam_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            class="eu.trentorise.smartcampus.ifame.fragment.IFretta_Details" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/refresh_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#FF8C81C1"
+            android:drawableRight="@drawable/ic_launcher_dt"
+            android:gravity="center_vertical|end"
+            android:text="@string/location_button" />
+    </RelativeLayout>
+
+</ScrollView>

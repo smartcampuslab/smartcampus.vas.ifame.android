@@ -12,9 +12,9 @@ public class MostraComposizioneMenu extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_mostra_composizione_menu);
+		setContentView(R.layout.layout_mostra_menu_composto);
 		
-		TextView tv = (TextView)findViewById(R.id.mostra_scelte);
+		TextView tv = (TextView)findViewById(R.id.textview);
 		
 		Bundle i = getIntent().getExtras();
 		

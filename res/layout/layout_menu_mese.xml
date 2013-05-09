@@ -1,8 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:isScrollContainer="true" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="true"
+        android:padding="10dp" >
 
         <TextView
             android:id="@+id/day_of_the_week"
@@ -45,5 +49,6 @@
             android:layout_centerVertical="true"
             android:focusableInTouchMode="true" >
         </ListView>
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>

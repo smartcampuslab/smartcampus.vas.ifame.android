@@ -1,112 +1,246 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/date_daily_menu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="dailymenu"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/alternative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_alignTop="@id/date_daily_menu"
+        android:layout_alignBottom="@id/date_daily_menu"         
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:textSize="17sp"
+        android:background="#21DC1A"
+        android:text="@string/iDeciso_alternative_btn" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/date_daily_menu"
+        android:layout_height="match_parent"
+        android:padding="4dp" 
+        android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/date_daily_menu"
-                android:layout_width="wrap_content"
+                android:id="@+id/primi"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginBottom="20dp"
-                android:text="dailymenu"
+                android:layout_below="@+id/date_daily_menu"
+                android:paddingLeft="3dp"
+                android:background="#D21F1B"
+                android:text="@string/iDeciso_menu_del_giorno_primi"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/alternative"
+            
+            <!-- prova -->
+            	<TextView
+                android:id="@+id/primi_kcal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/date_daily_menu"
                 android:layout_alignParentRight="true"
-                android:background="#21DC1A"
-                android:text="@string/iDeciso_alternative_btn" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_below="@+id/date_daily_menu"
+                android:paddingLeft="3dp"
+                android:background="#D21F1B"
+                android:paddingRight="3dp"
+                android:layout_alignBottom="@+id/primi"
+                android:layout_alignTop="@+id/primi"
+                android:text="Kcal"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
-        <LinearLayout
-            android:id="@+id/piatti"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/header"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" >
-
-            <RelativeLayout
+            <ListView
+                android:id="@+id/list_view_primi"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:scrollbars="none"
+                android:layout_below="@id/primi" >
+            </ListView>
 
-                <TextView
-                    android:id="@+id/primi"
-                    android:textColor="#FFFFFF"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="5dp"
-                    android:background="#FF0000"
-                    android:text="@string/iDeciso_menu_del_giorno_primi"
-                    android:textSize="20sp" />
+            <TextView
+                android:id="@+id/secondi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/list_view_primi"
+                android:background="#D21F1B"
+                android:paddingLeft="3dp"
+                android:text="@string/iDeciso_menu_del_giorno_secondi"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+            
+            <TextView
+                android:id="@+id/secondi_kcal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/list_view_primi"
+                android:paddingLeft="3dp"
+                android:background="#D21F1B"
+                android:paddingRight="3dp"
+                android:layout_alignBottom="@+id/secondi"
+                android:layout_alignTop="@+id/secondi"
+                android:text="Kcal"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
-                <ListView
-                    android:id="@+id/list_view_primi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/primi" >
-                </ListView>
+            <ListView
+                android:id="@+id/list_view_secondi"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/secondi" >
+            </ListView>
 
-                <TextView
-                    android:id="@+id/secondi"
-                    android:layout_width="match_parent"
-                    android:textColor="#FFFFFF"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/list_view_primi"
-                    android:background="#FF0000"
-                    android:text="@string/iDeciso_menu_del_giorno_secondi"
-                    android:textSize="20sp" />
+            <TextView
+                android:id="@+id/contorni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="3dp"
+                android:layout_below="@id/list_view_secondi"
+                android:background="#D21F1B"
+                android:text="@string/iDeciso_menu_del_giorno_contorni"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+            
+            <TextView
+                android:id="@+id/contorni_kcal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/list_view_secondi"
+                android:paddingLeft="3dp"
+                android:background="#D21F1B"
+                android:paddingRight="3dp"
+                android:layout_alignBottom="@+id/contorni"
+                android:layout_alignTop="@+id/contorni"
+                android:text="Kcal"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
-                <ListView
-                    android:id="@+id/list_view_secondi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/secondi" >
-                </ListView>
-
-                <TextView
-                    android:id="@+id/contorni"
-                    android:layout_width="match_parent"
-                    android:textColor="#FFFFFF"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/list_view_secondi"
-                    android:background="#FF0000"
-                    android:text="@string/iDeciso_menu_del_giorno_contorni"
-                    android:textSize="20sp" />
-
-                <ListView
-                    android:id="@+id/list_view_contorni"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/contorni" >
-                </ListView>
-            </RelativeLayout>
-        </LinearLayout>
+            <ListView
+                android:id="@+id/list_view_contorni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/contorni" >
+            </ListView>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
+
+
+<!--
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+	<RelativeLayout 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+	
+	<TextView
+	 	android:id="@+id/date_daily_menu"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_marginTop="8dp"
+	    android:layout_marginBottom="20dp"
+	    android:text="dailymenu"
+	    android:textSize="20sp" />
+	
+	            <Button
+	                android:id="@+id/alternative"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBottom="@id/date_daily_menu"
+	                android:layout_alignParentRight="true"
+	                android:background="#21DC1A"
+	                android:text="@string/iDeciso_alternative_btn" />
+
+
+	
+	                <TextView
+	                    android:id="@+id/primi"
+	                    android:layout_below="@+id/date_daily_menu"
+	                    android:textColor="#FFFFFF"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentLeft="true"
+	                    android:layout_marginTop="5dp"
+	                    android:background="#D21F1B"
+	                    android:text="@string/iDeciso_menu_del_giorno_primi"
+	                    android:textSize="20sp" />
+	                
+	
+	                <ListView
+	                    android:id="@+id/list_view_primi"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentLeft="true"
+	                    android:layout_below="@id/primi" >
+	                </ListView>
+	
+	                <TextView
+	                    android:id="@+id/secondi"
+	                    android:layout_width="match_parent"
+	                    android:textColor="#FFFFFF"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentLeft="true"
+	                    android:layout_below="@id/list_view_primi"
+	                    android:background="#FF0000"
+	                    android:text="@string/iDeciso_menu_del_giorno_secondi"
+	                    android:textSize="20sp" />
+	
+	                <ListView
+	                    android:id="@+id/list_view_secondi"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentLeft="true"
+	                    android:layout_below="@id/secondi" >
+	                </ListView>
+	
+	                <TextView
+	                    android:id="@+id/contorni"
+	                    android:layout_width="match_parent"
+	                    android:textColor="#FFFFFF"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentLeft="true"
+	                    android:layout_below="@id/list_view_secondi"
+	                    android:background="#FF0000"
+	                    android:text="@string/iDeciso_menu_del_giorno_contorni"
+	                    android:textSize="20sp" />
+	
+		<ListView
+			android:id="@+id/list_view_contorni"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@id/contorni" >
+		</ListView>
+	</RelativeLayout> 
+</ScrollView>
+-->

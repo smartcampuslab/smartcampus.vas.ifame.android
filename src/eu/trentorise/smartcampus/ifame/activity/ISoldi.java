@@ -2,7 +2,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
@@ -10,9 +9,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
@@ -57,6 +60,23 @@ public class ISoldi extends Activity {
 
 		isoldi_listview.setAdapter(adapter);
 
+		isoldi_listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// trova qual'è l'oggetto schiacciato
+				String selected = (String) parent.getItemAtPosition(position);
+
+				Intent i = new Intent(ISoldi.this, Tipologie_menu.class);
+				i.putExtra("selected_item", selected);
+				startActivity(i);
+
+			}
+
+		});
+
 		try {
 			saldoReturn = (Saldo) new ISoldiConnector(getApplicationContext())
 					.execute().get();
@@ -64,6 +84,15 @@ public class ISoldi extends Activity {
 				getAmount(0);
 			} else {
 				getAmount(Float.parseFloat(saldoReturn.getCredit()));
+				
+				ListAdapter listAdapter = isoldi_listview.getAdapter();
+
+				int rows = listAdapter.getCount();
+				int height = 70 * rows;
+				ViewGroup.LayoutParams params = isoldi_listview.getLayoutParams();
+				params.height = height;
+				isoldi_listview.setLayoutParams(params);
+				isoldi_listview.requestLayout();
 			}
 
 		} catch (InterruptedException e) {
@@ -79,7 +108,7 @@ public class ISoldi extends Activity {
 		v_list = new ArrayList<String>();
 
 		while (i.hasNext()) {
-			//Transaction t = (Transaction) i.next();
+			// Transaction t = (Transaction) i.next();
 			Transaction t = new Transaction();
 			t = (Transaction) i.next();
 			// transaction_time = t.getTimemillis();
@@ -88,23 +117,23 @@ public class ISoldi extends Activity {
 			v_list.add(t.getValue());
 		}
 
-		
 		stats_button.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				/*ListView lt = (ListView) findViewById(R.id.test_listview); 
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-						ISoldi.this, android.R.layout.simple_list_item_1,
-						v_list);
-				lt.setAdapter(adapter); */
+				/*
+				 * ListView lt = (ListView) findViewById(R.id.test_listview);
+				 * ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				 * ISoldi.this, android.R.layout.simple_list_item_1, v_list);
+				 * lt.setAdapter(adapter);
+				 */
 
-				Intent intent = new Intent(ISoldi.this, Stats_Activity.class); 
+				Intent intent = new Intent(ISoldi.this, Stats_Activity.class);
 				intent.putExtra("values", v_list.toArray());
 				intent.putExtra("time_value", t_list.toArray());
-				startActivity(intent); 
+				startActivity(intent);
 			}
-		}); 
+		});
 	}
 
 	public void getAmount(float amount) {

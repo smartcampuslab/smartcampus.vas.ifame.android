@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
@@ -65,12 +66,21 @@ public class IFretta extends Activity {
 		List<Mensa> mense = list.getList();
 
 		MyArrayAdapter adapter = new MyArrayAdapter(this,
-				android.R.layout.simple_list_item_1, mense);
+				R.layout.layout_list_view_ideciso, mense);
 
 		// MyArrayAdapter adapter = new MyArrayAdapter(this,
 		// R.layout.mensa_text, list.getList());
 
 		ifretta_listView.setAdapter(adapter);
+		
+		
+
+		int rows = adapter.getCount();
+		int height = 60 * rows;
+		ViewGroup.LayoutParams params = ifretta_listView.getLayoutParams();
+		params.height = height;
+		ifretta_listView.setLayoutParams(params);
+		ifretta_listView.requestLayout();
 
 		/*
 		 * mensa_list = new ArrayList<WebcamMensa>();
