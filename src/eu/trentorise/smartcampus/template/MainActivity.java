@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
 		// retrieve the token: no restriction on the preferred account type
 		try {
 			mToken = mAccessProvider.getAuthToken(this, null);
-			if (mToken != null) {
+		if (mToken != null) {
 				// read user data
 				UserData data = mAccessProvider.readUserData(this, null);
 				showUserIdFromAccountData(data);
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 
 				});
 				
-			}
+			} 
 		} catch (OperationCanceledException e) {
 			Log.e(TAG, "Login cancelled.");
 			finish();

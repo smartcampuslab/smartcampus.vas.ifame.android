@@ -48,7 +48,7 @@
     <string name="zanella_button">ZANELLA</string>
     <string name="fbk_button">FBK</string>
     <string name="mensa_view">Mensa XXX - 00:00</string>
-    <string name="location_button">Mostra sulla mappa</string>
+    <string name="location_button">Mappa e orari</string>
     <string name="button_1">Button1</string>
     <string name="button_2">Button2</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
