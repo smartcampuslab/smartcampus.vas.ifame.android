@@ -1,12 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_relative_layout_ifame"
     android:layout_width="match_parent"
-    android:padding="5dp"
     android:layout_height="match_parent"
-    tools:context=".IFame_Main_Activity" 
-    android:orientation="vertical">
+    tools:context=".IFame_Main_Activity" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" >
 
         <LinearLayout
+            android:id="@+id/homelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -16,60 +21,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:weightSum="1"
                 android:paddingTop="40dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="15dp" >
+                android:weightSum="1" >
 
                 <Button
                     android:id="@+id/iFretta_button"
+                    style="@style/iFameHomeButton"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.35"
-                    android:background="@drawable/ifretta_red" />
-                
-                <TextView
-                    android:layout_weight="0.15"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content" />
-                
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/ifretta_red"
+                    android:text="@string/iFretta"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
                 <Button
                     android:id="@+id/iDeciso_button"
+                    style="@style/iFameHomeButton"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.50"
-                    android:background="@drawable/ideciso_red" />
-                
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/ideciso_red"
+                    android:text="@string/iDeciso"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:weightSum="1"
                 android:paddingTop="40dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp" >
+                android:weightSum="1" >
 
                 <Button
                     android:id="@+id/iGradito_button"
+                    style="@style/iFameHomeButton"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.35"
-                    android:background="@drawable/igradito_red" />
-                
-                <TextView
-                    android:layout_weight="0.3"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content" />
-		    
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/igradito_red"
+                    android:text="@string/iGradito"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
                 <Button
                     android:id="@+id/iSoldi_button"
+                    style="@style/iFameHomeButton"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.35"
-                    android:background="@drawable/isoldi_red"/>
-
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/isoldi_red"
+                    android:text="@string/iSoldi"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>
