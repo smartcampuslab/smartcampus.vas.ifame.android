@@ -8,46 +8,34 @@
         android:isScrollContainer="true"
         android:padding="10dp" >
 
+        <Spinner
+            android:id="@+id/spinner_settimana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/iDeciso_menu_mese_settimana" />
+
         <TextView
             android:id="@+id/day_of_the_week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="5dp"
-            android:background="#FF0000"
+            android:layout_below="@id/spinner_settimana"
+            android:background="#CC0000"
+            android:paddingLeft="3dp"
             android:text="day"
+            android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
         <ListView
             android:id="@+id/menu_of_the_day"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_below="@id/day_of_the_week"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:focusableInTouchMode="true"
-            android:padding="10dp" >
-        </ListView>
-
-        <TextView
-            android:id="@+id/next_day_of_the_week"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/menu_of_the_day"
-            android:layout_marginTop="5dp"
-            android:background="#FF0000"
-            android:text="day"
-            android:textSize="20sp" />
-
-        <ListView
-            android:id="@+id/menu_of_the_next_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/next_day_of_the_week"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:focusableInTouchMode="true" >
+            android:scrollbars="none" >
         </ListView>
     </RelativeLayout>
 

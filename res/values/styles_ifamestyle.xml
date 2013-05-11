@@ -31,8 +31,10 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_ifamestyle</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Ifamestyle</item>
 
+
         <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.Ifamestyle.Widget</item>
+        
     </style>
 
     <style name="ActionBar.Solid.Ifamestyle" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
@@ -40,6 +42,7 @@
         <item name="backgroundStacked">@drawable/ab_stacked_solid_ifamestyle</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_ifamestyle</item>
         <item name="progressBarStyle">@style/ProgressBar.Ifamestyle</item>
+        
     </style>
 
     <style name="ActionBar.Transparent.Ifamestyle" parent="@style/Widget.Sherlock.ActionBar">
@@ -56,6 +59,7 @@
     </style>
 
     <style name="ActionBarTabStyle.Ifamestyle" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="background">@drawable/tab_indicator_ab_ifamestyle</item>
         <item name="android:background">@drawable/tab_indicator_ab_ifamestyle</item>
     </style>
 
@@ -77,6 +81,7 @@
     <style name="Theme.Ifamestyle.Widget" parent="@style/Theme.Sherlock">
         <item name="popupMenuStyle">@style/PopupMenu.Ifamestyle</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Ifamestyle</item>
+
     </style>
 
     <style name="iFameHomeButton" parent="android:Widget.Button">

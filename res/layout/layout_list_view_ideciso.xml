@@ -4,5 +4,5 @@
 		android:layout_margin="5dp"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textSize="20sp"
+		android:textAppearance="?android:attr/textAppearanceMedium" 
 		android:drawableRight="@drawable/arrow_dark" />

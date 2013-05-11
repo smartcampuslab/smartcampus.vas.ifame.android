@@ -3,16 +3,29 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
+import eu.trentorise.smartcampus.ifame.model.Settimana;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Menu_mese extends Activity {
+
+	private List<Settimana> settimana = new ArrayList<Settimana>();
+	private Spinner weekSpinner;
+	private ArrayAdapter<Settimana> weekAdapter;
+	private Settimana selectedSettimana;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,30 +57,20 @@ public class Menu_mese extends Activity {
 				layout.layout_list_view, lista_cibi_day);
 		listacibiday.setAdapter(adapter_cibi_day);
 
-		// Menu del giorno seguente
+		ListAdapter listAdapterCibi = listacibiday.getAdapter();
 
-		final TextView dateplus = (TextView) findViewById(R.id.next_day_of_the_week);
+		int rowsCibi = listAdapterCibi.getCount();
+		int heightCibi = 60 * rowsCibi;
+		ViewGroup.LayoutParams paramsCibi = listacibiday.getLayoutParams();
+		paramsCibi.height = heightCibi;
+		listacibiday.setLayoutParams(paramsCibi);
+		listacibiday.requestLayout();
 
-		SimpleDateFormat sdn = new SimpleDateFormat("EEEE dd MMMM yyyy");
-		String next_day_week = sdn.format(new Date());
-		dateplus.setText(next_day_week);
+	}
 
-		// riempio la ListView con i cibi
-
-		String[] cibi_dayplus = { "Pasta Bella Napoli", "Risotto agli aromi",
-				"Chicche di patate", "Bistecca di vitello",
-				"Branzino ai ferri", "Pizza", "Bastoncini di pesce",
-				"Finocchi", "Spinaci", "Cavolfiori" };
-
-		final ArrayList<String> lista_cibi_dayplus = new ArrayList<String>();
-		for (int i = 0; i < cibi_dayplus.length; ++i) {
-			lista_cibi_dayplus.add(cibi_dayplus[i]);
-		}
-		ListView listacibidayplus = (ListView) findViewById(R.id.menu_of_the_next_day);
-
-		final MyArrayAdapter adapter_cibi_dayplus = new MyArrayAdapter(this,
-				layout.layout_list_view, lista_cibi_dayplus);
-		listacibidayplus.setAdapter(adapter_cibi_dayplus);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.layout_menu_mese, container, false);
 	}
 
 	@Override
@@ -75,6 +78,17 @@ public class Menu_mese extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_mese, menu);
 		return true;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		weekSpinner = (Spinner) findViewById(R.id.spinner_settimana);
+		weekAdapter = new ArrayAdapter<Settimana>(this,
+				android.R.layout.simple_spinner_dropdown_item, settimana);
+		weekSpinner.setAdapter(weekAdapter);
+
 	}
 
 }

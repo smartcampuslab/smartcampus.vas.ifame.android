@@ -32,7 +32,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ifretta_red"
                     android:text="@string/iFretta"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
                     android:id="@+id/iDeciso_button"
@@ -42,7 +42,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ideciso_red"
                     android:text="@string/iDeciso"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
             <LinearLayout
@@ -60,7 +60,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/igradito_red"
                     android:text="@string/iGradito"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
                     android:id="@+id/iSoldi_button"
@@ -70,7 +70,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/isoldi_red"
                     android:text="@string/iSoldi"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
