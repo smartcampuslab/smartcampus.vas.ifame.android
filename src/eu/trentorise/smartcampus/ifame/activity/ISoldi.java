@@ -15,9 +15,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
@@ -33,8 +35,8 @@ public class ISoldi extends Activity {
 	ArrayList<String> acquisti_possibili;
 	Long transaction_time;
 	String transaction_value;
-	ArrayList<Long> t_list;
-	ArrayList<String> v_list;
+	public ArrayList<Long> t_list;
+	public ArrayList<String> v_list;
 	private ArrayAdapter<String> adapter;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +86,13 @@ public class ISoldi extends Activity {
 				getAmount(0);
 			} else {
 				getAmount(Float.parseFloat(saldoReturn.getCredit()));
-				
+
 				ListAdapter listAdapter = isoldi_listview.getAdapter();
 
 				int rows = listAdapter.getCount();
 				int height = 70 * rows;
-				ViewGroup.LayoutParams params = isoldi_listview.getLayoutParams();
+				ViewGroup.LayoutParams params = isoldi_listview
+						.getLayoutParams();
 				params.height = height;
 				isoldi_listview.setLayoutParams(params);
 				isoldi_listview.requestLayout();
@@ -128,21 +131,26 @@ public class ISoldi extends Activity {
 				 * lt.setAdapter(adapter);
 				 */
 
-				Intent intent = new Intent(ISoldi.this, Stats_Activity.class);
-				intent.putExtra("values", v_list.toArray());
-				intent.putExtra("time_value", t_list.toArray());
-				startActivity(intent);
+//non ci serve più un'altra Activity per le statistiche!
+				
+				// Intent intent = new Intent(ISoldi.this,
+				// Stats_Activity.class);
+				// intent.putExtra("values", v_list.toArray());
+				// intent.putExtra("time_value", t_list.toArray());
+				// startActivity(intent);
+				showUserStats();
+
 			}
 		});
 	}
 
 	public void getAmount(float amount) {
 		if (amount >= 4.90) {
-			centerText.setText("E " + String.valueOf(amount));
+			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
-			bottomText.setText("Puoi acquistare:  ");
-			bottomText.setTextColor(Color.parseColor("#228B22"));
+			bottomText.setText("Puoi acquistare:");
+			stats_button.setBackgroundColor(Color.parseColor("#228B22"));
 
 			acquisti_possibili.add("Intero");
 			acquisti_possibili.add("Ridotto");
@@ -150,32 +158,64 @@ public class ISoldi extends Activity {
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 4.20 && amount < 4.90) {
-			centerText.setText("E " + String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#D2691E"));
+			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setTextColor(Color.parseColor("#FFD700"));
 
-			bottomText.setText("Puoi acquistare:  ");
-			bottomText.setTextColor(Color.parseColor("#D2691E"));
+			bottomText.setText("Puoi acquistare:");
+			stats_button.setBackgroundColor(Color.parseColor("#FFD700"));
 
 			acquisti_possibili.add("Ridotto");
 			acquisti_possibili.add("Snack");
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 2.90 && amount < 4.20) {
-			centerText.setText("E " + String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#D2691E"));
+			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setTextColor(Color.parseColor("#FF8800"));
 
-			bottomText.setText("Puoi acquistare: ");
-			bottomText.setTextColor(Color.parseColor("#D2691E"));
+			bottomText.setText("Puoi acquistare:");
+			stats_button.setBackgroundColor(Color.parseColor("#FF8800"));
 
 			acquisti_possibili.add("Snack");
 			adapter.notifyDataSetChanged();
 		} else {
-			centerText.setText("E " + String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#FF0000"));
+			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setTextColor(Color.parseColor("#CC0000"));
 
 			bottomText.setText("Devi ricaricare!");
-			bottomText.setTextColor(Color.parseColor("#FF0000"));
+			bottomText.setTextSize(25);
+			bottomText.setTextColor(Color.parseColor("#CC0000"));
+
+			stats_button.setBackgroundColor(Color.parseColor("#CC0000"));
 
 		}
 	}
+
+	public void showUserStats() {
+
+		final View userStatsLayout = (View) findViewById(R.id.user_stats);
+
+		ToggleButton showUserStats_button = (ToggleButton) findViewById(R.id.isoldi_statistics_button);
+		
+		if (showUserStats_button.isChecked()) {
+			userStatsLayout.setVisibility(View.VISIBLE);
+
+		} else {
+			userStatsLayout.setVisibility(View.GONE);
+		}
+
+		showUserStats_button
+				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked) {
+							userStatsLayout.setVisibility(View.VISIBLE);
+
+						} else {
+							userStatsLayout.setVisibility(View.GONE);
+						}
+					}
+				});
+	}
+
 }
