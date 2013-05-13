@@ -73,15 +73,6 @@ public class IFretta extends Activity {
 
 		ifretta_listView.setAdapter(adapter);
 		
-		
-
-		int rows = adapter.getCount();
-		int height = 60 * rows;
-		ViewGroup.LayoutParams params = ifretta_listView.getLayoutParams();
-		params.height = height;
-		ifretta_listView.setLayoutParams(params);
-		ifretta_listView.requestLayout();
-
 		/*
 		 * mensa_list = new ArrayList<WebcamMensa>();
 		 * 
