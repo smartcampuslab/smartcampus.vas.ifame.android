@@ -36,7 +36,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:logo="@drawable/ifame_logo" 
-        android:label="@string/app_name"
+        android:label="@string/title_activity_ifame__main_"
         android:theme="@style/Theme.Ifamestyle"  >
         <meta-data
             android:name="SHARED_PACKAGE"
@@ -49,8 +49,8 @@
             android:value="SmartCampus Android Template" />
 
         <activity
-            android:name="eu.trentorise.smartcampus.template.MainActivity"
-            android:label="@string/app_name" >
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFame_Main_Activity"
+            android:label="@string/title_activity_ifame__main_" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -95,10 +95,6 @@
         <activity
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticatorActivity"
             android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.IFame_Main_Activity"
-            android:label="@string/title_activity_ifame__main_" >
-        </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta"
             android:label="@string/title_activity_ifretta" >

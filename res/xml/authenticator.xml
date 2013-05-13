@@ -17,5 +17,5 @@
     android:accountType="eu.trentorise.smartcampus.ifame"
     android:icon="@drawable/ic_launcher"
     android:smallIcon="@drawable/ic_launcher"
-    android:label="@string/app_name"
+    android:label="@string/title_activity_ifame__main_"
  />
