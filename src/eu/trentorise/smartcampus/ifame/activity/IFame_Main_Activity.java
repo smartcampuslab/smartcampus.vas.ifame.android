@@ -45,6 +45,7 @@ public class IFame_Main_Activity extends Activity {
 	 * token
 	 */
 	private SCAccessProvider mAccessProvider = null;
+	
 	/** Access token for the application user */
 	private String mToken = null;
 
