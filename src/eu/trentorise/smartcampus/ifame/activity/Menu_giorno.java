@@ -26,7 +26,7 @@ import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
 
 public class Menu_giorno extends Activity {
-	
+	//
 	private String selectedDish;
 
 	protected void onCreate(Bundle savedInstanceState) {
