@@ -11,37 +11,53 @@ public class MostraMenuComposto extends Activity {
 
 	private boolean isPrimoPiatto;
 	private boolean isSecondoPiatto;
-	private boolean isContornoCaldo;
-	private boolean isContornoFreddo;
+	private boolean isContorno1;
+	private boolean isContorno2;
 	private boolean isDessert;
-	private boolean isPane;
+	private boolean isPanino;
 	private boolean isInsalatona;
-	
+	private boolean isPizza;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_mostra_menu_composto);
-		
-		Bundle datas = getIntent().getExtras();
-		
+
+		Bundle datas  = getIntent().getExtras();
+
+/*
 		isPrimoPiatto = datas.getBoolean("isPrimoPiatto");
 		isSecondoPiatto = datas.getBoolean("isSecondoPiatto");
-		isContornoCaldo = datas.getBoolean("isContornoCaldo");
-		isContornoFreddo = datas.getBoolean("isContornoFreddo");
+		isContorno1 = datas.getBoolean("isContornoCaldo");
+		isContorno2 = datas.getBoolean("isContornoFreddo");
 		isDessert = datas.getBoolean("isDessert");
-		isPane = datas.getBoolean("isPane");
+		isPanino = datas.getBoolean("isPanino");
 		isInsalatona = datas.getBoolean("isInsalatona");
+		isPizza = datas.getBoolean("isPizza");
+	
+*/
+		isPrimoPiatto = datas.getBoolean("isPrimoPiatto");
+		isSecondoPiatto = datas.getBoolean("isSecondoPiatto");
+		isContorno1 = datas.getBoolean("isContorno1");
+		isContorno2 = datas.getBoolean("isContorno2");
+		isDessert = datas.getBoolean("isDessert");
+		isPanino = datas.getBoolean("isPanino");
+		isInsalatona = datas.getBoolean("isInsalatona");
+		isPizza = datas.getBoolean("isPizza");
 		
-		TextView tv = (TextView)findViewById(R.id.textview);
-		tv.setText("L'utente ha selezionato: \n" +
-				"Primo piatto: " + isPrimoPiatto + "\n" +
-				"Secondo piatto: " + isSecondoPiatto + "\n" +
-				"Insalatona: " + isInsalatona + "\n" +
-				"Contorno Caldo: " + isContornoCaldo + "\n" +
-				"Contorno Freddo: " + isContornoFreddo + "\n" +
-				"Dessert: " + isDessert + "\n" +
-				"Pane: "+ isPane);
 		
+		
+		TextView tv = (TextView) findViewById(R.id.textview);
+		tv.setText("Il menu selezionato è: " + Fai_il_tuo_menu.menu + "" +
+				"\n Primo: " + isPrimoPiatto+
+				"\n Secondo:" +isSecondoPiatto +
+				"\n Contorno1: " +isContorno1 +
+				"\n Contorno2: " + isContorno2+
+				"\n Dessert:" + isDessert+
+				"\n Panino: " + isPanino+
+				"\n Insalatona: " +isInsalatona +
+				"\n Pizza: "+isPizza);
+
 	}
 
 	@Override
