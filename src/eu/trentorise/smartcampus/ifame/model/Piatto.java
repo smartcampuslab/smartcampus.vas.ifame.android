@@ -53,9 +53,4 @@ public class Piatto {
 		this.piatto_ingredients = piatto_ingredients;
 	}
 
-	@Override
-	public String toString() {
-		return  piatto_name ;
-	}
-
 }

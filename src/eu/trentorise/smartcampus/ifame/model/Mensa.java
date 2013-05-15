@@ -1,6 +1,5 @@
 package eu.trentorise.smartcampus.ifame.model;
 
-
 public class Mensa {
 
 	private Long mensa_id;
