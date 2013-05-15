@@ -36,7 +36,7 @@ public class IFretta extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta);
 
-		pd = new ProgressDialog(IFretta.this).show(IFretta.this, "Mense",
+		pd = new ProgressDialog(IFretta.this).show(IFretta.this, "iFretta",
 				"Loading...");
 
 		new IFrettaConnector(getApplicationContext()).execute();
