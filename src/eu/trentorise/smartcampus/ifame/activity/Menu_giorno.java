@@ -3,35 +3,131 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
+import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
+import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
+import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
+import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
+import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
+import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class Menu_giorno extends Activity {
-	//
+
 	private String selectedDish;
+	View view; 
+	ProgressDialog pd;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_menu_giorno);
+		
+		new ProgressDialog(Menu_giorno.this);
+		//Dont show anything until the data is loaded
+		pd = ProgressDialog.show(Menu_giorno.this, "Loading... ",
+				"please wait...");
+		view = findViewById(R.id.menu_del_giorno_view);
+		view.setVisibility(View.GONE);
+
+		new IDecisoConnector(Menu_giorno.this).execute();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_giorno, menu);
+		return true;
+	}
+
+	private class StartWebSearchAlertDialog extends DialogFragment {
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			builder.setMessage(
+					getString(R.string.GoogleSearchAlertText) + " "
+							+ selectedDish + "?")
+					.setPositiveButton(
+							getString(R.string.GoogleSearchAlertAccept),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+
+									Intent intent = new Intent(
+											Intent.ACTION_WEB_SEARCH);
+									intent.putExtra(SearchManager.QUERY,
+											selectedDish); // query contains
+									// search string
+									startActivity(intent);
+
+								}
+							})
+					.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+								}
+							});
+			// Create the AlertDialog object and return it
+			return builder.create();
+
+		}
+	}
+
+	public void createMenuDelGiorno(MenuDelGiorno menuDelGiorno) {
+
+		List<String> lista_primi = new ArrayList<String>();
+		List<String> lista_secondi = new ArrayList<String>();
+		List<String> lista_contorni = new ArrayList<String>();
+
+		List<PiattoKcal> piattiList = menuDelGiorno.getPiattiDelGiorno();
+		Iterator<PiattoKcal> iter = piattiList.iterator();
+
+		int counter = 0;
+		while (iter.hasNext()) {
+			//row one to three are the "primi piatti"
+			PiattoKcal piatto = (PiattoKcal) iter.next();
+			if (counter < 3) {
+				lista_primi.add(piatto.getPiatto());
+			} else if (counter >= 3 && counter < 5) { //row 3 to 5 are the "secondi"
+				lista_secondi.add(piatto.getPiatto());
+			} else {
+				lista_contorni.add(piatto.getPiatto()); //remaining rows are the "contorni"
+			}
+			counter++;
+		}
 
 		final TextView date = (TextView) findViewById(R.id.date_daily_menu);
 
@@ -51,14 +147,6 @@ public class Menu_giorno extends Activity {
 
 		});
 
-		// riempio la ListView per i primi piatti
-
-		String[] primi = { "Pasta A.O.P.", "Pasta al ragu", "Risotto ai funghi" };
-
-		final ArrayList<String> lista_primi = new ArrayList<String>();
-		for (int i = 0; i < primi.length; ++i) {
-			lista_primi.add(primi[i]);
-		}
 		ListView listaprimi = (ListView) findViewById(R.id.list_view_primi);
 		listaprimi.setOnItemClickListener(new OnItemClickListener() {
 
@@ -67,42 +155,29 @@ public class Menu_giorno extends Activity {
 					int position, long arg3) {
 				selectedDish = (String) parent.getItemAtPosition(position);
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-				
 
 				dialog.show(getFragmentManager(), null);
 
 			}
 		});
 
-		final MyArrayAdapter adapter_primi = new MyArrayAdapter(this,
+		ArrayAdapter<String> adapter_primi = new ArrayAdapter<String>(Menu_giorno.this,
 				layout.layout_list_view, lista_primi);
 		listaprimi.setAdapter(adapter_primi);
 
-		// riempio la ListView per i secondi piatti
+		// lista_secondi = new ArrayList<String>();
 
-		String[] secondi = { "Scaloppine al limone", "Ossobuco alla romana" };
-
-		final ArrayList<String> lista_secondi = new ArrayList<String>();
-		for (int i = 0; i < secondi.length; ++i) {
-			lista_secondi.add(secondi[i]);
-		}
 		ListView listasecondi = (ListView) findViewById(R.id.list_view_secondi);
 
-		final MyArrayAdapter adapter_secondi = new MyArrayAdapter(this,
+		ArrayAdapter<String> adapter_secondi = new ArrayAdapter<String>(Menu_giorno.this,
 				layout.layout_list_view, lista_secondi);
 		listasecondi.setAdapter(adapter_secondi);
 
-		// riempio la ListView per i contorni caldi
+		// lista_contorni = new ArrayList<String>();
 
-		String[] contorni = { "Fagioli", "Patatine fritte", "Carote" };
-
-		final ArrayList<String> lista_contorni = new ArrayList<String>();
-		for (int i = 0; i < contorni.length; ++i) {
-			lista_contorni.add(contorni[i]);
-		}
 		ListView listacontorni = (ListView) findViewById(R.id.list_view_contorni);
 
-		final MyArrayAdapter adapter_contorni = new MyArrayAdapter(this,
+		ArrayAdapter<String> adapter_contorni = new ArrayAdapter<String>(Menu_giorno.this,
 				layout.layout_list_view, lista_contorni);
 		listacontorni.setAdapter(adapter_contorni);
 		listasecondi.setOnItemClickListener(new OnItemClickListener() {
@@ -112,13 +187,11 @@ public class Menu_giorno extends Activity {
 					int position, long arg3) {
 				selectedDish = (String) parent.getItemAtPosition(position);
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-				
 
 				dialog.show(getFragmentManager(), null);
 
 			}
 		});
-
 
 		// RISOLUZIONE PROBLEMA LISTVIEW IN SCROLLCONTAINER
 
@@ -159,51 +232,114 @@ public class Menu_giorno extends Activity {
 					int position, long arg3) {
 				selectedDish = (String) parent.getItemAtPosition(position);
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-				
 
 				dialog.show(getFragmentManager(), null);
 
 			}
 		});
-
-
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_giorno, menu);
-		return true;
-	}
+	private class IDecisoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
 
-	public class StartWebSearchAlertDialog extends DialogFragment {
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			
-			
-			
-			builder.setMessage(getString(R.string.GoogleSearchAlertText) +" "+ selectedDish +"?")
-            .setPositiveButton(getString(R.string.GoogleSearchAlertAccept), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-    				
-                	Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-    				intent.putExtra(SearchManager.QUERY, selectedDish); // query contains
-    																// search string
-    				startActivity(intent);
-                    
-                }
-            })
-            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User cancelled the dialog
-                }
-            });
-     // Create the AlertDialog object and return it
-     return builder.create();
+		private ProtocolCarrier mProtocolCarrier;
+		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
+		private static final String auth_token = "AUTH_TOKEN";
+		private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		public Context context;
+		public String appToken = "test smartcampus";
+		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
-			
+		public IDecisoConnector(Context applicationContext) {
+			context = applicationContext;
 		}
+
+		private MenuDelGiorno getMenuDelGiorno() {
+			// try {
+
+			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+
+			MessageRequest request = new MessageRequest(
+					"http://smartcampuswebifame.app.smartcampuslab.it",
+					"getmenudelgiorno");
+			request.setMethod(Method.GET);
+
+			MessageResponse response;
+			try {
+				response = mProtocolCarrier.invokeSync(request, appToken,
+						authToken);
+
+				if (response.getHttpStatus() == 200) {
+
+					String body = response.getBody();
+
+					MenuDelGiorno mdg = Utils.convertJSONToObject(body,
+							MenuDelGiorno.class);
+
+					return mdg;
+
+				} else {
+
+				}
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+
+		}
+
+		@Override
+		protected MenuDelGiorno doInBackground(Void... params) {
+			return getMenuDelGiorno();
+		}
+
+		@Override
+		protected void onPostExecute(MenuDelGiorno result) {
+			super.onPostExecute(result);
+			createMenuDelGiorno(result);
+			//Make data visible after it has been fetched and dismiss the dialog loader
+			view.setVisibility(View.VISIBLE);
+			pd.dismiss(); 
+		}
+
 	}
 
+	/*
+	 * To be completed... 
+	 */
+//	private class MenuGiornoAdapter extends ArrayAdapter<PiattoKcal> {
+//
+//		public MenuGiornoAdapter(Context context, int textViewResourceId,
+//				List<PiattoKcal> objects) {
+//			super(context, textViewResourceId, objects);
+//			// TODO Auto-generated constructor stub
+//		}
+//
+//		@Override
+//		public View getView(int position, View convertView, ViewGroup parent) {
+//			LayoutInflater inflater = (LayoutInflater) getContext()
+//					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//			convertView = inflater.inflate(R.layout.mensa_text, null);
+//
+//			TextView nome_piatto_del_giorno = (TextView) convertView
+//					.findViewById(R.id.menu_name_adapter);
+//			TextView kcal_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu_kcal_adapter);
+//			
+//			PiattoKcal piattoDelGiorno = getItem(position);
+//
+//			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto() + " ");
+//			
+//			kcal_piatto_del_giorno.setText(piattoDelGiorno.getKcal() + " ");
+//
+//			return convertView;
+//		}
+//
+//	}
 }
