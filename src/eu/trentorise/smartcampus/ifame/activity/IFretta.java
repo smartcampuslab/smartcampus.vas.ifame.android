@@ -39,7 +39,7 @@ public class IFretta extends Activity {
 		pd = new ProgressDialog(IFretta.this).show(IFretta.this, "iFretta",
 				"Loading...");
 
-		new IFrettaConnector(getApplicationContext()).execute();
+		new IFrettaConnector(IFretta.this).execute();
 	}
 
 	/*

@@ -6,13 +6,13 @@ import java.util.List;
 
 public class MenuDelGiorno {
 
-	private List<PiattoKcal> piattiDelGiorno;
+	private static List<PiattoKcal> piattiDelGiorno;
 	private int day;
 
 	public MenuDelGiorno() {
 	}
 
-	public List<PiattoKcal> getPiattiDelGiorno() {
+	public static List<PiattoKcal> getPiattiDelGiorno() {
 		return piattiDelGiorno;
 	}
 

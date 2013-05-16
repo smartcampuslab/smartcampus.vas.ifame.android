@@ -2,6 +2,7 @@ package eu.trentorise.smartcampus.ifame.model;
 
 public class PiattoKcal {
 
+	
 	private String piatto;
 	private String kcal;
 
@@ -27,6 +28,6 @@ public class PiattoKcal {
 
 	public void setKcal(String kcal) {
 		this.kcal = kcal;
-	}
+	}	
 
 }
