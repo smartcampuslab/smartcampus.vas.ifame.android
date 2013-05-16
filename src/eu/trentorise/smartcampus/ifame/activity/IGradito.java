@@ -11,19 +11,25 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.R.layout;
+import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.PiattiList;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -47,30 +53,6 @@ public class IGradito extends Activity {
 
 		list_view = (ListView) findViewById(R.id.list_view_igradito);
 
-		/*
-		 * 
-		 * 
-		 * 
-		 * SOLO PER VEDERE GLI INGREDIENTI FAKE IN UN TOAST
-		 */
-		list_view.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				Piatto p = (Piatto) adapter.getItemAtPosition(position);
-
-				String ingredients = "Ingredienti: ";
-
-				for (int i = 0; i < p.getPiatto_ingredients().length; i++) {
-					ingredients += p.getPiatto_ingredients()[i] + " ";
-				}
-				ingredients += "!";
-				Toast.makeText(IGradito.this, ingredients, Toast.LENGTH_LONG)
-						.show();
-			}
-		});
-
 		new IGraditoConnector(IGradito.this).execute();
 	}
 
@@ -87,12 +69,16 @@ public class IGradito extends Activity {
 	 * 
 	 * 
 	 * 
-	 * CONNECTOR TO GETALLPIATTI WEB SERVICE
+	 * CONNECTOR TO GETMENUDELGIORNO WEB SERVICE
 	 */
 
-	public class IGraditoConnector extends AsyncTask<Void, Void, PiattiList> {
+	private class IGraditoConnector extends
+			AsyncTask<Void, Void, MenuDelGiorno> {
 
 		private ProtocolCarrier mProtocolCarrier;
+		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
+		private static final String auth_token = "AUTH_TOKEN";
+		private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
@@ -101,21 +87,32 @@ public class IGradito extends Activity {
 			context = applicationContext;
 		}
 
-		private PiattiList getPiatti() {
+		private MenuDelGiorno getMenuDelGiorno() {
+			// try {
+
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getallpiatti");
+					"getmenudelgiorno");
 			request.setMethod(Method.GET);
+
 			MessageResponse response;
 			try {
 				response = mProtocolCarrier.invokeSync(request, appToken,
 						authToken);
+
 				if (response.getHttpStatus() == 200) {
+
 					String body = response.getBody();
-					PiattiList pl = Utils.convertJSONToObject(body,
-							PiattiList.class);
-					return pl;
+
+					MenuDelGiorno mdg = Utils.convertJSONToObject(body,
+							MenuDelGiorno.class);
+
+					return mdg;
+
+				} else {
+
 				}
 			} catch (ConnectionException e) {
 				// TODO Auto-generated catch block
@@ -128,50 +125,56 @@ public class IGradito extends Activity {
 				e.printStackTrace();
 			}
 			return null;
+
 		}
 
 		@Override
-		protected PiattiList doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getPiatti();
+		protected MenuDelGiorno doInBackground(Void... params) {
+			return getMenuDelGiorno();
 		}
 
 		@Override
-		protected void onPostExecute(PiattiList result) {
+		protected void onPostExecute(MenuDelGiorno result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 
-			Adapter a = new ArrayAdapter(IGradito.this,
-					android.R.layout.simple_list_item_1, result.getPiatti());
+			ListAdapter a = new MyArrayAdapter(IGradito.this,
+					android.R.layout.simple_list_item_1,
+					result.getPiattiDelGiorno());
 
-			list_view.setAdapter((ListAdapter) a);
+			list_view.setAdapter(a);
 			pd.dismiss();
 		}
 
 	}
-}
 
-class MyArrayAdapter extends ArrayAdapter<String> {
+	private class MyArrayAdapter extends ArrayAdapter<PiattoKcal> {
 
-	HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+		public MyArrayAdapter(Context context, int textViewResourceId,
+				List<PiattoKcal> objects) {
+			super(context, textViewResourceId, objects);
+		}
 
-	public MyArrayAdapter(Context context, int textViewResourceId,
-			List<String> objects) {
-		super(context, textViewResourceId, objects);
-		for (int i = 0; i < objects.size(); ++i) {
-			mIdMap.put(objects.get(i), i);
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			convertView = inflater
+					.inflate(layout.layout_row_menu_adapter, null);
+
+			PiattoKcal p = getItem(position);
+
+			TextView name = (TextView) convertView
+					.findViewById(R.id.menu_name_adapter);
+			TextView kcal = (TextView) convertView
+					.findViewById(R.id.menu_kcal_adapter);
+
+			name.setText(p.getPiatto());
+			kcal.setText("");
+
+			return convertView;
 		}
 	}
-
-	@Override
-	public long getItemId(int position) {
-		String item = getItem(position);
-		return mIdMap.get(item);
-	}
-
-	@Override
-	public boolean hasStableIds() {
-		return true;
-	}
-
 }

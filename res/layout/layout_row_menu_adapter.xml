@@ -12,7 +12,7 @@
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_weight="1"
         android:gravity="left|center_vertical"
-        android:text="nomepiatto"
+        android:text="nome piatto"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView

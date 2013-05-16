@@ -3,18 +3,28 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
-import eu.trentorise.smartcampus.ifame.model.PiattiList;
 import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
-import eu.trentorise.smartcampus.ifame.model.Settimana;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -22,22 +32,6 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class Menu_mese extends Activity {
 
@@ -79,30 +73,20 @@ public class Menu_mese extends Activity {
 		}
 
 		private MenuDellaSettimana getMenuDellaSettimana() {
-
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
-
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
 					"getmenudellasettimana");
 			request.setMethod(Method.GET);
-
 			MessageResponse response;
 			try {
 				response = mProtocolCarrier.invokeSync(request, appToken,
 						authToken);
-
 				if (response.getHttpStatus() == 200) {
-
 					String body = response.getBody();
-
 					MenuDellaSettimana mds = Utils.convertJSONToObject(body,
 							MenuDellaSettimana.class);
-
 					return mds;
-
-				} else {
-
 				}
 			} catch (ConnectionException e) {
 				// TODO Auto-generated catch block
@@ -115,13 +99,11 @@ public class Menu_mese extends Activity {
 				e.printStackTrace();
 			}
 			return null;
-
 		}
 
 		@Override
 		protected MenuDellaSettimana doInBackground(Void... params) {
 			// TODO Auto-generated method stub
-
 			return getMenuDellaSettimana();
 		}
 
@@ -147,13 +129,7 @@ public class Menu_mese extends Activity {
 				adapter.addAll(m.getPiattiDelGiorno());
 			}
 
-			// TextView tw = new TextView(Menu_mese.this);
-			// tw.setText("PROVA HEADER");
-			// tw.setBackgroundColor(Color.BLUE);
-			// listacibi_view.addHeaderView(tw);
-
 			listacibi_view.setAdapter(adapter);
-
 			// chiudo il loading...
 			pd.dismiss();
 		}
@@ -204,7 +180,6 @@ public class Menu_mese extends Activity {
 				name.setText(p.getPiatto());
 				kcal.setText(p.getKcal());
 			}
-
 			return convertView;
 		}
 	}
