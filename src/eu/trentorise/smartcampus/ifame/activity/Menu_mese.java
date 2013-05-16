@@ -3,10 +3,14 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
+import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
+import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
+import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
 import eu.trentorise.smartcampus.ifame.model.Settimana;
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,7 +26,7 @@ import android.widget.TextView;
 
 public class Menu_mese extends Activity {
 
-	private List<Settimana> settimana = new ArrayList<Settimana>();
+	
 	private Spinner weekSpinner;
 	private ArrayAdapter<Settimana> weekAdapter;
 	private Settimana selectedSettimana;
@@ -32,29 +36,36 @@ public class Menu_mese extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_menu_mese);
 
-		// Menu del giorno corrente
+	}
 
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.layout_menu_mese, container, false);
+	}
+	
+	/*
+	public void createMenuOfTheWeek(MenuDellaSettimana menuDellaSettimana){
+		List<List<String>> menu_settimana = new ArrayList<List<String>>();
+		
+		List<PiattoKcal> piatti_del_giorno = MenuDelGiorno.getPiattiDelGiorno();
+		List<MenuDelGiorno> menu_giorno = menuDellaSettimana.getMenuDellaSettimana();
+		Iterator<MenuDelGiorno> iter = menu_giorno.iterator(); 
+		Iterator<PiattoKcal> iter1 = piatti_del_giorno.iterator();
+		
+		while(iter.hasNext()){
+			
+		}
+		
 		final TextView date = (TextView) findViewById(R.id.day_of_the_week);
 
 		SimpleDateFormat sd = new SimpleDateFormat("EEEE dd MMMM yyyy");
 		String day_week = sd.format(new Date());
 		date.setText(day_week);
-
-		// riempio la ListView con i cibi
-
-		String[] cibi_day = { "Pasta Aglio olio e peperoncino",
-				"Pasta al ragu", "Risotto ai funghi", "Scaloppine al limone",
-				"Stinco con Patate", "Anatre all'arancia",
-				"Ossobuco alla romana", "Fagioli", "Patatine fritte", "Carote" };
-
-		final ArrayList<String> lista_cibi_day = new ArrayList<String>();
-		for (int i = 0; i < cibi_day.length; ++i) {
-			lista_cibi_day.add(cibi_day[i]);
-		}
+		
 		ListView listacibiday = (ListView) findViewById(R.id.menu_of_the_day);
 
-		final MyArrayAdapter adapter_cibi_day = new MyArrayAdapter(this,
-				layout.layout_list_view, lista_cibi_day);
+		 ArrayAdapter<String> adapter_cibi_day = new ArrayAdapter<String>(this,
+				layout.layout_list_view, menu_settimana);
 		listacibiday.setAdapter(adapter_cibi_day);
 
 		ListAdapter listAdapterCibi = listacibiday.getAdapter();
@@ -65,13 +76,8 @@ public class Menu_mese extends Activity {
 		paramsCibi.height = heightCibi;
 		listacibiday.setLayoutParams(paramsCibi);
 		listacibiday.requestLayout();
-
 	}
-
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.layout_menu_mese, container, false);
-	}
+	*/
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,15 +86,15 @@ public class Menu_mese extends Activity {
 		return true;
 	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-
-		weekSpinner = (Spinner) findViewById(R.id.spinner_settimana);
-		weekAdapter = new ArrayAdapter<Settimana>(this,
-				android.R.layout.simple_spinner_dropdown_item, settimana);
-		weekSpinner.setAdapter(weekAdapter);
-
-	}
+//	@Override
+//	public void onStart() {
+//		super.onStart();
+//
+//		weekSpinner = (Spinner) findViewById(R.id.spinner_settimana);
+//		weekAdapter = new ArrayAdapter<Settimana>(this,
+//				android.R.layout.simple_spinner_dropdown_item, settimana);
+//		weekSpinner.setAdapter(weekAdapter);
+//
+//	}
 
 }
