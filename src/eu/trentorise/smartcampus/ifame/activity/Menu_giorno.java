@@ -34,6 +34,7 @@ import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -108,24 +109,23 @@ public class Menu_giorno extends Activity {
 
 	public void createMenuDelGiorno(MenuDelGiorno menuDelGiorno) {
 
-		List<String> lista_primi = new ArrayList<String>();
-		List<String> lista_secondi = new ArrayList<String>();
-		List<String> lista_contorni = new ArrayList<String>();
+		ListView lista_piatti_view = (ListView) findViewById(R.id.lista_piatti);
+		List<PiattoKcal> lista_piatti = new ArrayList<PiattoKcal>();
 
 		List<PiattoKcal> piattiList = menuDelGiorno.getPiattiDelGiorno();
 		Iterator<PiattoKcal> iter = piattiList.iterator();
 
 		int counter = 0;
 		while (iter.hasNext()) {
-			//row one to three are the "primi piatti"
-			PiattoKcal piatto = (PiattoKcal) iter.next();
-			if (counter < 3) {
-				lista_primi.add(piatto.getPiatto());
-			} else if (counter >= 3 && counter < 5) { //row 3 to 5 are the "secondi"
-				lista_secondi.add(piatto.getPiatto());
-			} else {
-				lista_contorni.add(piatto.getPiatto()); //remaining rows are the "contorni"
-			}
+			TextView txt = new TextView(this); 
+			txt.setText("Primi Piatti"); 
+			//txt.setTextColor("");
+			///lista_piatti_view.addHeaderView();
+			PiattoKcal piatto = iter.next();
+			lista_piatti.add(piatto);
+//			if(null){
+//				
+//			}
 			counter++;
 		}
 
@@ -147,40 +147,11 @@ public class Menu_giorno extends Activity {
 
 		});
 
-		ListView listaprimi = (ListView) findViewById(R.id.list_view_primi);
-		listaprimi.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View arg1,
-					int position, long arg3) {
-				selectedDish = (String) parent.getItemAtPosition(position);
-				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-
-				dialog.show(getFragmentManager(), null);
-
-			}
-		});
-
-		ArrayAdapter<String> adapter_primi = new ArrayAdapter<String>(Menu_giorno.this,
-				layout.layout_list_view, lista_primi);
-		listaprimi.setAdapter(adapter_primi);
-
-		// lista_secondi = new ArrayList<String>();
-
-		ListView listasecondi = (ListView) findViewById(R.id.list_view_secondi);
-
-		ArrayAdapter<String> adapter_secondi = new ArrayAdapter<String>(Menu_giorno.this,
-				layout.layout_list_view, lista_secondi);
-		listasecondi.setAdapter(adapter_secondi);
-
-		// lista_contorni = new ArrayList<String>();
-
-		ListView listacontorni = (ListView) findViewById(R.id.list_view_contorni);
-
-		ArrayAdapter<String> adapter_contorni = new ArrayAdapter<String>(Menu_giorno.this,
-				layout.layout_list_view, lista_contorni);
-		listacontorni.setAdapter(adapter_contorni);
-		listasecondi.setOnItemClickListener(new OnItemClickListener() {
+		MenuGiornoAdapter adapter_piatti = new MenuGiornoAdapter(Menu_giorno.this,
+				android.R.layout.simple_list_item_1, lista_piatti);
+		lista_piatti_view.setAdapter(adapter_piatti);
+		
+		lista_piatti_view.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
@@ -196,47 +167,47 @@ public class Menu_giorno extends Activity {
 		// RISOLUZIONE PROBLEMA LISTVIEW IN SCROLLCONTAINER
 
 		// listaprimi
-		ListAdapter listAdapterPrimi = listaprimi.getAdapter();
-
-		int rowsPrimi = listAdapterPrimi.getCount();
-		int heightPrimi = 60 * rowsPrimi;
-		ViewGroup.LayoutParams paramsPrimi = listaprimi.getLayoutParams();
-		paramsPrimi.height = heightPrimi;
-		listaprimi.setLayoutParams(paramsPrimi);
-		listaprimi.requestLayout();
-
-		// listasecondi
-		ListAdapter listAdapterSecondi = listasecondi.getAdapter();
-
-		int rowsSecondi = listAdapterSecondi.getCount();
-		int heightSecondi = 60 * rowsSecondi;
-		ViewGroup.LayoutParams paramsSecondi = listasecondi.getLayoutParams();
-		paramsSecondi.height = heightSecondi;
-		listasecondi.setLayoutParams(paramsSecondi);
-		listasecondi.requestLayout();
-
-		// listacontorni
-		ListAdapter listAdapterContorni = listacontorni.getAdapter();
-
-		int rowsContorni = listAdapterContorni.getCount();
-		int heightContorni = 60 * rowsContorni;
-
-		ViewGroup.LayoutParams paramsContorni = listacontorni.getLayoutParams();
-		paramsContorni.height = heightContorni;
-		listacontorni.setLayoutParams(paramsContorni);
-		listacontorni.requestLayout();
-		listacontorni.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View arg1,
-					int position, long arg3) {
-				selectedDish = (String) parent.getItemAtPosition(position);
-				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-
-				dialog.show(getFragmentManager(), null);
-
-			}
-		});
+//		ListAdapter listAdapterPrimi = listaprimi.getAdapter();
+//
+//		int rowsPrimi = listAdapterPrimi.getCount();
+//		int heightPrimi = 60 * rowsPrimi;
+//		ViewGroup.LayoutParams paramsPrimi = listaprimi.getLayoutParams();
+//		paramsPrimi.height = heightPrimi;
+//		listaprimi.setLayoutParams(paramsPrimi);
+//		listaprimi.requestLayout();
+//
+//		// listasecondi
+//		ListAdapter listAdapterSecondi = listasecondi.getAdapter();
+//
+//		int rowsSecondi = listAdapterSecondi.getCount();
+//		int heightSecondi = 60 * rowsSecondi;
+//		ViewGroup.LayoutParams paramsSecondi = listasecondi.getLayoutParams();
+//		paramsSecondi.height = heightSecondi;
+//		listasecondi.setLayoutParams(paramsSecondi);
+//		listasecondi.requestLayout();
+//
+//		// listacontorni
+//		ListAdapter listAdapterContorni = listacontorni.getAdapter();
+//
+//		int rowsContorni = listAdapterContorni.getCount();
+//		int heightContorni = 60 * rowsContorni;
+//
+//		ViewGroup.LayoutParams paramsContorni = listacontorni.getLayoutParams();
+//		paramsContorni.height = heightContorni;
+//		listacontorni.setLayoutParams(paramsContorni);
+//		listacontorni.requestLayout();
+//		listacontorni.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View arg1,
+//					int position, long arg3) {
+//				selectedDish = (String) parent.getItemAtPosition(position);
+//				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
+//
+//				dialog.show(getFragmentManager(), null);
+//
+//			}
+//		});
 	}
 
 	private class IDecisoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
@@ -310,36 +281,33 @@ public class Menu_giorno extends Activity {
 
 	}
 
-	/*
-	 * To be completed... 
-	 */
-//	private class MenuGiornoAdapter extends ArrayAdapter<PiattoKcal> {
-//
-//		public MenuGiornoAdapter(Context context, int textViewResourceId,
-//				List<PiattoKcal> objects) {
-//			super(context, textViewResourceId, objects);
-//			// TODO Auto-generated constructor stub
-//		}
-//
-//		@Override
-//		public View getView(int position, View convertView, ViewGroup parent) {
-//			LayoutInflater inflater = (LayoutInflater) getContext()
-//					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//
-//			convertView = inflater.inflate(R.layout.mensa_text, null);
-//
-//			TextView nome_piatto_del_giorno = (TextView) convertView
-//					.findViewById(R.id.menu_name_adapter);
-//			TextView kcal_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu_kcal_adapter);
-//			
-//			PiattoKcal piattoDelGiorno = getItem(position);
-//
-//			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto() + " ");
-//			
-//			kcal_piatto_del_giorno.setText(piattoDelGiorno.getKcal() + " ");
-//
-//			return convertView;
-//		}
-//
-//	}
+	private class MenuGiornoAdapter extends ArrayAdapter<PiattoKcal> {
+ 
+		public MenuGiornoAdapter(Context context, int textViewResourceId,
+				List<PiattoKcal> objects) {
+			super(context, textViewResourceId, objects);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			convertView = inflater.inflate(R.layout.layout_row_menu_adapter, null);
+
+			TextView nome_piatto_del_giorno = (TextView) convertView
+					.findViewById(R.id.menu_name_adapter);
+			TextView kcal_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu_kcal_adapter);
+			
+			PiattoKcal piattoDelGiorno = getItem(position);
+
+			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto());
+			
+			kcal_piatto_del_giorno.setText(piattoDelGiorno.getKcal());
+
+			return convertView;
+		}
+
+	}
 }
