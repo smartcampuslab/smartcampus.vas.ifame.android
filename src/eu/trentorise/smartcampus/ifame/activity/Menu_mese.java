@@ -76,7 +76,7 @@ public class Menu_mese extends Activity {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getmenudellasettimana");
+					"getmenudelmese");
 			request.setMethod(Method.GET);
 			MessageResponse response;
 			try {
@@ -112,7 +112,7 @@ public class Menu_mese extends Activity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(mds);
 
-			List<MenuDelGiorno> mdglist = mds.getMenuDellaSettimana();
+			List<MenuDelGiorno> mdglist = mds.getMenuDelGiorno();
 			List<PiattoKcal> entireweek = new ArrayList<PiattoKcal>();
 
 			ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
