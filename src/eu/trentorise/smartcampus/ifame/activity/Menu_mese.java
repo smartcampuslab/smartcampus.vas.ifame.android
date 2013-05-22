@@ -153,55 +153,6 @@ public class Menu_mese extends Activity {
 		}
 	}
 
-	private class ListHeaderAdapter extends ArrayAdapter<PiattoKcal> {
-
-		public ListHeaderAdapter(Context context, List<PiattoKcal> list) {
-			super(Menu_mese.this, android.R.layout.simple_list_item_1, list);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			convertView = inflater
-					.inflate(layout.layout_row_menu_adapter, null);
-
-			PiattoKcal p = getItem(position);
-
-			TextView name = (TextView) convertView
-					.findViewById(R.id.menu_name_adapter);
-			TextView kcal = (TextView) convertView
-					.findViewById(R.id.menu_kcal_adapter);
-
-			if (p.getPiatto().matches("[0-9]+")) {
-				// ho un piatto sentinella setto il testo come data
-				// e niente kcal
-				int day = Integer.parseInt(p.getPiatto());
-
-				Calendar c = Calendar.getInstance();
-				c.set(Calendar.DATE, day);
-				SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
-				String date_formatted = s.format(c.getTime());
-
-				convertView.setBackgroundColor(Color.RED);
-				name.setText(date_formatted);
-				name.setTextSize((float) 20);
-				// name.setBackgroundColor(Color.RED);
-				name.setTextColor(Color.WHITE);
-				// perche nel layout c'è che esce 'kcal'
-				kcal.setText("");
-
-			} else {
-				// ho un piatto vero setto i campi coi valori corrispondenti
-				name.setText(p.getPiatto());
-				kcal.setText(p.getKcal());
-			}
-			return convertView;
-		}
-	}
-
 	/*
 	 * 
 	 * 
@@ -316,52 +267,68 @@ public class Menu_mese extends Activity {
 		}
 	}
 
-	// private class ListHeaderAdapter extends ArrayAdapter<PiattoKcal> {
-	//
-	// public ListHeaderAdapter(Context context, List<PiattoKcal> list) {
-	// super(Menu_mese.this, android.R.layout.simple_list_item_1, list);
-	// }
-	//
-	// @Override
-	// public View getView(int position, View convertView, ViewGroup parent) {
-	//
-	// LayoutInflater inflater = (LayoutInflater) getContext()
-	// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	//
-	// convertView = inflater
-	// .inflate(layout.layout_row_menu_adapter, null);
-	//
-	// PiattoKcal p = getItem(position);
-	//
-	// TextView name = (TextView) convertView
-	// .findViewById(R.id.menu_name_adapter);
-	// TextView kcal = (TextView) convertView
-	// .findViewById(R.id.menu_kcal_adapter);
-	//
-	// if (p.getPiatto().matches("[0-9]+")) {
-	// // ho un piatto sentinella setto il testo come data
-	// // e niente kcal
-	// int day = Integer.parseInt(p.getPiatto());
-	//
-	// Calendar c = Calendar.getInstance();
-	// c.set(Calendar.DATE, day);
-	// SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
-	// String date_formatted = s.format(c.getTime());
-	//
-	// convertView.setBackgroundColor(Color.RED);
-	// name.setText(date_formatted);
-	// name.setTextSize((float) 20);
-	// // name.setBackgroundColor(Color.RED);
-	// name.setTextColor(Color.WHITE);
-	// // perche nel layout c'è che esce 'kcal'
-	// kcal.setText("");
-	//
-	// } else {
-	// // ho un piatto vero setto i campi coi valori corrispondenti
-	// name.setText(p.getPiatto());
-	// kcal.setText(p.getKcal());
-	// }
-	// return convertView;
-	// }
-	// }
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * LISTADAPTER FOR THE LIST OF PIATTOKCAL
+	 */
+	private class ListHeaderAdapter extends ArrayAdapter<PiattoKcal> {
+
+		public ListHeaderAdapter(Context context, List<PiattoKcal> list) {
+			super(Menu_mese.this, android.R.layout.simple_list_item_1, list);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			convertView = inflater
+					.inflate(layout.layout_row_menu_adapter, null);
+
+			PiattoKcal p = getItem(position);
+
+			TextView name = (TextView) convertView
+					.findViewById(R.id.menu_name_adapter);
+			TextView kcal = (TextView) convertView
+					.findViewById(R.id.menu_kcal_adapter);
+
+			if (p.getPiatto().matches("[0-9]+")) {
+				// ho un piatto sentinella setto il testo come data
+				// e niente kcal
+				int day = Integer.parseInt(p.getPiatto());
+
+				Calendar c = Calendar.getInstance();
+				c.set(Calendar.DATE, day);
+				SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
+				String date_formatted = s.format(c.getTime());
+
+				convertView.setBackgroundColor(Color.RED);
+				name.setText(date_formatted);
+				name.setTextSize((float) 20);
+				// name.setBackgroundColor(Color.RED);
+				name.setTextColor(Color.WHITE);
+				// perche nel layout c'è che esce 'kcal'
+				kcal.setText("");
+
+			} else {
+				// ho un piatto vero setto i campi coi valori corrispondenti
+				name.setText(p.getPiatto());
+				kcal.setText(p.getKcal());
+			}
+			return convertView;
+		}
+	}
+
 }
