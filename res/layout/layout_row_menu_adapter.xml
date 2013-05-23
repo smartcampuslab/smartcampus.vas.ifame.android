@@ -9,19 +9,23 @@
     <TextView
         android:id="@+id/menu_name_adapter"
         android:layout_width="wrap_content"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left|center_vertical"
-        android:text="nome piatto"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="nome piatto ciaoas sad sad sad sad asdasdas asdasdasd adsads"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/menu_kcal_adapter"
         android:layout_width="wrap_content"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="wrap_content"
         android:layout_weight="0"
         android:gravity="right|center_vertical"
-        android:text="kcal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="Kcal"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

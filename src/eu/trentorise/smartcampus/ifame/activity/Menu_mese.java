@@ -294,36 +294,44 @@ public class Menu_mese extends Activity {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater
-					.inflate(layout.layout_row_menu_adapter, null);
-
 			PiattoKcal p = getItem(position);
-
-			TextView name = (TextView) convertView
-					.findViewById(R.id.menu_name_adapter);
-			TextView kcal = (TextView) convertView
-					.findViewById(R.id.menu_kcal_adapter);
 
 			if (p.getPiatto().matches("[0-9]+")) {
 				// ho un piatto sentinella setto il testo come data
-				// e niente kcal
+				convertView = inflater.inflate(
+						layout.layout_row_header_menu_adapter, null);
+
+				TextView dayHeader = (TextView) convertView
+						.findViewById(R.id.menu_day_header_adapter);
+				TextView kcalHeader = (TextView) convertView
+						.findViewById(R.id.menu__kcal_header_adapter);
+
 				int day = Integer.parseInt(p.getPiatto());
 
 				Calendar c = Calendar.getInstance();
 				c.set(Calendar.DATE, day);
-				SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
+				SimpleDateFormat s = new SimpleDateFormat(
+						"EEEEE dd MMMM yyyy");
 				String date_formatted = s.format(c.getTime());
 
-				convertView.setBackgroundColor(Color.RED);
-				name.setText(date_formatted);
-				name.setTextSize((float) 20);
+				dayHeader.setText(date_formatted);
+				// dayHeader.setTextSize((float) 18);
 				// name.setBackgroundColor(Color.RED);
-				name.setTextColor(Color.WHITE);
+				dayHeader.setTextColor(Color.WHITE);
 				// perche nel layout c'è che esce 'kcal'
-				kcal.setText("");
+				kcalHeader.setTextColor(Color.WHITE);
+				// kcalHeader.setText("KCal");
 
 			} else {
 				// ho un piatto vero setto i campi coi valori corrispondenti
+				convertView = inflater.inflate(layout.layout_row_menu_adapter,
+						null);
+
+				TextView name = (TextView) convertView
+						.findViewById(R.id.menu_name_adapter);
+				TextView kcal = (TextView) convertView
+						.findViewById(R.id.menu_kcal_adapter);
+
 				name.setText(p.getPiatto());
 				kcal.setText(p.getKcal());
 			}
