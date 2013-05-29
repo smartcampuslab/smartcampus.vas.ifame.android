@@ -56,7 +56,7 @@ public class Menu_giorno extends Activity {
 		view = findViewById(R.id.menu_del_giorno_view);
 		view.setVisibility(View.GONE);
 
-		new IDecisoConnector(Menu_giorno.this).execute();
+		new MenuDelGiornoConnector(Menu_giorno.this).execute();
 	}
 
 	@Override
@@ -105,6 +105,9 @@ public class Menu_giorno extends Activity {
 	public void createMenuDelGiorno(MenuDelGiorno menuDelGiorno) {
 
 		ListView lista_piatti_view = (ListView) findViewById(R.id.lista_piatti);
+		Button alternative_button = (Button) findViewById(R.id.alternative_button); 
+		TextView menu_giorno_textView = (TextView) findViewById(R.id.menu_del_giorno_text);
+		
 		List<PiattoKcal> lista_piatti = new ArrayList<PiattoKcal>();
 
 		List<PiattoKcal> piattiList = menuDelGiorno.getPiattiDelGiorno();
@@ -118,10 +121,10 @@ public class Menu_giorno extends Activity {
 				lista_piatti.add(new PiattoKcal("3", ""));
 		}
 
-
-
+		
 		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
 		String daily_menu = s.format(new Date());
+		//Set the title of the action bar to the current date
 		setTitle(daily_menu);
 
 
@@ -133,17 +136,26 @@ public class Menu_giorno extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
-				selectedDish = (String) parent.getItemAtPosition(position);
+				selectedDish = ((PiattoKcal) parent.getItemAtPosition(position)).getPiatto();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
 				dialog.show(getFragmentManager(), null);
 
 			}
 		});
+		
+		alternative_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Menu_giorno.this, Menu_giorno_alternative.class); 
+				startActivity(intent);
+			}
+		});
 
 	}
 
-	private class IDecisoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
+	private class MenuDelGiornoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
@@ -153,7 +165,7 @@ public class Menu_giorno extends Activity {
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
-		public IDecisoConnector(Context applicationContext) {
+		public MenuDelGiornoConnector(Context applicationContext) {
 			context = applicationContext;
 		}
 
