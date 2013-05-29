@@ -4,17 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Alternative;
@@ -30,48 +38,56 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class Menu_giorno_alternative extends Activity {
 
-	View view;
-	ProgressDialog pd;
+	private View view;
+	private ProgressDialog pd;
+	private String selectedDish;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_menu_giorno_alternative);
-		
+
+		// Start a dialog that will load until data is visible
 		new ProgressDialog(Menu_giorno_alternative.this);
 		// Dont show anything until the data is loaded
 		pd = ProgressDialog.show(Menu_giorno_alternative.this, "Loading... ",
 				"please wait...");
 		view = findViewById(R.id.menu_alternative_view);
+		// set the visibility of gthe layout to gone so that nothing will be
+		// visible
 		view.setVisibility(View.GONE);
 
 		new AlternativeConnector(Menu_giorno_alternative.this).execute();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_giorno_alternative, menu);
-		return true;
-	}
-
+	/*
+	 * 
+	 * Creates and shows a list of the alternative menu of the day
+	 */
 	public void createMenuAlternative(Alternative alternative) {
 
 		// Get the listview
 		ListView lista_alternative = (ListView) findViewById(R.id.lista_piatti_alternative);
+
+		// Create a list in which the alternative menu will be saved
 		List<PiattoKcal> piatti_alternativi = new ArrayList<PiattoKcal>();
 
+		// Create a list and save all the alternative dishes into it
 		List<PiattoKcal> alternativeList = alternative.getAlternative();
+
+		// add an item into the list, this item will be used as a sentinel that
+		// will determine the type of dish(primo, secondo, etc..)
 		piatti_alternativi.add(new PiattoKcal("1", ""));
+
 		for (int i = 0; i < alternativeList.size(); i++) {
 			piatti_alternativi.add(alternativeList.get(i));
 			if (i == 2) {
-				piatti_alternativi.add(new PiattoKcal("2", ""));
+				piatti_alternativi.add(new PiattoKcal("2", "")); //sentinel for secondi
 			}
 			if (i == 5) {
-				piatti_alternativi.add(new PiattoKcal("3", ""));
+				piatti_alternativi.add(new PiattoKcal("3", "")); //sentinel for piatti freddi
 			}
 			if (i == 8) {
-				piatti_alternativi.add(new PiattoKcal("4", ""));
+				piatti_alternativi.add(new PiattoKcal("4", "")); //sentinel for contorni
 			}
 		}
 
@@ -79,10 +95,33 @@ public class Menu_giorno_alternative extends Activity {
 				Menu_giorno_alternative.this,
 				android.R.layout.simple_expandable_list_item_1,
 				piatti_alternativi);
-		lista_alternative.setAdapter(adapter_alternative); 
+		lista_alternative.setAdapter(adapter_alternative);
+
 		
+		//add a listener to the listview which will allow a google search when an item is clicked
+		lista_alternative.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1,
+					int position, long arg3) {
+				//Get the dish on a selected position of the list
+				selectedDish = ((PiattoKcal) parent.getItemAtPosition(position))
+						.getPiatto();
+				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
+
+				dialog.show(getFragmentManager(), null); //Show the dialog
+
+			}
+		});
+
 	}
 
+	/*
+	 * 
+	 * Connector for the Alternative menu
+	 * 
+	 * 
+	 */
 	private class AlternativeConnector extends
 			AsyncTask<Void, Void, Alternative> {
 
@@ -155,6 +194,41 @@ public class Menu_giorno_alternative extends Activity {
 
 	}
 
+	private class StartWebSearchAlertDialog extends DialogFragment {
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			builder.setMessage(
+					getString(R.string.GoogleSearchAlertText) + " "
+							+ selectedDish + "?")
+					.setPositiveButton(
+							getString(R.string.GoogleSearchAlertAccept),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+
+									Intent intent = new Intent(
+											Intent.ACTION_WEB_SEARCH);
+									intent.putExtra(SearchManager.QUERY,
+											selectedDish); // query contains
+									// search string
+									startActivity(intent);
+
+								}
+							})
+					.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+								}
+							});
+			// Create the AlertDialog object and return it
+			return builder.create();
+		}
+	}
+
 	private class AlternativeAdapter extends ArrayAdapter<PiattoKcal> {
 
 		public AlternativeAdapter(Context context, int textViewResourceId,
@@ -205,6 +279,13 @@ public class Menu_giorno_alternative extends Activity {
 			}
 			return convertView;
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_giorno_alternative, menu);
+		return true;
 	}
 
 }

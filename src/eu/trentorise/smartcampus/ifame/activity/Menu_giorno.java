@@ -56,7 +56,7 @@ public class Menu_giorno extends Activity {
 		view = findViewById(R.id.menu_del_giorno_view);
 		view.setVisibility(View.GONE);
 
-		new IDecisoConnector(Menu_giorno.this).execute();
+		new MenuDelGiornoConnector(Menu_giorno.this).execute();
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class Menu_giorno extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
-				selectedDish = (String) parent.getItemAtPosition(position);
+				selectedDish = ((PiattoKcal) parent.getItemAtPosition(position)).getPiatto();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
 				dialog.show(getFragmentManager(), null);
@@ -155,7 +155,7 @@ public class Menu_giorno extends Activity {
 
 	}
 
-	private class IDecisoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
+	private class MenuDelGiornoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
@@ -165,7 +165,7 @@ public class Menu_giorno extends Activity {
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
-		public IDecisoConnector(Context applicationContext) {
+		public MenuDelGiornoConnector(Context applicationContext) {
 			context = applicationContext;
 		}
 
