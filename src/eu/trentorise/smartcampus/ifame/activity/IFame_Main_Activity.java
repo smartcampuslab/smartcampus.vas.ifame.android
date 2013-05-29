@@ -82,7 +82,8 @@ public class IFame_Main_Activity extends Activity {
 		}
 
 	}
-
+	
+	@Override
 	protected void onResume() {
 
 		super.onResume();
@@ -92,7 +93,7 @@ public class IFame_Main_Activity extends Activity {
 			// access the user data from the AC service remotely
 			new LoadUserDataFromACServiceTask().execute(mToken);
 			// access the basic user profile data remotely
-			new LoadUserDataFromProfileServiceTask().execute(mToken);
+			//new LoadUserDataFromProfileServiceTask().execute(mToken);
 
 			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 			iFretta_btn.setOnClickListener(new OnClickListener() {
@@ -169,7 +170,7 @@ public class IFame_Main_Activity extends Activity {
 						AccountManager.KEY_AUTHTOKEN);
 				Log.i(TAG, "Authentication successfull");
 				new LoadUserDataFromACServiceTask().execute(mToken);
-				new LoadUserDataFromProfileServiceTask().execute(mToken);
+//				new LoadUserDataFromProfileServiceTask().execute(mToken);
 				// authentication cancelled by user
 			} else if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
