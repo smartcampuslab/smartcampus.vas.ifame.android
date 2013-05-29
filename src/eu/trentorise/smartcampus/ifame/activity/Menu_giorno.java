@@ -105,6 +105,9 @@ public class Menu_giorno extends Activity {
 	public void createMenuDelGiorno(MenuDelGiorno menuDelGiorno) {
 
 		ListView lista_piatti_view = (ListView) findViewById(R.id.lista_piatti);
+		Button alternative_button = (Button) findViewById(R.id.alternative_button); 
+		TextView menu_giorno_textView = (TextView) findViewById(R.id.menu_del_giorno_text);
+		
 		List<PiattoKcal> lista_piatti = new ArrayList<PiattoKcal>();
 
 		List<PiattoKcal> piattiList = menuDelGiorno.getPiattiDelGiorno();
@@ -118,10 +121,10 @@ public class Menu_giorno extends Activity {
 				lista_piatti.add(new PiattoKcal("3", ""));
 		}
 
-
-
+		
 		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
 		String daily_menu = s.format(new Date());
+		//Set the title of the action bar to the current date
 		setTitle(daily_menu);
 
 
@@ -138,6 +141,15 @@ public class Menu_giorno extends Activity {
 
 				dialog.show(getFragmentManager(), null);
 
+			}
+		});
+		
+		alternative_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Menu_giorno.this, Menu_giorno_alternative.class); 
+				startActivity(intent);
 			}
 		});
 

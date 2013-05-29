@@ -1,18 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_del_giorno_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-
-   
-        <ListView
-            android:id="@+id/lista_piatti"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/menu_del_giorno_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-             />
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="10dp"
+            android:text="Menu del Giorno"
+            android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/alternative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Alternative" />
     </RelativeLayout>
 
+    <ListView
+        android:id="@+id/lista_piatti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true" />
 
+</LinearLayout>
