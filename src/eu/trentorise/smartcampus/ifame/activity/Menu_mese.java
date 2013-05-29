@@ -15,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
@@ -47,6 +49,30 @@ public class Menu_mese extends Activity {
 		setContentView(R.layout.layout_menu_mese);
 
 		listacibi_view = (ListView) findViewById(R.id.menu_of_the_day);
+
+		// Aggiungo lo spinner
+		weekSpinner = (Spinner) findViewById(R.id.spinner_settimana);
+		weekSpinner
+				.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> adapter,
+							View view, int position, long id) {
+						String string_date = (String) adapter
+								.getItemAtPosition(position);
+
+						String[] numbers = string_date.split("[0-9]");
+						Toast.makeText(Menu_mese.this,
+								"start:",
+								Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+					}
+
+				});
 
 		pd = new ProgressDialog(Menu_mese.this).show(Menu_mese.this, "iDeciso",
 				"Loading...");
@@ -232,14 +258,28 @@ public class Menu_mese extends Activity {
 					.getMenuDellaSettimana();
 			// creo la lista di piatti da mostrare
 			ArrayList<PiattoKcal> currentWeek = new ArrayList<PiattoKcal>();
+			// creo la lista per lo spinner
+			ArrayList<String> spinner_date_list = new ArrayList<String>();
+			ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(
+					Menu_mese.this,
+					android.R.layout.simple_spinner_dropdown_item,
+					spinner_date_list);
 			// creo l'adapter per la lista di piatti
 			ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
 					Menu_mese.this, currentWeek);
 			// ciclo sulle settimane e prendo tutti i piatti della settimana
 			// corrente
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+
 			for (MenuDellaSettimana m : mds) {
 				int start_day = m.getStart_day();
 				int end_day = m.getEnd_day();
+				c.set(Calendar.DATE, start_day);
+				String start_day_string = dateFormat.format(c.getTime());
+				c.set(Calendar.DATE, end_day);
+				String end_day_string = dateFormat.format(c.getTime());
+				spinner_adapter.add("Da " + start_day_string + " a "
+						+ end_day_string);
 				// se il giorno corrente è tra il giorno iniziale e quelo finale
 				// della settimana sono nella settimana che mi interessa
 				if (currentDay >= start_day && currentDay <= end_day) {
@@ -257,10 +297,11 @@ public class Menu_mese extends Activity {
 						adapter.add(piattoSentinella);
 						// aggiungo tutti gli altri piatti
 						adapter.addAll(mdg.getPiattiDelGiorno());
+
 					}
 				}
 			}
-
+			weekSpinner.setAdapter(spinner_adapter);
 			listacibi_view.setAdapter(adapter);
 			// chiudo il loading...
 			pd.dismiss();
@@ -310,8 +351,7 @@ public class Menu_mese extends Activity {
 
 				Calendar c = Calendar.getInstance();
 				c.set(Calendar.DATE, day);
-				SimpleDateFormat s = new SimpleDateFormat(
-						"EEEEE dd MMMM yyyy");
+				SimpleDateFormat s = new SimpleDateFormat("EEEEE dd MMMM yyyy");
 				String date_formatted = s.format(c.getTime());
 
 				dayHeader.setText(date_formatted);
