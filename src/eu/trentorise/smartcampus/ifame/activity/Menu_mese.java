@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -62,10 +63,22 @@ public class Menu_mese extends Activity {
 						String string_date = (String) adapter
 								.getItemAtPosition(position);
 
-						String[] numbers = string_date.split("[0-9]");
+						String[] numbers = string_date.split("\\s");
+						String[] arr = numbers[1].split("/", 2);
+						String start_day = arr[0];
+
+						arr = numbers[3].split("/", 2);
+						String end_day = arr[0];
+
 						Toast.makeText(Menu_mese.this,
-								"start:",
-								Toast.LENGTH_SHORT).show();
+								start_day + " + " + end_day, Toast.LENGTH_SHORT)
+								.show();
+
+						List<PiattoKcal> p = new ArrayList<PiattoKcal>();
+						ArrayAdapter<PiattoKcal> adpter = new ListHeaderAdapter(
+								Menu_mese.this, p);
+
+						setPiattiList(Integer.parseInt(start_day));
 					}
 
 					@Override
@@ -254,7 +267,7 @@ public class Menu_mese extends Activity {
 			// cerco la settimana corrente e la mostro
 			Calendar c = Calendar.getInstance();
 			int currentDay = c.get(Calendar.DAY_OF_MONTH);
-			
+
 			// prendo la lista di menu della settimana
 			ArrayList<MenuDellaSettimana> mds = (ArrayList<MenuDellaSettimana>) mdm
 					.getMenuDellaSettimana();
@@ -269,11 +282,12 @@ public class Menu_mese extends Activity {
 			// creo l'adapter per la lista di piatti
 			ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
 					Menu_mese.this, currentWeek);
-						
-			String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-			setTitle("Menu of " +months[c.get(Calendar.MONTH)]);
-			
-			
+
+			String[] months = { "January", "February", "March", "April", "May",
+					"June", "July", "August", "September", "October",
+					"November", "December" };
+			setTitle("Menu of " + months[c.get(Calendar.MONTH)]);
+
 			// ciclo sulle settimane e prendo tutti i piatti della settimana
 			// corrente
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
@@ -313,6 +327,39 @@ public class Menu_mese extends Activity {
 			// chiudo il loading...
 			pd.dismiss();
 		}
+	}
+
+	private void setPiattiList(int start_day) {
+		// prendo la lista di menu della settimana
+		List<MenuDellaSettimana> mds = menuDelMese.getMenuDellaSettimana();
+		// creo la lista di piatti da mostrare
+		ArrayList<PiattoKcal> currentWeek = new ArrayList<PiattoKcal>();
+		// creo l'adapter per la lista di piatti
+
+		ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
+				Menu_mese.this, currentWeek);
+
+		for (MenuDellaSettimana m : mds) {
+			if (start_day == m.getStart_day()) {
+				// sono nella settimana interessata ciclo sui menu del
+				// giorno
+				ArrayList<MenuDelGiorno> mdglist = (ArrayList<MenuDelGiorno>) m
+						.getMenuDelGiorno();
+				for (MenuDelGiorno mdg : mdglist) {
+					// ATTENZIONE AL MAGHEGGIO
+					PiattoKcal piattoSentinella = new PiattoKcal();
+					// setto come nome del piatto il numero del giorno
+					piattoSentinella.setPiatto(mdg.getDay() + "");
+					// del menu del giorno che sto iterando perche mi serve
+					// come sentinella nell'adapter
+					adapter.add(piattoSentinella);
+					// aggiungo tutti gli altri piatti
+					adapter.addAll(mdg.getPiattiDelGiorno());
+				}
+			}
+		}
+
+		listacibi_view.setAdapter(adapter);
 	}
 
 	/*
