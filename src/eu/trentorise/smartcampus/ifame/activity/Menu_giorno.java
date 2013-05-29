@@ -2,7 +2,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -155,53 +153,6 @@ public class Menu_giorno extends Activity {
 
 			}
 		});
-
-		// RISOLUZIONE PROBLEMA LISTVIEW IN SCROLLCONTAINER
-
-		// listaprimi
-		// ListAdapter listAdapterPrimi = listaprimi.getAdapter();
-		//
-		// int rowsPrimi = listAdapterPrimi.getCount();
-		// int heightPrimi = 60 * rowsPrimi;
-		// ViewGroup.LayoutParams paramsPrimi = listaprimi.getLayoutParams();
-		// paramsPrimi.height = heightPrimi;
-		// listaprimi.setLayoutParams(paramsPrimi);
-		// listaprimi.requestLayout();
-		//
-		// // listasecondi
-		// ListAdapter listAdapterSecondi = listasecondi.getAdapter();
-		//
-		// int rowsSecondi = listAdapterSecondi.getCount();
-		// int heightSecondi = 60 * rowsSecondi;
-		// ViewGroup.LayoutParams paramsSecondi =
-		// listasecondi.getLayoutParams();
-		// paramsSecondi.height = heightSecondi;
-		// listasecondi.setLayoutParams(paramsSecondi);
-		// listasecondi.requestLayout();
-		//
-		// // listacontorni
-		// ListAdapter listAdapterContorni = listacontorni.getAdapter();
-		//
-		// int rowsContorni = listAdapterContorni.getCount();
-		// int heightContorni = 60 * rowsContorni;
-		//
-		// ViewGroup.LayoutParams paramsContorni =
-		// listacontorni.getLayoutParams();
-		// paramsContorni.height = heightContorni;
-		// listacontorni.setLayoutParams(paramsContorni);
-		// listacontorni.requestLayout();
-		// listacontorni.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View arg1,
-		// int position, long arg3) {
-		// selectedDish = (String) parent.getItemAtPosition(position);
-		// StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-		//
-		// dialog.show(getFragmentManager(), null);
-		//
-		// }
-		// });
 	}
 
 	private class IDecisoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
