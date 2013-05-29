@@ -31,26 +31,9 @@ public class IFretta_Details extends Activity {
 
 		//Get mensa intent from activity:ifretta
 	    String mensa_name = (String) extras.get("mensa");
-		TextView mensa_name_text = (TextView) findViewById(R.id.mensa_name_textview);
-		final TextView date = (TextView) findViewById(R.id.date_text_view);
-
+		setTitle(mensa_name);
 		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		String date_s = s.format(new Date());
-
-		//the onclick method is for a demonstraive purpose, time is updated when the button is clicked
-		Button btn = (Button) findViewById(R.id.location_button);
-		btn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-				String date_s = s.format(new Date());
-				date.setText(date_s);
-			}
-		});
-
-		mensa_name_text.setText(mensa_name);
-		date.setText(date_s);
 
 		String img_url = (String) extras.get("img_url"); //Get the mensa url  from activity:ifretta
 		

@@ -2,7 +2,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -120,27 +118,14 @@ public class Menu_giorno extends Activity {
 				lista_piatti.add(new PiattoKcal("3", ""));
 		}
 
-		final TextView date = (TextView) findViewById(R.id.date_daily_menu);
+
 
 		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
 		String daily_menu = s.format(new Date());
-		date.setText(daily_menu);
+		setTitle(daily_menu);
 
-		Button alternative_btn = (Button) findViewById(R.id.alternative);
-		alternative_btn.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Menu_giorno.this,
-						Menu_giorno_alternative.class);
-				startActivity(intent);
-			}
-
-		});
-
-		MenuGiornoAdapter adapter_piatti = new MenuGiornoAdapter(
-				Menu_giorno.this, android.R.layout.simple_list_item_1,
-				lista_piatti);
+		MenuGiornoAdapter adapter_piatti = new MenuGiornoAdapter(Menu_giorno.this, android.R.layout.simple_list_item_1,lista_piatti);
 		lista_piatti_view.setAdapter(adapter_piatti);
 
 		lista_piatti_view.setOnItemClickListener(new OnItemClickListener() {
@@ -156,52 +141,6 @@ public class Menu_giorno extends Activity {
 			}
 		});
 
-		// RISOLUZIONE PROBLEMA LISTVIEW IN SCROLLCONTAINER
-
-		// listaprimi
-		// ListAdapter listAdapterPrimi = listaprimi.getAdapter();
-		//
-		// int rowsPrimi = listAdapterPrimi.getCount();
-		// int heightPrimi = 60 * rowsPrimi;
-		// ViewGroup.LayoutParams paramsPrimi = listaprimi.getLayoutParams();
-		// paramsPrimi.height = heightPrimi;
-		// listaprimi.setLayoutParams(paramsPrimi);
-		// listaprimi.requestLayout();
-		//
-		// // listasecondi
-		// ListAdapter listAdapterSecondi = listasecondi.getAdapter();
-		//
-		// int rowsSecondi = listAdapterSecondi.getCount();
-		// int heightSecondi = 60 * rowsSecondi;
-		// ViewGroup.LayoutParams paramsSecondi =
-		// listasecondi.getLayoutParams();
-		// paramsSecondi.height = heightSecondi;
-		// listasecondi.setLayoutParams(paramsSecondi);
-		// listasecondi.requestLayout();
-		//
-		// // listacontorni
-		// ListAdapter listAdapterContorni = listacontorni.getAdapter();
-		//
-		// int rowsContorni = listAdapterContorni.getCount();
-		// int heightContorni = 60 * rowsContorni;
-		//
-		// ViewGroup.LayoutParams paramsContorni =
-		// listacontorni.getLayoutParams();
-		// paramsContorni.height = heightContorni;
-		// listacontorni.setLayoutParams(paramsContorni);
-		// listacontorni.requestLayout();
-		// listacontorni.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View arg1,
-		// int position, long arg3) {
-		// selectedDish = (String) parent.getItemAtPosition(position);
-		// StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-		//
-		// dialog.show(getFragmentManager(), null);
-		//
-		// }
-		// });
 	}
 
 	private class IDecisoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {

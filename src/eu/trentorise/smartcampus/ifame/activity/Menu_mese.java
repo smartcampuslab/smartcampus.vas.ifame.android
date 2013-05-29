@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -253,6 +254,7 @@ public class Menu_mese extends Activity {
 			// cerco la settimana corrente e la mostro
 			Calendar c = Calendar.getInstance();
 			int currentDay = c.get(Calendar.DAY_OF_MONTH);
+			
 			// prendo la lista di menu della settimana
 			ArrayList<MenuDellaSettimana> mds = (ArrayList<MenuDellaSettimana>) mdm
 					.getMenuDellaSettimana();
@@ -267,6 +269,11 @@ public class Menu_mese extends Activity {
 			// creo l'adapter per la lista di piatti
 			ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
 					Menu_mese.this, currentWeek);
+						
+			String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+			setTitle("Menu of " +months[c.get(Calendar.MONTH)]);
+			
+			
 			// ciclo sulle settimane e prendo tutti i piatti della settimana
 			// corrente
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
