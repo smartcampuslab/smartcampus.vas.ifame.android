@@ -70,10 +70,6 @@ public class Menu_mese extends Activity {
 						arr = numbers[3].split("/", 2);
 						String end_day = arr[0];
 
-						Toast.makeText(Menu_mese.this,
-								start_day + " + " + end_day, Toast.LENGTH_SHORT)
-								.show();
-
 						List<PiattoKcal> p = new ArrayList<PiattoKcal>();
 						ArrayAdapter<PiattoKcal> adpter = new ListHeaderAdapter(
 								Menu_mese.this, p);
@@ -100,97 +96,6 @@ public class Menu_mese extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_mese, menu);
 		return true;
-	}
-
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * CONNECTOR MENU DELLA SETTIMANA
-	 */
-	public class MenuDellaSettimanaConnector extends
-			AsyncTask<Void, Void, MenuDellaSettimana> {
-
-		private ProtocolCarrier mProtocolCarrier;
-		public Context context;
-		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-
-		public MenuDellaSettimanaConnector(Context applicationContext) {
-			context = applicationContext;
-		}
-
-		private MenuDellaSettimana getMenuDellaSettimana() {
-			mProtocolCarrier = new ProtocolCarrier(context, appToken);
-			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getmenudellasettimana");
-			request.setMethod(Method.GET);
-			MessageResponse response;
-			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
-				if (response.getHttpStatus() == 200) {
-					String body = response.getBody();
-					MenuDellaSettimana mds = Utils.convertJSONToObject(body,
-							MenuDellaSettimana.class);
-					return mds;
-				}
-			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected MenuDellaSettimana doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getMenuDellaSettimana();
-		}
-
-		@Override
-		protected void onPostExecute(MenuDellaSettimana mds) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(mds);
-
-			List<MenuDelGiorno> mdglist = mds.getMenuDelGiorno();
-			List<PiattoKcal> entireweek = new ArrayList<PiattoKcal>();
-
-			ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
-					Menu_mese.this, entireweek);
-
-			for (MenuDelGiorno mdg : mdglist) {
-				// ATTENZIONE AL MAGHEGGIO
-				PiattoKcal piattoSentinella = new PiattoKcal();
-				// setto come nome del piatto il numero del giorno
-				piattoSentinella.setPiatto(mdg.getDay() + "");
-				// del menu del giorno che sto iterando perche mi serve
-				// come sentinella nell'adapter
-				adapter.add(piattoSentinella);
-				// aggiungo tutti gli altri piatti
-				adapter.addAll(mdg.getPiattiDelGiorno());
-			}
-
-			listacibi_view.setAdapter(adapter);
-			// chiudo il loading...
-			pd.dismiss();
-		}
 	}
 
 	/*
@@ -271,17 +176,13 @@ public class Menu_mese extends Activity {
 			// prendo la lista di menu della settimana
 			ArrayList<MenuDellaSettimana> mds = (ArrayList<MenuDellaSettimana>) mdm
 					.getMenuDellaSettimana();
-			// creo la lista di piatti da mostrare
-			ArrayList<PiattoKcal> currentWeek = new ArrayList<PiattoKcal>();
+
 			// creo la lista per lo spinner
 			ArrayList<String> spinner_date_list = new ArrayList<String>();
 			ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(
 					Menu_mese.this,
 					android.R.layout.simple_spinner_dropdown_item,
 					spinner_date_list);
-			// creo l'adapter per la lista di piatti
-			ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
-					Menu_mese.this, currentWeek);
 
 			String[] months = { "January", "February", "March", "April", "May",
 					"June", "July", "August", "September", "October",
@@ -292,6 +193,8 @@ public class Menu_mese extends Activity {
 			// corrente
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
+			int iter = 0;
+			int position = 0;
 			for (MenuDellaSettimana m : mds) {
 				int start_day = m.getStart_day();
 				int end_day = m.getEnd_day();
@@ -299,31 +202,20 @@ public class Menu_mese extends Activity {
 				String start_day_string = dateFormat.format(c.getTime());
 				c.set(Calendar.DATE, end_day);
 				String end_day_string = dateFormat.format(c.getTime());
+				// setto l'item dello spinner
 				spinner_adapter.add("Da " + start_day_string + " a "
 						+ end_day_string);
+
 				// se il giorno corrente è tra il giorno iniziale e quelo finale
 				// della settimana sono nella settimana che mi interessa
 				if (currentDay >= start_day && currentDay <= end_day) {
-					// sono nella settimana interessata ciclo sui menu del
-					// giorno
-					ArrayList<MenuDelGiorno> mdglist = (ArrayList<MenuDelGiorno>) m
-							.getMenuDelGiorno();
-					for (MenuDelGiorno mdg : mdglist) {
-						// ATTENZIONE AL MAGHEGGIO
-						PiattoKcal piattoSentinella = new PiattoKcal();
-						// setto come nome del piatto il numero del giorno
-						piattoSentinella.setPiatto(mdg.getDay() + "");
-						// del menu del giorno che sto iterando perche mi serve
-						// come sentinella nell'adapter
-						adapter.add(piattoSentinella);
-						// aggiungo tutti gli altri piatti
-						adapter.addAll(mdg.getPiattiDelGiorno());
-
-					}
+					position = iter;
 				}
+				iter++;
 			}
 			weekSpinner.setAdapter(spinner_adapter);
-			listacibi_view.setAdapter(adapter);
+			weekSpinner.setSelection(position);
+
 			// chiudo il loading...
 			pd.dismiss();
 		}
