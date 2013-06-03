@@ -69,16 +69,12 @@ public class IGradito extends Activity {
 	 * 
 	 * 
 	 * 
-	 * CONNECTOR TO GETMENUDELGIORNO WEB SERVICE
+	 * CONNECTOR TO GETALLPIATTI WEB SERVICE
 	 */
 
-	private class IGraditoConnector extends
-			AsyncTask<Void, Void, MenuDelGiorno> {
+	private class IGraditoConnector extends AsyncTask<Void, Void, PiattiList> {
 
 		private ProtocolCarrier mProtocolCarrier;
-		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
-		private static final String auth_token = "AUTH_TOKEN";
-		private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
@@ -87,14 +83,13 @@ public class IGradito extends Activity {
 			context = applicationContext;
 		}
 
-		private MenuDelGiorno getMenuDelGiorno() {
-			// try {
+		private PiattiList getPiattiList() {
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getmenudelgiorno");
+					"getallpiatti");
 			request.setMethod(Method.GET);
 
 			MessageResponse response;
@@ -106,10 +101,10 @@ public class IGradito extends Activity {
 
 					String body = response.getBody();
 
-					MenuDelGiorno mdg = Utils.convertJSONToObject(body,
-							MenuDelGiorno.class);
+					PiattiList list = Utils.convertJSONToObject(body,
+							PiattiList.class);
 
-					return mdg;
+					return list;
 
 				} else {
 
@@ -129,18 +124,17 @@ public class IGradito extends Activity {
 		}
 
 		@Override
-		protected MenuDelGiorno doInBackground(Void... params) {
-			return getMenuDelGiorno();
+		protected PiattiList doInBackground(Void... params) {
+			return getPiattiList();
 		}
 
 		@Override
-		protected void onPostExecute(MenuDelGiorno result) {
+		protected void onPostExecute(PiattiList result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 
-			ListAdapter a = new MyArrayAdapter(IGradito.this,
-					android.R.layout.simple_list_item_1,
-					result.getPiattiDelGiorno());
+			ListAdapter a = new ArrayAdapter<String>(IGradito.this,
+					android.R.layout.simple_list_item_1, result.getPiatti());
 
 			list_view.setAdapter(a);
 			pd.dismiss();
@@ -148,33 +142,33 @@ public class IGradito extends Activity {
 
 	}
 
-	private class MyArrayAdapter extends ArrayAdapter<PiattoKcal> {
-
-		public MyArrayAdapter(Context context, int textViewResourceId,
-				List<PiattoKcal> objects) {
-			super(context, textViewResourceId, objects);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			convertView = inflater
-					.inflate(layout.layout_row_menu_adapter, null);
-
-			PiattoKcal p = getItem(position);
-
-			TextView name = (TextView) convertView
-					.findViewById(R.id.menu_name_adapter);
-			TextView kcal = (TextView) convertView
-					.findViewById(R.id.menu_kcal_adapter);
-
-			name.setText(p.getPiatto());
-			kcal.setText("");
-
-			return convertView;
-		}
-	}
+	// private class MyArrayAdapter extends ArrayAdapter<PiattoKcal> {
+	//
+	// public MyArrayAdapter(Context context, int textViewResourceId,
+	// List<PiattoKcal> objects) {
+	// super(context, textViewResourceId, objects);
+	// }
+	//
+	// @Override
+	// public View getView(int position, View convertView, ViewGroup parent) {
+	//
+	// LayoutInflater inflater = (LayoutInflater) getContext()
+	// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	//
+	// convertView = inflater
+	// .inflate(layout.layout_row_menu_adapter, null);
+	//
+	// PiattoKcal p = getItem(position);
+	//
+	// TextView name = (TextView) convertView
+	// .findViewById(R.id.menu_name_adapter);
+	// TextView kcal = (TextView) convertView
+	// .findViewById(R.id.menu_kcal_adapter);
+	//
+	// name.setText(p.getPiatto());
+	// kcal.setText("");
+	//
+	// return convertView;
+	// }
+	// }
 }
