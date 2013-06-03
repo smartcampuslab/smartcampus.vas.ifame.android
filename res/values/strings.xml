@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -96,10 +96,6 @@
     <string name="GoogleSearchAlertText">Mostrare risultati per: </string>
     <string name="GoogleSearchAlertAccept">Avvia ricerca</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenu</string>
-    
-    
-        
-    
-    
+    <string name="title_activity_menu_giorno_tab">Menu_giorno_tab</string>
 
 </resources>

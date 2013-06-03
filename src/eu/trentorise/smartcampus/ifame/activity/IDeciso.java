@@ -39,7 +39,7 @@ public class IDeciso extends Activity {
 					long id) {
 				Intent i;
 				switch (position){
-				case 0: i = new Intent(IDeciso.this, Menu_giorno.class);
+				case 0: i = new Intent(IDeciso.this, Menu_giorno_tab.class);
 				startActivity(i);
 				break;
 				case 1: i = new Intent(IDeciso.this, Tipologie_menu.class);
