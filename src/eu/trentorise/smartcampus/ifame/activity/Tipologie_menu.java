@@ -3,8 +3,12 @@ package eu.trentorise.smartcampus.ifame.activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import eu.trentorise.smartcampus.ifame.R;
@@ -15,32 +19,36 @@ public class Tipologie_menu extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_tipologie_menu);
-		
+
 		Intent i = getIntent();
 		String selected_item = i.getStringExtra("selected_item");
 		
-		TabHost menu = (TabHost)findViewById(android.R.id.tabhost);
-        TabSpec spec = menu.newTabSpec("tabcontent");
-        spec.setContent(R.id.menu_intero_btn);
-        spec.setIndicator("Intero");
-        menu.addTab(spec);
-        spec = menu.newTabSpec("menu_ridotto_btn");
-        spec.setContent(R.id.menu_ridotto_btn);
-        spec.setIndicator("Ridotto");
-        menu.addTab(spec);
-        spec = menu.newTabSpec("menu_snack_btn");
-        spec.setContent(R.id.menu_snack_btn);
-        spec.setIndicator("Snack");
-        menu.addTab(spec);
+		Intent intent;
+		TabSpec spec;
+
+		intent = new Intent(this, TipologiaIntero.class);
+		TabHost menu = (TabHost) findViewById(android.R.id.tabhost);
+		spec = menu.newTabSpec("Intero").setIndicator(createTabIndicator(getString(R.string.iDeciso_menu_types_intero))).setContent(intent);
+		menu.addTab(spec);
 		
-        
-        if (selected_item!=null){
-        	
-        	if (selected_item.equals("Intero")){
-        		menu.setCurrentTab(0);}
-        	else if (selected_item.equals("Ridotto")){menu.setCurrentTab(1);}
-        	else {menu.setCurrentTab(2);}
-        }
+		intent = new Intent(this, TipologiaRidotto.class);
+		spec = menu.newTabSpec("Ridotto").setIndicator(createTabIndicator(getString(R.string.iDeciso_menu_types_ridotto))).setContent(intent);
+		menu.addTab(spec);
+		
+		intent = new Intent(this, TipologiaSnack.class);
+		spec = menu.newTabSpec("Snack").setIndicator(createTabIndicator(getString(R.string.iDeciso_menu_types_snack))).setContent(intent);
+		menu.addTab(spec);
+
+		if (selected_item != null) {
+
+			if (selected_item.equals("Intero")) {
+				menu.setCurrentTab(0);
+			} else if (selected_item.equals("Ridotto")) {
+				menu.setCurrentTab(1);
+			} else {
+				menu.setCurrentTab(2);
+			}
+		}
 	}
 
 	@Override
@@ -48,7 +56,19 @@ public class Tipologie_menu extends TabActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.tipologie_menu, menu);
 		return true;
-		
+
 	}
+	
+	//per eventuali modifiche di layout del tab agire qui
+	private View createTabIndicator(String text) {
+	    Button button = new Button(this);
+	    button.setBackgroundResource(R.color.sc_dark_gray);
+	    button.setTextSize(14);
+	    button.setText(text);
+	    button.setTextColor(Color.WHITE);
+	    button.setGravity(Gravity.CENTER);
+	    return button;
+	}
+
 
 }
