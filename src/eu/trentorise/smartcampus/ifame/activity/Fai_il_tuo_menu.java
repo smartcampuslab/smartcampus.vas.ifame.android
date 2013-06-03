@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 
 public class Fai_il_tuo_menu extends Activity {
@@ -60,85 +61,97 @@ public class Fai_il_tuo_menu extends Activity {
 				isPizza = pizza.isChecked();
 				isPanino = panino.isChecked();
 
-				// intero
 				if (!isPrimoPiatto && !isSecondoPiatto && !isContorno1
 						&& !isContorno2 && !isInsalatona && !isDessert
-						&& !isPizza && !isPanino)
-					menu = null;
-				else if (primo.isChecked() && secondo.isChecked())
-					Fai_il_tuo_menu.menu = chosenMenu.Intero;
+						&& !isPizza && !isPanino) {
+					Toast toast = Toast.makeText(getApplicationContext(), R.string.iDeciso_compose_menu_no_items_selected, Toast.LENGTH_LONG);
+					toast.show();
+					
 
-				// snack1
-				else if (primo.isChecked()
-						&& (!secondo.isChecked())
-						&& ((contorno1.isChecked() && !contorno2.isChecked() && !dessert
-								.isChecked())
-								^ (!contorno1.isChecked()
-										&& contorno2.isChecked() && !dessert
-											.isChecked())
-								^ (!contorno1.isChecked()
-										&& !contorno2.isChecked() && dessert
-											.isChecked()) ^ (!contorno1
-								.isChecked() && !contorno2.isChecked() && !dessert
-									.isChecked()))) {
-					menu = chosenMenu.Snack;
+				} else {
+
+					// intero
+					if (!isPrimoPiatto && !isSecondoPiatto && !isContorno1
+							&& !isContorno2 && !isInsalatona && !isDessert
+							&& !isPizza && !isPanino)
+						menu = null;
+					else if (primo.isChecked() && secondo.isChecked())
+						Fai_il_tuo_menu.menu = chosenMenu.Intero;
+
+					// snack1
+					else if (primo.isChecked()
+							&& (!secondo.isChecked())
+							&& ((contorno1.isChecked()
+									&& !contorno2.isChecked() && !dessert
+										.isChecked())
+									^ (!contorno1.isChecked()
+											&& contorno2.isChecked() && !dessert
+												.isChecked())
+									^ (!contorno1.isChecked()
+											&& !contorno2.isChecked() && dessert
+												.isChecked()) ^ (!contorno1
+									.isChecked() && !contorno2.isChecked() && !dessert
+										.isChecked()))) {
+						menu = chosenMenu.Snack;
+					}
+					// snack2
+					else if (!primo.isChecked()
+							&& (secondo.isChecked())
+							&& ((contorno1.isChecked()
+									&& !contorno2.isChecked() && !dessert
+										.isChecked())
+									^ (!contorno1.isChecked()
+											&& contorno2.isChecked() && !dessert
+												.isChecked())
+									^ (!contorno1.isChecked()
+											&& !contorno2.isChecked() && dessert
+												.isChecked()) ^ (!contorno1
+									.isChecked() && !contorno2.isChecked() && !dessert
+										.isChecked()))) {
+						menu = chosenMenu.Snack;
+					}
+
+					// snack insalatona
+					else if (insalatona.isChecked())
+						menu = chosenMenu.Snack;
+					// snack panino
+					else if (panino.isChecked())
+						menu = chosenMenu.Snack;
+					else
+						menu = chosenMenu.Ridotto;
+
+					/*
+					 * Intent i = new Intent(Fai_il_tuo_menu.this,
+					 * MostraMenuComposto.class);
+					 */
+
+					// per ora
+					Intent i = new Intent(Fai_il_tuo_menu.this,
+							Tipologie_menu.class);
+
+					i.putExtra("isPrimoPiatto", isPrimoPiatto);
+					i.putExtra("isSecondoPiatto", isSecondoPiatto);
+					i.putExtra("isContorno1", isContorno1);
+					i.putExtra("isContorno2", isContorno2);
+					i.putExtra("isInsalatona", isInsalatona);
+					i.putExtra("isDessert", isDessert);
+					i.putExtra("isPizza", isPizza);
+					i.putExtra("isPanino", isPanino);
+
+					String selected_menu = null;
+					if (menu.equals(chosenMenu.Intero))
+						selected_menu = "Intero";
+
+					else if (menu.equals(chosenMenu.Ridotto))
+						selected_menu = "Ridotto";
+					else if (menu.equals(chosenMenu.Snack))
+						selected_menu = "Snack";
+
+					i.putExtra("selected_item", selected_menu);
+
+					startActivity(i);
+
 				}
-				// snack2
-				else if (!primo.isChecked()
-						&& (secondo.isChecked())
-						&& ((contorno1.isChecked() && !contorno2.isChecked() && !dessert
-								.isChecked())
-								^ (!contorno1.isChecked()
-										&& contorno2.isChecked() && !dessert
-											.isChecked())
-								^ (!contorno1.isChecked()
-										&& !contorno2.isChecked() && dessert
-											.isChecked()) ^ (!contorno1
-								.isChecked() && !contorno2.isChecked() && !dessert
-									.isChecked()))) {
-					menu = chosenMenu.Snack;
-				}
-
-				// snack insalatona
-				else if (insalatona.isChecked())
-					menu = chosenMenu.Snack;
-				// snack panino
-				else if (panino.isChecked())
-					menu = chosenMenu.Snack;
-				else
-					menu = chosenMenu.Ridotto;
-
-				/*
-				 * Intent i = new Intent(Fai_il_tuo_menu.this,
-				 * MostraMenuComposto.class);
-				 */
-
-				// per ora
-				Intent i = new Intent(Fai_il_tuo_menu.this,
-						Tipologie_menu.class);
-
-				i.putExtra("isPrimoPiatto", isPrimoPiatto);
-				i.putExtra("isSecondoPiatto", isSecondoPiatto);
-				i.putExtra("isContorno1", isContorno1);
-				i.putExtra("isContorno2", isContorno2);
-				i.putExtra("isInsalatona", isInsalatona);
-				i.putExtra("isDessert", isDessert);
-				i.putExtra("isPizza", isPizza);
-				i.putExtra("isPanino", isPanino);
-
-				String selected_menu = null;
-				if (menu.equals(chosenMenu.Intero))
-					selected_menu = "Intero";
-
-				else if (menu.equals(chosenMenu.Ridotto))
-					selected_menu = "Ridotto";
-				else if (menu.equals(chosenMenu.Snack))
-					selected_menu = "Snack";
-
-				i.putExtra("selected_item", selected_menu);
-
-				startActivity(i);
-
 			}
 		});
 	}

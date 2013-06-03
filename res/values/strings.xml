@@ -97,5 +97,6 @@
     <string name="GoogleSearchAlertAccept">Avvia ricerca</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenu</string>
     <string name="title_activity_menu_giorno_tab">Menu_giorno_tab</string>
+    <string name ="iDeciso_compose_menu_no_items_selected">Seleziona almeno un piatto!</string>
 
 </resources>

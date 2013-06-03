@@ -105,8 +105,6 @@ public class Menu_giorno extends Activity {
 	public void createMenuDelGiorno(MenuDelGiorno menuDelGiorno) {
 
 		ListView lista_piatti_view = (ListView) findViewById(R.id.lista_piatti);
-		Button alternative_button = (Button) findViewById(R.id.alternative_button); 
-		TextView menu_giorno_textView = (TextView) findViewById(R.id.menu_del_giorno_text);
 		
 		List<PiattoKcal> lista_piatti = new ArrayList<PiattoKcal>();
 
@@ -144,14 +142,6 @@ public class Menu_giorno extends Activity {
 			}
 		});
 		
-		alternative_button.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Menu_giorno.this, Menu_giorno_alternative.class); 
-				startActivity(intent);
-			}
-		});
 
 	}
 
