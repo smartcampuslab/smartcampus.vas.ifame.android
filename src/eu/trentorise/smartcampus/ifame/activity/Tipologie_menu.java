@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import eu.trentorise.smartcampus.ifame.R;
@@ -19,6 +20,7 @@ public class Tipologie_menu extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_tipologie_menu);
+		ScrollView scroll = (ScrollView)findViewById(R.id.iDeciso_tipologie_main_scrollview);
 
 		Intent i = getIntent();
 		String selected_item = i.getStringExtra("selected_item");
@@ -49,6 +51,9 @@ public class Tipologie_menu extends TabActivity {
 				menu.setCurrentTab(2);
 			}
 		}
+		
+		scroll.scrollTo(0, 0);
+		scroll.scrollBy(0, 0);
 	}
 
 	@Override

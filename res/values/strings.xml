@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -103,5 +103,11 @@
     <string name="title_activity_tipologia_snack">Menu Snack</string>
     <string name="iDeciso_2contorni">2 Contorni</string>
     <string name="iDeciso_pane">Pane</string>
+    <string name="iDeciso_pizza_trancio">Pizza (trancio)</string>
+    <string name="iDeciso_acqua_o_caffe">Acqua o caffè</string>
+    <string name="iDeciso_panino">Panino</string>
+    <string name="iDeciso_2a_scelta_tra">2 a scelta tra</string>
+    <string name="iDeciso_contorni">Contorni</string>
+    <string name="iDeciso_pizza">Pizza</string>
 
 </resources>
