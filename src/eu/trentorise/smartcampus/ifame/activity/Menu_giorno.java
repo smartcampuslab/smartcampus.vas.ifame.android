@@ -120,11 +120,10 @@ public class Menu_giorno extends Activity {
 		}
 
 		
-		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
-		String daily_menu = s.format(new Date());
-		//Set the title of the action bar to the current date
-		setTitle(daily_menu);
-
+//		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM yyyy");
+//		String daily_menu = s.format(new Date());
+//		//Set the title of the action bar to the current date
+//		setTitle(daily_menu);
 
 		MenuGiornoAdapter adapter_piatti = new MenuGiornoAdapter(Menu_giorno.this, android.R.layout.simple_list_item_1,lista_piatti);
 		lista_piatti_view.setAdapter(adapter_piatti);
