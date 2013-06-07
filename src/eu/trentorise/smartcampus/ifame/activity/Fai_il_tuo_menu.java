@@ -35,6 +35,14 @@ public class Fai_il_tuo_menu extends Activity {
 	public static final String DESSERT_AVAILABLE = "dessertAvailable";
 	public static final String INSALATONA_AVAILABLE = "insalatonaAvailable";
 	public static final String PIZZA_AVAILABLE = "pizzaAvailable";
+	public static final String IS_PRIMO = "isPrimo";
+	public static final String IS_SECONDO = "isSecondo";
+	public static final String IS_CONTORNO_1 = "isC1";
+	public static final String IS_CONTORNO_2 = "isC2";
+	public static final String IS_INSALATONA = "isInsalatona";
+	public static final String IS_DESSERT = "isDessert";
+	public static final String IS_PANINO = "isPanino";
+	public static final String IS_PIZZA = "isPizza";
 	
 	public CheckBox primo;
 	public CheckBox secondo;
@@ -46,7 +54,7 @@ public class Fai_il_tuo_menu extends Activity {
 	public CheckBox pizza;
 
 	public enum chosenMenu {
-		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Pizza, Panino};
+		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Snack1234, Pizza, Panino};
 
 	public static chosenMenu menu;
 
@@ -269,14 +277,14 @@ public class Fai_il_tuo_menu extends Activity {
 				Intent i = new Intent(Fai_il_tuo_menu.this,
 						Tipologie_menu_fr.class);
 
-				i.putExtra("isPrimoPiatto", isPrimoPiatto);
-				i.putExtra("isSecondoPiatto", isSecondoPiatto);
-				i.putExtra("isContorno1", isContorno1);
-				i.putExtra("isContorno2", isContorno2);
-				i.putExtra("isInsalatona", isInsalatona);
-				i.putExtra("isDessert", isDessert);
-				i.putExtra("isPizza", isPizza);
-				i.putExtra("isPanino", isPanino);
+				i.putExtra(IS_PRIMO, isPrimoPiatto);
+				i.putExtra(IS_SECONDO, isSecondoPiatto);
+				i.putExtra(IS_CONTORNO_1, isContorno1);
+				i.putExtra(IS_CONTORNO_2, isContorno2);
+				i.putExtra(IS_INSALATONA, isInsalatona);
+				i.putExtra(IS_DESSERT, isDessert);
+				i.putExtra(IS_PIZZA, isPizza);
+				i.putExtra(IS_PANINO, isPanino);
 
 				i.putExtra(CONTORNO_1_AVAILABLE, c1Avail);
 				i.putExtra(CONTORNO_2_AVAILABLE, c2Avail);

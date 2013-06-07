@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
@@ -70,9 +71,14 @@ public class ISoldi extends Activity {
 
 				// trova qual'è l'oggetto schiacciato
 				String selected = (String) parent.getItemAtPosition(position);
-
+				if (selected.equals("Snack"))
+					selected = "Snack1234";
+				if (selected.equals("Ridotto"))
+					selected = "Ridotto1234";
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
 				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, selected);
+				Toast.makeText(getApplicationContext(), selected,
+						Toast.LENGTH_LONG).show();
 				startActivity(i);
 
 			}
@@ -124,20 +130,7 @@ public class ISoldi extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				/*
-				 * ListView lt = (ListView) findViewById(R.id.test_listview);
-				 * ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				 * ISoldi.this, android.R.layout.simple_list_item_1, v_list);
-				 * lt.setAdapter(adapter);
-				 */
 
-//non ci serve più un'altra Activity per le statistiche!
-				
-				// Intent intent = new Intent(ISoldi.this,
-				// Stats_Activity.class);
-				// intent.putExtra("values", v_list.toArray());
-				// intent.putExtra("time_value", t_list.toArray());
-				// startActivity(intent);
 				showUserStats();
 
 			}
@@ -195,7 +188,7 @@ public class ISoldi extends Activity {
 		final View userStatsLayout = (View) findViewById(R.id.user_stats);
 
 		ToggleButton showUserStats_button = (ToggleButton) findViewById(R.id.isoldi_statistics_button);
-		
+
 		if (showUserStats_button.isChecked()) {
 			userStatsLayout.setVisibility(View.VISIBLE);
 
