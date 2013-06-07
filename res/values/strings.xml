@@ -67,7 +67,7 @@
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno caldo</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno freddo</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenu</string>
+    <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenu o Trancio di pizza</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
     <string name="credito_residuo_isoldi">Il tuo credito residuo:</string>
     <string name="iDeciso_menu_types_intero">Menu Intero</string>

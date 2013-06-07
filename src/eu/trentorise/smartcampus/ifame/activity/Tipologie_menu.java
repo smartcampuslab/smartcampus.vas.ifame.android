@@ -23,7 +23,7 @@ public class Tipologie_menu extends TabActivity {
 		ScrollView scroll = (ScrollView)findViewById(R.id.iDeciso_tipologie_main_scrollview);
 
 		Intent i = getIntent();
-		String selected_item = i.getStringExtra("selected_item");
+		String selected_item = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 		
 		Intent intent;
 		TabSpec spec;
@@ -51,9 +51,7 @@ public class Tipologie_menu extends TabActivity {
 				menu.setCurrentTab(2);
 			}
 		}
-		
-		scroll.scrollTo(0, 0);
-		scroll.scrollBy(0, 0);
+
 	}
 
 	@Override

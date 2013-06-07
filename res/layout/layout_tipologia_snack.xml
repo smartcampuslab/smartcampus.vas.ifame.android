@@ -57,16 +57,24 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/tipologia_snack_pane2"
+            android:id="@+id/tipologia_snack_contorno_o_dessert2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_snack_secondo2"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tipologia_snack_pane2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_snack_contorno_o_dessert2"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tipologia_snack_trancio_pizza3"
+            android:id="@+id/tipologia_snack_panino_o_pizza3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -80,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_trancio_pizza3"
+            android:layout_below="@+id/tipologia_snack_panino_o_pizza3"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -93,8 +101,9 @@
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
+        
         <TextView
-            android:id="@+id/tipologia_snack_panino4"
+            android:id="@+id/tipologia_snack_insalatona4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -104,20 +113,11 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/tipologia_snack_dessert4"
+            android:id="@+id/tipologia_snack_pane4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_panino4"
-            android:layout_marginLeft="20dp"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/tipologia_snack_acqua_o_caffe4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_dessert4"
+            android:layout_below="@+id/tipologia_snack_insalatona4"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
     </RelativeLayout>

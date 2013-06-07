@@ -28,13 +28,13 @@ public class TipologiaRidotto extends Activity {
 		pane1.setText("+ "+getString(R.string.iDeciso_pane));
 		
 		//menu ridotto2
-		TextView secondo2 = (TextView) findViewById(R.id.tipologia_ridotto_secondo2);
-		TextView due_a_scelta_tra2 = (TextView) findViewById(R.id.tipologia_ridotto_2a_scelta_tra2);
+		TextView secondo_e_2contorni2 = (TextView) findViewById(R.id.tipologia_ridotto_secondo_e_2contorni2);
+		TextView dessert2 = (TextView) findViewById(R.id.tipologia_ridotto_dessert2);
 		TextView pane2 = (TextView) findViewById(R.id.tipologia_ridotto_pane2); 
 				
-		secondo2.setText("- "+getString(R.string.iDeciso_compose_menu_checkbox_second)+", ");
-		secondo2.setTypeface(null, Typeface.BOLD);
-		due_a_scelta_tra2.setText("+ "+getString(R.string.iDeciso_2a_scelta_tra)+ ": "+getString(R.string.iDeciso_contorni)+ " e "+getString(R.string.iDeciso_compose_menu_checkbox_dessert));
+		secondo_e_2contorni2.setText("- "+getString(R.string.iDeciso_compose_menu_checkbox_second)+", "+ getString(R.string.iDeciso_2contorni));
+		secondo_e_2contorni2.setTypeface(null, Typeface.BOLD);
+		dessert2.setText("+ "+getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane2.setText("+ "+getString(R.string.iDeciso_pane));
 		
 		

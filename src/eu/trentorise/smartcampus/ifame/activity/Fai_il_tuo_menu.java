@@ -1,5 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+
+import com.actionbarsherlock.ActionBarSherlock;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +27,15 @@ public class Fai_il_tuo_menu extends Activity {
 	private boolean isPanino;
 	private boolean isPizza;
 
+	public static final String SELECTED_MENU = "selected_menu";
+	public static final String PRIMO_AVAILABLE = "primoAvailable";
+	public static final String SECONDO_AVAILABLE = "secondoAvailable";
+	public static final String CONTORNO_1_AVAILABLE = "contorno1Available";
+	public static final String CONTORNO_2_AVAILABLE = "contorno2Available";
+	public static final String DESSERT_AVAILABLE = "dessertAvailable";
+	public static final String INSALATONA_AVAILABLE = "insalatonaAvailable";
+	public static final String PIZZA_AVAILABLE = "pizzaAvailable";
+	
 	public CheckBox primo;
 	public CheckBox secondo;
 	public CheckBox contorno1;
@@ -34,10 +46,10 @@ public class Fai_il_tuo_menu extends Activity {
 	public CheckBox pizza;
 
 	public enum chosenMenu {
-		Intero, Ridotto, Snack, Pizza, Panino
-	};
+		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Pizza, Panino};
 
 	public static chosenMenu menu;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,7 @@ public class Fai_il_tuo_menu extends Activity {
 
 		componiMenu();
 
+		
 		Button confirm = (Button) findViewById(R.id.confirm_menu_btn);
 		confirm.setOnClickListener(new OnClickListener() {
 
@@ -61,97 +74,249 @@ public class Fai_il_tuo_menu extends Activity {
 				isPizza = pizza.isChecked();
 				isPanino = panino.isChecked();
 
+				boolean primoAvail = false;
+				boolean secondoAvail = false;
+				boolean c1Avail = false;
+				boolean c2Avail = false;
+				boolean dessertAvail = false;
+				boolean insalatonaAvail = false;
+				boolean pizzaAvail = false;
+
+
+				
+				// no selezioni
 				if (!isPrimoPiatto && !isSecondoPiatto && !isContorno1
 						&& !isContorno2 && !isInsalatona && !isDessert
 						&& !isPizza && !isPanino) {
-					Toast toast = Toast.makeText(getApplicationContext(), R.string.iDeciso_compose_menu_no_items_selected, Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(),
+							R.string.iDeciso_compose_menu_no_items_selected,
+							Toast.LENGTH_LONG);
 					toast.show();
-					
-
-				} else {
-
-					// intero
-					if (!isPrimoPiatto && !isSecondoPiatto && !isContorno1
-							&& !isContorno2 && !isInsalatona && !isDessert
-							&& !isPizza && !isPanino)
-						menu = null;
-					else if (primo.isChecked() && secondo.isChecked())
-						Fai_il_tuo_menu.menu = chosenMenu.Intero;
-
-					// snack1
-					else if (primo.isChecked()
-							&& (!secondo.isChecked())
-							&& ((contorno1.isChecked()
-									&& !contorno2.isChecked() && !dessert
-										.isChecked())
-									^ (!contorno1.isChecked()
-											&& contorno2.isChecked() && !dessert
-												.isChecked())
-									^ (!contorno1.isChecked()
-											&& !contorno2.isChecked() && dessert
-												.isChecked()) ^ (!contorno1
-									.isChecked() && !contorno2.isChecked() && !dessert
-										.isChecked()))) {
-						menu = chosenMenu.Snack;
-					}
-					// snack2
-					else if (!primo.isChecked()
-							&& (secondo.isChecked())
-							&& ((contorno1.isChecked()
-									&& !contorno2.isChecked() && !dessert
-										.isChecked())
-									^ (!contorno1.isChecked()
-											&& contorno2.isChecked() && !dessert
-												.isChecked())
-									^ (!contorno1.isChecked()
-											&& !contorno2.isChecked() && dessert
-												.isChecked()) ^ (!contorno1
-									.isChecked() && !contorno2.isChecked() && !dessert
-										.isChecked()))) {
-						menu = chosenMenu.Snack;
-					}
-
-					// snack insalatona
-					else if (insalatona.isChecked())
-						menu = chosenMenu.Snack;
-					// snack panino
-					else if (panino.isChecked())
-						menu = chosenMenu.Snack;
-					else
-						menu = chosenMenu.Ridotto;
-
-					/*
-					 * Intent i = new Intent(Fai_il_tuo_menu.this,
-					 * MostraMenuComposto.class);
-					 */
-
-					// per ora
-					Intent i = new Intent(Fai_il_tuo_menu.this,
-							Tipologie_menu.class);
-
-					i.putExtra("isPrimoPiatto", isPrimoPiatto);
-					i.putExtra("isSecondoPiatto", isSecondoPiatto);
-					i.putExtra("isContorno1", isContorno1);
-					i.putExtra("isContorno2", isContorno2);
-					i.putExtra("isInsalatona", isInsalatona);
-					i.putExtra("isDessert", isDessert);
-					i.putExtra("isPizza", isPizza);
-					i.putExtra("isPanino", isPanino);
-
-					String selected_menu = null;
-					if (menu.equals(chosenMenu.Intero))
-						selected_menu = "Intero";
-
-					else if (menu.equals(chosenMenu.Ridotto))
-						selected_menu = "Ridotto";
-					else if (menu.equals(chosenMenu.Snack))
-						selected_menu = "Snack";
-
-					i.putExtra("selected_item", selected_menu);
-
-					startActivity(i);
-
 				}
+
+				// intero
+				else if (primo.isChecked() && secondo.isChecked()) {
+					Fai_il_tuo_menu.menu = chosenMenu.Intero;
+					if (!isContorno1)
+						c1Avail = true;
+					if (!isContorno2)
+						c2Avail = true;
+					if (!isDessert)
+						dessertAvail = true;
+				}
+
+				// snack1 ---> primo selezionato + solo uno tra i contorni o il
+				// dessert
+				else if (primo.isChecked()
+						&& (!secondo.isChecked())
+						&& ((contorno1.isChecked() && !contorno2.isChecked() && !dessert
+								.isChecked())
+								^ (!contorno1.isChecked()
+										&& contorno2.isChecked() && !dessert
+											.isChecked())
+								^ (!contorno1.isChecked()
+										&& !contorno2.isChecked() && dessert
+											.isChecked()) ^ (!contorno1
+								.isChecked() && !contorno2.isChecked() && !dessert
+									.isChecked()))) {
+
+					menu = chosenMenu.Snack1;
+
+					// se ha preso solo ed esclusivamente il primo
+					if (!contorno1.isChecked() && !contorno2.isChecked()
+							&& !dessert.isChecked()) {
+						c1Avail = true;
+						c2Avail = true;
+						dessertAvail = true;
+
+					}
+				}
+				// snack2 ---> secondo selezionato + solo uno tra i contorni o
+				// il dessert
+				else if (!primo.isChecked()
+						&& (secondo.isChecked())
+						&& ((contorno1.isChecked() && !contorno2.isChecked() && !dessert
+								.isChecked())
+								^ (!contorno1.isChecked()
+										&& contorno2.isChecked() && !dessert
+											.isChecked())
+								^ (!contorno1.isChecked()
+										&& !contorno2.isChecked() && dessert
+											.isChecked()) ^ (!contorno1
+								.isChecked() && !contorno2.isChecked() && !dessert
+									.isChecked()))) {
+					menu = chosenMenu.Snack2;
+
+					// se ha preso solo ed esclusivamente il secondo
+					if (!contorno1.isChecked() && !contorno2.isChecked()
+							&& !dessert.isChecked()) {
+						c1Avail = true;
+						c2Avail = true;
+						dessertAvail = true;
+
+					}
+				}
+
+				// snack insalatona
+				else if (insalatona.isChecked() && !dessert.isChecked()
+						&& !contorno1.isChecked() && !contorno2.isChecked())
+					menu = chosenMenu.Snack4;
+
+				// ridotto insalatona
+				else if (insalatona.isChecked()
+						&& (contorno1.isChecked() || contorno2.isChecked() || dessert
+								.isChecked()))
+					menu = chosenMenu.Ridotto3;
+
+				if (isContorno1 && !isContorno2 && !isDessert) {
+					c2Avail = true;
+					dessertAvail = true;
+				}
+
+				if (!isContorno1 && isContorno2 && !isDessert) {
+					c1Avail = true;
+					dessertAvail = true;
+				}
+				if (!isContorno1 && !isContorno2 && isDessert) {
+					c2Avail = true;
+					c1Avail = true;
+				}
+
+				// snack panino
+				else if (panino.isChecked())
+					menu = chosenMenu.Snack3;
+
+				// se ha preso il primo + almeno 2 tra contorni e dessert
+				else if (isPrimoPiatto
+						&& ((isContorno1 && isContorno2)
+								|| (isContorno1 && isDessert) || (isContorno2 && isDessert))) {
+
+					menu = chosenMenu.Ridotto1;
+
+					if (!isContorno1)
+						c1Avail = true;
+					if (!isContorno2)
+						c2Avail = true;
+					if (!isDessert)
+						dessertAvail = true;
+				}
+				
+				// se ha preso il secondo + almeno 2 tra contorni e dessert
+				else if (isSecondoPiatto
+						&& ((isContorno1 && isContorno2)
+								|| (isContorno1 && isDessert) || (isContorno2 && isDessert))) {
+
+					menu = chosenMenu.Ridotto2;
+
+					if (!isContorno1)
+						c1Avail = true;
+					if (!isContorno2)
+						c2Avail = true;
+					if (!isDessert)
+						dessertAvail = true;
+				}
+				
+				else if (isPizza)
+					menu = chosenMenu.Ridotto4;
+				
+				// se ha preso 2 contorni e il dessert a questo puÚ scegliere da R1 e R2 e quindi tra primo o secondo
+				
+				else if (isContorno1 && isContorno2 && isDessert){
+					menu = chosenMenu.Ridotto12;
+					if (!isPrimoPiatto)
+						primoAvail = true;
+					if (!isSecondoPiatto)
+						secondoAvail = true;
+				}
+				
+				// se ha preso 2 tra contorni e dessert allora puÚ scegliere qualsiasi tipo di ridotto 
+				else if (isContorno1 && isContorno2 && !isDessert){
+					menu = chosenMenu.Ridotto1234;
+					
+					primoAvail = true;
+					secondoAvail = true;
+					insalatonaAvail = true;
+					pizzaAvail = true;
+					dessertAvail = true;
+				}
+				else if (isContorno1 && !isContorno2 && isDessert){
+					menu = chosenMenu.Ridotto1234;	
+					
+					primoAvail = true;
+					secondoAvail = true;
+					insalatonaAvail = true;
+					pizzaAvail = true;
+					c2Avail = true;
+				}
+				else if (!isContorno1 && isContorno2 && isDessert){
+					menu = chosenMenu.Ridotto1234;	
+					
+					primoAvail = true;
+					secondoAvail = true;
+					insalatonaAvail = true;
+					pizzaAvail = true;
+					c1Avail = true;
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+
+				Intent i = new Intent(Fai_il_tuo_menu.this,
+						Tipologie_menu.class);
+
+				i.putExtra("isPrimoPiatto", isPrimoPiatto);
+				i.putExtra("isSecondoPiatto", isSecondoPiatto);
+				i.putExtra("isContorno1", isContorno1);
+				i.putExtra("isContorno2", isContorno2);
+				i.putExtra("isInsalatona", isInsalatona);
+				i.putExtra("isDessert", isDessert);
+				i.putExtra("isPizza", isPizza);
+				i.putExtra("isPanino", isPanino);
+
+				i.putExtra(CONTORNO_1_AVAILABLE, c1Avail);
+				i.putExtra(CONTORNO_2_AVAILABLE, c2Avail);
+				i.putExtra(PRIMO_AVAILABLE, primoAvail);
+				i.putExtra(SECONDO_AVAILABLE, secondoAvail);
+				i.putExtra(DESSERT_AVAILABLE, dessertAvail);
+				i.putExtra(INSALATONA_AVAILABLE, insalatonaAvail);
+				i.putExtra(PIZZA_AVAILABLE, pizzaAvail);
+				
+				
+				
+				String selected_menu = null;
+				if (menu.equals(chosenMenu.Intero))
+					selected_menu = "Intero";
+				else if (menu.equals(chosenMenu.Ridotto1))
+					selected_menu = "Ridotto1";
+				else if (menu.equals(chosenMenu.Ridotto2))
+					selected_menu = "Ridotto2";
+				else if (menu.equals(chosenMenu.Ridotto3))
+					selected_menu = "Ridotto3";
+				else if (menu.equals(chosenMenu.Ridotto4))
+					selected_menu = "Ridotto4";
+				else if (menu.equals(chosenMenu.Ridotto12))
+					selected_menu = "Ridotto12";
+				else if (menu.equals(chosenMenu.Ridotto1234))
+					selected_menu = "Ridotto1234";
+				else if (menu.equals(chosenMenu.Snack1))
+					selected_menu = "Snack1";
+				else if (menu.equals(chosenMenu.Snack2))
+					selected_menu = "Snack2";
+				else if (menu.equals(chosenMenu.Snack3))
+					selected_menu = "Snack3";
+				else if (menu.equals(chosenMenu.Snack4))
+					selected_menu = "Snack4";
+				
+
+				i.putExtra(SELECTED_MENU, selected_menu);
+
+				startActivity(i);
+
 			}
 		});
 	}
@@ -174,6 +339,8 @@ public class Fai_il_tuo_menu extends Activity {
 		insalatona = (CheckBox) findViewById(R.id.insalatona);
 		pizza = (CheckBox) findViewById(R.id.pizza);
 
+		// quando rilascio, se c1 c2 e dessert allora non devo liberare
+		// insalatona
 		primo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -189,6 +356,12 @@ public class Fai_il_tuo_menu extends Activity {
 					// panino.setChecked(false);
 
 				} else {
+					if (!secondo.isChecked()
+							&& !panino.isChecked()
+							&& !pizza.isChecked()
+							&& !(contorno1.isChecked() && contorno2.isChecked() && dessert
+									.isChecked()))
+						insalatona.setEnabled(true);
 
 					if (!pizza.isChecked() && !secondo.isChecked()
 							&& !contorno2.isChecked() && !dessert.isChecked()
@@ -207,6 +380,8 @@ public class Fai_il_tuo_menu extends Activity {
 			}
 		});
 
+		// quando rilascio, se c1 c2 e dessert allora non devo liberare
+		// insalatona
 		secondo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -221,6 +396,12 @@ public class Fai_il_tuo_menu extends Activity {
 					// panino.setChecked(false);
 
 				} else {
+					if (!primo.isChecked()
+							&& !panino.isChecked()
+							&& !pizza.isChecked()
+							&& !(contorno1.isChecked() && contorno2.isChecked() && dessert
+									.isChecked()))
+						insalatona.setEnabled(true);
 					if (!pizza.isChecked() && !primo.isChecked()
 							&& !contorno2.isChecked() && !dessert.isChecked()
 							&& !panino.isChecked() && !contorno1.isChecked())
@@ -275,7 +456,10 @@ public class Fai_il_tuo_menu extends Activity {
 		});
 
 		insalatona.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
+			/*
+			 * non escludere i contorni e il dessert. la cosa importante Ë che
+			 * solo 2 su 3 siano selezionati
+			 */
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
@@ -288,17 +472,29 @@ public class Fai_il_tuo_menu extends Activity {
 					primo.setChecked(false);
 					secondo.setEnabled(false);
 					secondo.setChecked(false);
-					dessert.setEnabled(false);
-					dessert.setChecked(false);
-					contorno1.setEnabled(false);
-					contorno1.setChecked(false);
-					contorno2.setEnabled(false);
-					contorno2.setChecked(false);
+					if // da ripetere in !isChecked
+					(contorno1.isChecked() && contorno2.isChecked()) {
+						dessert.setEnabled(false);
+						dessert.setChecked(false);
+					}
+
+					if (contorno2.isChecked() && dessert.isChecked()) {
+						contorno1.setEnabled(false);
+						contorno1.setChecked(false);
+					}
+					if (contorno1.isChecked() && dessert.isChecked()) {
+						contorno2.setEnabled(false);
+						contorno2.setChecked(false);
+					}
 
 				} else {
 
-					panino.setEnabled(true);
-					pizza.setEnabled(true);
+					if (!primo.isChecked() && !secondo.isChecked()
+							&& !contorno1.isChecked() && !contorno2.isChecked()
+							&& !dessert.isChecked()) {
+						panino.setEnabled(true);
+						pizza.setEnabled(true);
+					}
 					primo.setEnabled(true);
 					secondo.setEnabled(true);
 					contorno1.setEnabled(true);
@@ -350,17 +546,34 @@ public class Fai_il_tuo_menu extends Activity {
 					boolean isChecked) {
 				if (isChecked) {
 
-					insalatona.setEnabled(false);
-					insalatona.setChecked(false);
+					if (contorno2.isChecked() && dessert.isChecked()) {
+						insalatona.setEnabled(false);
+						insalatona.setChecked(false);
+					}
+
+					if (insalatona.isChecked() && contorno2.isChecked())
+						dessert.setEnabled(false);
+					if (insalatona.isChecked() && dessert.isChecked()) {
+						contorno2.setEnabled(false);
+					}
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					pizza.setChecked(false);
 					pizza.setEnabled(false);
 				} else {
 
+					contorno2.setEnabled(true);
+					dessert.setEnabled(true);
+
 					if (!primo.isChecked() && !secondo.isChecked()
-							&& !contorno2.isChecked() && !dessert.isChecked()
-							&& !panino.isChecked() && !pizza.isChecked())
+							&& !panino.isChecked() && !pizza.isChecked()
+							&& !contorno1.isChecked() && !dessert.isChecked()) {
+						dessert.setEnabled(true);
+						contorno2.setEnabled(true);
+						insalatona.setEnabled(true);
+					}
+					if (!primo.isChecked() && !secondo.isChecked()
+							&& !pizza.isChecked() && !panino.isChecked())
 						insalatona.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()
 							&& !contorno2.isChecked() && !dessert.isChecked()
@@ -381,16 +594,32 @@ public class Fai_il_tuo_menu extends Activity {
 					boolean isChecked) {
 				if (isChecked) {
 
-					insalatona.setEnabled(false);
-					insalatona.setChecked(false);
+					if (contorno1.isChecked() && dessert.isChecked()) {
+						insalatona.setEnabled(false);
+						insalatona.setChecked(false);
+					}
+
+					if (insalatona.isChecked() && contorno1.isChecked())
+						dessert.setEnabled(false);
+					if (insalatona.isChecked() && dessert.isChecked()) {
+						contorno1.setEnabled(false);
+					}
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					pizza.setChecked(false);
 					pizza.setEnabled(false);
 				} else {
+					contorno1.setEnabled(true);
+					dessert.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()
-							&& !contorno1.isChecked() && !dessert.isChecked()
-							&& !panino.isChecked() && !pizza.isChecked())
+							&& !panino.isChecked() && !pizza.isChecked()
+							&& !contorno1.isChecked() && !dessert.isChecked()) {
+						insalatona.setEnabled(true);
+						dessert.setEnabled(true);
+						contorno1.setEnabled(true);
+					}
+					if (!primo.isChecked() && !secondo.isChecked()
+							&& !pizza.isChecked() && !panino.isChecked())
 						insalatona.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()
 							&& !contorno1.isChecked() && !dessert.isChecked()
@@ -412,18 +641,30 @@ public class Fai_il_tuo_menu extends Activity {
 					boolean isChecked) {
 
 				if (isChecked) {
-					insalatona.setEnabled(false);
-					insalatona.setChecked(false);
+					if (contorno2.isChecked() && contorno1.isChecked()) {
+						insalatona.setEnabled(false);
+						insalatona.setChecked(false);
+					}
+					if (insalatona.isChecked() && contorno2.isChecked())
+						contorno1.setEnabled(false);
+					if (insalatona.isChecked() && contorno1.isChecked()) {
+						contorno2.setEnabled(false);
+					}
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					pizza.setEnabled(false);
 					pizza.setChecked(false);
 
 				} else {
+					contorno2.setEnabled(true);
+					contorno1.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()
-							&& !contorno1.isChecked() && !contorno2.isChecked()
-							&& !panino.isChecked() && !pizza.isChecked())
+
+					&& !panino.isChecked() && !pizza.isChecked()) {
+						contorno2.setEnabled(true);
+						contorno1.setEnabled(true);
 						insalatona.setEnabled(true);
+					}
 					if (!primo.isChecked() && !secondo.isChecked()
 							&& !contorno1.isChecked() && !contorno2.isChecked()
 							&& !insalatona.isChecked() && !pizza.isChecked())
@@ -437,98 +678,5 @@ public class Fai_il_tuo_menu extends Activity {
 			}
 		});
 
-		// caterba di ifssss
-		/*
-		 * // intero if (primo.isChecked() && secondo.isChecked())
-		 * Fai_il_tuo_menu.menu = chosenMenu.Intero;
-		 * 
-		 * // snack1 else if (primo.isChecked() && (!secondo.isChecked()) &&
-		 * ((contorno1.isChecked() && !contorno2.isChecked() && !dessert
-		 * .isChecked()) ^ (!contorno1.isChecked() && contorno2.isChecked() &&
-		 * !dessert .isChecked()) ^ (!contorno1.isChecked() &&
-		 * !contorno2.isChecked() && dessert .isChecked()) ^
-		 * (!contorno1.isChecked() && !contorno2.isChecked() &&
-		 * !dessert.isChecked()))) { menu = chosenMenu.Snack; } // snack2 else
-		 * if (!primo.isChecked() && (secondo.isChecked()) &&
-		 * ((contorno1.isChecked() && !contorno2.isChecked() && !dessert
-		 * .isChecked()) ^ (!contorno1.isChecked() && contorno2.isChecked() &&
-		 * !dessert .isChecked()) ^ (!contorno1.isChecked() &&
-		 * !contorno2.isChecked() && dessert .isChecked()) ^
-		 * (!contorno1.isChecked() && !contorno2.isChecked() &&
-		 * !dessert.isChecked()))) { menu = chosenMenu.Snack; }
-		 * 
-		 * // snack insalatona else if (insalatona.isChecked()) menu =
-		 * chosenMenu.Snack; //snack panino else if (panino.isChecked()) menu =
-		 * chosenMenu.Snack; else menu = chosenMenu.Ridotto;
-		 */
-
 	}
 }
-
-/*
- * primo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
- * 
- * @Override public void onCheckedChanged(CompoundButton buttonView, boolean
- * isChecked) { if (!isChecked) { //noprimo
- * 
- * if (secondo.isChecked()){//secondo if(contorno1.isChecked()){ //secondo
- * contorno1 if (contorno2.isChecked()){ //secondo c1 c2
- * 
- * } else{ //secondo c1 noc2 } } else{ //secondo e no contorno1 } } else{
- * //tutti i casi in cui il secondo no }
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * }
- * 
- * else { // primo selezionato insalatona.setEnabled(false);
- * insalatona.setChecked(false); pizza.setEnabled(false);
- * pizza.setChecked(false); panino.setEnabled(false); panino.setChecked(false);
- * 
- * if (secondo.isChecked()) { menu = chosenMenu.Intero;
- * contorno1.setEnabled(true); contorno2.setEnabled(true);
- * dessert.setEnabled(true); } else { // preso il primo ma non il secondo if
- * (contorno1.isChecked()) { // primo contorno 1 if (contorno2.isChecked()) { //
- * primo contorno1 // contorno 2 // --->ridotto menu = chosenMenu.Ridotto;
- * dessert.setEnabled(true); } else { // primo cortorno 1 if
- * (dessert.isChecked()) { // primo contorno1 // dessert --> // Ridotto
- * 
- * menu = chosenMenu.Ridotto;
- * 
- * } else { // primo contorno1 menu = chosenMenu.Snack; }
- * 
- * } } else {// primo if (contorno2.isChecked()) { // primo contorno2 if
- * (dessert.isChecked()) { // primo contorno2 dessert
- * 
- * menu = chosenMenu.Ridotto;
- * 
- * } else { // primo contorno2 menu = chosenMenu.Snack; }
- * 
- * } else {// primo //che abbia o no il dessert sono in snack menu =
- * chosenMenu.Snack;
- * 
- * } } } } //fine del primo selezionato con tutte le altre possibilit√†
- * 
- * } });
- * 
- * secondo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
- * 
- * @Override public void onCheckedChanged(CompoundButton buttonView, boolean
- * isChecked) { // TODO Auto-generated method stub
- * 
- * } });
- */
-
