@@ -111,5 +111,7 @@
     <string name="iDeciso_pizza">Pizza</string>
     <string name="title_activity_tipologie_menu_fr">Tipologie di menu</string>
     <string name="title_activity_tipologia_intero_fragment">Tipologia Intero</string>
+    <string name="iFretta_set_as_favourite_webcam">Webcam preferita</string>
+    <string name="iFretta_search_in_ViviTrento">Cerca in ViviTrento</string>
 
 </resources>

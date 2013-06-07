@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:paddingTop="20dp"
-		android:paddingBottom="20dp"
-		android:paddingLeft="20dp"
-		android:paddingRight="15dp"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall" 
-		android:drawableRight="@drawable/arrow_dark" />
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:drawableRight="@drawable/arrow_dark"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="15dp"
+    android:paddingTop="20dp"
+    android:textAppearance="?android:attr/textAppearanceSmall" />

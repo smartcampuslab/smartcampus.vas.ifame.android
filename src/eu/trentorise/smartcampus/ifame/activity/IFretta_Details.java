@@ -4,20 +4,28 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 
 public class IFretta_Details extends Activity {
+	
+	private MenuItem menuItem;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,6 +61,25 @@ public class IFretta_Details extends Activity {
 		//
 		// btn.setBackgroundColor(Color.parseColor("#228B22"));
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.ifretta_menu, menu);
+	    return true;
+	}
+	
+	@Override
+	  public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case R.id.action_settings:
+	      menuItem = item;
+	      break;
+	    default:
+	      break;
+	    }
+	    return true;
+	  }
 	
 	//It is advisable to use async task to retrieve data or perform network task
 	//Otherwise an exception will be thrown 

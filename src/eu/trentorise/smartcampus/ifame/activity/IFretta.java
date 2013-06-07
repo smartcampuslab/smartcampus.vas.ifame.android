@@ -2,6 +2,10 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.List;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,18 +32,30 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class IFretta extends Activity {
+public class IFretta extends SherlockActivity {
 
 	ProgressDialog pd;
-
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.ifretta);
 
 		pd = new ProgressDialog(IFretta.this).show(IFretta.this, "iFretta",
 				"Loading...");
 
 		new IFrettaConnector(IFretta.this).execute();
+		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+		
 	}
 
 	/*
@@ -65,10 +81,10 @@ public class IFretta extends Activity {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.mensa_text, null);
+			convertView = inflater.inflate(R.layout.layout_list_view_ifretta, null);
 
 			TextView nome_mensa = (TextView) convertView
-					.findViewById(R.id.mensa_nameView);
+					.findViewById(R.id.list_ifretta);
 			Mensa m = getItem(position);
 
 			nome_mensa.setText(m.getMensa_name());
@@ -165,7 +181,7 @@ public class IFretta extends Activity {
 		List<Mensa> mense = list.getList();
 
 		MyArrayAdapter adapter = new MyArrayAdapter(this,
-				R.layout.layout_list_view_ideciso, mense);
+				R.layout.layout_list_view_ifretta, mense);
 
 		ifretta_listView.setAdapter(adapter);
 		ifretta_listView.setOnItemClickListener(new OnItemClickListener() {
