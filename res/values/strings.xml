@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -113,5 +113,8 @@
     <string name="title_activity_tipologia_intero_fragment">Tipologia Intero</string>
     <string name="iFretta_set_as_favourite_webcam">Webcam preferita</string>
     <string name="iFretta_search_in_ViviTrento">Cerca in ViviTrento</string>
+    <string name="iFame_ridotto">Ridotto</string>
+    <string name="iFame_intero">Intero</string>
+    <string name="iFame_snack">Snack</string>
 
 </resources>
