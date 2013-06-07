@@ -71,8 +71,8 @@ public class ISoldi extends Activity {
 				// trova qual'è l'oggetto schiacciato
 				String selected = (String) parent.getItemAtPosition(position);
 
-				Intent i = new Intent(ISoldi.this, Tipologie_menu.class);
-				i.putExtra("selected_item", selected);
+				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, selected);
 				startActivity(i);
 
 			}

@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eu.trentorise.smartcampus.ifame"
@@ -160,16 +160,12 @@
             android:label="@string/title_activity_menu_giorno_tab" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.TipologiaIntero"
-            android:label="@string/title_activity_tipologia_intero" >
+            android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr"
+            android:label="@string/title_activity_tipologie_menu_fr" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.TipologiaRidotto"
-            android:label="@string/title_activity_tipologia_ridotto" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.TipologiaSnack"
-            android:label="@string/title_activity_tipologia_snack" >
+            android:name="eu.trentorise.smartcampus.ifame.tabs.TipologiaInteroFragment"
+            android:label="@string/title_activity_tipologia_intero_fragment" >
         </activity>
     </application>
 

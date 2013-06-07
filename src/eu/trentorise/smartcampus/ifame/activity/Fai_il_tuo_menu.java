@@ -267,7 +267,7 @@ public class Fai_il_tuo_menu extends Activity {
 				
 
 				Intent i = new Intent(Fai_il_tuo_menu.this,
-						Tipologie_menu.class);
+						Tipologie_menu_fr.class);
 
 				i.putExtra("isPrimoPiatto", isPrimoPiatto);
 				i.putExtra("isSecondoPiatto", isSecondoPiatto);
