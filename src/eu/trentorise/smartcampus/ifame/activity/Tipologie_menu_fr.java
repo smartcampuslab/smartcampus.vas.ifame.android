@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -24,11 +25,20 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		boolean from_componi = getIntent().getBooleanExtra(
+				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
 		String selected_menu = null;
-		selected_menu = getIntent().getStringExtra(
-				Fai_il_tuo_menu.SELECTED_MENU);
-		getIntent().removeExtra(Fai_il_tuo_menu.SELECTED_MENU);
-
+		
+		if (from_componi) {
+			selected_menu = getIntent().getStringExtra(
+					Fai_il_tuo_menu.SELECTED_MENU);
+			getIntent().removeExtra(Fai_il_tuo_menu.SELECTED_MENU);
+		}
+		else {
+			getIntent().removeExtra(Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE);
+			getIntent().removeExtra(Fai_il_tuo_menu.SELECTED_MENU);
+		}
+		
 		// getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// getSupportActionBar().setDisplayShowTitleEnabled(true);
 		setContentView(R.layout.empty_layout);
@@ -56,8 +66,9 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		snackTab.setText(R.string.iFame_snack);
 		getSupportActionBar().addTab(snackTab);
 
-		if (selected_menu != null){
-			
+		
+		if (from_componi && selected_menu != null){
+
 			if (selected_menu.equals("Intero"))
 				interoTab.select();
 

@@ -1,6 +1,5 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-
 import com.actionbarsherlock.ActionBarSherlock;
 
 import android.app.Activity;
@@ -28,6 +27,7 @@ public class Fai_il_tuo_menu extends Activity {
 	private boolean isPizza;
 
 	public static final String SELECTED_MENU = "selected_menu";
+	public static final String HAS_CALLED_TIPOLOGIE = "has_called_tipologie";
 	public static final String PRIMO_AVAILABLE = "primoAvailable";
 	public static final String SECONDO_AVAILABLE = "secondoAvailable";
 	public static final String CONTORNO_1_AVAILABLE = "contorno1Available";
@@ -43,7 +43,7 @@ public class Fai_il_tuo_menu extends Activity {
 	public static final String IS_DESSERT = "isDessert";
 	public static final String IS_PANINO = "isPanino";
 	public static final String IS_PIZZA = "isPizza";
-	
+
 	public CheckBox primo;
 	public CheckBox secondo;
 	public CheckBox contorno1;
@@ -54,10 +54,10 @@ public class Fai_il_tuo_menu extends Activity {
 	public CheckBox pizza;
 
 	public enum chosenMenu {
-		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Snack12, Pizza, Panino};
+		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Snack12, Pizza, Panino
+	};
 
 	public static chosenMenu menu;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,6 @@ public class Fai_il_tuo_menu extends Activity {
 
 		componiMenu();
 
-		
 		Button confirm = (Button) findViewById(R.id.confirm_menu_btn);
 		confirm.setOnClickListener(new OnClickListener() {
 
@@ -90,8 +89,6 @@ public class Fai_il_tuo_menu extends Activity {
 				boolean insalatonaAvail = false;
 				boolean pizzaAvail = false;
 
-
-				
 				// no selezioni
 				if (!isPrimoPiatto && !isSecondoPiatto && !isContorno1
 						&& !isContorno2 && !isInsalatona && !isDessert
@@ -134,7 +131,6 @@ public class Fai_il_tuo_menu extends Activity {
 					if (!contorno1.isChecked() && !contorno2.isChecked()
 							&& !dessert.isChecked()) {
 						c1Avail = true;
-						c2Avail = true;
 						dessertAvail = true;
 
 					}
@@ -173,42 +169,49 @@ public class Fai_il_tuo_menu extends Activity {
 				// ridotto insalatona
 				else if (insalatona.isChecked()
 						&& (contorno1.isChecked() || contorno2.isChecked() || dessert
-								.isChecked()))
+								.isChecked())) {
 					menu = chosenMenu.Ridotto3;
 
-				if (isContorno1 && !isContorno2 && !isDessert) {
-					c2Avail = true;
-					dessertAvail = true;
-				}
+					// se oltre all'insalata ha preso solo uno tra contorni e
+					// dessert
+					if (isContorno1 && !isContorno2 && !isDessert) {
+						c2Avail = true;
+						dessertAvail = true;
+					}
 
-				if (!isContorno1 && isContorno2 && !isDessert) {
-					c1Avail = true;
-					dessertAvail = true;
-				}
-				if (!isContorno1 && !isContorno2 && isDessert) {
-					c2Avail = true;
-					c1Avail = true;
-				}
+					if (!isContorno1 && isContorno2 && !isDessert) {
+						c1Avail = true;
+						dessertAvail = true;
+					}
+					if (!isContorno1 && !isContorno2 && isDessert) {
+						c2Avail = true;
+						c1Avail = true;
+					}
+										
+					// se oltre all'insalata ha preso 2 tra contorni e dessert non fare niente, non puoi più prendere altro a parte il pane
+					
 
+					/*if ((isContorno1 && isContorno2)
+							|| (isContorno1 && isDessert)
+							|| (isContorno2 && isDessert)) {
+						
+
+					}*/
+
+				}
 				// snack panino
 				else if (panino.isChecked())
 					menu = chosenMenu.Snack3;
 
-				// se ha preso il primo + almeno 2 tra contorni e dessert
+				// se ha preso il primo + almeno 2 tra contorni e dessert non mettere niente come available
 				else if (isPrimoPiatto
 						&& ((isContorno1 && isContorno2)
 								|| (isContorno1 && isDessert) || (isContorno2 && isDessert))) {
 
 					menu = chosenMenu.Ridotto1;
-
-					if (!isContorno1)
-						c1Avail = true;
-					if (!isContorno2)
-						c2Avail = true;
-					if (!isDessert)
-						dessertAvail = true;
+					
 				}
-				
+
 				// se ha preso il secondo + almeno 2 tra contorni e dessert
 				else if (isSecondoPiatto
 						&& ((isContorno1 && isContorno2)
@@ -216,90 +219,60 @@ public class Fai_il_tuo_menu extends Activity {
 
 					menu = chosenMenu.Ridotto2;
 
-					if (!isContorno1)
-						c1Avail = true;
-					if (!isContorno2)
-						c2Avail = true;
-					if (!isDessert)
-						dessertAvail = true;
 				}
-				
+
 				else if (isPizza)
 					menu = chosenMenu.Ridotto4;
+
 				
-				// se ha preso 2 contorni e il dessert a questo può scegliere da R1 e R2 e quindi tra primo o secondo
-				
-				else if (isContorno1 && isContorno2 && isDessert){
+				// se ha preso 2 contorni e 1 dessert a questo può scegliere da
+				// R1 e R2 e quindi tra primo o secondo
+
+				else if (isContorno1 && isContorno2 && isDessert) {
 					menu = chosenMenu.Ridotto12;
 					if (!isPrimoPiatto)
 						primoAvail = true;
 					if (!isSecondoPiatto)
 						secondoAvail = true;
 				}
-				
-				// se ha preso 2 tra contorni e dessert allora può scegliere qualsiasi tipo di ridotto 
-				else if (isContorno1 && isContorno2 && !isDessert){
+
+				// se ha preso 2 TRA contorni e dessert allora può scegliere
+				// qualsiasi tipo di ridotto
+				else if (isContorno1 && isContorno2 && !isDessert) {
 					menu = chosenMenu.Ridotto1234;
-					
+
 					primoAvail = true;
 					secondoAvail = true;
 					insalatonaAvail = true;
 					pizzaAvail = true;
 					dessertAvail = true;
-				}
-				else if (isContorno1 && !isContorno2 && isDessert){
-					menu = chosenMenu.Ridotto1234;	
-					
+				} else if (isContorno1 && !isContorno2 && isDessert) {
+					menu = chosenMenu.Ridotto1234;
+
 					primoAvail = true;
 					secondoAvail = true;
 					insalatonaAvail = true;
 					pizzaAvail = true;
 					c2Avail = true;
-				}
-				else if (!isContorno1 && isContorno2 && isDessert){
-					menu = chosenMenu.Ridotto1234;	
-					
+				} else if (!isContorno1 && isContorno2 && isDessert) {
+					menu = chosenMenu.Ridotto1234;
+
 					primoAvail = true;
 					secondoAvail = true;
 					insalatonaAvail = true;
 					pizzaAvail = true;
 					c1Avail = true;
 				}
-				
-				//se ho preso solo ed esclusivamente il contorno1
-				else if (isContorno1 && !isContorno2 && !isDessert){
+
+				// se ho preso solo ed esclusivamente il contorno1
+				else if ((isContorno1 && !isContorno2 && !isDessert)
+						^ (!isContorno1 && isContorno2 && !isDessert)
+						^ (!isContorno1 && !isContorno2 && isDessert)) {
 					menu = chosenMenu.Snack12;
-					//available tutte le composizioni di snack 1 e 2
+					// available tutte le composizioni di snack 1 e 2
 					primoAvail = true;
 					secondoAvail = true;
-					
-					
-					
-				
-					
-					
-				} 	
-				//se ho preso solo ed esclusivamente il contorno2
-				else if (!isContorno1 && isContorno2 && !isDessert){
-					menu = chosenMenu.Snack12;
-					primoAvail = true;
-					secondoAvail = true;
-					
-					
 				}
-				//se ho preso solo ed esclusivamente il dessert
-				else if (!isContorno1 && !isContorno2 && isDessert){
-					menu = chosenMenu.Snack12;
-					primoAvail = true;
-					secondoAvail = true;
-					
-				}
-				
-				
-				
-				
-				
-				
 				
 				
 
@@ -322,9 +295,7 @@ public class Fai_il_tuo_menu extends Activity {
 				i.putExtra(DESSERT_AVAILABLE, dessertAvail);
 				i.putExtra(INSALATONA_AVAILABLE, insalatonaAvail);
 				i.putExtra(PIZZA_AVAILABLE, pizzaAvail);
-				
-				
-				
+
 				String selected_menu = null;
 				if (menu.equals(chosenMenu.Intero))
 					selected_menu = "Intero";
@@ -350,10 +321,11 @@ public class Fai_il_tuo_menu extends Activity {
 					selected_menu = "Snack4";
 				else if (menu.equals(chosenMenu.Snack12))
 					selected_menu = "Snack12";
-				
 
+				i.putExtra(HAS_CALLED_TIPOLOGIE, true);
 				i.putExtra(SELECTED_MENU, selected_menu);
-				Toast.makeText(getApplicationContext(), selected_menu, Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), selected_menu,
+						Toast.LENGTH_LONG).show();
 				startActivity(i);
 
 			}
