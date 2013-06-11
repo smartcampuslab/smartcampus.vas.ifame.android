@@ -1,7 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;

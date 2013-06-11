@@ -57,14 +57,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.template.FileActivity"
-            android:label="@string/title_activity_file" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.storage.dropbox.DropboxAuth"
-            android:configChanges="orientation|keyboard" >
-        </activity>
+      
         <activity
             android:name="com.dropbox.client2.android.AuthActivity"
             android:configChanges="orientation|keyboard"
@@ -77,7 +70,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>   
+
 
         <service
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticationService"
@@ -112,20 +106,8 @@
             android:label="@string/title_activity_isoldi" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno"
-            android:label="@string/title_activity_menu_giorno" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno_alternative"
-            android:label="@string/title_activity_menu_giorno_alternative" >
-        </activity>
-        <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu"
             android:label="@string/title_activity_fai_il_tuo_menu" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu"
-            android:label="@string/title_activity_tipologie_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_mese"
@@ -136,18 +118,6 @@
             android:label="@string/title_activity_ifretta_details" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_Intero"
-            android:label="@string/title_activity_menu__intero" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_Ridotto"
-            android:label="@string/title_activity_menu__ridotto" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_snack"
-            android:label="@string/title_activity_menu_snack" >
-        </activity>
-        <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Stats_Activity"
             android:label="@string/stats_activity" >
         </activity>
@@ -156,16 +126,8 @@
             android:label="@string/title_activity_menu_giorno_tab" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno_tab"
-            android:label="@string/title_activity_menu_giorno_tab" >
-        </activity>
-        <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr"
             android:label="@string/title_activity_tipologie_menu_fr" >
-        </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.tabs.TipologiaInteroFragment"
-            android:label="@string/title_activity_tipologia_intero_fragment" >
         </activity>
     </application>
 
