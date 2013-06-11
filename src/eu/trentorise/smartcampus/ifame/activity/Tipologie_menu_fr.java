@@ -32,12 +32,9 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		if (from_componi) {
 			selected_menu = getIntent().getStringExtra(
 					Fai_il_tuo_menu.SELECTED_MENU);
-			getIntent().removeExtra(Fai_il_tuo_menu.SELECTED_MENU);
 		}
-		else {
-			getIntent().removeExtra(Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE);
-			getIntent().removeExtra(Fai_il_tuo_menu.SELECTED_MENU);
-		}
+
+		
 		
 		// getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// getSupportActionBar().setDisplayShowTitleEnabled(true);

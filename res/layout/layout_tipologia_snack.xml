@@ -29,20 +29,38 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/tipologia_snack_contorno_o_dessert1"
+            android:id="@+id/tipologia_snack_contorno1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_snack_primo1"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/tipologia_snack_o1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tipologia_snack_contorno1"
+            android:layout_alignBottom="@+id/tipologia_snack_contorno1"
+            android:textSize="15sp" 
+            android:text="@string/iDeciso_o" />
+        
+        <TextView
+            android:id="@+id/tipologia_snack_dessert1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tipologia_snack_o1"
+            android:layout_alignBottom="@+id/tipologia_snack_contorno1"
+            android:textSize="15sp" />
+        
 
         <TextView
             android:id="@+id/tipologia_snack_pane1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_contorno_o_dessert1"
+            android:layout_below="@+id/tipologia_snack_contorno1"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -57,19 +75,37 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/tipologia_snack_contorno_o_dessert2"
+            android:id="@+id/tipologia_snack_contorno2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_snack_secondo2"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/tipologia_snack_o2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tipologia_snack_contorno2"
+            android:layout_alignBottom="@+id/tipologia_snack_contorno2"
+            android:textSize="15sp" 
+            android:text="@string/iDeciso_o" />
+        
+        <TextView
+            android:id="@+id/tipologia_snack_dessert2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tipologia_snack_o2"
+            android:layout_alignBottom="@+id/tipologia_snack_contorno2"
+            android:textSize="15sp" />
+        
         <TextView
             android:id="@+id/tipologia_snack_pane2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_contorno_o_dessert2"
+            android:layout_below="@+id/tipologia_snack_contorno2"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 

@@ -37,21 +37,22 @@
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tipologia_intero_pane"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_2contorni"
-            android:layout_marginLeft="20dp"
-            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tipologia_intero_dessert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_pane"
+            android:layout_below="@+id/tipologia_intero_2contorni"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/tipologia_intero_pane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_intero_dessert"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
     </RelativeLayout>

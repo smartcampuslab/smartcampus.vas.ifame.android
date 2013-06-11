@@ -248,7 +248,6 @@ public class Fai_il_tuo_menu extends Activity {
 					dessertAvail = true;
 				} else if (isContorno1 && !isContorno2 && isDessert) {
 					menu = chosenMenu.Ridotto1234;
-
 					primoAvail = true;
 					secondoAvail = true;
 					insalatonaAvail = true;
@@ -264,7 +263,7 @@ public class Fai_il_tuo_menu extends Activity {
 					c1Avail = true;
 				}
 
-				// se ho preso solo ed esclusivamente il contorno1
+				// se ho preso solo ed esclusivamente 1 tra contorni e dessert
 				else if ((isContorno1 && !isContorno2 && !isDessert)
 						^ (!isContorno1 && isContorno2 && !isDessert)
 						^ (!isContorno1 && !isContorno2 && isDessert)) {
@@ -324,8 +323,6 @@ public class Fai_il_tuo_menu extends Activity {
 
 				i.putExtra(HAS_CALLED_TIPOLOGIE, true);
 				i.putExtra(SELECTED_MENU, selected_menu);
-				Toast.makeText(getApplicationContext(), selected_menu,
-						Toast.LENGTH_LONG).show();
 				startActivity(i);
 
 			}
