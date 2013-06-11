@@ -27,6 +27,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		String selected_menu = null;
 		selected_menu = getIntent().getStringExtra(
 				Fai_il_tuo_menu.SELECTED_MENU);
+		getIntent().removeExtra(Fai_il_tuo_menu.SELECTED_MENU);
 
 		// getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -72,7 +73,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 					|| selected_menu.equals("Snack2")
 					|| selected_menu.equals("Snack3")
 					|| selected_menu.equals("Snack4")
-					|| selected_menu.equals("Snack1234"))
+					|| selected_menu.equals("Snack12"))
 
 				snackTab.select();
 

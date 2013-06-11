@@ -54,7 +54,7 @@ public class Fai_il_tuo_menu extends Activity {
 	public CheckBox pizza;
 
 	public enum chosenMenu {
-		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Snack1234, Pizza, Panino};
+		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Snack12, Pizza, Panino};
 
 	public static chosenMenu menu;
 
@@ -266,6 +266,35 @@ public class Fai_il_tuo_menu extends Activity {
 					c1Avail = true;
 				}
 				
+				//se ho preso solo ed esclusivamente il contorno1
+				else if (isContorno1 && !isContorno2 && !isDessert){
+					menu = chosenMenu.Snack12;
+					//available tutte le composizioni di snack 1 e 2
+					primoAvail = true;
+					secondoAvail = true;
+					
+					
+					
+				
+					
+					
+				} 	
+				//se ho preso solo ed esclusivamente il contorno2
+				else if (!isContorno1 && isContorno2 && !isDessert){
+					menu = chosenMenu.Snack12;
+					primoAvail = true;
+					secondoAvail = true;
+					
+					
+				}
+				//se ho preso solo ed esclusivamente il dessert
+				else if (!isContorno1 && !isContorno2 && isDessert){
+					menu = chosenMenu.Snack12;
+					primoAvail = true;
+					secondoAvail = true;
+					
+				}
+				
 				
 				
 				
@@ -319,10 +348,12 @@ public class Fai_il_tuo_menu extends Activity {
 					selected_menu = "Snack3";
 				else if (menu.equals(chosenMenu.Snack4))
 					selected_menu = "Snack4";
+				else if (menu.equals(chosenMenu.Snack12))
+					selected_menu = "Snack12";
 				
 
 				i.putExtra(SELECTED_MENU, selected_menu);
-
+				Toast.makeText(getApplicationContext(), selected_menu, Toast.LENGTH_LONG).show();
 				startActivity(i);
 
 			}
