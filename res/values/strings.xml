@@ -119,5 +119,8 @@
     <string name="iDeciso_o">o</string>
     <string name="iDeciso_e">e</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
+    <string name="iDeciso_menu_intero_price"><u>€4,70</u></string>
+    <string name="iDeciso_menu_ridotto_price"><u>€4,20</u></string>
+    <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
 
 </resources>

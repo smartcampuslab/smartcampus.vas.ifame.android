@@ -2,11 +2,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.List;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuItem;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +9,8 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +19,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.ListaMense;
@@ -94,8 +95,12 @@ public class IFretta extends SherlockActivity {
 			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
 			String mensa_name = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
 
-			if (m.getMensa_name().equals(mensa_name))
+			if (m.getMensa_name().equals(mensa_name)){
 				nome_mensa.setTypeface(null, Typeface.BOLD);
+				SpannableString content = new SpannableString(m.getMensa_name());
+				content.setSpan(new UnderlineSpan(), 0, m.getMensa_name().length(), 0);
+				nome_mensa.setText(content);	
+			}
 			return convertView;
 		}
 

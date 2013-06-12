@@ -28,6 +28,7 @@ import eu.trentorise.smartcampus.ifame.model.Transaction;
 
 public class ISoldi extends Activity {
 
+	public final static String GET_AMOUNT_MONEY = "get_money";
 	Button stats_button;
 	Saldo saldoReturn;
 	TextView centerText;
@@ -92,9 +93,12 @@ public class ISoldi extends Activity {
 				getAmount(0);
 			} else {
 				getAmount(Float.parseFloat(saldoReturn.getCredit()));
+				
 
 				ListAdapter listAdapter = isoldi_listview.getAdapter();
 
+				
+				//schifo indicibile
 				int rows = listAdapter.getCount();
 				int height = 70 * rows;
 				ViewGroup.LayoutParams params = isoldi_listview

@@ -17,13 +17,22 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="9dp"
             android:src="@drawable/intero_menu" />
+        
+        <TextView android:id="@+id/tipologia_intero_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tipologia_intero_image"
+            android:layout_marginTop="5dp"
+            android:text="@string/iDeciso_menu_intero_price"
+            android:textSize="17sp"/>
 
         <TextView
             android:id="@+id/tipologia_intero_biglabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_image"
+            android:layout_below="@+id/tipologia_intero_price"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
             android:textSize="17sp" />

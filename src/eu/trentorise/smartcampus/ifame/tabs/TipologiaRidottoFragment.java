@@ -1,6 +1,8 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
+import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 
 public class TipologiaRidottoFragment extends SherlockFragment {
 
@@ -50,6 +54,23 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 	@Override
 	public void onResume() {
+		
+		String stringDisplayed;
+		SharedPreferences pref = getSherlockActivity().getSharedPreferences(
+				getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+		if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
+			float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
+			if (cash >= 4.20)
+				stringDisplayed = "Il tuo credito è sufficiente: €"+ cash;
+			else {
+				float difference = 4.20f -cash;
+				stringDisplayed = "Il tuo credito è insufficiente: €"+cash+"\nDevi ricaricare almeno: "+difference;
+				}
+			Toast.makeText(getSherlockActivity().getApplicationContext(), stringDisplayed, Toast.LENGTH_LONG).show();
+			
+		}
+		else
+			Toast.makeText(getSherlockActivity().getApplicationContext(),"Non sono riuscito a prendere l'attributo", Toast.LENGTH_LONG).show();
 
 		i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(

@@ -64,7 +64,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		getSupportActionBar().addTab(snackTab);
 
 		
-		if (from_componi && selected_menu != null){
+		if (/*from_componi && */selected_menu != null){
 
 			if (selected_menu.equals("Intero"))
 				interoTab.select();
