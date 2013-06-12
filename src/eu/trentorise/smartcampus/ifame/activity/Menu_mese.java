@@ -241,7 +241,7 @@ public class Menu_mese extends Activity {
 					// ATTENZIONE AL MAGHEGGIO
 					Piatto piattoSentinella = new Piatto();
 					// setto come nome del piatto il numero del giorno
-					piattoSentinella.setPiatto(mdg.getDay() + "");
+					piattoSentinella.setPiatto_nome(mdg.getDay() + "");
 					// del menu del giorno che sto iterando perche mi serve
 					// come sentinella nell'adapter
 					adapter.add(piattoSentinella);
@@ -283,7 +283,7 @@ public class Menu_mese extends Activity {
 
 			Piatto p = getItem(position);
 
-			if (p.getPiatto().matches("[0-9]+")) {
+			if (p.getPiatto_nome().matches("[0-9]+")) {
 				// ho un piatto sentinella setto il testo come data
 				convertView = inflater.inflate(
 						layout.layout_row_header_menu_adapter, null);
@@ -293,7 +293,7 @@ public class Menu_mese extends Activity {
 				TextView kcalHeader = (TextView) convertView
 						.findViewById(R.id.menu__kcal_header_adapter);
 
-				int day = Integer.parseInt(p.getPiatto());
+				int day = Integer.parseInt(p.getPiatto_nome());
 
 				Calendar c = Calendar.getInstance();
 				c.set(Calendar.DATE, day);
@@ -318,8 +318,8 @@ public class Menu_mese extends Activity {
 				TextView kcal = (TextView) convertView
 						.findViewById(R.id.menu_kcal_adapter);
 
-				name.setText(p.getPiatto());
-				kcal.setText(p.getKcal());
+				name.setText(p.getPiatto_nome());
+				kcal.setText(p.getPiatto_kcal());
 			}
 			return convertView;
 		}

@@ -125,7 +125,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 					int position, long arg3) {
 				//Get the dish on a selected position of the list
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
-						.getPiatto();
+						.getPiatto_nome();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
 				dialog.show(getFragmentManager(), null); //Show the dialog
@@ -263,12 +263,12 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 
 			Piatto piattoDelGiorno = getItem(position);
 
-			if (piattoDelGiorno.getPiatto().matches("[0-9]+")) {
+			if (piattoDelGiorno.getPiatto_nome().matches("[0-9]+")) {
 
 				convertView = inflater.inflate(
 						R.layout.layout_row_header_menu_adapter, null);
 
-				int num = Integer.parseInt(piattoDelGiorno.getPiatto());
+				int num = Integer.parseInt(piattoDelGiorno.getPiatto_nome());
 
 				TextView nome_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_day_header_adapter);
@@ -292,8 +292,8 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 				TextView kcal_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_kcal_adapter);
 
-				nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto());
-				kcal_piatto_del_giorno.setText(piattoDelGiorno.getKcal());
+				nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());
+				kcal_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_kcal());
 
 			}
 			return convertView;
