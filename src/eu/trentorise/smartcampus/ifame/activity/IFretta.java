@@ -90,15 +90,15 @@ public class IFretta extends SherlockActivity {
 					.findViewById(R.id.list_ifretta);
 			Mensa m = getItem(position);
 
-			nome_mensa.setText(m.getMensa_name());
+			nome_mensa.setText(m.getMensa_nome());
 			
 			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
 			String mensa_name = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
 
-			if (m.getMensa_name().equals(mensa_name)){
+			if (m.getMensa_nome().equals(mensa_name)){
 				nome_mensa.setTypeface(null, Typeface.BOLD);
-				SpannableString content = new SpannableString(m.getMensa_name());
-				content.setSpan(new UnderlineSpan(), 0, m.getMensa_name().length(), 0);
+				SpannableString content = new SpannableString(m.getMensa_nome());
+				content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome().length(), 0);
 				nome_mensa.setText(content);	
 			}
 			return convertView;
@@ -201,7 +201,7 @@ public class IFretta extends SherlockActivity {
 					int position, long id) {
 				Mensa m = (Mensa) adapter.getItemAtPosition(position);
 				Intent i = new Intent(IFretta.this, IFretta_Details.class);
-				i.putExtra("mensa", m.getMensa_name());
+				i.putExtra("mensa", m.getMensa_nome());
 				i.putExtra("img_url", m.getMensa_link());
 				startActivity(i);
 

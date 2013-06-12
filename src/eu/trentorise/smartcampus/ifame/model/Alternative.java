@@ -2,6 +2,7 @@ package eu.trentorise.smartcampus.ifame.model;
 
 import java.util.List;
 
+
 public class Alternative {
 	private List<Piatto> alternative;
 
