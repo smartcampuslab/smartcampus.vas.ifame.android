@@ -65,7 +65,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		TextView pane = (TextView)theContainer.findViewById(R.id.tipologia_intero_pane);
 		pane.setText("+ "+getString(R.string.iDeciso_pane));
 		
-		if (isCalled /*&&  selected_menu.equals("Intero")*/ ){
+		if (isCalled &&  selected_menu.equals("Intero") ){
 			isC1Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_1_AVAILABLE, false);
 			isC2Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_2_AVAILABLE, false);
 			isDessertAvail = i.getBooleanExtra(Fai_il_tuo_menu.DESSERT_AVAILABLE, false);

@@ -153,7 +153,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		pizza4.setTypeface(null, Typeface.BOLD);
 		due_a_scelta_tra4.setText("+ "
 				+ getString(R.string.iDeciso_2a_scelta_tra) + ":");
-		contorni4.setText(" " + getString(R.string.iDeciso_contorni) + ",");
+		contorni4.setText(" " + getString(R.string.iDeciso_contorni) + " ");
 		dessert4.setText(" "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane4.setText("+ " + getString(R.string.iDeciso_pane));

@@ -6,7 +6,9 @@ import java.util.Date;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -24,36 +26,48 @@ import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 
 public class IFretta_Details extends Activity {
-	
+
 	private MenuItem menuItem;
+	String mensa_name;
+
+
+	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
+	public final static String HAS_FAVOURITE_CANTEEN = "HAS_CANTEEN";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle extras = getIntent().getExtras();
+
 		setContentView(R.layout.ifretta_details);
 
-		//if there are no available intents  return
+		// if there are no available intents return
 		if (extras == null) {
 			return;
 		}
 
-		//Get mensa intent from activity:ifretta
-	    String mensa_name = (String) extras.get("mensa");
+		// Get mensa intent from activity:ifretta
+		mensa_name = (String) extras.get("mensa");
 		setTitle(mensa_name);
 		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		String date_s = s.format(new Date());
 
-		String img_url = (String) extras.get("img_url"); //Get the mensa url  from activity:ifretta
-		
-		//if there is no webcam available for the given mensa, assign an image that says "not available"
-		if(img_url.equals("")){
-			findViewById(R.id.imageViewID).setBackgroundResource(R.drawable.image_not_available);
-		}	else {
-			//retrieve the image from unitn website
+		String img_url = (String) extras.get("img_url"); // Get the mensa url
+															// from
+															// activity:ifretta
+
+		// if there is no webcam available for the given mensa, assign an image
+		// that says "not available"
+		if (img_url.equals("")) {
+			findViewById(R.id.imageViewID).setBackgroundResource(
+					R.drawable.image_not_available);
+		} else {
+			// retrieve the image from unitn website
 			ImageView img_view = (ImageView) findViewById(R.id.imageViewID);
-			img_view.getLayoutParams().height = 600; //Set size of the retrieved image 
-			img_view.getLayoutParams().width = 420; //set size of the retrieved image
-			new RetrieveImage(img_view).execute(img_url); 
+			img_view.getLayoutParams().height = 600; // Set size of the
+														// retrieved image
+			img_view.getLayoutParams().width = 420; // set size of the retrieved
+													// image
+			new RetrieveImage(img_view).execute(img_url);
 		}
 
 		// mensa_name.setTextColor(Color.parseColor("#228B22"));
@@ -61,39 +75,55 @@ public class IFretta_Details extends Activity {
 		//
 		// btn.setBackgroundColor(Color.parseColor("#228B22"));
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.ifretta_menu, menu);
-	    return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.ifretta_menu, menu);
+		return true;
 	}
-	
+
 	@Override
-	  public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    case R.id.action_settings:
-	      menuItem = item;
-	      break;
-	    default:
-	      break;
-	    }
-	    return true;
-	  }
-	
-	//It is advisable to use async task to retrieve data or perform network task
-	//Otherwise an exception will be thrown 
-	//This class will be called in the onCreate method
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		/*
+		 * case R.id.action_settings: menuItem = item; break;
+		 */
+		case R.id.iFretta_set_as_favourite_webcam:
+
+
+			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putBoolean(HAS_FAVOURITE_CANTEEN, true);
+			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
+			editor.commit();
+
+			break;
+
+		case R.id.iFretta_search_in_ViviTrento:
+			Toast.makeText(getApplicationContext(), "funzionoooooo",
+					Toast.LENGTH_LONG).show();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+
+	// It is advisable to use async task to retrieve data or perform network
+	// task
+	// Otherwise an exception will be thrown
+	// This class will be called in the onCreate method
 	private class RetrieveImage extends AsyncTask<String, Void, Bitmap> {
 
 		ImageView img_view;
 
-		//Constructor..
+		// Constructor..
 		public RetrieveImage(ImageView img_view) {
 			this.img_view = img_view;
 		}
 
-		//Perform retrieval in background
+		// Perform retrieval in background
 		@Override
 		protected Bitmap doInBackground(String... urls) {
 			String urldisplay = urls[0];

@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -88,7 +90,12 @@ public class IFretta extends SherlockActivity {
 			Mensa m = getItem(position);
 
 			nome_mensa.setText(m.getMensa_name());
+			
+			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+			String mensa_name = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
 
+			if (m.getMensa_name().equals(mensa_name))
+				nome_mensa.setTypeface(null, Typeface.BOLD);
 			return convertView;
 		}
 

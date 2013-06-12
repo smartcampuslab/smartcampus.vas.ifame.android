@@ -11,7 +11,7 @@
                 android:id="@+id/iFretta_set_as_favourite_webcam"
                 android:orderInCategory="1"
                 android:showAsAction="always"
-                android:title="@string/iFretta_set_as_favourite_webcam"/>
+                android:title="@string/iFretta_set_as_favourite_canteen"/>
             <item
                 android:id="@+id/iFretta_search_in_ViviTrento"
                 android:orderInCategory="2"

@@ -122,10 +122,19 @@
             android:textSize="15sp" />
         
         <TextView
-            android:id="@+id/tipologia_ridotto_dessert3"
+            android:id="@+id/tipologia_ridotto_e3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tipologia_ridotto_contorni3"
+            android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
+            android:textSize="15sp"
+            android:text="@string/iDeciso_e" />
+        
+        <TextView
+            android:id="@+id/tipologia_ridotto_dessert3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tipologia_ridotto_e3"
             android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
             android:textSize="15sp" />
 
@@ -166,10 +175,19 @@
             android:textSize="15sp" />
         
         <TextView
-            android:id="@+id/tipologia_ridotto_dessert4"
+            android:id="@+id/tipologia_ridotto_e4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tipologia_ridotto_contorni4"
+            android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra4"
+            android:textSize="15sp" 
+            android:text="@string/iDeciso_e"/>
+        
+        <TextView
+            android:id="@+id/tipologia_ridotto_dessert4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tipologia_ridotto_e4"
             android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra4"
             android:textSize="15sp" />
 
