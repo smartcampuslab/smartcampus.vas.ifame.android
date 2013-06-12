@@ -26,7 +26,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
-import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -127,17 +127,17 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 		ListView lista_piatti_view = (ListView) theContainer.findViewById(R.id.lista_piatti);
 		
-		List<PiattoKcal> lista_piatti = new ArrayList<PiattoKcal>();
+		List<Piatto> lista_piatti = new ArrayList<Piatto>();
 
-		List<PiattoKcal> piattiList = menuDelGiorno.getPiattiDelGiorno();
-		lista_piatti.add(new PiattoKcal("1", ""));
+		List<Piatto> piattiList = menuDelGiorno.getPiattiDelGiorno();
+		lista_piatti.add(new Piatto("1", ""));
 		for (int i = 0; i < piattiList.size(); i++) {
 			lista_piatti.add(piattiList.get(i));
 			if (i == 2) {
-				lista_piatti.add(new PiattoKcal("2", ""));
+				lista_piatti.add(new Piatto("2", ""));
 			}
 			if (i == 4)
-				lista_piatti.add(new PiattoKcal("3", ""));
+				lista_piatti.add(new Piatto("3", ""));
 		}
 
 
@@ -149,7 +149,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
-				selectedDish = ((PiattoKcal) parent.getItemAtPosition(position)).getPiatto();
+				selectedDish = ((Piatto) parent.getItemAtPosition(position)).getPiatto();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
 				dialog.show(getFragmentManager(), null);
@@ -232,10 +232,10 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 	}
 
-	private class MenuGiornoAdapter extends ArrayAdapter<PiattoKcal> {
+	private class MenuGiornoAdapter extends ArrayAdapter<Piatto> {
 
 		public MenuGiornoAdapter(Context context, int textViewResourceId,
-				List<PiattoKcal> objects) {
+				List<Piatto> objects) {
 			super(context, textViewResourceId, objects);
 			// TODO Auto-generated constructor stub
 		}
@@ -247,7 +247,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 			
 
-			PiattoKcal piattoDelGiorno = getItem(position);
+			Piatto piattoDelGiorno = getItem(position);
 			
 			if (piattoDelGiorno.getPiatto().matches("[0-9]+")){
 				

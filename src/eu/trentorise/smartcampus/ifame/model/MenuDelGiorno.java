@@ -6,17 +6,17 @@ import java.util.List;
 
 public class MenuDelGiorno {
 
-	private List<PiattoKcal> piattiDelGiorno;
+	private List<Piatto> piattiDelGiorno;
 	private int day;
 
 	public MenuDelGiorno() {
 	}
 
-	public List<PiattoKcal> getPiattiDelGiorno() {
+	public List<Piatto> getPiattiDelGiorno() {
 		return piattiDelGiorno;
 	}
 
-	public void setPiattiDelGiorno(List<PiattoKcal> piattiDelGiorno) {
+	public void setPiattiDelGiorno(List<Piatto> piattiDelGiorno) {
 		this.piattiDelGiorno = piattiDelGiorno;
 	}
 
@@ -27,5 +27,5 @@ public class MenuDelGiorno {
 	public void setDay(int day) {
 		this.day = day;
 	}
-	
+
 }

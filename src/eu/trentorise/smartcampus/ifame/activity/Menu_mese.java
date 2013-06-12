@@ -29,7 +29,7 @@ import eu.trentorise.smartcampus.ifame.R.layout;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
-import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -70,8 +70,8 @@ public class Menu_mese extends Activity {
 						arr = numbers[3].split("/", 2);
 						String end_day = arr[0];
 
-						List<PiattoKcal> p = new ArrayList<PiattoKcal>();
-						ArrayAdapter<PiattoKcal> adpter = new ListHeaderAdapter(
+						List<Piatto> p = new ArrayList<Piatto>();
+						ArrayAdapter<Piatto> adpter = new ListHeaderAdapter(
 								Menu_mese.this, p);
 
 						setPiattiList(Integer.parseInt(start_day));
@@ -225,10 +225,10 @@ public class Menu_mese extends Activity {
 		// prendo la lista di menu della settimana
 		List<MenuDellaSettimana> mds = menuDelMese.getMenuDellaSettimana();
 		// creo la lista di piatti da mostrare
-		ArrayList<PiattoKcal> currentWeek = new ArrayList<PiattoKcal>();
+		ArrayList<Piatto> currentWeek = new ArrayList<Piatto>();
 		// creo l'adapter per la lista di piatti
 
-		ArrayAdapter<PiattoKcal> adapter = new ListHeaderAdapter(
+		ArrayAdapter<Piatto> adapter = new ListHeaderAdapter(
 				Menu_mese.this, currentWeek);
 
 		for (MenuDellaSettimana m : mds) {
@@ -239,7 +239,7 @@ public class Menu_mese extends Activity {
 						.getMenuDelGiorno();
 				for (MenuDelGiorno mdg : mdglist) {
 					// ATTENZIONE AL MAGHEGGIO
-					PiattoKcal piattoSentinella = new PiattoKcal();
+					Piatto piattoSentinella = new Piatto();
 					// setto come nome del piatto il numero del giorno
 					piattoSentinella.setPiatto(mdg.getDay() + "");
 					// del menu del giorno che sto iterando perche mi serve
@@ -269,9 +269,9 @@ public class Menu_mese extends Activity {
 	 * 
 	 * LISTADAPTER FOR THE LIST OF PIATTOKCAL
 	 */
-	private class ListHeaderAdapter extends ArrayAdapter<PiattoKcal> {
+	private class ListHeaderAdapter extends ArrayAdapter<Piatto> {
 
-		public ListHeaderAdapter(Context context, List<PiattoKcal> list) {
+		public ListHeaderAdapter(Context context, List<Piatto> list) {
 			super(Menu_mese.this, android.R.layout.simple_list_item_1, list);
 		}
 
@@ -281,7 +281,7 @@ public class Menu_mese extends Activity {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			PiattoKcal p = getItem(position);
+			Piatto p = getItem(position);
 
 			if (p.getPiatto().matches("[0-9]+")) {
 				// ho un piatto sentinella setto il testo come data

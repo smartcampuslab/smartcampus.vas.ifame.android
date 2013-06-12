@@ -3,16 +3,16 @@ package eu.trentorise.smartcampus.ifame.model;
 import java.util.List;
 
 public class Alternative {
-	private List<PiattoKcal> alternative;
+	private List<Piatto> alternative;
 
 	public Alternative() {
 	}
 
-	public List<PiattoKcal> getAlternative() {
+	public List<Piatto> getAlternative() {
 		return alternative;
 	}
 
-	public void setAlternative(List<PiattoKcal> alternative) {
+	public void setAlternative(List<Piatto> alternative) {
 		this.alternative = alternative;
 	}
 }

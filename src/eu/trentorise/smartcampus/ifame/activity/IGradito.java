@@ -29,7 +29,6 @@ import eu.trentorise.smartcampus.ifame.R.layout;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.PiattiList;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -133,42 +132,14 @@ public class IGradito extends Activity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 
-			ListAdapter a = new ArrayAdapter<String>(IGradito.this,
-					android.R.layout.simple_list_item_1, result.getPiatti());
+			//commento per desmond
+			
+			//ListAdapter a = new ArrayAdapter<String>(IGradito.this,
+			//		android.R.layout.simple_list_item_1, result.getPiatti());
 
-			list_view.setAdapter(a);
+			//list_view.setAdapter(a);
 			pd.dismiss();
 		}
 
 	}
-
-	// private class MyArrayAdapter extends ArrayAdapter<PiattoKcal> {
-	//
-	// public MyArrayAdapter(Context context, int textViewResourceId,
-	// List<PiattoKcal> objects) {
-	// super(context, textViewResourceId, objects);
-	// }
-	//
-	// @Override
-	// public View getView(int position, View convertView, ViewGroup parent) {
-	//
-	// LayoutInflater inflater = (LayoutInflater) getContext()
-	// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	//
-	// convertView = inflater
-	// .inflate(layout.layout_row_menu_adapter, null);
-	//
-	// PiattoKcal p = getItem(position);
-	//
-	// TextView name = (TextView) convertView
-	// .findViewById(R.id.menu_name_adapter);
-	// TextView kcal = (TextView) convertView
-	// .findViewById(R.id.menu_kcal_adapter);
-	//
-	// name.setText(p.getPiatto());
-	// kcal.setText("");
-	//
-	// return convertView;
-	// }
-	// }
 }

@@ -27,7 +27,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Alternative;
-import eu.trentorise.smartcampus.ifame.model.PiattoKcal;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -88,25 +88,25 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		ListView lista_alternative = (ListView) theContainer.findViewById(R.id.lista_piatti_alternative);
 
 		// Create a list in which the alternative menu will be saved
-		List<PiattoKcal> piatti_alternativi = new ArrayList<PiattoKcal>();
+		List<Piatto> piatti_alternativi = new ArrayList<Piatto>();
 
 		// Create a list and save all the alternative dishes into it
-		List<PiattoKcal> alternativeList = alternative.getAlternative();
+		List<Piatto> alternativeList = alternative.getAlternative();
 
 		// add an item into the list, this item will be used as a sentinel that
 		// will determine the type of dish(primo, secondo, etc..)
-		piatti_alternativi.add(new PiattoKcal("1", ""));
+		piatti_alternativi.add(new Piatto("1", ""));
 
 		for (int i = 0; i < alternativeList.size(); i++) {
 			piatti_alternativi.add(alternativeList.get(i));
 			if (i == 2) {
-				piatti_alternativi.add(new PiattoKcal("2", "")); //sentinel for secondi
+				piatti_alternativi.add(new Piatto("2", "")); //sentinel for secondi
 			}
 			if (i == 5) {
-				piatti_alternativi.add(new PiattoKcal("3", "")); //sentinel for piatti freddi
+				piatti_alternativi.add(new Piatto("3", "")); //sentinel for piatti freddi
 			}
 			if (i == 8) {
-				piatti_alternativi.add(new PiattoKcal("4", "")); //sentinel for contorni
+				piatti_alternativi.add(new Piatto("4", "")); //sentinel for contorni
 			}
 		}
 
@@ -124,7 +124,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
 				//Get the dish on a selected position of the list
-				selectedDish = ((PiattoKcal) parent.getItemAtPosition(position))
+				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
@@ -248,10 +248,10 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		}
 	}
 
-	private class AlternativeAdapter extends ArrayAdapter<PiattoKcal> {
+	private class AlternativeAdapter extends ArrayAdapter<Piatto> {
 
 		public AlternativeAdapter(Context context, int textViewResourceId,
-				List<PiattoKcal> objects) {
+				List<Piatto> objects) {
 			super(context, textViewResourceId, objects);
 			// TODO Auto-generated constructor stub
 		}
@@ -261,7 +261,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			PiattoKcal piattoDelGiorno = getItem(position);
+			Piatto piattoDelGiorno = getItem(position);
 
 			if (piattoDelGiorno.getPiatto().matches("[0-9]+")) {
 

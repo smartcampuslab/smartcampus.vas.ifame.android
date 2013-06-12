@@ -2,8 +2,13 @@ package eu.trentorise.smartcampus.ifame.model;
 
 public class Mensa {
 
+
 	private Long mensa_id;
+	
+
 	private String mensa_name;
+	
+
 	private String mensa_link;
 
 	public Mensa() {
@@ -13,6 +18,11 @@ public class Mensa {
 	public Mensa(Long mensa_id, String mensa_name, String mensa_link) {
 		super();
 		this.mensa_id = mensa_id;
+		this.mensa_name = mensa_name;
+		this.mensa_link = mensa_link;
+	}
+	
+	public Mensa(String mensa_name, String mensa_link) {
 		this.mensa_name = mensa_name;
 		this.mensa_link = mensa_link;
 	}
