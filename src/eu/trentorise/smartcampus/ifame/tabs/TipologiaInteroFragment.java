@@ -52,32 +52,35 @@ public class TipologiaInteroFragment extends SherlockFragment {
 	@Override
 	public void onResume() {
 
-		
-
 		Intent i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(
 				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
-		
-		if (isCalled){
-			TextView buyable = (TextView) theContainer.findViewById(R.id.tipologia_intero_buyable);
-			SharedPreferences pref = getSherlockActivity().getSharedPreferences(
-					getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+		TextView buyable = (TextView) theContainer
+				.findViewById(R.id.tipologia_intero_buyable);
+
+		if (isCalled) {
+
+			SharedPreferences pref = getSherlockActivity()
+					.getSharedPreferences(
+							getString(R.string.iFretta_preference_file),
+							Context.MODE_PRIVATE);
 			if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
 				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
-				if (cash >= 4.70){
-					buyable.setText("Il tuo credito è sufficiente: €"+ cash);
+				if (cash >= 4.70) {
+					buyable.setVisibility(View.VISIBLE);
+					buyable.setText("Il tuo credito è sufficiente: €" + cash);
 					buyable.setTextColor(Color.parseColor("#08D126"));
-				}
-				else {
-					float difference = 4.70f -cash;
+				} else {
+					float difference = 4.70f - cash;
 					buyable.setText("Credito insufficiente ad acquistare il menu");
 					buyable.setTextColor(Color.parseColor("#CF323C"));
-					}
-				
+				}
+
 			}
-			
-		}
-		
+
+		} else
+			buyable.setVisibility(View.GONE);
+
 		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 		TextView bigLabel = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_biglabel);
