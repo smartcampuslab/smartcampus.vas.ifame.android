@@ -19,7 +19,7 @@
        android:id = "@+id/spinner"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       
+       android:entries="@array/lista_mense"
        />
    
     <SeekBar
@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/spinner"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp" 
+        android:progress="50"/>
 
     <TextView
         android:id="@+id/pessimo_text"
@@ -43,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/seekBar1"
         android:layout_alignParentRight="true"
-        android:text="ottimo" />
+        android:text="Ottimo" />
 
      <EditText
          android:id="@+id/editText1"

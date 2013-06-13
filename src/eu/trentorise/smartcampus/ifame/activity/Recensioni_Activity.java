@@ -14,6 +14,8 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import eu.trentorise.smartcampus.ifame.R;
 
 public class Recensioni_Activity extends Activity {
@@ -70,15 +72,37 @@ public class Recensioni_Activity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.action_add_comments:
-			
+
 			final Dialog dialog = new Dialog(this);
-			//hide the title bar
-			//dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			//set content view to the customized layout
+			// hide the title bar
+			// dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			// set content view to the customized layout
 			dialog.setContentView(R.layout.igradito_custom_dialogbox);
 			dialog.setTitle("La tua recensione...");
-  
-			Button annullaButton = (Button) dialog.findViewById(R.id.annulla_button);
+
+			//the values of the spinner are taken from the string xml file for the moment, 
+			//null pointer exception shown when getting the context of the array adapter
+			
+			
+			// add elements to the spinner
+			// Spinner mensa_spinner = (Spinner) findViewById(R.id.spinner);
+			// ArrayList<String> spinner_list = new ArrayList<String>();
+			// spinner_list.add("Povo Mensa");
+			// spinner_list.add("Povo Mensa Veloce");
+			// spinner_list.add("Tommaso Gar");
+			// spinner_list.add("Zannela");
+			// spinner_list.add("Mesiano 1");
+			// spinner_list.add("Mesiano 2");
+			//
+			// ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(
+			// , android.R.layout.simple_spinner_dropdown_item,
+			// spinner_list);
+
+			// mensa_spinner.setAdapter(spinner_adapter);
+
+			// Add a listener to the button that closes the dialog
+			Button annullaButton = (Button) dialog
+					.findViewById(R.id.annulla_button);
 			// if button is clicked, close the custom dialog
 			annullaButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -86,14 +110,14 @@ public class Recensioni_Activity extends Activity {
 					dialog.dismiss();
 				}
 			});
- 
+
 			dialog.show();
-			
+
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 		return true;
-	}	
+	}
 
 }

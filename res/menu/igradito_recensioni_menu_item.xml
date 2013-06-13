@@ -6,7 +6,11 @@
         android:icon="@drawable/abs__ic_menu_moreoverflow_normal_holo_light"
         android:showAsAction="always"
         android:title="@string/action_settings">
-        <menu>
+        
+    </item>
+    
+    <!-- stava nel item di sopra
+    <menu>
             <item
                 android:id="@+id/iFretta_set_as_favourite_webcam"
                 android:orderInCategory="1"
@@ -18,6 +22,6 @@
                 android:showAsAction="always"
                 android:title="@string/iFretta_search_in_ViviTrento"/>
         </menu>
-    </item>
+     -->
 
 </menu>

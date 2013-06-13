@@ -124,5 +124,15 @@
     <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
     <string name="title_activity_ifretta__show__webcam">IFretta_Show_Webcam</string>
     <string name="title_activity_recensioni_activity">Recensioni_Activity</string>
+    
+    <!-- This piece of code is temporal and will removed when necessary (desmond) -->
+    <string-array name="lista_mense">
+        <item>Povo Mensa</item>
+        <item>Povo Mensa Veloce</item>
+        <item>Tommaso Gar</item>
+        <item>Zanella</item>
+        <item>Mesiano 1</item>
+        <item>Mesiano 2</item>
+    </string-array>
 
 </resources>
