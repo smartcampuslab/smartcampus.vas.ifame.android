@@ -34,6 +34,7 @@ public class IDeciso extends Activity {
 					.execute().get();
 
 			if (saldoReturn == null) {
+				Toast.makeText(getApplicationContext(), "Saldo in denaro mancante", Toast.LENGTH_LONG).show();
 			} else {
 
 				cash = Float.parseFloat(saldoReturn.getCredit());
@@ -43,16 +44,17 @@ public class IDeciso extends Activity {
 						Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 
+				Toast.makeText(getApplicationContext(), "Cash: "+cash, Toast.LENGTH_LONG).show();
 				editor.remove(ISoldi.GET_AMOUNT_MONEY);
 				editor.putFloat(ISoldi.GET_AMOUNT_MONEY, cash);
 				editor.commit();
 			}
 
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			Toast.makeText(getApplicationContext(), "InterruptedException", Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
+			Toast.makeText(getApplicationContext(), "ExecutionException", Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 

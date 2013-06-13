@@ -32,7 +32,6 @@ public class IFretta_Details extends Activity {
 
 
 	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
-	public final static String HAS_FAVOURITE_CANTEEN = "HAS_CANTEEN";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,7 +93,6 @@ public class IFretta_Details extends Activity {
 
 			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = pref.edit();
-			editor.putBoolean(HAS_FAVOURITE_CANTEEN, true);
 			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
 			editor.commit();
 

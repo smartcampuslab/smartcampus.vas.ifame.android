@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -64,8 +64,8 @@
     <string name="title_activity_menu_mese">Menu del mese</string>
     <string name="iDeciso_compose_menu_checkbox_first">Primo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno caldo</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno freddo</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Primo Contorno</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Secondo Contorno</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
     <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenu o Trancio di pizza</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
@@ -122,5 +122,6 @@
     <string name="iDeciso_menu_intero_price"><u>€4,70</u></string>
     <string name="iDeciso_menu_ridotto_price"><u>€4,20</u></string>
     <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
+    <string name="title_activity_ifretta__show__webcam">IFretta_Show_Webcam</string>
 
 </resources>

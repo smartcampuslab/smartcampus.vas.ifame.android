@@ -27,12 +27,20 @@
             android:text="@string/iDeciso_menu_ridotto_price"
             android:textSize="17sp"/>
 
+        <TextView android:id="@+id/tipologia_ridotto_buyable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@+id/tipologia_ridotto_price"
+            android:layout_marginTop="5dp"
+            android:textSize="17sp"/>
         <TextView
             android:id="@+id/tipologia_ridotto_primo1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_ridotto_price"
+            android:layout_below="@+id/tipologia_ridotto_buyable"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
             android:textSize="17sp" />

@@ -73,8 +73,6 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_marginTop="20dp"
-            android:background="#2BA63B"
-            android:textColor="#FFFFFF"
             android:text="@string/iDeciso_compose_menu_calcola_btn" />
         
         

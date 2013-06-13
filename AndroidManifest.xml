@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eu.trentorise.smartcampus.ifame"
@@ -57,7 +57,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      
         <activity
             android:name="com.dropbox.client2.android.AuthActivity"
             android:configChanges="orientation|keyboard"
@@ -70,8 +69,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>   
-
+        </activity>
 
         <service
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticationService"
@@ -128,6 +126,10 @@
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr"
             android:label="@string/title_activity_tipologie_menu_fr" >
+        </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Show_Webcam"
+            android:label="@string/title_activity_ifretta__show__webcam" >
         </activity>
     </application>
 

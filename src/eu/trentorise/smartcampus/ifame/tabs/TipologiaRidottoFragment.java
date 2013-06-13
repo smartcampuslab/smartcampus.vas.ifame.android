@@ -54,27 +54,31 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 	@Override
 	public void onResume() {
-		
-		String stringDisplayed;
-		SharedPreferences pref = getSherlockActivity().getSharedPreferences(
-				getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
-		if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
-			float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
-			if (cash >= 4.20)
-				stringDisplayed = "Il tuo credito è sufficiente: €"+ cash;
-			else {
-				float difference = 4.20f -cash;
-				stringDisplayed = "Il tuo credito è insufficiente: €"+cash+"\nDevi ricaricare almeno: "+difference;
-				}
-			Toast.makeText(getSherlockActivity().getApplicationContext(), stringDisplayed, Toast.LENGTH_LONG).show();
-			
-		}
-		else
-			Toast.makeText(getSherlockActivity().getApplicationContext(),"Non sono riuscito a prendere l'attributo", Toast.LENGTH_LONG).show();
 
 		i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(
 				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+
+		if (isCalled) {
+			TextView buyable = (TextView) theContainer
+					.findViewById(R.id.tipologia_ridotto_buyable);
+			SharedPreferences pref = getSherlockActivity()
+					.getSharedPreferences(
+							getString(R.string.iFretta_preference_file),
+							Context.MODE_PRIVATE);
+			if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
+				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
+				if (cash >= 4.20) {
+					buyable.setText("Il tuo credito è sufficiente: €" + cash);
+					buyable.setTextColor(Color.parseColor("#08D126"));
+				} else {
+					float difference = 4.20f - cash;
+					buyable.setText("Credito insufficiente ad acquistare il menu");
+					buyable.setTextColor(Color.parseColor("#CF323C"));
+				}
+
+			}
+		}
 		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 
 		isPrimoAvail = i

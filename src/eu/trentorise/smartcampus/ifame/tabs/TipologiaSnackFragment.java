@@ -52,27 +52,34 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 	@Override
 	public void onResume() {
-		
-		String stringDisplayed;
-		SharedPreferences pref = getSherlockActivity().getSharedPreferences(
-				getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
-		if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
-			float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
-			if (cash >= 2.90)
-				stringDisplayed = "Il tuo credito è sufficiente: €"+ cash;
-			else {
-				float difference = 2.90f -cash;
-				stringDisplayed = "Il tuo credito è insufficiente: €"+cash+"\nDevi ricaricare almeno: "+difference;
-				}
-			Toast.makeText(getSherlockActivity().getApplicationContext(), stringDisplayed, Toast.LENGTH_LONG).show();
-			
-		}
-		else
-			Toast.makeText(getSherlockActivity().getApplicationContext(),"Non sono riuscito a prendere l'attributo", Toast.LENGTH_LONG).show();
 
 		i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(
 				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+
+		if (isCalled) {
+			TextView buyable = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_buyable);
+			SharedPreferences pref = getSherlockActivity()
+					.getSharedPreferences(
+							getString(R.string.iFretta_preference_file),
+							Context.MODE_PRIVATE);
+			if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
+				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
+				if (cash >= 2.90) {
+					buyable.setText("Il tuo credito è sufficiente: €" + cash);
+					buyable.setTextColor(Color.parseColor("#08D126"));
+				} else {
+					float difference = 2.90f - cash;
+					buyable.setText("Credito insufficiente ad acquistare il menu");
+					buyable.setTextColor(Color.parseColor("#CF323C"));
+
+					/* +"\nDevi ricaricare almeno: "+difference */
+				}
+
+			}
+		}
+
 		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 
 		isPrimoAvail = i
@@ -89,7 +96,6 @@ public class TipologiaSnackFragment extends SherlockFragment {
 				Fai_il_tuo_menu.INSALATONA_AVAILABLE, false);
 		isPizzaAvail = i
 				.getBooleanExtra(Fai_il_tuo_menu.PIZZA_AVAILABLE, false);
-
 
 		// menu snack 1
 		TextView primo1 = (TextView) theContainer
@@ -197,19 +203,20 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			if (isPrimoAvail)
 				primo1.setTextColor(Color.parseColor("#08D126"));
-			
-			if (isC1Avail || isC2Avail) 
+
+			if (isC1Avail || isC2Avail)
 				contorno1.setTextColor(Color.parseColor("#08D126"));
-			
-			if (isDessertAvail) 
+
+			if (isDessertAvail)
 				dessert1.setTextColor(Color.parseColor("#08D126"));
-			
-			//metto in grigio 2 3 4
+
+			// metto in grigio 2 3 4
 			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno2.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-	
-			TextView o2 =(TextView) theContainer.findViewById(R.id.tipologia_snack_o2);
+
+			TextView o2 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_o2);
 			o2.setTextColor(Color.parseColor("#C4C4C4"));
 			pane2.setTextColor(Color.parseColor("#C4C4C4"));
 			panino_o_pizza3.setTextColor(Color.parseColor("#C4C4C4"));
@@ -217,27 +224,26 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			acqua_o_caffe3.setTextColor(Color.parseColor("#C4C4C4"));
 			insalatona4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			
-			
-			
+
 		}
-		
-		else if (isCalled && selected_menu.equals("Snack2")){
-			
+
+		else if (isCalled && selected_menu.equals("Snack2")) {
+
 			pane2.setTextColor(Color.parseColor("#08D126"));
 			if (isSecondoAvail)
 				secondo2.setTextColor(Color.parseColor("#08D126"));
-			if (isC1Avail || isC2Avail) 
+			if (isC1Avail || isC2Avail)
 				contorno2.setTextColor(Color.parseColor("#08D126"));
-			if (isDessertAvail) 
+			if (isDessertAvail)
 				dessert2.setTextColor(Color.parseColor("#08D126"));
-			
-		 //grigio 1 3 4
+
+			// grigio 1 3 4
 			primo1.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno1.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-			TextView o1 =(TextView) theContainer.findViewById(R.id.tipologia_snack_o1);
-			o1.setTextColor(Color.parseColor("#C4C4C4"));		
+			TextView o1 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_o1);
+			o1.setTextColor(Color.parseColor("#C4C4C4"));
 			pane1.setTextColor(Color.parseColor("#C4C4C4"));
 			panino_o_pizza3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
@@ -246,40 +252,43 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
 		}
 
-		else if (isCalled && selected_menu.equals("Snack3")){
-			
+		else if (isCalled && selected_menu.equals("Snack3")) {
+
 			dessert3.setTextColor(Color.parseColor("#08D126"));
 			acqua_o_caffe3.setTextColor(Color.parseColor("#08D126"));
-			
-			//grigio 1 2 4
+
+			// grigio 1 2 4
 			primo1.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno1.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
 			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-			TextView o1 =(TextView) theContainer.findViewById(R.id.tipologia_snack_o1);
-			o1.setTextColor(Color.parseColor("#C4C4C4"));		
-			TextView o2 =(TextView) theContainer.findViewById(R.id.tipologia_snack_o2);
-			o2.setTextColor(Color.parseColor("#C4C4C4"));		
+			TextView o1 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_o1);
+			o1.setTextColor(Color.parseColor("#C4C4C4"));
+			TextView o2 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_o2);
+			o2.setTextColor(Color.parseColor("#C4C4C4"));
 			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno2.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
 			pane2.setTextColor(Color.parseColor("#C4C4C4"));
 			insalatona4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			
-			
+
 		}
-		
-		else if (isCalled && selected_menu.equals("Snack4")){
+
+		else if (isCalled && selected_menu.equals("Snack4")) {
 			pane4.setTextColor(Color.parseColor("#08D126"));
-			//metto in grigio 1 2 3
+			// metto in grigio 1 2 3
 			primo1.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno1.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
 			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-			TextView o1 =(TextView) theContainer.findViewById(R.id.tipologia_snack_o1);
-			o1.setTextColor(Color.parseColor("#C4C4C4"));		
-			TextView o2 =(TextView) theContainer.findViewById(R.id.tipologia_snack_o2);
+			TextView o1 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_o1);
+			o1.setTextColor(Color.parseColor("#C4C4C4"));
+			TextView o2 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_o2);
 			o2.setTextColor(Color.parseColor("#C4C4C4"));
 			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno2.setTextColor(Color.parseColor("#C4C4C4"));
@@ -288,11 +297,9 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			panino_o_pizza3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
 			acqua_o_caffe3.setTextColor(Color.parseColor("#C4C4C4"));
-			
+
 		}
-		
-		
-		
+
 		super.onResume();
 
 	}
