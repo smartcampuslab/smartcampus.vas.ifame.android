@@ -1,32 +1,26 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
-import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.PiattiList;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
@@ -39,7 +33,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGradito extends Activity {
 
-	ListView list_view;
 	ProgressDialog pd;
 
 	@Override
@@ -50,7 +43,7 @@ public class IGradito extends Activity {
 		pd = new ProgressDialog(IGradito.this).show(IGradito.this, "iGradito",
 				"Loading...");
 
-		list_view = (ListView) findViewById(R.id.list_view_igradito);
+		
 
 		new IGraditoConnector(IGradito.this).execute();
 	}
@@ -61,7 +54,43 @@ public class IGradito extends Activity {
 		getMenuInflater().inflate(R.menu.igradito, menu);
 		return true;
 	}
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 *  ADAPTER PER IGRADITO
+	 */
 
+	private class IGraditoAdapter extends ArrayAdapter<Piatto> {
+
+		public IGraditoAdapter(Context context, int textViewResourceId, List<Piatto> list) {
+			super(IGradito.this, textViewResourceId, list);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			Piatto p = getItem(position);
+
+			
+				convertView = inflater.inflate(
+						layout.igradito_layout_row_adapter, null);
+
+				TextView piatto_name = (TextView) convertView
+						.findViewById(R.id.piatto_name_adapter);
+				TextView piatto_avg = (TextView) convertView
+						.findViewById(R.id.piatto_avgvote_adapter);	
+
+				piatto_name.setText(p.getPiatto_nome());
+				piatto_avg.setText(p.getPiatto_kcal());
+			
+			return convertView;
+		}
+	}
 	/*
 	 * 
 	 * 
@@ -131,15 +160,41 @@ public class IGradito extends Activity {
 		protected void onPostExecute(PiattiList result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-
-			//commento per desmond
 			
-			//ListAdapter a = new ArrayAdapter<String>(IGradito.this,
-			//		android.R.layout.simple_list_item_1, result.getPiatti());
-
-			//list_view.setAdapter(a);
+			
+			System.out.println("Sono nel onpostexecute"); 
+			createPiatti(result);
+			
 			pd.dismiss();
 		}
 
 	}
+	
+	private void createPiatti(PiattiList piattiList){
+		
+		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
+		//List<String> lista_piatti = piattiList.getPiatti();
+		List<Piatto> lista_piatti = piattiList.getPiatti();
+		if(lista_piatti.size() == 0){
+			System.out.println("è null");
+		}
+		//ListAdapter adapter = new ArrayAdapter<String>(IGradito.this, android.R.layout.simple_list_item_1, lista_piatti);
+		IGraditoAdapter adapter = new IGraditoAdapter(IGradito.this, android.R.layout.simple_list_item_1, lista_piatti);
+		list_view.setAdapter(adapter);
+		
+		list_view.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v, int position,
+					long id) {
+				
+				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
+				Intent i = new Intent(IGradito.this, Recensioni_Activity.class); 
+				i.putExtra("nome_piatto", piatto.getPiatto_nome());
+				startActivity(i);
+			}
+		});
+	}
+	
+	
 }

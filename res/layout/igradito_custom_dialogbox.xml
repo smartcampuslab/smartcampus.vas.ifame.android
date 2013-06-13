@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <!-- -
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF0000"
+        android:padding="10dp"
+        android:text="La tua recensione" />
+        
+         -->
+
+   <Spinner 
+       android:id = "@+id/spinner"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       
+       />
+   
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/spinner"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/pessimo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar1"
+        android:text="Pessimo" />
+    
+     <TextView
+        android:id="@+id/ottimo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar1"
+        android:layout_alignParentRight="true"
+        android:text="ottimo" />
+
+     <EditText
+         android:id="@+id/editText1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/pessimo_text"
+         android:layout_marginTop="22dp"
+         android:hint="Scrivi qui il tuo commento"
+         android:ems="10" >
+
+         <requestFocus />
+     </EditText>
+
+     <Button
+         android:id="@+id/annulla_button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/editText1"
+         android:layout_marginTop="29dp"
+         android:text="Annulla" />
+
+     <Button
+         android:id="@+id/OK_button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/annulla_button"
+         android:layout_alignBottom="@+id/annulla_button"
+         android:layout_alignParentRight="true"
+         android:text="OK" />
+
+</RelativeLayout>

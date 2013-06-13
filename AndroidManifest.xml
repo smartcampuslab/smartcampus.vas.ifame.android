@@ -123,6 +123,10 @@
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno_tab"
             android:label="@string/title_activity_menu_giorno_tab" >
         </activity>
+        <activity 
+            android:name="eu.trentorise.smartcampus.ifame.activity.Recensioni_Activity"
+            android:label="@string/title_activity_recensioni_activity">
+        </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr"
             android:label="@string/title_activity_tipologie_menu_fr" >

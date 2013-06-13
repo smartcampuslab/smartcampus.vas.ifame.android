@@ -123,5 +123,6 @@
     <string name="iDeciso_menu_ridotto_price"><u>€4,20</u></string>
     <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
     <string name="title_activity_ifretta__show__webcam">IFretta_Show_Webcam</string>
+    <string name="title_activity_recensioni_activity">Recensioni_Activity</string>
 
 </resources>
