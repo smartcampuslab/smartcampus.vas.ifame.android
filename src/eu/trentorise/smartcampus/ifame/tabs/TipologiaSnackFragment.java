@@ -56,10 +56,10 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(
 				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
-
+		TextView buyable = (TextView) theContainer
+				.findViewById(R.id.tipologia_snack_buyable);
 		if (isCalled) {
-			TextView buyable = (TextView) theContainer
-					.findViewById(R.id.tipologia_snack_buyable);
+			
 			SharedPreferences pref = getSherlockActivity()
 					.getSharedPreferences(
 							getString(R.string.iFretta_preference_file),
@@ -67,6 +67,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
 				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
 				if (cash >= 2.90) {
+					buyable.setVisibility(View.VISIBLE);
 					buyable.setText("Il tuo credito è sufficiente: €" + cash);
 					buyable.setTextColor(Color.parseColor("#08D126"));
 				} else {
@@ -78,7 +79,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 				}
 
 			}
-		}
+		}else buyable.setVisibility(View.GONE);
 
 		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 
