@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,8 +16,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
@@ -34,11 +36,31 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class IGradito extends Activity {
 
 	ProgressDialog pd;
+	private Spinner portataSpinner;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito);
+		
+		// Aggiungo lo spinner
+				portataSpinner = (Spinner) findViewById(R.id.spinner_portata);
+				portataSpinner
+						.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+							@Override
+							public void onItemSelected(AdapterView<?> adapter,
+									View view, int position, long id) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onNothingSelected(AdapterView<?> arg0) {
+								// TODO Auto-generated method stub
+							}
+
+						});
 
 		pd = new ProgressDialog(IGradito.this).show(IGradito.this, "iGradito",
 				"Loading...");
@@ -52,7 +74,16 @@ public class IGradito extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.igradito, menu);
-		return true;
+		
+		// Get the SearchView and set the searchable configuration
+	    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	    SearchView searchView = (SearchView) menu.findItem(R.id.igradito_search).getActionView();
+	    // Assumes current activity is the searchable activity
+	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+	    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+	    return true;
+
 	}
 	
 	/*

@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/like_count"
         android:layout_below="@id/comment"
-        android:src="@drawable/thumbs_up" />
+        android:src="@drawable/icon_like_up" />
     
      <ImageButton
         android:id="@+id/dislike_button"
@@ -62,6 +62,6 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/dislike_count"
         android:layout_below="@id/comment"
-        android:src="@drawable/thumbs_down" />
+        android:src="@drawable/icon_like_down" />
 
 </RelativeLayout>

@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -124,7 +124,7 @@
     <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
     <string name="title_activity_ifretta__show__webcam">IFretta_Show_Webcam</string>
     <string name="title_activity_recensioni_activity">Recensioni_Activity</string>
-    
+
     <!-- This piece of code is temporal and will removed when necessary (desmond) -->
     <string-array name="lista_mense">
         <item>Povo Mensa</item>
@@ -134,7 +134,15 @@
         <item>Mesiano 1</item>
         <item>Mesiano 2</item>
     </string-array>
-	<string name="iGradito_recensioni_order_by_date">Ordina per data</string>
-	<string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
-	<string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
+
+    <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
+    <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
+    <string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
+    
+    
+    
+    
+    <string name="iGradito_spinner">Scegli una categoria</string>
+    <string name="iGradito_search">Ricerca un piatto</string>
+
 </resources>
