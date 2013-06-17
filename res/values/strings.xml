@@ -144,5 +144,6 @@
     
     <string name="iGradito_spinner">Scegli una categoria</string>
     <string name="iGradito_search">Ricerca un piatto</string>
+     <string name="iGradito_add_comment">Aggiungi una recensione</string>
 
 </resources>

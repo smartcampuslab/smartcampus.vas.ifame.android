@@ -5,7 +5,7 @@
         android:id="@+id/action_add_comments"
         android:icon="@drawable/plus_icon"
         android:showAsAction="always"
-        android:title="@string/action_settings">
+        android:title="@string/iGradito_add_comment">
     </item>
     <item
         android:id="@+id/igradito_recensioni_option_menu"

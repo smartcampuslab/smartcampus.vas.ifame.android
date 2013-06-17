@@ -16,6 +16,7 @@
             android:gravity="left"
             android:layout_weight="1"
             android:textColor="#E32033"
+            android:paddingLeft="5dp"
             android:text="Nome Utente"
             android:textSize="14dp" />
 
@@ -26,6 +27,7 @@
             android:textColor="#E32033"
             android:gravity="right"
             android:layout_weight="1"
+            android:paddingRight="5dp"
             android:text="17/06/13"
             android:textSize="13dp" />
     </LinearLayout>
@@ -64,14 +66,16 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/like_count"
         android:layout_below="@id/iGradito_recensioni_review_content"
-        android:src="@drawable/thumbs_up" />
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_like_up" />
     
      <ImageButton
         android:id="@+id/dislike_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/dislike_count"
+        android:background="@android:color/transparent"
         android:layout_below="@id/iGradito_recensioni_review_content"
-        android:src="@drawable/thumbs_down" />
+        android:src="@drawable/icon_like_down" />
 
 </RelativeLayout>
