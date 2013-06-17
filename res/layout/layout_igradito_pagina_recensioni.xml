@@ -43,7 +43,7 @@
         android:paddingTop="2dp"
         android:paddingLeft="2dp"
         android:padding="5dp"
-        android:textColor="#FF0000"
+        android:textColor="#CC0000"
         android:text="5.10" />
 
     <TextView
@@ -70,8 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/espresso_da"
-        android:background="#FF0000"
+        android:background="#CC0000"
         android:padding="5dp"
+        android:textColor="#FFFFFF"
         android:text="Recensioni" />
 
 </RelativeLayout>

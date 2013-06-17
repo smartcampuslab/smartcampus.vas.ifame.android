@@ -1,22 +1,23 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.model.Review;
 
 public class Recensioni_Activity extends Activity {
 
@@ -42,24 +43,72 @@ public class Recensioni_Activity extends Activity {
 		String nome_piatto = (String) extras.get("nome_piatto");
 		setTitle(nome_piatto);
 
+		
 		String[] utenti = new String[] {
-				"Francesco\nbuonissimo, da prendere sempre",
-				"Desmond\nma cos'è sta storia? ",
-				"Stefano\nche figata prendere l'intero", "Bonadiman\nbuono!",
-				"Larva\ndavvero buono", "Leso\nnon mi è piaciuto" };
-		List<String> lista_utenti = new ArrayList<String>();
+				"Francesco",
+				"Desmond",
+				"Stefano", "Bonadiman",
+				"Enrico" };
+		
+		ArrayList<Review> lista_reviews = new ArrayList<Review>();
 		for (int i = 0; i < utenti.length; i++) {
-			lista_utenti.add(utenti[i]);
+			Review r = new Review(utenti[i], "questa � solo la prova di una recensione", "17/06/13");
+			lista_reviews.add(r);
+			
 		}
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				Recensioni_Activity.this, android.R.layout.simple_list_item_1,
-				lista_utenti);
+		LazyAdapter adapter = new LazyAdapter(
+				Recensioni_Activity.this, R.layout.list_igradito_recensioni,
+				lista_reviews);
 
 		user_list.setAdapter(adapter);
 
 	}
 
+	
+	public class LazyAdapter extends ArrayAdapter<Review> {
+		 
+	    ArrayList<Review> reviews;
+	    Activity activity;
+	    int layoutId;
+	 
+	    public LazyAdapter(Activity activity, int layout_id, ArrayList<Review> reviews) {
+	    	super(activity, layout_id, reviews);
+	    	this.reviews=reviews;
+	    	this.activity = activity;
+	    	this.layoutId = layout_id;
+	    }
+	 
+	    public int getCount() {
+	        return reviews.size();
+	    }
+	 
+	/*    public Review getItem(int position) {
+	        return reviews[position];
+	    }*/
+	 
+	    public long getItemId(int position) {
+	        return position;
+	    }
+	 
+	   
+	    
+	    public View getView(int position, View convertView, ViewGroup parent) {
+	        View row = convertView;
+	        
+	        if(row == null){
+	            LayoutInflater inflater = ((Activity)activity).getLayoutInflater();
+	            row = inflater.inflate(layoutId, parent, false);
+	            
+	        }
+	        
+	        return row;
+	    }
+	}
+	
+	
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
