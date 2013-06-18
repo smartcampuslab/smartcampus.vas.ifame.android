@@ -1,12 +1,13 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,11 +16,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.model.ListaMense;
+import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Review;
+import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
+import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
+import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
+import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class Recensioni_Activity extends Activity {
 
@@ -28,6 +41,8 @@ public class Recensioni_Activity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	ListaMense listaMense = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -61,6 +76,8 @@ public class Recensioni_Activity extends Activity {
 
 		user_list.setAdapter(adapter);
 
+		
+		new IGraditoConnector(Recensioni_Activity.this).execute();
 	}
 
 	public class ReviewAdapter extends ArrayAdapter<Review> {
@@ -168,8 +185,6 @@ public class Recensioni_Activity extends Activity {
 			View view = inflater.inflate(R.layout.igradito_custom_dialogbox,
 					container);
 
-			String[] mensa_list = new String[] { "Povo Mensa", "Povo Mensa Veloce",
-					"Tommaso Gar", "Zannela", "Mesiano 1", "Mesiano 2" };
 
 			Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
 			
@@ -181,14 +196,153 @@ public class Recensioni_Activity extends Activity {
 				dismiss();
 				}
 			});
-
-			final ArrayAdapter<String> splist = new ArrayAdapter<String>(
-					getActivity(), android.R.layout.simple_spinner_item, mensa_list);
-
-			spinner.setAdapter(splist);
+			
+			MyCursorAdapter adapter = new MyCursorAdapter(getActivity(), listaMense.getList());
+			spinner.setAdapter(adapter);
+			
+//			final MensaListArrayAdapter adapter = new MensaListArrayAdapter(
+//					getActivity(), android.R.layout.simple_spinner_item, listaMense.getList());
+//
+//			spinner.setAdapter(adapter);
 
 			return view;
 		}
+		
 	}
+	
+	/*
+	private class MensaListArrayAdapter extends ArrayAdapter<Mensa> {
 
+		public MensaListArrayAdapter(Context context, int textViewResourceId,
+				List<Mensa> objects) {
+			super(context, textViewResourceId, objects);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			
+			convertView = inflater.inflate(R.layout.layout_listview_igradito, null);
+
+			Mensa m = getItem(position);
+			
+			TextView nome_mensa = (TextView) convertView
+					.findViewById(R.id.nome_mensa);
+			
+
+			nome_mensa.setText(m.getMensa_nome());
+			
+			
+			return convertView;
+		}
+
+	} */
+	
+	
+	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter{
+	    private Activity activity;
+	    private List<Mensa> lista_mense; 
+
+	    public MyCursorAdapter(Activity activity, List<Mensa> lista_mense){
+	        this.activity = activity;
+	        this.lista_mense = lista_mense;
+	    }
+
+	    public int getCount() {
+	        return lista_mense.size();
+	    }
+
+	    public Object getItem(int position) {
+	        return lista_mense.get(position);
+	    }
+
+	    @Override
+		public long getItemId(int position) {
+			return lista_mense.get(position).getMensa_id();
+		}
+	    
+	    public View getView(int position, View convertView, ViewGroup parent) {
+
+	    View spinView;
+	    if( convertView == null ){
+	        LayoutInflater inflater = activity.getLayoutInflater();
+	        spinView = inflater.inflate(R.layout.layout_listview_igradito, null);
+	    } else {
+	         spinView = convertView;
+	    }
+	    TextView nome_mensa = (TextView) spinView.findViewById(R.id.nome_mensa);
+	    	    
+	    nome_mensa.setText(lista_mense.get(position).getMensa_nome());
+	    
+	    return spinView;
+	    
+	    }
+
+	}
+	
+	
+	private class IGraditoConnector extends AsyncTask<Void, Void, ListaMense> {
+
+		private ProtocolCarrier mProtocolCarrier;
+		public Context context;
+		public String appToken = "test smartcampus";
+		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		public IGraditoConnector(Context applicationContext) {
+			context = applicationContext;
+		}
+
+		private ListaMense getMense() {
+			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+
+			MessageRequest request = new MessageRequest(
+					"http://smartcampuswebifame.app.smartcampuslab.it",
+					"getmense");
+			request.setMethod(Method.GET);
+
+			MessageResponse response;
+			try {
+				response = mProtocolCarrier.invokeSync(request, appToken,
+						authToken);
+
+				if (response.getHttpStatus() == 200) {
+					String body = response.getBody();
+					ListaMense list = Utils.convertJSONToObject(body,
+							ListaMense.class);
+					return list;
+				} else {
+					return null;
+				}
+
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+
+		@Override
+		protected ListaMense doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			return getMense();
+		}
+
+		@Override
+		protected void onPostExecute(ListaMense result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			listaMense = result;
+			
+		}
+	}	
 }

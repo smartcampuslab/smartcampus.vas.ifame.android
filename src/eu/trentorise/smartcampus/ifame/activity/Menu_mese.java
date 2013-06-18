@@ -167,8 +167,15 @@ public class Menu_mese extends Activity {
 		protected void onPostExecute(MenuDelMese mdm) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(mdm);
+			
+			
+			
 			// setto il menu del mese ricevuto come variabile di classe
 			menuDelMese = mdm;
+			
+			
+			
+			
 			// cerco la settimana corrente e la mostro
 			Calendar c = Calendar.getInstance();
 			int currentDay = c.get(Calendar.DAY_OF_MONTH);
