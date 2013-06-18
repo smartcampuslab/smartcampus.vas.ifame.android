@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -202,6 +203,7 @@ public class IGradito extends Activity {
 	}
 	
 	private void createPiatti(PiattiList piattiList){
+		
 		
 		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
 		//List<String> lista_piatti = piattiList.getPiatti();

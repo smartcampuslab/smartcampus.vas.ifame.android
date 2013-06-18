@@ -19,8 +19,9 @@
        android:id = "@+id/spinner"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:entries="@array/lista_mense"
+       
        />
+   <!-- android:entries="@array/lista_mense" -->
    
     <SeekBar
         android:id="@+id/seekBar1"

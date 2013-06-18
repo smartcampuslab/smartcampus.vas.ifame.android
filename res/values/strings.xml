@@ -126,6 +126,8 @@
     <string name="title_activity_recensioni_activity">Recensioni_Activity</string>
 
     <!-- This piece of code is temporal and will removed when necessary (desmond) -->
+     
+     <!--  
     <string-array name="lista_mense">
         <item>Povo Mensa</item>
         <item>Povo Mensa Veloce</item>
@@ -134,7 +136,8 @@
         <item>Mesiano 1</item>
         <item>Mesiano 2</item>
     </string-array>
-
+-->
+	
     <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
     <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
     <string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
