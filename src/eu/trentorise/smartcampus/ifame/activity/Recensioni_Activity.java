@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -184,7 +185,9 @@ public class Recensioni_Activity extends Activity {
 				Bundle savedInstanceState) {
 			View view = inflater.inflate(R.layout.igradito_custom_dialogbox,
 					container);
-
+			
+			//set the title of the dialog box
+			getDialog().setTitle("La tua recensione... ");
 
 			Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
 			
