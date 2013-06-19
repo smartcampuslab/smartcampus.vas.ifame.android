@@ -12,61 +12,205 @@
 
         <CheckBox
             android:id="@+id/primo_piatto"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/iDeciso_compose_menu_checkbox_first" />
+        
+        <ToggleButton 
+            android:id="@+id/primo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/primo_piatto"
+            android:layout_above="@+id/secondo_piatto"
+            android:layout_alignBottom="@+id/primo_piatto"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true"/>
 
         <CheckBox
             android:id="@+id/secondo_piatto"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/primo_piatto"
             android:text="@string/iDeciso_compose_menu_checkbox_second" />
+        
+        <ToggleButton 
+            android:id="@+id/secondo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/secondo_piatto"
+            android:layout_below="@+id/primo_piatto"
+            android:layout_above="@+id/contorno_caldo"
+            android:layout_alignBottom="@+id/secondo_piatto"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true" />
 
         <CheckBox
             android:id="@+id/contorno_caldo"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/secondo_piatto"
             android:text="@string/iDeciso_compose_menu_checkbox_contorno_caldo" />
+        
+        <ToggleButton 
+            android:id="@+id/contorno_caldo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/contorno_caldo"
+            android:layout_below="@+id/secondo_piatto"
+            android:layout_above="@+id/contorno_freddo"
+            android:layout_alignBottom="@+id/contorno_caldo"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true"/>
 
         <CheckBox
             android:id="@+id/contorno_freddo"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/contorno_caldo"
             android:text="@string/iDeciso_compose_menu_checkbox_contorno_freddo" />
+        
+        <ToggleButton 
+            android:id="@+id/contorno_freddo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/contorno_freddo"
+            android:layout_below="@+id/contorno_caldo"
+            android:layout_above="@+id/insalatona"
+            android:layout_alignBottom="@+id/contorno_freddo"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true"/>
 
         <CheckBox
             android:id="@+id/insalatona"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/contorno_freddo"
             android:text="@string/iDeciso_compose_menu_checkbox_insalatona" />
+        
+        <ToggleButton 
+            android:id="@+id/insalatona_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/insalatona"
+            android:layout_below="@+id/contorno_freddo"
+            android:layout_above="@+id/dessert"
+            android:layout_alignBottom="@+id/insalatona"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true" />
 
         <CheckBox
             android:id="@+id/dessert"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/insalatona"
             android:text="@string/iDeciso_compose_menu_checkbox_dessert" />
+        
+        <ToggleButton 
+            android:id="@+id/dessert_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/dessert"
+            android:layout_below="@+id/insalatona"
+            android:layout_above="@+id/pane"
+            android:layout_alignBottom="@+id/dessert"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true"/>
 
         <CheckBox
             android:id="@+id/pane"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dessert"
             android:text="@string/iDeciso_compose_menu_checkbox_bread" />
+        
+        <ToggleButton 
+            android:id="@+id/pane_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/pane"
+            android:layout_below="@+id/dessert"
+            android:layout_above="@+id/pizza"
+            android:layout_alignBottom="@+id/pane"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true"/>
 
         <CheckBox
             android:id="@+id/pizza"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pane"
             android:text="@string/iDeciso_compose_menu_checkbox_pizza" />
+        
+        <ToggleButton 
+            android:id="@+id/pizza_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/pizza"
+            android:layout_below="@+id/pane"
+            android:layout_above="@+id/confirm_menu_btn"
+            android:layout_alignBottom="@+id/pizza"
+            android:drawableLeft="@drawable/arrow_down"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:visibility="gone"
+            android:clickable="true"
+            android:checked="true" />
+        
         <Button
             android:id="@+id/confirm_menu_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pizza"
             android:layout_centerHorizontal="true"
