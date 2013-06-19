@@ -36,9 +36,9 @@
     <string name="iDeciso">iDeciso</string>
     <string name="iGradito">iGradito</string>
     <string name="iSoldi">iSoldi</string>
-    <string name="title_activity_ifretta">iFretta</string>
-    <string name="title_activity_ideciso">iDeciso</string>
-    <string name="title_activity_igradito">iGradito</string>
+    <string name="iFretta_title_activity">iFretta</string>
+    <string name="iDeciso_title_activity">iDeciso</string>
+    <string name="iGradito_title_activity">iGradito</string>
     
     <string name="povo_1">Povo 1</string>
     <string name="mesiano_button">Mesiano</string>
@@ -52,7 +52,7 @@
     <string name="button_1">Button1</string>
     <string name="button_2">Button2</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
-    <string name="title_activity_ifretta_details">Webcam mensa</string>
+    <string name="iFretta_details_title_activity">Webcam mensa</string>
 
     <!-- iDeciso -->
     <string name="iDeciso_home_daily_menu">Menu del giorno</string>
@@ -106,21 +106,22 @@
     <string name="title_activity_tipologie_menu">Tipologie di menu</string>
     <string name="title_activity_menu_mese">Menu del mese</string>
     <!-- /iDeciso -->
-    
-    
-    <string name="credito_residuo_isoldi">Il tuo credito residuo:</string>
+    <!-- iGradito -->
+    	 <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
+    <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
+    <string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
+    <string name="iGradito_spinner">Scegli una categoria</string>
+    <string name="iGradito_search">Ricerca un piatto</string>
+    <string name="iGradito_add_comment">Aggiungi una recensione</string>
+    <!-- /iGradito -->
+    <string name="iSoldi_credito_residuo">Il tuo credito residuo:</string>
     <string name="title_activity_menu__intero">Menu Intero</string>
     <string name="title_activity_menu__ridotto">Menu Ridotto</string>
     <string name="title_activity_menu_snack">Menu Snack</string>
     <string name="title_activity_show_menu_composition">Show Menu Composition</string>
     <string name="title_activity_mostra_composizione_menu">Mostra Composizione Menu</string>
     <string name="title_activity_mostra_menu_composto">Il tuo menu</string>
-    <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
-    <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
-    <string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
-    <string name="iGradito_spinner">Scegli una categoria</string>
-    <string name="iGradito_search">Ricerca un piatto</string>
-    <string name="iGradito_add_comment">Aggiungi una recensione</string>
+   
     <string name="mensa_text">Mense</string>
     <string name="statistic_button_text">Le tue statistiche </string>
     <string name="stats_activity">Le tue statistiche</string>
@@ -141,7 +142,7 @@
     <string name="iFame_snack">Snack</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <string name="title_activity_ifretta__show__webcam">IFretta_Show_Webcam</string>
-    <string name="title_activity_recensioni_activity">Recensioni_Activity</string>
+    <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
     <string name="set_favourite_canteen_title">Scegli la tua mensa</string>
     <string name="set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
     <string name="set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>

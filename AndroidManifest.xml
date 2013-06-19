@@ -89,15 +89,15 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta"
-            android:label="@string/title_activity_ifretta" >
+            android:label="@string/iFretta_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IDeciso"
-            android:label="@string/title_activity_ideciso" >
+            android:label="@string/iDeciso_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IGradito"
-            android:label="@string/title_activity_igradito" >
+            android:label="@string/iGradito_title_activity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -120,7 +120,7 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Details"
-            android:label="@string/title_activity_ifretta_details" >
+            android:label="@string/iFretta_details_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Stats_Activity"
@@ -132,16 +132,13 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Recensioni_Activity"
-            android:label="@string/title_activity_recensioni_activity" >
+            android:label="@string/iGradito_recensioni_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr"
             android:label="@string/iDeciso_home_menu_types" >
         </activity>
-        <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Show_Webcam"
-            android:label="@string/title_activity_ifretta__show__webcam" >
-        </activity>
+
     </application>
 
 </manifest>

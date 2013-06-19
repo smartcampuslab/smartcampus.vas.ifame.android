@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ideciso_red"
-                    android:text="@string/iDeciso"
+                    android:text="@string/iDeciso_title_activity"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ifretta_red"
-                    android:text="@string/iFretta"
+                    android:text="@string/iFretta_title_activity"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/isoldi_red"
-                    android:text="@string/iSoldi"
+                    android:text="@string/iSoldi_title_activity"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/igradito_red"
-                    android:text="@string/iGradito"
+                    android:text="@string/iGradito_title_activity"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
         </LinearLayout>
