@@ -108,15 +108,15 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.ISoldi"
-            android:label="@string/title_activity_isoldi" >
+            android:label="@string/iSoldi_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu"
-            android:label="@string/title_activity_fai_il_tuo_menu" >
+            android:label="@string/iDeciso_home_compose_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_mese"
-            android:label="@string/title_activity_menu_mese" >
+            android:label="@string/iDeciso_home_monthly_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Details"
@@ -128,7 +128,7 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno_tab"
-            android:label="@string/title_activity_menu_giorno_tab" >
+            android:label="@string/iDeciso_home_daily_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Recensioni_Activity"
@@ -136,7 +136,7 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr"
-            android:label="@string/title_activity_tipologie_menu_fr" >
+            android:label="@string/iDeciso_home_menu_types" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Show_Webcam"
