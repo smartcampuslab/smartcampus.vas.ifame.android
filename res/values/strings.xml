@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -126,8 +126,9 @@
     <string name="title_activity_recensioni_activity">Recensioni_Activity</string>
 
     <!-- This piece of code is temporal and will removed when necessary (desmond) -->
-     
-     <!--  
+
+
+    <!--
     <string-array name="lista_mense">
         <item>Povo Mensa</item>
         <item>Povo Mensa Veloce</item>
@@ -135,18 +136,19 @@
         <item>Zanella</item>
         <item>Mesiano 1</item>
         <item>Mesiano 2</item>
-    </string-array>
--->
-	
+    </string-array>
+    -->
+
     <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
     <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
     <string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
-    
-    
-    
-    
     <string name="iGradito_spinner">Scegli una categoria</string>
     <string name="iGradito_search">Ricerca un piatto</string>
-     <string name="iGradito_add_comment">Aggiungi una recensione</string>
+    <string name="iGradito_add_comment">Aggiungi una recensione</string>
+    <string name="set_favourite_canteen_title">Scegli la tua mensa</string>
+    <string name="set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
+    <string name="set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
+    <string name="set_favourite_canteen_confirm_button">Conferma</string>
+    
 
 </resources>

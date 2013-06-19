@@ -1,37 +1,45 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.ACService;
 import eu.trentorise.smartcampus.ac.AcServiceException;
 import eu.trentorise.smartcampus.ac.Constants;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.authenticator.AMSCAccessProvider;
-import eu.trentorise.smartcampus.ac.model.Attribute;
 import eu.trentorise.smartcampus.ac.model.UserData;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.profileservice.ProfileService;
 import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
-import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class IFame_Main_Activity extends Activity {
 
+
+	
 	/** Logging tag */
 	private static final String TAG = "Main";
 
@@ -94,6 +102,26 @@ public class IFame_Main_Activity extends Activity {
 			new LoadUserDataFromACServiceTask().execute(mToken);
 			// access the basic user profile data remotely
 			//new LoadUserDataFromProfileServiceTask().execute(mToken);
+			
+			
+			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+			
+			//da rimuovere dopo
+			SharedPreferences.Editor editor = pref.edit();
+			
+			//editor.remove(IFretta_Details.GET_FAVOURITE_CANTEEN);
+			//editor.commit();
+			//
+			
+			String favourite_canteen = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, null);
+			
+			if (favourite_canteen == null){
+				//dialog 
+				SetFavouriteCanteenDialog dialog = new SetFavouriteCanteenDialog();
+				dialog.show(getFragmentManager(), "setFavouriteCanteenFragment");
+				
+				
+			}
 
 			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 			iFretta_btn.setOnClickListener(new OnClickListener() {
@@ -159,7 +187,55 @@ public class IFame_Main_Activity extends Activity {
 			});
 		}
 	}
+	
+	
+	public class SetFavouriteCanteenDialog extends DialogFragment {
 
+		public SetFavouriteCanteenDialog() {
+			// NO ARG CONSTRUCTOR---REQUIRED
+		}
+
+		
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View view = inflater.inflate(R.layout.layout_set_favourite_canteen_dialog,
+					container);
+			
+			//set the title of the dialog box
+			getDialog().setTitle(getString(R.string.set_favourite_canteen_title));
+
+			Spinner spinner = (Spinner) view.findViewById(R.id.set_favourite_canteen_spinner);
+			
+			//ADD LISTENER TO THE ANNULA BUTTON
+			view.findViewById(R.id.set_favourite_canteen_confirm_button).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismiss();
+				}
+			});
+			
+			
+			
+			/*
+			 * da aggiornare ottenendo la lista mense da server
+			 */
+			String [] mense = {"Povo 0", "Povo 1", "Mesiano", "Grand Hotel"};
+			
+			ArrayList<String> menseList = new ArrayList<String>();
+			for (int i = 0; i<mense.length;i++)
+				menseList.add(i, mense[i]);
+			
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.layout_list_view, menseList);
+			spinner.setAdapter(adapter);
+						
+
+			return view;
+		}
+		
+	}
+	
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// check the result of the authentication

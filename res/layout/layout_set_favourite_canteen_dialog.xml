@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/set_favourite_canteen_explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/set_favourite_canteen_explanation" />
+
+    <Spinner
+        android:id="@+id/set_favourite_canteen_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/set_favourite_canteen_explanation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/set_favourite_canteen_confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/set_favourite_canteen_spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp" 
+        android:text="@string/set_favourite_canteen_confirm_button" />"
+
+    <TextView
+        android:id="@+id/set_favourite_canteen_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/set_favourite_canteen_confirm_button"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/set_favourite_canteen_details"
+        android:textSize="11dp" />
+
+</RelativeLayout>
