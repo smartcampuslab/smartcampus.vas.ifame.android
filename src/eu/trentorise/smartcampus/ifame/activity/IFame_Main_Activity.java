@@ -115,14 +115,14 @@ public class IFame_Main_Activity extends Activity {
 			
 			String favourite_canteen = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, null);
 			
-			if (favourite_canteen == null){
+		/*	if (favourite_canteen == null){
 				//dialog 
 				SetFavouriteCanteenDialog dialog = new SetFavouriteCanteenDialog();
 				dialog.show(getFragmentManager(), getString(R.string.iFame_set_favourite_canteen_fragment));
 				
 				
 			}
-
+*/
 			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 			iFretta_btn.setOnClickListener(new OnClickListener() {
 
