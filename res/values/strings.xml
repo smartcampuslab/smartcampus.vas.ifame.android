@@ -70,9 +70,9 @@
     <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenu o Trancio di pizza</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
     <string name="credito_residuo_isoldi">Il tuo credito residuo:</string>
-    <string name="iDeciso_menu_types_intero">Menu Intero</string>
-    <string name="iDeciso_menu_types_ridotto">Menu Ridotto</string>
-    <string name="iDeciso_menu_types_snack">Menu Snack</string>
+    <string name="iDeciso_menu_types_intero">Intero</string>
+    <string name="iDeciso_menu_types_ridotto">Ridotto</string>
+    <string name="iDeciso_menu_types_snack">Snack</string>
     <string name="title_activity_menu__intero">Menu Intero</string>
     <string name="title_activity_menu__ridotto">Menu Ridotto</string>
     <string name="title_activity_menu_snack">Menu Snack</string>
@@ -150,5 +150,7 @@
     <string name="set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
     <string name="set_favourite_canteen_confirm_button">Conferma</string>
     <string name="set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
+    <string name="iSoldi_puoi_acquistare">Puoi acquistare:</string>
+    <string name="iSoldi_devi_ricaricare">Devi ricariche</string>
 
 </resources>

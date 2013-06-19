@@ -146,39 +146,39 @@ public class ISoldi extends Activity {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
-			bottomText.setText("Puoi acquistare:");
+			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#228B22"));
 
-			acquisti_possibili.add("Intero");
-			acquisti_possibili.add("Ridotto");
-			acquisti_possibili.add("Snack");
+			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_intero));
+			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_ridotto));
+			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 4.20 && amount < 4.90) {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FFD700"));
 
-			bottomText.setText("Puoi acquistare:");
+			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#FFD700"));
 
-			acquisti_possibili.add("Ridotto");
-			acquisti_possibili.add("Snack");
+			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_ridotto));
+			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 2.90 && amount < 4.20) {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF8800"));
 
-			bottomText.setText("Puoi acquistare:");
+			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#FF8800"));
 
-			acquisti_possibili.add("Snack");
+			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 		} else {
 			centerText.setText("€ " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#CC0000"));
 
-			bottomText.setText("Devi ricaricare!");
+			bottomText.setText(getString(R.string.iSoldi_devi_ricaricare));
 			bottomText.setTextSize(25);
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 

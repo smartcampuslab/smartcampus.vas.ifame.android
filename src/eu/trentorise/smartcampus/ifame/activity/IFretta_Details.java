@@ -99,7 +99,7 @@ public class IFretta_Details extends Activity {
 			break;
 
 		case R.id.iFretta_search_in_ViviTrento:
-			Toast.makeText(getApplicationContext(), "funzionoooooo",
+			Toast.makeText(getApplicationContext(), "implementare collegamento a vivitrento",
 					Toast.LENGTH_LONG).show();
 			break;
 		default:
