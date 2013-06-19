@@ -24,7 +24,6 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.ListaMense;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Review;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
@@ -42,7 +41,7 @@ public class Recensioni_Activity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
-	ListaMense listaMense = null;
+	List<Mensa> listaMense = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +199,7 @@ public class Recensioni_Activity extends Activity {
 				}
 			});
 			
-			MyCursorAdapter adapter = new MyCursorAdapter(getActivity(), listaMense.getList());
+			MyCursorAdapter adapter = new MyCursorAdapter(getActivity(), listaMense);
 			spinner.setAdapter(adapter);
 			
 //			final MensaListArrayAdapter adapter = new MensaListArrayAdapter(
@@ -287,7 +286,7 @@ public class Recensioni_Activity extends Activity {
 	}
 	
 	
-	private class IGraditoConnector extends AsyncTask<Void, Void, ListaMense> {
+	private class IGraditoConnector extends AsyncTask<Void, Void, List<Mensa>> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
@@ -298,7 +297,7 @@ public class Recensioni_Activity extends Activity {
 			context = applicationContext;
 		}
 
-		private ListaMense getMense() {
+		private List<Mensa> getMense() {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -313,8 +312,8 @@ public class Recensioni_Activity extends Activity {
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
-					ListaMense list = Utils.convertJSONToObject(body,
-							ListaMense.class);
+					List<Mensa> list = Utils.convertJSONToObjects(body,
+							Mensa.class);
 					return list;
 				} else {
 					return null;
@@ -335,13 +334,13 @@ public class Recensioni_Activity extends Activity {
 		
 
 		@Override
-		protected ListaMense doInBackground(Void... params) {
+		protected List<Mensa> doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			return getMense();
 		}
 
 		@Override
-		protected void onPostExecute(ListaMense result) {
+		protected void onPostExecute(List<Mensa> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			listaMense = result;

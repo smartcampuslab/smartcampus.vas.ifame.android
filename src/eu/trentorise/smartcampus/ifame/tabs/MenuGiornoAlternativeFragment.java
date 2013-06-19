@@ -26,7 +26,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.Alternative;
+
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -42,7 +42,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 	private View view;
 	private ProgressDialog pd;
 	private String selectedDish;
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
@@ -53,23 +53,22 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 	}
 
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		theContainer = container;
-		return inflater.inflate(R.layout.layout_menu_giorno_alternative, container, false);
+		return inflater.inflate(R.layout.layout_menu_giorno_alternative,
+				container, false);
 	}
 
-	
-	
 	@Override
 	public void onResume() {
-	
-		//logic	
+
+		// logic
 		new ProgressDialog(getActivity());
 		// Dont show anything until the data is loaded
-		pd = ProgressDialog.show(getActivity(), "Loading... ",
-				"please wait...");
+		pd = ProgressDialog
+				.show(getActivity(), "Loading... ", "please wait...");
 		view = theContainer.findViewById(R.id.menu_alternative_view);
 		// set the visibility of gthe layout to gone so that nothing will be
 		// visible
@@ -77,58 +76,62 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 
 		new AlternativeConnector(getActivity()).execute();
 		super.onResume();
-		
+
 	}
-	
-	
-	
-	public void createMenuAlternative(Alternative alternative) {
+
+	public void createMenuAlternative(List<Piatto> alternative) {
+		
+		if(alternative == null){
+			System.out.println("La lista è vuota....");
+		} else {
+			System.out.println("La lista non è vuota....");
+		}
 
 		// Get the listview
-		ListView lista_alternative = (ListView) theContainer.findViewById(R.id.lista_piatti_alternative);
+		ListView lista_alternative = (ListView) theContainer
+				.findViewById(R.id.lista_piatti_alternative);
 
 		// Create a list in which the alternative menu will be saved
 		List<Piatto> piatti_alternativi = new ArrayList<Piatto>();
-
-		// Create a list and save all the alternative dishes into it
-		List<Piatto> alternativeList = alternative.getAlternative();
 
 		// add an item into the list, this item will be used as a sentinel that
 		// will determine the type of dish(primo, secondo, etc..)
 		piatti_alternativi.add(new Piatto("1", ""));
 
-		for (int i = 0; i < alternativeList.size(); i++) {
-			piatti_alternativi.add(alternativeList.get(i));
+		for (int i = 0; i < alternative.size(); i++) {
+			piatti_alternativi.add(alternative.get(i));
 			if (i == 2) {
-				piatti_alternativi.add(new Piatto("2", "")); //sentinel for secondi
+				piatti_alternativi.add(new Piatto("2", "")); // sentinel for 
+																// secondi
 			}
 			if (i == 5) {
-				piatti_alternativi.add(new Piatto("3", "")); //sentinel for piatti freddi
+				piatti_alternativi.add(new Piatto("3", "")); // sentinel for
+																// piatti freddi
 			}
 			if (i == 8) {
-				piatti_alternativi.add(new Piatto("4", "")); //sentinel for contorni
+				piatti_alternativi.add(new Piatto("4", "")); // sentinel for
+																// contorni
 			}
 		}
 
 		AlternativeAdapter adapter_alternative = new AlternativeAdapter(
-				getActivity(),
-				android.R.layout.simple_expandable_list_item_1,
+				getActivity(), android.R.layout.simple_expandable_list_item_1,
 				piatti_alternativi);
 		lista_alternative.setAdapter(adapter_alternative);
 
-		
-		//add a listener to the listview which will allow a google search when an item is clicked
+		// add a listener to the listview which will allow a google search when
+		// an item is clicked
 		lista_alternative.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
-				//Get the dish on a selected position of the list
+				// Get the dish on a selected position of the list
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto_nome();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
-				dialog.show(getFragmentManager(), null); //Show the dialog
+				dialog.show(getFragmentManager(), null); // Show the dialog
 
 			}
 		});
@@ -138,11 +141,9 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 	/*
 	 * 
 	 * Connector for the Alternative menu
-	 * 
-	 * 
 	 */
 	private class AlternativeConnector extends
-			AsyncTask<Void, Void, Alternative> {
+			AsyncTask<Void, Void, List<Piatto>> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
@@ -156,7 +157,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 			context = applicationContext;
 		}
 
-		private Alternative getAlternative() {
+		private List<Piatto> getAlternative() {
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
@@ -174,10 +175,12 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 
 					String body = response.getBody();
 
-					Alternative alt = Utils.convertJSONToObject(body,
-							Alternative.class);
+					List<Piatto> alternative = Utils.convertJSONToObjects(body,
+							Piatto.class);
+					
+				
 
-					return alt;
+					return alternative;
 
 				} else {
 
@@ -197,12 +200,12 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		}
 
 		@Override
-		protected Alternative doInBackground(Void... params) {
+		protected List<Piatto> doInBackground(Void... params) {
 			return getAlternative();
 		}
 
 		@Override
-		protected void onPostExecute(Alternative result) {
+		protected void onPostExecute(List<Piatto> result) {
 			super.onPostExecute(result);
 			createMenuAlternative(result);
 			// Make data visible after it has been fetched and dismiss the
@@ -292,8 +295,10 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 				TextView kcal_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_kcal_adapter);
 
-				nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());
-				kcal_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_kcal());
+				nome_piatto_del_giorno
+						.setText(piattoDelGiorno.getPiatto_nome());
+				kcal_piatto_del_giorno
+						.setText(piattoDelGiorno.getPiatto_kcal());
 
 			}
 			return convertView;

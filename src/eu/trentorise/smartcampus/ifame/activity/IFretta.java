@@ -25,7 +25,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.ListaMense;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -38,7 +37,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class IFretta extends SherlockActivity {
 
 	ProgressDialog pd;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -49,7 +48,7 @@ public class IFretta extends SherlockActivity {
 				"Loading...");
 
 		new IFrettaConnector(IFretta.this).execute();
-		
+
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class IFretta extends SherlockActivity {
 			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
-		
+
 	}
 
 	/*
@@ -84,22 +83,27 @@ public class IFretta extends SherlockActivity {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.layout_list_view_ifretta, null);
+			convertView = inflater.inflate(R.layout.layout_list_view_ifretta,
+					null);
 
 			TextView nome_mensa = (TextView) convertView
 					.findViewById(R.id.list_ifretta);
 			Mensa m = getItem(position);
 
 			nome_mensa.setText(m.getMensa_nome());
-			
-			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
-			String mensa_name = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
 
-			if (m.getMensa_nome().equals(mensa_name)){
+			SharedPreferences pref = getSharedPreferences(
+					getString(R.string.iFretta_preference_file),
+					Context.MODE_PRIVATE);
+			String mensa_name = pref.getString(
+					IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
+
+			if (m.getMensa_nome().equals(mensa_name)) {
 				nome_mensa.setTypeface(null, Typeface.BOLD);
 				SpannableString content = new SpannableString(m.getMensa_nome());
-				content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome().length(), 0);
-				nome_mensa.setText(content);	
+				content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
+						.length(), 0);
+				nome_mensa.setText(content);
 			}
 			return convertView;
 		}
@@ -116,7 +120,7 @@ public class IFretta extends SherlockActivity {
 	 * ASYNCTASK PER COLLEGARSI AL WEB SERVICES E PRENDERE LE WEBCAM DISPONIBILI
 	 */
 
-	private class IFrettaConnector extends AsyncTask<Void, Void, ListaMense> {
+	private class IFrettaConnector extends AsyncTask<Void, Void, List<Mensa>> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
@@ -127,7 +131,7 @@ public class IFretta extends SherlockActivity {
 			context = applicationContext;
 		}
 
-		private ListaMense getWebCamMense() {
+		private List<Mensa> getWebCamMense() {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -141,10 +145,13 @@ public class IFretta extends SherlockActivity {
 						authToken);
 
 				if (response.getHttpStatus() == 200) {
+
 					String body = response.getBody();
-					ListaMense list = Utils.convertJSONToObject(body,
-							ListaMense.class);
-					return list;
+
+					List<Mensa> list_mense = Utils.convertJSONToObjects(body,
+							Mensa.class);
+					
+					return list_mense;
 				} else {
 					return null;
 				}
@@ -163,13 +170,13 @@ public class IFretta extends SherlockActivity {
 		}
 
 		@Override
-		protected ListaMense doInBackground(Void... params) {
+		protected List<Mensa> doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			return getWebCamMense();
 		}
 
 		@Override
-		protected void onPostExecute(ListaMense result) {
+		protected void onPostExecute(List<Mensa> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			createWebcamList(result);
@@ -187,10 +194,10 @@ public class IFretta extends SherlockActivity {
 	 * 
 	 * CON I RISULTATI DA SERVER CREA LA LISTA DI WEBCAM
 	 */
-	private void createWebcamList(ListaMense list) {
+	private void createWebcamList(List<Mensa> mense) {
 		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
 
-		List<Mensa> mense = list.getList();
+		
 
 		MyArrayAdapter adapter = new MyArrayAdapter(this,
 				R.layout.layout_list_view_ifretta, mense);
@@ -202,7 +209,7 @@ public class IFretta extends SherlockActivity {
 				Mensa m = (Mensa) adapter.getItemAtPosition(position);
 				Intent i = new Intent(IFretta.this, IFretta_Details.class);
 				i.putExtra("mensa", m.getMensa_nome());
-				i.putExtra("img_url", m.getMensa_link());
+				i.putExtra("img_url", m.getMensa_link_offline());
 				startActivity(i);
 
 			}
