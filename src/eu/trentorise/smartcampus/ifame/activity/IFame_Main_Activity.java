@@ -118,7 +118,7 @@ public class IFame_Main_Activity extends Activity {
 			if (favourite_canteen == null){
 				//dialog 
 				SetFavouriteCanteenDialog dialog = new SetFavouriteCanteenDialog();
-				dialog.show(getFragmentManager(), getString(R.string.set_favourite_canteen_fragment));
+				dialog.show(getFragmentManager(), getString(R.string.iFame_set_favourite_canteen_fragment));
 				
 				
 			}
@@ -202,7 +202,7 @@ public class IFame_Main_Activity extends Activity {
 					container);
 			
 			//set the title of the dialog box
-			getDialog().setTitle(getString(R.string.set_favourite_canteen_title));
+			getDialog().setTitle(getString(R.string.iFame_set_favourite_canteen_title));
 
 			Spinner spinner = (Spinner) view.findViewById(R.id.set_favourite_canteen_spinner);
 			

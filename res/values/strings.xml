@@ -12,20 +12,27 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
+    <!-- iFameMain -->
+    <string name="iFame_set_favourite_canteen_title">Scegli la tua mensa</string>
+    <string name="iFame_set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
+    <string name="iFame_set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
+    <string name="iFame_set_favourite_canteen_confirm_button">Conferma</string>
+    <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
+    <string name="iFame_main_title_activity">iFame</string>
+    <!-- /iFameMain -->
+    
     <!-- iFretta -->
     <string name="iFretta_title_activity">iFretta</string>
     <string name="iFretta_details_title_activity">Webcam mensa</string>
     <string name="iFretta_set_as_favourite_canteen">Mensa preferita</string>
     <string name="iFretta_search_in_ViviTrento">Cerca in ViviTrento</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
-
     <!-- /iFretta -->
-
-
+    
     <!-- iDeciso -->
     <string name="iDeciso_title_activity">iDeciso</string>
     <string name="iDeciso_home_daily_menu">Menu del giorno</string>
@@ -84,7 +91,6 @@
     <string name="iDeciso_compose_menu_no_items_selected">Seleziona almeno un piatto!</string>
     <!-- /iDeciso -->
 
-
     <!-- iGradito -->
     <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
     <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
@@ -93,8 +99,8 @@
     <string name="iGradito_search">Ricerca un piatto</string>
     <string name="iGradito_add_comment">Aggiungi una recensione</string>
     <string name="iGradito_title_activity">iGradito</string>
+    <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
     <!-- /iGradito -->
-
 
     <!-- iSoldi -->
     <string name="iSoldi_puoi_acquistare">Puoi acquistare:</string>
@@ -104,16 +110,9 @@
     <string name="iSoldi_statistic_button_text">Le tue statistiche </string>
     <!-- /iSoldi -->
 
-    <string name="title_activity_ifretta__show__webcam">IFretta_Show_Webcam</string>
-    <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
-    <string name="set_favourite_canteen_title">Scegli la tua mensa</string>
-    <string name="set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
-    <string name="set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
-    <string name="set_favourite_canteen_confirm_button">Conferma</string>
-    <string name="set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
+    <!-- others -->
     <string name="app_uid_label">SmartCampus</string>
     <string name="app_name">iFame</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="tv_data">User Data</string>
     <string name="tv_from_user_account">From user account:</string>
@@ -125,19 +124,8 @@
     <string name="title_activity_file">FileActivity</string>
     <string name="iFame">iFame</string>
     <string name="photo_btn_label">Upload a photo!</string>
-    <string name="iFame_main_title_activity">iFame</string>
     <string name="action_settings">Settings</string>
-    <string name="povo_1">Povo 1</string>
-    <string name="mesiano_button">Mesiano</string>
-    <string name="tom_gar_button">Tommaso Gar</string>
-    <string name="povo_0">Povo 0</string>
-    <string name="maggio_button">XXIV Maggio</string>
-    <string name="zanella_button">Zanella</string>
-    <string name="fbk_button">FBK - TrentoRISE</string>
-    <string name="mensa_view">Mensa XXX - 00:00</string>
-    <string name="location_button">Mappa e orari</string>
-    <string name="button_1">Button1</string>
-    <string name="button_2">Button2</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
+    <!-- /others -->
 
 </resources>

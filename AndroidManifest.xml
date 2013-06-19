@@ -123,10 +123,6 @@
             android:label="@string/iFretta_details_title_activity" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Stats_Activity"
-            android:label="@string/stats_activity" >
-        </activity>
-        <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno_tab"
             android:label="@string/iDeciso_home_daily_menu" >
         </activity>

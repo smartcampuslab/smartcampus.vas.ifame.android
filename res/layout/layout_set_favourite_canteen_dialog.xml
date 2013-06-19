@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/set_favourite_canteen_explanation" />
+        android:text="@string/iFame_set_favourite_canteen_explanation" />
 
     <Spinner
         android:id="@+id/set_favourite_canteen_spinner"
@@ -25,7 +25,7 @@
         android:layout_below="@+id/set_favourite_canteen_spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp" 
-        android:text="@string/set_favourite_canteen_confirm_button" />"
+        android:text="@string/iFame_set_favourite_canteen_confirm_button" />"
 
     <TextView
         android:id="@+id/set_favourite_canteen_details"
@@ -34,7 +34,7 @@
         android:layout_below="@+id/set_favourite_canteen_confirm_button"
         android:gravity="center"
         android:layout_marginTop="8dp"
-        android:text="@string/set_favourite_canteen_details"
+        android:text="@string/iFame_set_favourite_canteen_details"
         android:textSize="11dp" />
 
 </RelativeLayout>
