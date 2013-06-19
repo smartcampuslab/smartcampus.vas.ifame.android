@@ -222,10 +222,10 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 			builder.setMessage(
-					getString(R.string.GoogleSearchAlertText) + " "
+					getString(R.string.iDeciso_GoogleSearchAlertText) + " "
 							+ selectedDish + "?")
 					.setPositiveButton(
-							getString(R.string.GoogleSearchAlertAccept),
+							getString(R.string.iDeciso_GoogleSearchAlertAccept),
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {

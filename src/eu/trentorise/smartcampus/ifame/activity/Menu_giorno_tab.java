@@ -32,7 +32,7 @@ public class Menu_giorno_tab extends SherlockFragmentActivity {
 		
 		
 		Tab alternativeMenuTab = getSupportActionBar().newTab();
-		alternativeMenuTab.setText(R.string.title_activity_menu_giorno_alternative);
+		alternativeMenuTab.setText(R.string.iDeciso_alternatives_title_activity);
 		alternativeMenuTab.setTabListener(new TabListener<MenuGiornoAlternativeFragment>(this,
 				getString(R.string.iDeciso_daily_menu_alternatives_fragment), MenuGiornoAlternativeFragment.class, android.R.id.content));
 		getSupportActionBar().addTab(alternativeMenuTab);

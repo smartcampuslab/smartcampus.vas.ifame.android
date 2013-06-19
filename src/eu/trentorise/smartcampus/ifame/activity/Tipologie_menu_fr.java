@@ -42,7 +42,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab interoTab = getSupportActionBar().newTab();
-		interoTab.setText(R.string.iFame_intero);
+		interoTab.setText(R.string.iDeciso_menu_types_intero);
 		interoTab.setTabListener(new TabListener<TipologiaInteroFragment>(this,
 				getString(R.string.iDeciso_tipologie_menu_fragment_intero), TipologiaInteroFragment.class,
 				android.R.id.content));
@@ -52,7 +52,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		ridottoTab.setTabListener(new TabListener<TipologiaRidottoFragment>(
 				this, getString(R.string.iDeciso_tipologie_menu_fragment_ridotto),
 				TipologiaRidottoFragment.class, android.R.id.content));
-		ridottoTab.setText(R.string.iFame_ridotto);
+		ridottoTab.setText(R.string.iDeciso_menu_types_ridotto);
 		getSupportActionBar().addTab(ridottoTab);
 
 		Tab snackTab = getSupportActionBar().newTab();
@@ -60,7 +60,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 				getString(R.string.iDeciso_tipologie_menu_fragment_snack), TipologiaSnackFragment.class,
 				android.R.id.content));
 
-		snackTab.setText(R.string.iFame_snack);
+		snackTab.setText(R.string.iDeciso_menu_types_snack);
 		getSupportActionBar().addTab(snackTab);
 
 		

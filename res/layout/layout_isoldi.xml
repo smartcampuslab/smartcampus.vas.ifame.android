@@ -49,8 +49,8 @@
             android:layout_marginTop="10dp"
             android:background="#2BA63B"
             android:textColor="#FFFFFF"
-            android:textOff="@string/statistic_button_text"
-            android:textOn="@string/statistic_button_text" />
+            android:textOff="@string/iSoldi_statistic_button_text"
+            android:textOn="@string/iSoldi_statistic_button_text" />
 
         <include
             android:id="@+id/user_stats"
