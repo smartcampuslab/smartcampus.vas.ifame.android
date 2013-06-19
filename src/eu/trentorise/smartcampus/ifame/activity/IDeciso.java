@@ -60,8 +60,8 @@ public class IDeciso extends Activity {
 
 		setContentView(R.layout.layout_ideciso);
 
-		String[] features = { "Menu del giorno", "Tipologie di menu",
-				"Fai il tuo menu", "Menu del mese" };
+		String[] features = { getString(R.string.iDeciso_home_daily_menu), getString(R.string.iDeciso_home_menu_types),
+				getString(R.string.iDeciso_home_compose_menu), getString(R.string.iDeciso_home_monthly_menu) };
 		ArrayList<String> features_list = new ArrayList<String>();
 
 		for (int i = 0; i < features.length; i++) {
@@ -114,40 +114,3 @@ public class IDeciso extends Activity {
 	}
 
 }
-
-/*
- * @Override protected void onCreate(Bundle savedInstanceState) {
- * super.onCreate(savedInstanceState); setContentView(R.layout.layout_ideciso);
- * 
- * 
- * Button iDeciso_menu_giorno_btn = (Button)findViewById(R.id.daily_menu_btn);
- * iDeciso_menu_giorno_btn.setOnClickListener(new OnClickListener(){
- * 
- * @Override public void onClick(View arg0) {
- * 
- * Intent i = new Intent(IDeciso.this, Menu_giorno.class); startActivity(i);
- * 
- * }});
- * 
- * Button iDeciso_menu_types_btn = (Button)findViewById(R.id.menu_types_btn);
- * iDeciso_menu_types_btn.setOnClickListener(new OnClickListener(){
- * 
- * @Override public void onClick(View v) { Intent i = new Intent(IDeciso.this,
- * Tipologie_menu.class); startActivity(i);
- * 
- * }}); Button iDeciso_compose_menu_btn =
- * (Button)findViewById(R.id.compose_menu_btn);
- * iDeciso_compose_menu_btn.setOnClickListener(new OnClickListener(){
- * 
- * @Override public void onClick(View v) { Intent i = new Intent(IDeciso.this,
- * Fai_il_tuo_menu.class); startActivity(i);
- * 
- * }}); Button iDeciso_monthly_menu_btn =
- * (Button)findViewById(R.id.monthly_menu_btn);
- * iDeciso_monthly_menu_btn.setOnClickListener(new OnClickListener(){
- * 
- * @Override public void onClick(View v) { Intent i = new Intent(IDeciso.this,
- * Menu_mese.class); startActivity(i);
- * 
- * }}); }
- */

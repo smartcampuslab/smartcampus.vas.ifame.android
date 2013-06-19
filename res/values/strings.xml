@@ -149,6 +149,6 @@
     <string name="set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
     <string name="set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
     <string name="set_favourite_canteen_confirm_button">Conferma</string>
-    
+    <string name="set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
 
 </resources>

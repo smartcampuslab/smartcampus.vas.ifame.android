@@ -118,7 +118,7 @@ public class IFame_Main_Activity extends Activity {
 			if (favourite_canteen == null){
 				//dialog 
 				SetFavouriteCanteenDialog dialog = new SetFavouriteCanteenDialog();
-				dialog.show(getFragmentManager(), "setFavouriteCanteenFragment");
+				dialog.show(getFragmentManager(), getString(R.string.set_favourite_canteen_fragment));
 				
 				
 			}
