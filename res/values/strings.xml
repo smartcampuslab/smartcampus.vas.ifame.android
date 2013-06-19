@@ -30,16 +30,9 @@
     <string name="title_activity_file">FileActivity</string>
     <string name="iFame">iFame</string>
     <string name="photo_btn_label">Upload a photo!</string>
-    <string name="title_activity_ifame__main_">iFame</string>
+    <string name="iFame_main_title_activity">iFame</string>
     <string name="action_settings">Settings</string>
-    <string name="iFretta">iFretta</string>
-    <string name="iDeciso">iDeciso</string>
-    <string name="iGradito">iGradito</string>
-    <string name="iSoldi">iSoldi</string>
-    <string name="iFretta_title_activity">iFretta</string>
-    <string name="iDeciso_title_activity">iDeciso</string>
-    <string name="iGradito_title_activity">iGradito</string>
-    
+
     <string name="povo_1">Povo 1</string>
     <string name="mesiano_button">Mesiano</string>
     <string name="tom_gar_button">Tommaso Gar</string>
@@ -52,9 +45,13 @@
     <string name="button_1">Button1</string>
     <string name="button_2">Button2</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
-    <string name="iFretta_details_title_activity">Webcam mensa</string>
-
+    
+<!-- iFretta -->
+ <string name="iFretta_title_activity">iFretta</string>
+ <string name="iFretta_details_title_activity">Webcam mensa</string>
+<!-- /iFretta -->
     <!-- iDeciso -->
+    <string name="iDeciso_title_activity">iDeciso</string>
     <string name="iDeciso_home_daily_menu">Menu del giorno</string>
     <string name="iDeciso_home_menu_types">Tipologie di menu</string>
     <string name="iDeciso_home_compose_menu">Fai il tuo menu</string>
@@ -113,8 +110,9 @@
     <string name="iGradito_spinner">Scegli una categoria</string>
     <string name="iGradito_search">Ricerca un piatto</string>
     <string name="iGradito_add_comment">Aggiungi una recensione</string>
+    <string name="iGradito_title_activity">iGradito</string>
     <!-- /iGradito -->
-    <string name="iSoldi_credito_residuo">Il tuo credito residuo:</string>
+   
     <string name="title_activity_menu__intero">Menu Intero</string>
     <string name="title_activity_menu__ridotto">Menu Ridotto</string>
     <string name="title_activity_menu_snack">Menu Snack</string>
@@ -151,6 +149,7 @@
     <!-- iSoldi -->
     <string name="iSoldi_puoi_acquistare">Puoi acquistare:</string>
     <string name="iSoldi_devi_ricaricare">Devi ricaricare</string>
+     <string name="iSoldi_credito_residuo">Il tuo credito residuo:</string>
     <string name="iSoldi_title_activity">iSoldi</string>
 	<!-- /iSoldi -->
 </resources>
