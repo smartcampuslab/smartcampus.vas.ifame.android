@@ -72,7 +72,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 					buyable.setTextColor(Color.parseColor("#08D126"));
 				} else {
 					float difference = 2.90f - cash;
-					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente) + cash);
+					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente));
 					buyable.setTextColor(Color.parseColor("#CF323C"));
 
 					/* +"\nDevi ricaricare almeno: "+difference */

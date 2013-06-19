@@ -68,11 +68,11 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
 				if (cash >= 4.70) {
 					buyable.setVisibility(View.VISIBLE);
-					buyable.setText("Il tuo credito è sufficiente: €" + cash);
+					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_sufficiente) + cash);
 					buyable.setTextColor(Color.parseColor("#08D126"));
 				} else {
 					float difference = 4.70f - cash;
-					buyable.setText("Credito insufficiente ad acquistare il menu");
+					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente));
 					buyable.setTextColor(Color.parseColor("#CF323C"));
 				}
 
@@ -103,7 +103,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				.findViewById(R.id.tipologia_intero_pane);
 		pane.setText("+ " + getString(R.string.iDeciso_pane));
 
-		if (isCalled && selected_menu.equals("Intero")) {
+		if (isCalled && selected_menu.equals(getString(R.string.iDeciso_menu_types_intero))) {
 			isC1Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_1_AVAILABLE,
 					false);
 			isC2Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_2_AVAILABLE,

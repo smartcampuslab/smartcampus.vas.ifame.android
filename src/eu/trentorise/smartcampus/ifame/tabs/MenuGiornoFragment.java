@@ -260,11 +260,11 @@ public class MenuGiornoFragment extends SherlockFragment {
 				TextView nome_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_day_header_adapter);
 				if(num == 1){
-					nome_piatto_del_giorno.setText("Primi"); 
+					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_primi)); 
 				} else if (num == 2){
-					nome_piatto_del_giorno.setText("Secondi"); 
+					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_secondi)); 
 				} else if(num == 3){
-					nome_piatto_del_giorno.setText("Contorni"); 
+					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_contorni)); 
 				}
 				
 				
