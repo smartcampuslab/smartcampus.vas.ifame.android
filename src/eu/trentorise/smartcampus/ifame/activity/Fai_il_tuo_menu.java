@@ -1,7 +1,5 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import com.actionbarsherlock.ActionBarSherlock;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ToggleButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
@@ -54,14 +53,14 @@ public class Fai_il_tuo_menu extends Activity {
 	public CheckBox insalatona;
 	public CheckBox pizza;
 
-	public ToggleButton primo_button;
-	public ToggleButton secondo_button;
-	public ToggleButton contorno1_button;
-	public ToggleButton contorno2_button;
-	public ToggleButton dessert_button;
-	public ToggleButton panino_button;
-	public ToggleButton insalatona_button;
-	public ToggleButton pizza_button;
+	public ImageView primo_button;
+	public ImageView secondo_button;
+	public ImageView contorno1_button;
+	public ImageView contorno2_button;
+	public ImageView dessert_button;
+	public ImageView panino_button;
+	public ImageView insalatona_button;
+	public ImageView pizza_button;
 
 	public enum chosenMenu {
 		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Ridotto12, Ridotto1234, Snack1, Snack2, Snack3, Snack4, Snack12, Pizza, Panino
@@ -358,28 +357,26 @@ public class Fai_il_tuo_menu extends Activity {
 		insalatona = (CheckBox) findViewById(R.id.insalatona);
 		pizza = (CheckBox) findViewById(R.id.pizza);
 
-		primo_button = (ToggleButton) findViewById(R.id.primo_button);
-		secondo_button = (ToggleButton) findViewById(R.id.secondo_button);
-		contorno1_button = (ToggleButton) findViewById(R.id.contorno_caldo_button);
-		contorno2_button = (ToggleButton) findViewById(R.id.contorno_freddo_button);
-		dessert_button = (ToggleButton) findViewById(R.id.dessert_button);
-		panino_button = (ToggleButton) findViewById(R.id.pane_button);
-		insalatona_button = (ToggleButton) findViewById(R.id.insalatona_button);
-		pizza_button = (ToggleButton) findViewById(R.id.pizza_button);
-
-		// primo_button.setOnCheckedChangeListener(new
-		// CompoundButton.OnCheckedChangeListener() {
-		// @Override
-		// public void onCheckedChanged(CompoundButton buttonView, boolean
-		// isChecked) {
-		// if (isChecked) {
-		// LAYOUT.setVisibility(View.VISIBLE);
-		//
-		// } else {
-		// LAYOUT.setVisibility(View.GONE);
-		// }
-		// }
-		// });
+		primo_button = (ImageView) findViewById(R.id.primo_button);
+		secondo_button = (ImageView) findViewById(R.id.secondo_button);
+		contorno1_button = (ImageView) findViewById(R.id.contorno_caldo_button);
+		contorno2_button = (ImageView) findViewById(R.id.contorno_freddo_button);
+		dessert_button = (ImageView) findViewById(R.id.dessert_button);
+		panino_button = (ImageView) findViewById(R.id.pane_button);
+		insalatona_button = (ImageView) findViewById(R.id.insalatona_button);
+		pizza_button = (ImageView) findViewById(R.id.pizza_button);
+		
+//		final View primo_layout = (View) findViewById(R.id.primo_piatto_giorno);
+//
+//		 primo_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//		 @Override
+//		 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//		 if (isChecked) 
+//				primo_layout.setVisibility(View.VISIBLE);
+//		
+//		 else primo_layout.setVisibility(View.GONE);
+//		 }
+//		 });
 
 		// quando rilascio, se c1 c2 e dessert allora non devo liberare
 		// insalatona
