@@ -152,5 +152,9 @@
     <string name="set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iSoldi_puoi_acquistare">Puoi acquistare:</string>
     <string name="iSoldi_devi_ricaricare">Devi ricariche</string>
-
+    <string name="iDeciso_tipologie_menu_fragment_intero">tipologiaInteroFragment</string>
+    <string name="iDeciso_tipologie_menu_fragment_ridotto">tipologiaRidottoFragment</string>
+    <string name="iDeciso_tipologie_menu_fragment_snack">tipologiaSnackFragment</string>
+	<string name="iDeciso_daily_menu_daily_fragment">menuGiornoFragment</string>
+	<string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
 </resources>

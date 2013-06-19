@@ -84,7 +84,7 @@ public class Menu_mese extends Activity {
 
 				});
 
-		pd = new ProgressDialog(Menu_mese.this).show(Menu_mese.this, "iDeciso",
+		pd = new ProgressDialog(Menu_mese.this).show(Menu_mese.this, getString(R.string.title_activity_ideciso),
 				"Loading...");
 
 		// new MenuDellaSettimanaConnector(Menu_mese.this).execute();
