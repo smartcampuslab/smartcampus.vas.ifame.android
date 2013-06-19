@@ -13,11 +13,12 @@
         <LinearLayout
             android:id="@+id/primo_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <CheckBox
                     android:id="@+id/primo_piatto"
@@ -37,12 +38,20 @@
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+
+            <include
+                android:id="@+id/primo_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/secondo_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -59,19 +68,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/secondo_piatto"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/secondo_piatto"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_second"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            
+            <include
+                android:id="@+id/secondo_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
+            
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/contorno_caldo_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -88,19 +106,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/contorno_caldo"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/contorno_caldo"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_contorno_caldo"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            
+            <include
+                android:id="@+id/contorno_caldo_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/contorno_freddo_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -117,19 +143,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/contorno_freddo"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/contorno_freddo"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_contorno_freddo"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            
+            <include
+                android:id="@+id/contorno_freddo_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/insalatona_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -146,23 +180,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/insalatona"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/insalatona"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_insalatona"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            
+            <include
+                android:id="@+id/insalatona_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/dessert_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <CheckBox
                     android:id="@+id/dessert"
@@ -175,19 +217,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dessert"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/dessert"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_dessert"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            <include
+                android:id="@+id/dessert_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/pane_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -204,19 +253,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/pane"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/pane"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_bread"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            <include
+                android:id="@+id/pane_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/pizza_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -233,13 +289,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/pizza"
                     android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/pizza"
                     android:clickable="true"
                     android:contentDescription="@string/iDeciso_compose_menu_checkbox_pizza"
                     android:src="@drawable/arrow_down"
                     android:visibility="gone" />
             </RelativeLayout>
+            <include
+                android:id="@+id/pizza_include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                layout="@layout/layout_isoldi" />
         </LinearLayout>
 
         <Button

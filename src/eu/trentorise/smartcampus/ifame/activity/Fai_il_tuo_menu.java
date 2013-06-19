@@ -58,7 +58,7 @@ public class Fai_il_tuo_menu extends Activity {
 	public ImageView contorno1_button;
 	public ImageView contorno2_button;
 	public ImageView dessert_button;
-	public ImageView panino_button;
+	public ImageView pane_button;
 	public ImageView insalatona_button;
 	public ImageView pizza_button;
 
@@ -362,21 +362,141 @@ public class Fai_il_tuo_menu extends Activity {
 		contorno1_button = (ImageView) findViewById(R.id.contorno_caldo_button);
 		contorno2_button = (ImageView) findViewById(R.id.contorno_freddo_button);
 		dessert_button = (ImageView) findViewById(R.id.dessert_button);
-		panino_button = (ImageView) findViewById(R.id.pane_button);
+		pane_button = (ImageView) findViewById(R.id.pane_button);
 		insalatona_button = (ImageView) findViewById(R.id.insalatona_button);
 		pizza_button = (ImageView) findViewById(R.id.pizza_button);
-		
-//		final View primo_layout = (View) findViewById(R.id.primo_piatto_giorno);
-//
-//		 primo_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//		 @Override
-//		 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//		 if (isChecked) 
-//				primo_layout.setVisibility(View.VISIBLE);
-//		
-//		 else primo_layout.setVisibility(View.GONE);
-//		 }
-//		 });
+
+		final View primo_view = (View) findViewById(R.id.primo_include);
+		final View secondo_view = (View) findViewById(R.id.secondo_include);
+		final View contorno_caldo_view = (View) findViewById(R.id.contorno_caldo_include);
+		final View contorno_freddo_view = (View) findViewById(R.id.contorno_freddo_include);
+		final View insalatona_view = (View) findViewById(R.id.insalatona_include);
+		final View dessert_view = (View) findViewById(R.id.dessert_include);
+		final View pane_view = (View) findViewById(R.id.pane_include);
+		final View pizza_view = (View) findViewById(R.id.pizza_include);
+
+		// setto gli OnclickListener per le ImageView per espandere il menu in
+		// modo dinamico; inverte il senso della freccia per il menu espandibile
+
+		primo_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (primo_view.getVisibility() == View.GONE) {
+					primo_button.setImageResource(R.drawable.arrow_up);
+					primo_view.setVisibility(View.VISIBLE);
+				} else {
+					primo_view.setVisibility(View.GONE);
+					primo_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		secondo_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (secondo_view.getVisibility() == View.GONE) {
+					secondo_button.setImageResource(R.drawable.arrow_up);
+					secondo_view.setVisibility(View.VISIBLE);
+				} else {
+					secondo_view.setVisibility(View.GONE);
+					secondo_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		contorno1_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (contorno_caldo_view.getVisibility() == View.GONE) {
+					contorno1_button.setImageResource(R.drawable.arrow_up);
+					contorno_caldo_view.setVisibility(View.VISIBLE);
+				} else {
+					contorno_caldo_view.setVisibility(View.GONE);
+					contorno1_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		contorno2_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (contorno_freddo_view.getVisibility() == View.GONE) {
+					contorno2_button.setImageResource(R.drawable.arrow_up);
+					contorno_freddo_view.setVisibility(View.VISIBLE);
+				} else {
+					contorno_freddo_view.setVisibility(View.GONE);
+					contorno2_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		insalatona_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (insalatona_view.getVisibility() == View.GONE) {
+					insalatona_button.setImageResource(R.drawable.arrow_up);
+					insalatona_view.setVisibility(View.VISIBLE);
+				} else {
+					insalatona_view.setVisibility(View.GONE);
+					insalatona_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		dessert_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (dessert_view.getVisibility() == View.GONE) {
+					dessert_button.setImageResource(R.drawable.arrow_up);
+					dessert_view.setVisibility(View.VISIBLE);
+				} else {
+					dessert_view.setVisibility(View.GONE);
+					dessert_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		pane_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (pane_view.getVisibility() == View.GONE) {
+					pane_button.setImageResource(R.drawable.arrow_up);
+					pane_view.setVisibility(View.VISIBLE);
+				} else {
+					pane_view.setVisibility(View.GONE);
+					pane_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
+
+		pizza_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (pizza_view.getVisibility() == View.GONE) {
+					pizza_button.setImageResource(R.drawable.arrow_up);
+					pizza_view.setVisibility(View.VISIBLE);
+				} else {
+					pizza_view.setVisibility(View.GONE);
+					pizza_button.setImageResource(R.drawable.arrow_down);
+				}
+			}
+
+		});
 
 		// quando rilascio, se c1 c2 e dessert allora non devo liberare
 		// insalatona
@@ -394,7 +514,6 @@ public class Fai_il_tuo_menu extends Activity {
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					primo_button.setVisibility(View.VISIBLE);
-
 
 				} else {
 					primo_button.setVisibility(View.GONE);
@@ -484,7 +603,7 @@ public class Fai_il_tuo_menu extends Activity {
 					contorno2.setChecked(false);
 					dessert.setEnabled(false);
 					dessert.setChecked(false);
-					panino_button.setVisibility(View.VISIBLE);
+					pane_button.setVisibility(View.VISIBLE);
 
 				} else {
 
@@ -495,7 +614,7 @@ public class Fai_il_tuo_menu extends Activity {
 					contorno1.setEnabled(true);
 					contorno2.setEnabled(true);
 					dessert.setEnabled(true);
-					panino_button.setVisibility(View.GONE);
+					pane_button.setVisibility(View.GONE);
 
 				}
 			}
