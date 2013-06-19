@@ -68,11 +68,11 @@ public class TipologiaSnackFragment extends SherlockFragment {
 				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
 				if (cash >= 2.90) {
 					buyable.setVisibility(View.VISIBLE);
-					buyable.setText("Il tuo credito è sufficiente: €" + cash);
+					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_sufficiente) + cash);
 					buyable.setTextColor(Color.parseColor("#08D126"));
 				} else {
 					float difference = 2.90f - cash;
-					buyable.setText("Credito insufficiente ad acquistare il menu");
+					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente) + cash);
 					buyable.setTextColor(Color.parseColor("#CF323C"));
 
 					/* +"\nDevi ricaricare almeno: "+difference */

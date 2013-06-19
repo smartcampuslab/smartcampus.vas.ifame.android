@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -81,9 +81,10 @@
     <string name="title_activity_mostra_menu_composto">Il tuo menu</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
     <string name="iDeciso_alternative_btn">Alternative</string>
-    <string name="iDeciso_menu_del_giorno_primi">PRIMI PIATTI</string>
-    <string name="iDeciso_menu_del_giorno_secondi">SECONDI PIATTI</string>
-    <string name="iDeciso_menu_del_giorno_contorni">CONTORNI CALDI</string>
+    <string name="iDeciso_menu_del_giorno_primi">Primi</string>
+    <string name="iDeciso_menu_del_giorno_secondi">Secondi</string>
+    <string name="iDeciso_menu_del_giorno_contorni">Contorni</string>
+    <string name="iDeciso_menu_del_giorno_piatti_freddi">Piatti Freddi</string>
     <string name="mensa_text">Mense</string>
     <string name="statistic_button_text">Le tue statistiche </string>
     <string name="stats_activity">Le tue statistiche</string>
@@ -136,7 +137,7 @@
         <item>Zanella</item>
         <item>Mesiano 1</item>
         <item>Mesiano 2</item>
-    </string-array>
+    </string-array>
     -->
 
     <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
@@ -155,6 +156,9 @@
     <string name="iDeciso_tipologie_menu_fragment_intero">tipologiaInteroFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_ridotto">tipologiaRidottoFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_snack">tipologiaSnackFragment</string>
-	<string name="iDeciso_daily_menu_daily_fragment">menuGiornoFragment</string>
-	<string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
+    <string name="iDeciso_daily_menu_daily_fragment">menuGiornoFragment</string>
+    <string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
+    <string name="iDeciso_tipologie_menu_credito_sufficiente">Il tuo credito è sufficiente: €</string>
+    <string name="iDeciso_tipologie_menu_credito_insufficiente">Credito insufficiente ad acquistare il menu</string>
+
 </resources>
