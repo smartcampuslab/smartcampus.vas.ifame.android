@@ -25,16 +25,6 @@
                 android:weightSum="1" >
 
                 <Button
-                    android:id="@+id/iFretta_button"
-                    style="@style/iFameHomeButton"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:drawableTop="@drawable/ifretta_red"
-                    android:text="@string/iFretta"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
                     android:id="@+id/iDeciso_button"
                     style="@style/iFameHomeButton"
                     android:layout_width="0dip"
@@ -42,6 +32,16 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ideciso_red"
                     android:text="@string/iDeciso"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/iFretta_button"
+                    style="@style/iFameHomeButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/ifretta_red"
+                    android:text="@string/iFretta"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
@@ -53,16 +53,6 @@
                 android:weightSum="1" >
 
                 <Button
-                    android:id="@+id/iGradito_button"
-                    style="@style/iFameHomeButton"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:drawableTop="@drawable/igradito_red"
-                    android:text="@string/iGradito"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
                     android:id="@+id/iSoldi_button"
                     style="@style/iFameHomeButton"
                     android:layout_width="0dip"
@@ -70,6 +60,16 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/isoldi_red"
                     android:text="@string/iSoldi"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/iGradito_button"
+                    style="@style/iFameHomeButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/igradito_red"
+                    android:text="@string/iGradito"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
         </LinearLayout>
