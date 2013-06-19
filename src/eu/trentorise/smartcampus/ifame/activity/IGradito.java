@@ -24,7 +24,6 @@ import android.widget.TextView;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
-import eu.trentorise.smartcampus.ifame.model.PiattiList;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -132,7 +131,7 @@ public class IGradito extends Activity {
 	 * CONNECTOR TO GETALLPIATTI WEB SERVICE
 	 */
 
-	private class IGraditoConnector extends AsyncTask<Void, Void, PiattiList> {
+	private class IGraditoConnector extends AsyncTask<Void, Void, List<Piatto>> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
@@ -143,7 +142,7 @@ public class IGradito extends Activity {
 			context = applicationContext;
 		}
 
-		private PiattiList getPiattiList() {
+		private List<Piatto> getPiattiList() {
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
@@ -161,10 +160,10 @@ public class IGradito extends Activity {
 
 					String body = response.getBody();
 
-					PiattiList list = Utils.convertJSONToObject(body,
-							PiattiList.class);
+					List<Piatto> lista_piatti = Utils.convertJSONToObjects(body,
+							Piatto.class);
 
-					return list;
+					return lista_piatti;
 
 				} else {
 
@@ -184,12 +183,12 @@ public class IGradito extends Activity {
 		}
 
 		@Override
-		protected PiattiList doInBackground(Void... params) {
+		protected List<Piatto> doInBackground(Void... params) {
 			return getPiattiList();
 		}
 
 		@Override
-		protected void onPostExecute(PiattiList result) {
+		protected void onPostExecute(List<Piatto> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			
@@ -202,12 +201,12 @@ public class IGradito extends Activity {
 
 	}
 	
-	private void createPiatti(PiattiList piattiList){
+	private void createPiatti(List<Piatto> lista_piatti){
 		
 		
 		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
 		//List<String> lista_piatti = piattiList.getPiatti();
-		List<Piatto> lista_piatti = piattiList.getPiatti();
+		
 		if(lista_piatti.size() == 0){
 			System.out.println("è null");
 		}
