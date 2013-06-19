@@ -1,30 +1,9 @@
 package eu.trentorise.smartcampus.ifame.activity;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.R.layout;
-import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -32,106 +11,57 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+
+/**
+ * This Activity shows the list of dishes for a given mensa
+ */
+
 
 public class IGradito extends Activity {
 
-	ProgressDialog pd;
-	private Spinner portataSpinner;
-
+	ProgressDialog pd; 
+	View view; 
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_igradito);
+		setContentView(R.layout.layout_igradito_mensalist);
+		//set the process dialog
+		pd = ProgressDialog.show(this, "Loading... ",
+				"please wait...");
 		
-		// Aggiungo lo spinner
-				portataSpinner = (Spinner) findViewById(R.id.spinner_portata);
-				portataSpinner
-						.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-
-							@Override
-							public void onItemSelected(AdapterView<?> adapter,
-									View view, int position, long id) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onNothingSelected(AdapterView<?> arg0) {
-								// TODO Auto-generated method stub
-							}
-
-						});
-
-		pd = new ProgressDialog(IGradito.this).show(IGradito.this, "iGradito",
-				"Loading...");
-
+		//don't show anything until the data is retrieved
+		view = findViewById(R.id.ifretta_page_list); //change to relative layout view if it doesn't work
+		view.setVisibility(View.GONE);
 		
-
 		new IGraditoConnector(IGradito.this).execute();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.igradito, menu);
-		
-		// Get the SearchView and set the searchable configuration
-	    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-	    SearchView searchView = (SearchView) menu.findItem(R.id.igradito_search).getActionView();
-	    // Assumes current activity is the searchable activity
-	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-	    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-
-	    return true;
-
-	}
 	
 	/*
 	 * 
-	 * 
-	 * 
-	 *  ADAPTER PER IGRADITO
+	 * THIS CONNECTOR CONNECTS TO THE WEB SERVICE AND COLLECTS THE MENSA DATA
 	 */
-
-	private class IGraditoAdapter extends ArrayAdapter<Piatto> {
-
-		public IGraditoAdapter(Context context, int textViewResourceId, List<Piatto> list) {
-			super(IGradito.this, textViewResourceId, list);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			Piatto p = getItem(position);
-
-			
-				convertView = inflater.inflate(
-						layout.igradito_layout_row_adapter, null);
-
-				TextView piatto_name = (TextView) convertView
-						.findViewById(R.id.piatto_name_adapter);
-				TextView piatto_avg = (TextView) convertView
-						.findViewById(R.id.piatto_avgvote_adapter);	
-
-				piatto_name.setText(p.getPiatto_nome());
-				piatto_avg.setText(p.getPiatto_kcal());
-			
-			return convertView;
-		}
-	}
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * CONNECTOR TO GETALLPIATTI WEB SERVICE
-	 */
-
-	private class IGraditoConnector extends AsyncTask<Void, Void, List<Piatto>> {
+	
+	private class IGraditoConnector extends AsyncTask<Void, Void, List<Mensa>> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
@@ -142,13 +72,12 @@ public class IGradito extends Activity {
 			context = applicationContext;
 		}
 
-		private List<Piatto> getPiattiList() {
-
+		private List<Mensa> getWebCamMense() {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getallpiatti");
+					"getmense");
 			request.setMethod(Method.GET);
 
 			MessageResponse response;
@@ -160,14 +89,14 @@ public class IGradito extends Activity {
 
 					String body = response.getBody();
 
-					List<Piatto> lista_piatti = Utils.convertJSONToObjects(body,
-							Piatto.class);
-
-					return lista_piatti;
-
+					List<Mensa> list_mense = Utils.convertJSONToObjects(body,
+							Mensa.class);
+					
+					return list_mense;
 				} else {
-
+					return null;
 				}
+
 			} catch (ConnectionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -179,54 +108,98 @@ public class IGradito extends Activity {
 				e.printStackTrace();
 			}
 			return null;
-
 		}
 
 		@Override
-		protected List<Piatto> doInBackground(Void... params) {
-			return getPiattiList();
+		protected List<Mensa> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			return getWebCamMense();
 		}
 
 		@Override
-		protected void onPostExecute(List<Piatto> result) {
+		protected void onPostExecute(List<Mensa> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			
-			System.out.println("Sono nel onpostexecute"); 
-			createPiatti(result);
-			
+			createWebcamList(result);
+			// once the data is available dismiss the dialog
+			view.setVisibility(View.VISIBLE);
 			pd.dismiss();
 		}
 
 	}
 	
-	private void createPiatti(List<Piatto> lista_piatti){
-		
-		
-		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
-		//List<String> lista_piatti = piattiList.getPiatti();
-		
-		if(lista_piatti.size() == 0){
-			System.out.println("è null");
-		}
-		//ListAdapter adapter = new ArrayAdapter<String>(IGradito.this, android.R.layout.simple_list_item_1, lista_piatti);
-		IGraditoAdapter adapter = new IGraditoAdapter(IGradito.this, android.R.layout.simple_list_item_1, lista_piatti);
-		list_view.setAdapter(adapter);
-		
-		list_view.setOnItemClickListener(new OnItemClickListener() {
+	/*
+	 * 
+	 * CREATE A LIST THAT SHOWS THE VARIOUS CANTEENS WITH THE RESULTS RETRIEVED
+	 */
+	private void createWebcamList(List<Mensa> mense) {
+		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
 
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View v, int position,
-					long id) {
+		IGraditoArrayAdapter adapter = new IGraditoArrayAdapter(this,
+				R.layout.layout_list_view_ifretta, mense);
+
+		ifretta_listView.setAdapter(adapter);
+		ifretta_listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> adapter, View v,
+					int position, long id) {
+				Mensa m = (Mensa) adapter.getItemAtPosition(position);
+				Intent intent = new Intent(IGradito.this, IGradito_PiattiMensa_Activity.class);
+								
+				intent.putExtra("mensa", m);
 				
-				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
-				Intent i = new Intent(IGradito.this, Recensioni_Activity.class); 
-				i.putExtra("nome_piatto", piatto.getPiatto_nome());
-				startActivity(i);
+				startActivity(intent);
+
 			}
 		});
+
 	}
 	
-	
+	/*
+	 * 
+	 * CUSTOM ADAPTER FOR THE LIST OF CANTEENS
+	 */
+
+	private class IGraditoArrayAdapter extends ArrayAdapter<Mensa> {
+
+		public IGraditoArrayAdapter(Context context, int textViewResourceId,
+				List<Mensa> objects) {
+			super(context, textViewResourceId, objects);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			convertView = inflater.inflate(R.layout.layout_list_view_ifretta,
+					null);
+
+			TextView nome_mensa = (TextView) convertView
+					.findViewById(R.id.list_ifretta);
+			Mensa m = getItem(position);
+
+			nome_mensa.setText(m.getMensa_nome());
+
+			
+			/*
+			SharedPreferences pref = getSharedPreferences(
+					getString(R.string.iFretta_preference_file),
+					Context.MODE_PRIVATE);
+			String mensa_name = pref.getString(
+					IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
+
+			if (m.getMensa_nome().equals(mensa_name)) {
+				nome_mensa.setTypeface(null, Typeface.BOLD);
+				SpannableString content = new SpannableString(m.getMensa_nome());
+				content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
+						.length(), 0);
+				nome_mensa.setText(content);
+			} 
+			*/
+			
+			return convertView;
+		}
+
+	}
 }

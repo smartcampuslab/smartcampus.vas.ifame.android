@@ -1,7 +1,9 @@
 package eu.trentorise.smartcampus.ifame.model;
 
+import java.io.Serializable;
 
-public class Mensa {
+
+public class Mensa implements Serializable {
 	private Long mensa_id;
 	
 	private String mensa_nome;

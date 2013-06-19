@@ -84,6 +84,13 @@
                 android:resource="@xml/authenticator" />
         </service>
 
+        <activity android:label="@string/iGradito_Piatti_activity" android:name="eu.trentorise.smartcampus.ifame.activity.IGradito_PiattiMensa_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+        </activity>
+        
         <activity
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticatorActivity"
             android:configChanges="orientation|screenSize" />

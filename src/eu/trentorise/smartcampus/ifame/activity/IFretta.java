@@ -188,10 +188,6 @@ public class IFretta extends SherlockActivity {
 
 	/*
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * CON I RISULTATI DA SERVER CREA LA LISTA DI WEBCAM
 	 */
 	private void createWebcamList(List<Mensa> mense) {

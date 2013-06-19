@@ -201,47 +201,11 @@ public class Recensioni_Activity extends Activity {
 			
 			MyCursorAdapter adapter = new MyCursorAdapter(getActivity(), listaMense);
 			spinner.setAdapter(adapter);
-			
-//			final MensaListArrayAdapter adapter = new MensaListArrayAdapter(
-//					getActivity(), android.R.layout.simple_spinner_item, listaMense.getList());
-//
-//			spinner.setAdapter(adapter);
 
 			return view;
 		}
 		
 	}
-	
-	/*
-	private class MensaListArrayAdapter extends ArrayAdapter<Mensa> {
-
-		public MensaListArrayAdapter(Context context, int textViewResourceId,
-				List<Mensa> objects) {
-			super(context, textViewResourceId, objects);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			
-			convertView = inflater.inflate(R.layout.layout_listview_igradito, null);
-
-			Mensa m = getItem(position);
-			
-			TextView nome_mensa = (TextView) convertView
-					.findViewById(R.id.nome_mensa);
-			
-
-			nome_mensa.setText(m.getMensa_nome());
-			
-			
-			return convertView;
-		}
-
-	} */
 	
 	
 	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter{
