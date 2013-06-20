@@ -4,24 +4,21 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 
@@ -29,7 +26,6 @@ public class IFretta_Details extends Activity {
 
 	private MenuItem menuItem;
 	String mensa_name;
-
 
 	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
 
@@ -62,10 +58,18 @@ public class IFretta_Details extends Activity {
 		} else {
 			// retrieve the image from unitn website
 			ImageView img_view = (ImageView) findViewById(R.id.imageViewID);
-			img_view.getLayoutParams().height = 600; // Set size of the
-														// retrieved image
-			img_view.getLayoutParams().width = 420; // set size of the retrieved
-													// image
+
+			Display myDisplay = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			Rect rect = new Rect();
+			Display screen = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			screen.getRectSize(rect);
+
+			img_view.getLayoutParams().height = rect.height() - 5;
+
+			img_view.getLayoutParams().width = rect.width() - 5;
+
 			new RetrieveImage(img_view).execute(img_url);
 		}
 
@@ -90,17 +94,21 @@ public class IFretta_Details extends Activity {
 		 */
 		case R.id.iFretta_set_as_favourite_webcam:
 
-
-			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+			SharedPreferences pref = getSharedPreferences(
+					getString(R.string.iFretta_preference_file),
+					Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = pref.edit();
 			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
 			editor.commit();
-			Toast.makeText(getApplicationContext(), "Hai settato la tua mensa preferita: "+mensa_name, Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),
+					"Hai settato la tua mensa preferita: " + mensa_name,
+					Toast.LENGTH_LONG).show();
 			break;
 
 		case R.id.iFretta_search_in_ViviTrento:
-			Toast.makeText(getApplicationContext(), "implementare collegamento a vivitrento",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),
+					"implementare collegamento a vivitrento", Toast.LENGTH_LONG)
+					.show();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
