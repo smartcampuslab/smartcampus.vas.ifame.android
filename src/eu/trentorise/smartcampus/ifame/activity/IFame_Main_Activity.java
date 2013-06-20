@@ -104,25 +104,6 @@ public class IFame_Main_Activity extends Activity {
 			//new LoadUserDataFromProfileServiceTask().execute(mToken);
 			
 			
-			SharedPreferences pref = getSharedPreferences(getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
-			
-			//da rimuovere dopo
-			SharedPreferences.Editor editor = pref.edit();
-			
-			//editor.remove(IFretta_Details.GET_FAVOURITE_CANTEEN);
-			//editor.commit();
-			//
-			
-			String favourite_canteen = pref.getString(IFretta_Details.GET_FAVOURITE_CANTEEN, null);
-			
-		/*	if (favourite_canteen == null){
-				//dialog 
-				SetFavouriteCanteenDialog dialog = new SetFavouriteCanteenDialog();
-				dialog.show(getFragmentManager(), getString(R.string.iFame_set_favourite_canteen_fragment));
-				
-				
-			}
-*/
 			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 			iFretta_btn.setOnClickListener(new OnClickListener() {
 
@@ -189,51 +170,7 @@ public class IFame_Main_Activity extends Activity {
 	}
 	
 	
-	public class SetFavouriteCanteenDialog extends DialogFragment {
-
-		public SetFavouriteCanteenDialog() {
-			// NO ARG CONSTRUCTOR---REQUIRED
-		}
-
-		
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View view = inflater.inflate(R.layout.layout_set_favourite_canteen_dialog,
-					container);
-			
-			//set the title of the dialog box
-			getDialog().setTitle(getString(R.string.iFame_set_favourite_canteen_title));
-
-			Spinner spinner = (Spinner) view.findViewById(R.id.set_favourite_canteen_spinner);
-			
-			//ADD LISTENER TO THE ANNULA BUTTON
-			view.findViewById(R.id.set_favourite_canteen_confirm_button).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					dismiss();
-				}
-			});
-			
-			
-			
-			/*
-			 * da aggiornare ottenendo la lista mense da server
-			 */
-			String [] mense = {"Povo 0", "Povo 1", "Mesiano", "Grand Hotel"};
-			
-			ArrayList<String> menseList = new ArrayList<String>();
-			for (int i = 0; i<mense.length;i++)
-				menseList.add(i, mense[i]);
-			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.layout_list_view, menseList);
-			spinner.setAdapter(adapter);
-						
-
-			return view;
-		}
-		
-	}
+	
 	
 	
 	@Override

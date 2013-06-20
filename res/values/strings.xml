@@ -21,6 +21,7 @@
     <string name="iFame_set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
     <string name="iFame_set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
     <string name="iFame_set_favourite_canteen_confirm_button">Conferma</string>
+    <string name="iFame_set_favourite_canteen_menu_item">Imposta mensa preferita</string>
     <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iFame_main_title_activity">iFame</string>
     <!-- /iFameMain -->

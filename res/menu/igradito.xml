@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/igradito_search"
-          android:title="@string/iGradito_search"
-          android:icon="@drawable/ic_action_search"
-          android:showAsAction="ifRoom|collapseActionView"
-          android:actionViewClass="android.widget.SearchView" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/igradito_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/iGradito_search"/>
+    <item
+        android:id="@+id/iGradito_option_menu"
+        android:icon="@drawable/abs__ic_menu_moreoverflow_normal_holo_light"
+        android:showAsAction="always"
+        android:title="@string/action_settings">
+        <menu>
+            <item
+                android:id="@+id/iGradito_set_favourite_canteen"
+                android:orderInCategory="1"
+                android:showAsAction="always"
+                android:title="@string/iFame_set_favourite_canteen_menu_item"/>
+        </menu>
+    </item>
+
 </menu>
