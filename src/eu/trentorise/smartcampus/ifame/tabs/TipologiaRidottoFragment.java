@@ -150,6 +150,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				.findViewById(R.id.tipologia_ridotto_pane3);
 		TextView contorni3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_contorni3);
+		TextView e3 = (TextView) theContainer.findViewById(R.id.tipologia_ridotto_e3);
 		TextView dessert3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert3);
 
@@ -173,6 +174,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				.findViewById(R.id.tipologia_ridotto_contorni4);
 		TextView dessert4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert4);
+		TextView e4 = (TextView) theContainer.findViewById(R.id.tipologia_ridotto_e4);
 		TextView pane4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pane4);
 
@@ -252,6 +254,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			pane3.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
+			e3.setTextColor(Color.parseColor("#C4C4C4"));
+			e4.setTextColor(Color.parseColor("#C4C4C4"));
 			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
 			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
@@ -281,6 +285,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			pane3.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
+			e3.setTextColor(Color.parseColor("#C4C4C4"));
+			e4.setTextColor(Color.parseColor("#C4C4C4"));
 			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
 			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
@@ -311,6 +317,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			pane3.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
+			e3.setTextColor(Color.parseColor("#C4C4C4"));
+			e4.setTextColor(Color.parseColor("#C4C4C4"));
 			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
 			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
@@ -331,7 +339,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 			pane3.setTextColor(Color.parseColor("#08D126"));
 
-			// metti in grigio tutto il resto
+			// metti in grigio tutto il resto 124
 			primo1.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni1.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
@@ -340,6 +348,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			contorni2.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
 			pane2.setTextColor(Color.parseColor("#C4C4C4"));
+			e4.setTextColor(Color.parseColor("#C4C4C4"));
 			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
 			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
@@ -371,6 +380,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			pane2.setTextColor(Color.parseColor("#C4C4C4"));
 			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
 			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
+			e3.setTextColor(Color.parseColor("#C4C4C4"));
 			pane3.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
