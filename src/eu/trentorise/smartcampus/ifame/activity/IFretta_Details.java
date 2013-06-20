@@ -66,9 +66,11 @@ public class IFretta_Details extends Activity {
 					.getDefaultDisplay();
 			screen.getRectSize(rect);
 
-			img_view.getLayoutParams().height = rect.height() - 5;
+			int y = rect.height();
+			y = (int) ((int) y*0.77);
+			img_view.getLayoutParams().height = (y);
 
-			img_view.getLayoutParams().width = rect.width() - 5;
+			img_view.getLayoutParams().width = rect.width()-3;
 
 			new RetrieveImage(img_view).execute(img_url);
 		}
