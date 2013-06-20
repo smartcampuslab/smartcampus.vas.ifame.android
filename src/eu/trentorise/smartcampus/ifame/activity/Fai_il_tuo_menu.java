@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
@@ -506,17 +505,20 @@ public class Fai_il_tuo_menu extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-
+					primo_button.setVisibility(View.VISIBLE);
+					
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
 					pizza.setEnabled(false);
 					pizza.setChecked(false);
 					panino.setEnabled(false);
 					// panino.setChecked(false);
-					primo_button.setVisibility(View.VISIBLE);
-
+					
 				} else {
 					primo_button.setVisibility(View.GONE);
+					primo_view.setVisibility(View.GONE);
+					primo_button.setImageResource(R.drawable.arrow_down);
+					
 					if (!secondo.isChecked()
 							&& !panino.isChecked()
 							&& !pizza.isChecked()
@@ -549,16 +551,20 @@ public class Fai_il_tuo_menu extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
+					secondo_button.setVisibility(View.VISIBLE);
+					
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
 					pizza.setEnabled(false);
 					pizza.setChecked(false);
 					panino.setEnabled(false);
 					// panino.setChecked(false);
-					secondo_button.setVisibility(View.VISIBLE);
-
+					
 				} else {
 					secondo_button.setVisibility(View.GONE);
+					secondo_view.setVisibility(View.GONE);
+					secondo_button.setImageResource(R.drawable.arrow_down);
+					
 					if (!primo.isChecked()
 							&& !panino.isChecked()
 							&& !pizza.isChecked()
@@ -589,6 +595,8 @@ public class Fai_il_tuo_menu extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
+					pane_button.setVisibility(View.VISIBLE);
+					
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
 					pizza.setEnabled(false);
@@ -603,9 +611,11 @@ public class Fai_il_tuo_menu extends Activity {
 					contorno2.setChecked(false);
 					dessert.setEnabled(false);
 					dessert.setChecked(false);
-					pane_button.setVisibility(View.VISIBLE);
-
+					
 				} else {
+					pane_button.setVisibility(View.GONE);
+					pane_view.setVisibility(View.GONE);
+					pane_button.setImageResource(R.drawable.arrow_down);
 
 					insalatona.setEnabled(true);
 					pizza.setEnabled(true);
@@ -614,8 +624,7 @@ public class Fai_il_tuo_menu extends Activity {
 					contorno1.setEnabled(true);
 					contorno2.setEnabled(true);
 					dessert.setEnabled(true);
-					pane_button.setVisibility(View.GONE);
-
+					
 				}
 			}
 		});
@@ -630,6 +639,7 @@ public class Fai_il_tuo_menu extends Activity {
 					boolean isChecked) {
 				if (isChecked) {
 					insalatona_button.setVisibility(View.VISIBLE);
+					
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					pizza.setEnabled(false);
@@ -655,6 +665,8 @@ public class Fai_il_tuo_menu extends Activity {
 
 				} else {
 					insalatona_button.setVisibility(View.GONE);
+					insalatona_view.setVisibility(View.GONE);
+					insalatona_button.setImageResource(R.drawable.arrow_down);
 
 					if (!primo.isChecked() && !secondo.isChecked()
 							&& !contorno1.isChecked() && !contorno2.isChecked()
@@ -679,6 +691,7 @@ public class Fai_il_tuo_menu extends Activity {
 					boolean isChecked) {
 				if (isChecked) {
 					pizza_button.setVisibility(View.VISIBLE);
+					
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					insalatona.setEnabled(false);
@@ -696,6 +709,9 @@ public class Fai_il_tuo_menu extends Activity {
 
 				} else {
 					pizza_button.setVisibility(View.GONE);
+					pizza_view.setVisibility(View.GONE);
+					pizza_button.setImageResource(R.drawable.arrow_down);
+					
 					panino.setEnabled(true);
 					insalatona.setEnabled(true);
 					primo.setEnabled(true);
@@ -732,6 +748,8 @@ public class Fai_il_tuo_menu extends Activity {
 					pizza.setEnabled(false);
 				} else {
 					contorno1_button.setVisibility(View.GONE);
+					contorno_caldo_view.setVisibility(View.GONE);
+					contorno1_button.setImageResource(R.drawable.arrow_down);
 
 					contorno2.setEnabled(true);
 					dessert.setEnabled(true);
@@ -782,6 +800,9 @@ public class Fai_il_tuo_menu extends Activity {
 					pizza.setEnabled(false);
 				} else {
 					contorno2_button.setVisibility(View.GONE);
+					contorno_freddo_view.setVisibility(View.GONE);
+					contorno2_button.setImageResource(R.drawable.arrow_down);
+					
 					contorno1.setEnabled(true);
 					dessert.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()
@@ -815,6 +836,7 @@ public class Fai_il_tuo_menu extends Activity {
 
 				if (isChecked) {
 					dessert_button.setVisibility(View.VISIBLE);
+					
 					if (contorno2.isChecked() && contorno1.isChecked()) {
 						insalatona.setEnabled(false);
 						insalatona.setChecked(false);
@@ -831,6 +853,9 @@ public class Fai_il_tuo_menu extends Activity {
 
 				} else {
 					dessert_button.setVisibility(View.GONE);
+					dessert_view.setVisibility(View.GONE);
+					dessert_button.setImageResource(R.drawable.arrow_down);
+					
 					contorno2.setEnabled(true);
 					contorno1.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()

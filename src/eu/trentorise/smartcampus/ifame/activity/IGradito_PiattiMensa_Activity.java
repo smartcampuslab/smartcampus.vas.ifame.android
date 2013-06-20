@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -39,7 +41,9 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 
 	ProgressDialog pd;
 	private Spinner portataSpinner;
-	private Mensa mensa; 
+	private Mensa mensa;
+	IGraditoAdapter adapter;
+	List<Piatto_Mensa> lista_piatti;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 					}
 
 				});
-		
+
 		Bundle extras = getIntent().getExtras();
 
 		// if there are no available intents return
@@ -76,10 +80,28 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 		mensa = (Mensa) extras.get("mensa");
 		setTitle(mensa.getMensa_nome());
 
-		pd = new ProgressDialog(IGradito_PiattiMensa_Activity.this).show(
-				IGradito_PiattiMensa_Activity.this, "IGradito", "Loading...");
+		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
 
-		new IGraditoConnector(IGradito_PiattiMensa_Activity.this).execute();
+		adapter = new IGraditoAdapter(IGradito_PiattiMensa_Activity.this,
+				android.R.layout.simple_list_item_1);
+
+		list_view.setAdapter(adapter);
+
+		list_view.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v,
+					int position, long id) {
+
+				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
+				Intent i = new Intent(IGradito_PiattiMensa_Activity.this,
+						Recensioni_Activity.class);
+				i.putExtra("nome_piatto", piatto.getPiatto_nome());
+				startActivity(i);
+			}
+		});
+
+		new IGraditoConnector(getApplicationContext(), adapter).execute();
 	}
 
 	@Override
@@ -87,18 +109,33 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.igradito, menu);
 
-		// Get the SearchView and set the searchable configuration
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu
 				.findItem(R.id.igradito_search).getActionView();
-		// Assumes current activity is the searchable activity
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
-		searchView.setIconifiedByDefault(false); // Do not iconify the widget;
-													// expand it by default
+		if (null != searchManager) {
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+			searchView.setIconifiedByDefault(false);
+		}
 
-		return true;
+		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+			public boolean onQueryTextChange(String newText) {
+				// this is your adapter that will be filtered
+				adapter.getFilter().filter(newText);
+				return true;
+			}
 
+			public boolean onQueryTextSubmit(String query) {
+				// this is your adapter that will be filtered
+				adapter.getFilter().filter(query);
+
+				return true;
+			}
+		};
+
+		searchView.setOnQueryTextListener(queryTextListener);
+
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	/*
@@ -108,11 +145,13 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 	 * ADAPTER PER IGRADITO
 	 */
 
-	private class IGraditoAdapter extends ArrayAdapter<Piatto_Mensa> {
+	private class IGraditoAdapter extends ArrayAdapter<Piatto_Mensa> implements
+			Filterable {
 
-		public IGraditoAdapter(Context context, int textViewResourceId,
-				List<Piatto_Mensa> list) {
-			super(IGradito_PiattiMensa_Activity.this, textViewResourceId, list);
+		List<Piatto_Mensa> complete_list = new ArrayList<Piatto_Mensa>();
+
+		public IGraditoAdapter(Context context, int textViewResourceId) {
+			super(IGradito_PiattiMensa_Activity.this, textViewResourceId);
 		}
 
 		@Override
@@ -136,6 +175,78 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 
 			return convertView;
 		}
+
+		@Override
+		public Filter getFilter() {
+			Filter filter = new Filter() {
+
+				@SuppressWarnings("unchecked")
+				@Override
+				protected FilterResults performFiltering(CharSequence constraint) {
+					FilterResults results = new FilterResults();
+
+					// We implement here the filter logic
+
+					if (constraint == null || constraint.length() == 0) {
+						// No filter implemented we return all the list
+						results.values = complete_list;
+						results.count = complete_list.size();
+					} else {
+						// We perform filtering operation
+
+						List<Piatto_Mensa> piatti = new ArrayList<Piatto_Mensa>();
+
+						for (Piatto_Mensa p : complete_list) {
+
+							if (p.getPiatto()
+									.getPiatto_nome()
+									.toUpperCase()
+									.contains(
+											constraint.toString().toUpperCase())) {
+								piatti.add(p);
+								// System.out.println("Il piatto è: "+
+								// p.getPiatto().getPiatto_nome());
+
+							}
+						}
+
+						results.values = piatti;
+						// System.out.println("I piatti sono: " +
+						// results.values);
+						results.count = piatti.size();
+						// System.out.println("Numero: " + results.count);
+
+					}
+					return results;
+				}
+
+				@Override
+				protected void publishResults(CharSequence constraint,
+						FilterResults results) {
+
+					// Now we have to inform the adapter about the new list
+					// filtered
+
+					adapter.clear();
+
+					if (results.count > 0) {
+
+						for (Piatto_Mensa p : (List<Piatto_Mensa>) results.values) {
+
+							adapter.add(p);
+
+						}
+
+						notifyDataSetChanged();
+					} else {
+						notifyDataSetInvalidated();
+					}
+				}
+			};
+			return filter;
+
+		}
+
 	}
 
 	/*
@@ -147,15 +258,19 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 	 * CONNECTOR TO GETALLPIATTI WEB SERVICE
 	 */
 
-	private class IGraditoConnector extends AsyncTask<Void, Void, List<Piatto_Mensa>> {
+	private class IGraditoConnector extends
+			AsyncTask<Void, Void, List<Piatto_Mensa>> {
 
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		IGraditoAdapter adapter;
 
-		public IGraditoConnector(Context applicationContext) {
+		public IGraditoConnector(Context applicationContext,
+				IGraditoAdapter adapter) {
 			context = applicationContext;
+			this.adapter = adapter;
 		}
 
 		private List<Piatto_Mensa> getPiattiList() {
@@ -176,8 +291,8 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 
 					String body = response.getBody();
 
-					List<Piatto_Mensa> lista_piatti = Utils.convertJSONToObjects(
-							body, Piatto_Mensa.class);
+					List<Piatto_Mensa> lista_piatti = Utils
+							.convertJSONToObjects(body, Piatto_Mensa.class);
 
 					return lista_piatti;
 
@@ -199,6 +314,14 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 		}
 
 		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(getApplicationContext()).show(
+					IGradito_PiattiMensa_Activity.this, "IGradito",
+					"Loading...");
+			super.onPreExecute();
+		}
+
+		@Override
 		protected List<Piatto_Mensa> doInBackground(Void... params) {
 			return getPiattiList();
 		}
@@ -206,44 +329,24 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 		@Override
 		protected void onPostExecute(List<Piatto_Mensa> result) {
 			// TODO Auto-generated method stub
-			super.onPostExecute(result);
 
-			System.out.println("Sono nel onpostexecute");
-			createPiatti(result);
+			if (result != null) {
+
+				adapter.complete_list = result;
+
+				adapter.clear();
+				for (Piatto_Mensa p : result) {
+
+					adapter.add(p);
+
+				}
+				System.out.println("Sono nel onpostexecute");
+				lista_piatti = result;
+			}
 
 			pd.dismiss();
 		}
 
-	}
-
-	private void createPiatti(List<Piatto_Mensa> lista_piatti) {
-
-		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
-
-
-		if (lista_piatti.size() == 0) {
-			System.out.println("è null");
-		}
-
-		IGraditoAdapter adapter = new IGraditoAdapter(
-				IGradito_PiattiMensa_Activity.this,
-				android.R.layout.simple_list_item_1, lista_piatti);
-		
-		list_view.setAdapter(adapter);
-
-		list_view.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View v,
-					int position, long id) {
-
-				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
-				Intent i = new Intent(IGradito_PiattiMensa_Activity.this,
-						Recensioni_Activity.class);
-				i.putExtra("nome_piatto", piatto.getPiatto_nome());
-				startActivity(i);
-			}
-		});
 	}
 
 }
