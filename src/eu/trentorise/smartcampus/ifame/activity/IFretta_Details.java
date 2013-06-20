@@ -103,7 +103,7 @@ public class IFretta_Details extends Activity {
 			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
 			editor.commit();
 			Toast.makeText(getApplicationContext(),
-					"Hai settato la tua mensa preferita: " + mensa_name,
+					"Hai settato come preferita: " + mensa_name,
 					Toast.LENGTH_LONG).show();
 			break;
 

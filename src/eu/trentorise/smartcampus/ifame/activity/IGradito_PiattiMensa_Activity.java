@@ -8,10 +8,12 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,11 +25,11 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
-import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.model.Piatto_Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -42,8 +44,10 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 	ProgressDialog pd;
 	private Spinner portataSpinner;
 	private Mensa mensa;
+	String mensa_name;
 	IGraditoAdapter adapter;
 	List<Piatto_Mensa> lista_piatti;
+	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,7 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 
 		// Get mensa intent from activity:ifretta
 		mensa = (Mensa) extras.get("mensa");
+		mensa_name = mensa.getMensa_nome();
 		setTitle(mensa.getMensa_nome());
 
 		ListView list_view = (ListView) findViewById(R.id.list_view_igradito);
@@ -93,10 +98,10 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 			public void onItemClick(AdapterView<?> adapter, View v,
 					int position, long id) {
 
-				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
+				Piatto_Mensa piatto = (Piatto_Mensa) adapter.getItemAtPosition(position);
 				Intent i = new Intent(IGradito_PiattiMensa_Activity.this,
 						Recensioni_Activity.class);
-				i.putExtra("nome_piatto", piatto.getPiatto_nome());
+				i.putExtra("nome_piatto", piatto.getPiatto().getPiatto_nome());
 				startActivity(i);
 			}
 		});
@@ -117,7 +122,7 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 					.getSearchableInfo(getComponentName()));
 			searchView.setIconifiedByDefault(false);
 		}
-
+		
 		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 			public boolean onQueryTextChange(String newText) {
 				// this is your adapter that will be filtered
@@ -136,6 +141,32 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 		searchView.setOnQueryTextListener(queryTextListener);
 
 		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		/*
+		 * case R.id.action_settings: menuItem = item; break;
+		 */
+		case R.id.iGradito_set_favourite_canteen:
+
+			SharedPreferences pref = getSharedPreferences(
+					getString(R.string.iGradito_preference_file),
+					Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
+			editor.commit();
+			
+			Toast.makeText(getApplicationContext(),
+					"Hai settato come preferita: " + mensa_name,
+					Toast.LENGTH_LONG).show();
+			break;
+			
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 
 	/*
@@ -174,6 +205,7 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 			piatto_avg.setText(p.getVoto_medio().toString());
 
 			return convertView;
+			
 		}
 
 		@Override

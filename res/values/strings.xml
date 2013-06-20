@@ -102,6 +102,7 @@
     <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
+    <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <!-- /iGradito -->
 
 

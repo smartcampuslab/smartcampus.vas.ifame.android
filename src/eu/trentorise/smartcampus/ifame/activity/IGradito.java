@@ -180,14 +180,12 @@ public class IGradito extends Activity {
 			Mensa m = getItem(position);
 
 			nome_mensa.setText(m.getMensa_nome());
-
 			
-			/*
 			SharedPreferences pref = getSharedPreferences(
-					getString(R.string.iFretta_preference_file),
+					getString(R.string.iGradito_preference_file),
 					Context.MODE_PRIVATE);
 			String mensa_name = pref.getString(
-					IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
+					IGradito_PiattiMensa_Activity.GET_FAVOURITE_CANTEEN, "No String");
 
 			if (m.getMensa_nome().equals(mensa_name)) {
 				nome_mensa.setTypeface(null, Typeface.BOLD);
@@ -196,7 +194,6 @@ public class IGradito extends Activity {
 						.length(), 0);
 				nome_mensa.setText(content);
 			} 
-			*/
 			
 			return convertView;
 		}
