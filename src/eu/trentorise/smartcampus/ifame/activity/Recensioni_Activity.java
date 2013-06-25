@@ -66,7 +66,7 @@ public class Recensioni_Activity extends Activity {
 		ArrayList<Review> lista_reviews = new ArrayList<Review>();
 		for (int i = 0; i < utenti.length; i++) {
 			Review r = new Review(utenti[i],
-					"questa � solo la prova di una recensione", "17/06/13");
+					"questa e' solo la prova di una recensione", "17/06/13");
 			lista_reviews.add(r);
 
 		}

@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IGradito_PiattiMensa_Activity" >
+    tools:context=".IGradito_PiattiMensa_Activity" 
+    android:id="@+id/igradito_piatti_mensa_view">
     
     <Spinner
         android:id="@+id/spinner_portata"
