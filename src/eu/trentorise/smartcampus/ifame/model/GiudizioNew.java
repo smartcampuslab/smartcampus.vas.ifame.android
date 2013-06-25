@@ -2,37 +2,20 @@ package eu.trentorise.smartcampus.ifame.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-@XmlRootElement(name = "GiudizioNew")
 public class GiudizioNew {
-	@Id
-	@GeneratedValue
+
 	private Long giudizio_id;
 
-	@Column(name = "VOTO")
 	private Float voto;
 
-	@Column(name = "COMMENTO")
 	private String commento;
 
-	@Column(name = "ULTIMO_AGGIORNAMENTO")
 	private Date ultimo_aggiornamento;
 
-	@Column(name = "USER_ID")
 	private Long user_id;
 
-	@Column(name = "MENSA_ID")
 	private Long mensa_id;
 
-	@Column(name = "PIATTO_ID")
 	private Long piatto_id;
 
 	public GiudizioNew() {
