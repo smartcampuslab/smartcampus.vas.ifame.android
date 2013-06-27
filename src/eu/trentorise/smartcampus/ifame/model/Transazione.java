@@ -2,29 +2,14 @@ package eu.trentorise.smartcampus.ifame.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-@XmlRootElement(name = "Transazione")
-@NamedQuery(name = "Transazione.getUserTransactions", query = "from Transazione where user_id = ?1")
 public class Transazione {
 
-	@Id
-	@GeneratedValue
 	private Long transazione_id;
 
-	@Column(name = "USER_ID")
 	private Long user_id;
 
-	@Column(name = "DATA")
 	private Date data;
 
-	@Column(name = "IMPORTO")
 	private Float importo;
 
 	public Long getUser_id() {
