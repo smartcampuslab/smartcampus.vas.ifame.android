@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class GiudizioNew {
 
@@ -17,6 +18,22 @@ public class GiudizioNew {
 	private Long mensa_id;
 
 	private Long piatto_id;
+	
+	private List<Likes> likes; 
+
+	/**
+	 * @return the likes
+	 */
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+	/**
+	 * @param likes the likes to set
+	 */
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
 
 	public GiudizioNew() {
 		super();

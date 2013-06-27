@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,16 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.model.Giudizio;
+import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
+import eu.trentorise.smartcampus.ifame.model.GiudizioNew;
+import eu.trentorise.smartcampus.ifame.model.Likes;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.model.Review;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -36,13 +40,13 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class Recensioni_Activity extends Activity {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	List<Mensa> listaMense = null;
-	
+	Piatto piatto;
+	String user_id;
+	Mensa mensa;
+	GiudizioDataToPost giudizioDataToPost = null;
+	String add = "http://192.168.33.106:8080/web-ifame";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -56,88 +60,74 @@ public class Recensioni_Activity extends Activity {
 			return;
 		}
 
-		// Get intent from the igradito activity
-		String nome_piatto = (String) extras.get("nome_piatto");
-		setTitle(nome_piatto);
+		// Get intents from the igradito activity
+		piatto = (Piatto) extras.get("nome_piatto");
+		setTitle(piatto.getPiatto_nome());
 
-		String[] utenti = new String[] { "Francesco", "Desmond", "Stefano",
-				"Bonadiman", "Enrico" };
+		user_id = (String) extras.get("user_id");
+		mensa = (Mensa) extras.get("igradito_spinner_mense");
 
-		ArrayList<Review> lista_reviews = new ArrayList<Review>();
-		for (int i = 0; i < utenti.length; i++) {
-			Review r = new Review(utenti[i],
-					"questa e' solo la prova di una recensione", "17/06/13");
-			lista_reviews.add(r);
+		// TOAST FOR TESTING
+		Toast.makeText(
+				Recensioni_Activity.this,
+				piatto.getPiatto_nome() + " " + user_id + " "
+						+ mensa.getMensa_nome(), Toast.LENGTH_LONG).show();
 
-		}
+		//get list of comments
+		new GetGiudizioConnector(Recensioni_Activity.this).execute(
+				mensa.getMensa_id(), piatto.getPiatto_id());
 
-		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
-				R.layout.list_igradito_recensioni, lista_reviews);
-
-		user_list.setAdapter(adapter);
-
-		
-		new IGraditoConnector(Recensioni_Activity.this).execute();
 	}
 
-	public class ReviewAdapter extends ArrayAdapter<Review> {
-
-		ArrayList<Review> reviews;
-		Activity activity;
-		int layoutId;
+	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {
 
 		public ReviewAdapter(Activity activity, int layout_id,
-				ArrayList<Review> reviews) {
+				List<GiudizioNew> reviews) {
 			super(activity, layout_id, reviews);
-			this.reviews = reviews;
-			this.activity = activity;
-			this.layoutId = layout_id;
-		}
-
-		public int getCount() {
-			return reviews.size();
-		}
-
-		/*
-		 * public Review getItem(int position) { return reviews[position]; }
-		 */
-
-		public long getItemId(int position) {
-			return position;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
 
-			if (row == null) {
-				LayoutInflater inflater = ((Activity) activity)
-						.getLayoutInflater();
-				row = inflater.inflate(layoutId, parent, false);
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-				// TO BE USED WHEN REVIEW MODEL AND CONNECTOR ARE READY
-				// TextView username = (TextView)
-				// findViewById(R.id.iGradito_recensioni_nome_utente);
-				// TextView review_date = (TextView)
-				// findViewById(R.id.iGradito_recensioni_data_inserimento);
-				// TextView review_content =
-				// (TextView)findViewById(R.id.iGradito_recensioni_review_content);
-				// TextView like_count = (TextView)
-				// findViewById(R.id.like_count);
-				// TextView dislike_count =
-				// (TextView)findViewById(R.id.dislike_count);
-				//
-				// Review r = getItem(position);
-				//
-				// username.setText(r.getUser());
-				// review_date.setText(r.getDate());
-				// review_content.setText(r.getContent());
+			convertView = inflater.inflate(R.layout.list_igradito_recensioni,
+					null);
 
-				// fields like and dislike should be added to the review model
-				//
+			// TO BE USED WHEN REVIEW MODEL AND CONNECTOR ARE READY
+			TextView username = (TextView) convertView
+					.findViewById(R.id.iGradito_recensioni_nome_utente);
+			TextView review_date = (TextView) convertView
+					.findViewById(R.id.iGradito_recensioni_data_inserimento);
+			TextView review_content = (TextView) convertView
+					.findViewById(R.id.iGradito_recensioni_review_content);
+			TextView like_count = (TextView) convertView
+					.findViewById(R.id.like_count);
+			TextView dislike_count = (TextView) convertView
+					.findViewById(R.id.dislike_count);
 
+			GiudizioNew giudizio = getItem(position);
+
+			username.setText(user_id);
+			review_date.setText(new Date().toString());
+			review_content.setText(giudizio.getCommento());
+
+			List<Likes> list_likes = giudizio.getLikes();
+			Integer likes = 0;
+			Integer dislikes = 0;
+
+			for (Likes l : list_likes) {
+				if (l.getIs_like()) {
+					likes++;
+				} else {
+					dislikes++;
+				}
 			}
 
-			return row;
+			like_count.setText(likes.toString());
+			dislike_count.setText(dislikes.toString());
+
+			return convertView;
 		}
 	}
 
@@ -166,7 +156,7 @@ public class Recensioni_Activity extends Activity {
 	private void showCustomizedDialog() {
 		// hide the title bar
 		// dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		FragmentManager fm = getFragmentManager();
 		CustomDialog cd = new CustomDialog();
 		cd.show(fm, "fragment");
@@ -175,99 +165,128 @@ public class Recensioni_Activity extends Activity {
 
 	public class CustomDialog extends DialogFragment {
 
+		EditText cd_editText;
+		String commento;
+
 		public CustomDialog() {
 			// NO ARG CONSTRUCTOR---REQUIRED
 		}
 
-		
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View view = inflater.inflate(R.layout.igradito_custom_dialogbox,
 					container);
-			
-			//set the title of the dialog box
+
+			// set the title of the dialog box
 			getDialog().setTitle("La tua recensione... ");
 
-			Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
-			
-			//ADD LISTENER TO THE ANNULA BUTTON
-			view.findViewById(R.id.annulla_button).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-				dismiss();
-				}
-			});
-			
-			MyCursorAdapter adapter = new MyCursorAdapter(getActivity(), listaMense);
-			spinner.setAdapter(adapter);
+			view.findViewById(R.id.spinner);
+			cd_editText = (EditText) view
+					.findViewById(R.id.custom_dialog_etext);
+
+			// ADD LISTENER TO THE ANNULA BUTTON
+			view.findViewById(R.id.annulla_button).setOnClickListener(
+					new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							dismiss();
+						}
+					});
+
+			// ADD LISTENER TO THE OK BUTTON
+			view.findViewById(R.id.OK_button).setOnClickListener(
+					new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							giudizioDataToPost = new GiudizioDataToPost();
+							commento = cd_editText.getText().toString();
+							giudizioDataToPost.commento = commento;
+							giudizioDataToPost.userId = Long.parseLong(user_id);
+							giudizioDataToPost.voto = (float) 7;
+
+							// Toast.makeText(getActivity(), commento,
+							// Toast.LENGTH_LONG).show();
+
+							new PostGiudizioConnector(getActivity(),
+									giudizioDataToPost).execute(
+									mensa.getMensa_id(), piatto.getPiatto_id());
+						}
+					});
+
+			// MyCursorAdapter adapter = new MyCursorAdapter(getActivity(),
+			// listaMense);
+			// spinner.setAdapter(adapter);
 
 			return view;
 		}
-		
-	}
-	
-	
-	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter{
-	    private Activity activity;
-	    private List<Mensa> lista_mense; 
-
-	    public MyCursorAdapter(Activity activity, List<Mensa> lista_mense){
-	        this.activity = activity;
-	        this.lista_mense = lista_mense;
-	    }
-
-	    public int getCount() {
-	        return lista_mense.size();
-	    }
-
-	    public Object getItem(int position) {
-	        return lista_mense.get(position);
-	    }
-
-	    @Override
-		public long getItemId(int position) {
-			return lista_mense.get(position).getMensa_id();
-		}
-	    
-	    public View getView(int position, View convertView, ViewGroup parent) {
-
-	    View spinView;
-	    if( convertView == null ){
-	        LayoutInflater inflater = activity.getLayoutInflater();
-	        spinView = inflater.inflate(R.layout.layout_listview_igradito, null);
-	    } else {
-	         spinView = convertView;
-	    }
-	    TextView nome_mensa = (TextView) spinView.findViewById(R.id.nome_mensa);
-	    	    
-	    nome_mensa.setText(lista_mense.get(position).getMensa_nome());
-	    
-	    return spinView;
-	    
-	    }
 
 	}
-	
-	
-	private class IGraditoConnector extends AsyncTask<Void, Void, List<Mensa>> {
 
+	/*
+	 * public class MyCursorAdapter extends BaseAdapter implements
+	 * SpinnerAdapter { private Activity activity; private List<Mensa>
+	 * lista_mense;
+	 * 
+	 * public MyCursorAdapter(Activity activity, List<Mensa> lista_mense) {
+	 * this.activity = activity; this.lista_mense = lista_mense; }
+	 * 
+	 * public int getCount() { return lista_mense.size(); }
+	 * 
+	 * public Object getItem(int position) { return lista_mense.get(position); }
+	 * 
+	 * @Override public long getItemId(int position) { return
+	 * lista_mense.get(position).getMensa_id(); }
+	 * 
+	 * public View getView(int position, View convertView, ViewGroup parent) {
+	 * 
+	 * View spinView; if (convertView == null) { LayoutInflater inflater =
+	 * activity.getLayoutInflater(); spinView =
+	 * inflater.inflate(R.layout.layout_listview_igradito, null); } else {
+	 * spinView = convertView; } TextView nome_mensa = (TextView) spinView
+	 * .findViewById(R.id.nome_mensa);
+	 * 
+	 * nome_mensa.setText(lista_mense.get(position).getMensa_nome());
+	 * 
+	 * return spinView;
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
+
+	/**
+	 * CONNECTOR TO GET THE LIST OF COMMENTS
+	 * 
+	 */
+
+	private class GetGiudizioConnector extends
+			AsyncTask<Long, Void, List<GiudizioNew>> {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-
-		public IGraditoConnector(Context applicationContext) {
+		
+		public GetGiudizioConnector(Context applicationContext) {
 			context = applicationContext;
 		}
 
-		private List<Mensa> getMense() {
+		@Override
+		protected List<GiudizioNew> doInBackground(Long... params) {
+
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getmense");
+					"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio");
+
+			// MessageRequest request = new MessageRequest(add, "mensa/"
+			// + params[0] + "/piatto/" + params[1] + "/giudizio/add");
+
 			request.setMethod(Method.GET);
+
+			// request.setBody(Utils.convertToJSON(data));
 
 			MessageResponse response;
 			try {
@@ -276,8 +295,8 @@ public class Recensioni_Activity extends Activity {
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
-					List<Mensa> list = Utils.convertJSONToObjects(body,
-							Mensa.class);
+					List<GiudizioNew> list = Utils.convertJSONToObjects(body,
+							GiudizioNew.class);
 					return list;
 				} else {
 					return null;
@@ -295,20 +314,142 @@ public class Recensioni_Activity extends Activity {
 			}
 			return null;
 		}
-		
 
 		@Override
-		protected List<Mensa> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getMense();
-		}
-
-		@Override
-		protected void onPostExecute(List<Mensa> result) {
+		protected void onPostExecute(List<GiudizioNew> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			listaMense = result;
-			
+			createGiudiziList(result);
+
 		}
-	}	
+	}
+
+	/**
+	 * 
+	 * CONNECTOR TO POST COMMENTS
+	 * 
+	 */
+
+	private class PostGiudizioConnector extends
+			AsyncTask<Long, Void, List<GiudizioNew>> {
+		private ProtocolCarrier mProtocolCarrier;
+		public Context context;
+		public String appToken = "test smartcampus";
+		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		GiudizioDataToPost data = null;
+
+		public PostGiudizioConnector(Context applicationContext,
+				GiudizioDataToPost data) {
+			context = applicationContext;
+			this.data = data;
+		}
+
+		@Override
+		protected List<GiudizioNew> doInBackground(Long... params) {
+			// TODO Auto-generated method stu
+
+			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+
+			MessageRequest request = new MessageRequest(
+					"http://smartcampuswebifame.app.smartcampuslab.it",
+					"mensa/" + params[0] + "/piatto/" + params[1]
+							+ "/giudizio/add");
+
+			// MessageRequest request = new MessageRequest(add, "mensa/"
+			// + params[0] + "/piatto/" + params[1] + "/giudizio/add");
+
+			request.setMethod(Method.POST);
+
+			request.setBody(Utils.convertToJSON(data));
+
+			MessageResponse response;
+			try {
+				response = mProtocolCarrier.invokeSync(request, appToken,
+						authToken);
+
+				if (response.getHttpStatus() == 200) {
+					String body = response.getBody();
+					List<GiudizioNew> list = Utils.convertJSONToObjects(body,
+							GiudizioNew.class);
+					return list;
+				} else {
+					return null;
+				}
+
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(List<GiudizioNew> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			createGiudiziList(result);
+
+		}
+	}
+
+	private void createGiudiziList(List<GiudizioNew> reviews) {
+		ListView giudiziListview = (ListView) findViewById(R.id.recensioni_list);
+
+		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
+				android.R.layout.simple_list_item_1, reviews);
+
+		giudiziListview.setAdapter(adapter);
+	}
+	/**
+	 * 
+	 * CONNECTOR TO GET THE MENSA DATA
+	 * 
+	 */
+	/*
+	 * private class RecensioniMensaConnector extends AsyncTask<Void, Void,
+	 * List<Mensa>> {
+	 * 
+	 * private ProtocolCarrier mProtocolCarrier; public Context context; public
+	 * String appToken = "test smartcampus"; public String authToken =
+	 * "aee58a92-d42d-42e8-b55e-12e4289586fc";
+	 * 
+	 * public RecensioniMensaConnector(Context applicationContext) { context =
+	 * applicationContext; }
+	 * 
+	 * private List<Mensa> getMense() { mProtocolCarrier = new
+	 * ProtocolCarrier(context, appToken);
+	 * 
+	 * MessageRequest request = new MessageRequest(
+	 * "http://smartcampuswebifame.app.smartcampuslab.it", "getmense");
+	 * request.setMethod(Method.GET);
+	 * 
+	 * MessageResponse response; try { response =
+	 * mProtocolCarrier.invokeSync(request, appToken, authToken);
+	 * 
+	 * if (response.getHttpStatus() == 200) { String body = response.getBody();
+	 * List<Mensa> list = Utils.convertJSONToObjects(body, Mensa.class); return
+	 * list; } else { return null; }
+	 * 
+	 * } catch (ConnectionException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (ProtocolException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); } catch
+	 * (SecurityException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } return null; }
+	 * 
+	 * @Override protected List<Mensa> doInBackground(Void... params) { // TODO
+	 * Auto-generated method stub return getMense(); }
+	 * 
+	 * @Override protected void onPostExecute(List<Mensa> result) { // TODO
+	 * Auto-generated method stub super.onPostExecute(result); listaMense =
+	 * result;
+	 * 
+	 * } }
+	 */
 }

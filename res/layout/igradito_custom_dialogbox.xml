@@ -48,7 +48,7 @@
         android:text="Ottimo" />
 
      <EditText
-         android:id="@+id/editText1"
+         android:id="@+id/custom_dialog_etext"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignParentLeft="true"
@@ -66,7 +66,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignParentLeft="true"
-         android:layout_below="@+id/editText1"
+         android:layout_below="@+id/custom_dialog_etext"
          android:layout_marginTop="29dp"
          android:text="Annulla" />
 

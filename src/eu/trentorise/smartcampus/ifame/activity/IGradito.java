@@ -5,11 +5,14 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -34,15 +37,25 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGradito extends Activity {
 
-	ProgressDialog pd;
-	View view;
-	String address = "http://192.168.33.106:8080/web-ifame";
+	private ProgressDialog pd;
+	private View view;
+	private String user_id;
+	private Spinner mense_spinner;
 	//List<Mensa> listaMense = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_piattimensa);
+		
+		//Get user_id intent
+		Bundle extras = getIntent().getExtras(); 
+		if(extras == null){
+			return; 
+		}
+		
+		user_id = (String) extras.get("user_id");
+		
 		// set the process dialog
 		pd = ProgressDialog.show(this, "Loading... ", "please wait...");
 
@@ -249,34 +262,6 @@ public class IGradito extends Activity {
 
 	}
 
-	/*
-	 * 
-	 * CREATE A LIST THAT SHOWS THE VARIOUS CANTEENS WITH THE RESULTS RETRIEVED
-	 */
-	/*
-	private void createWebcamList(List<Mensa> mense) {
-		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
-
-		IGraditoArrayAdapter adapter = new IGraditoArrayAdapter(this,
-				R.layout.layout_list_view_ifretta, mense);
-
-		ifretta_listView.setAdapter(adapter);
-		ifretta_listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapter, View v,
-					int position, long id) {
-				Mensa m = (Mensa) adapter.getItemAtPosition(position);
-				Intent intent = new Intent(IGradito.this,
-						IGradito_PiattiMensa_Activity.class);
-
-				intent.putExtra("mensa", m);
-
-				startActivity(intent);
-
-			}
-		});
-
-	}
-	*/
 
 	/**
 	 * 
@@ -293,14 +278,36 @@ public class IGradito extends Activity {
 				piatti);
 		
 		piattilist_view.setAdapter(adapter); 
+		
+		//add a listener to the list 
+		piattilist_view.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position,
+					long id) {
+				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
+
+				Mensa spinner_mensa_value = (Mensa) mense_spinner.getSelectedItem();
+				
+				//Pass values to next activity through an intent
+				Intent intent = new Intent(IGradito.this, Recensioni_Activity.class);
+				intent.putExtra("nome_piatto", piatto);
+				intent.putExtra("user_id", user_id);
+				intent.putExtra("igradito_spinner_mense", spinner_mensa_value);
+				startActivity(intent);
+			}
+			
+		});
 	}
 	
 	private void createMenseSpinner(List<Mensa> listamense){
-		Spinner spinner = (Spinner) findViewById(R.id.spinner_portata);
+		mense_spinner = (Spinner) findViewById(R.id.spinner_portata);
 		
 		MyCursorAdapter adapter = new MyCursorAdapter(this, listamense);
-		spinner.setAdapter(adapter);
+		mense_spinner.setAdapter(adapter);
+ 
 	}
+	
 
 	/*
 	 * 
@@ -338,51 +345,4 @@ public class IGradito extends Activity {
 		}
 
 	}
-	
-	/*
-	 * 
-	 * CUSTOM ADAPTER FOR THE LIST OF CANTEENS
-	 */
-
-	/*
-	private class IGraditoArrayAdapter extends ArrayAdapter<Mensa> {
-
-		public IGraditoArrayAdapter(Context context, int textViewResourceId,
-				List<Mensa> objects) {
-			super(context, textViewResourceId, objects);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			convertView = inflater.inflate(R.layout.layout_list_view_ifretta,
-					null);
-
-			TextView nome_mensa = (TextView) convertView
-					.findViewById(R.id.list_ifretta);
-			Mensa m = getItem(position);
-
-			nome_mensa.setText(m.getMensa_nome());
-
-			SharedPreferences pref = getSharedPreferences(
-					getString(R.string.iGradito_preference_file),
-					Context.MODE_PRIVATE);
-			String mensa_name = pref.getString(
-					IGradito_PiattiMensa_Activity.GET_FAVOURITE_CANTEEN, "No String");
-
-			if (m.getMensa_nome().equals(mensa_name)) {
-				nome_mensa.setTypeface(null, Typeface.BOLD);
-				SpannableString content = new SpannableString(m.getMensa_nome());
-				content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
-						.length(), 0);
-				nome_mensa.setText(content);
-			} 
-
-			return convertView;
-		}
-
-	} */
 }

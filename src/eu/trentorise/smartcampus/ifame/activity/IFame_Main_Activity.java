@@ -38,8 +38,6 @@ import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 
 public class IFame_Main_Activity extends Activity {
 
-
-	
 	/** Logging tag */
 	private static final String TAG = "Main";
 
@@ -53,7 +51,10 @@ public class IFame_Main_Activity extends Activity {
 	 * token
 	 */
 	private SCAccessProvider mAccessProvider = null;
-	
+
+	// added for getting userid for recensioni activity (igradito)
+	private String userID;
+
 	/** Access token for the application user */
 	private String mToken = null;
 
@@ -75,6 +76,14 @@ public class IFame_Main_Activity extends Activity {
 		// retrieve the token: no restriction on the preferred account type
 		try {
 			mToken = mAccessProvider.getAuthToken(this, null);
+			// added for getting userid for recensioni activity (igradito)
+			if (mToken != null) {
+				// read user Data
+				UserData data = mAccessProvider.readUserData(this, null);
+				userID = data.getUserId();
+
+			}
+			// added for getting userid for recensioni activity (igradito)
 
 		}
 
@@ -90,7 +99,7 @@ public class IFame_Main_Activity extends Activity {
 		}
 
 	}
-	
+
 	@Override
 	protected void onResume() {
 
@@ -101,9 +110,8 @@ public class IFame_Main_Activity extends Activity {
 			// access the user data from the AC service remotely
 			new LoadUserDataFromACServiceTask().execute(mToken);
 			// access the basic user profile data remotely
-			//new LoadUserDataFromProfileServiceTask().execute(mToken);
-			
-			
+			// new LoadUserDataFromProfileServiceTask().execute(mToken);
+
 			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 			iFretta_btn.setOnClickListener(new OnClickListener() {
 
@@ -140,8 +148,9 @@ public class IFame_Main_Activity extends Activity {
 
 					Intent i = new Intent(IFame_Main_Activity.this,
 							IGradito.class);
+					// added for getting userid for recensioni activity (igradito)
+					i.putExtra("user_id", userID);
 					startActivity(i);
-
 				}
 
 			});
@@ -168,11 +177,7 @@ public class IFame_Main_Activity extends Activity {
 			});
 		}
 	}
-	
-	
-	
-	
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// check the result of the authentication
@@ -183,7 +188,7 @@ public class IFame_Main_Activity extends Activity {
 						AccountManager.KEY_AUTHTOKEN);
 				Log.i(TAG, "Authentication successfull");
 				new LoadUserDataFromACServiceTask().execute(mToken);
-//				new LoadUserDataFromProfileServiceTask().execute(mToken);
+				// new LoadUserDataFromProfileServiceTask().execute(mToken);
 				// authentication cancelled by user
 			} else if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
