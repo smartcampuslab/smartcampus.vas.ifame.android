@@ -67,12 +67,6 @@ public class Recensioni_Activity extends Activity {
 		user_id = (String) extras.get("user_id");
 		mensa = (Mensa) extras.get("igradito_spinner_mense");
 
-		// TOAST FOR TESTING
-		Toast.makeText(
-				Recensioni_Activity.this,
-				piatto.getPiatto_nome() + " " + user_id + " "
-						+ mensa.getMensa_nome(), Toast.LENGTH_LONG).show();
-
 		//get list of comments
 		new GetGiudizioConnector(Recensioni_Activity.this).execute(
 				mensa.getMensa_id(), piatto.getPiatto_id());
@@ -108,8 +102,8 @@ public class Recensioni_Activity extends Activity {
 
 			GiudizioNew giudizio = getItem(position);
 
-			username.setText(user_id);
-			review_date.setText(new Date().toString());
+			username.setText(giudizio.getUser_id().toString());
+			review_date.setText(giudizio.getUltimo_aggiornamento().toString());
 			review_content.setText(giudizio.getCommento());
 
 			List<Likes> list_likes = giudizio.getLikes();
@@ -180,7 +174,6 @@ public class Recensioni_Activity extends Activity {
 			// set the title of the dialog box
 			getDialog().setTitle("La tua recensione... ");
 
-			view.findViewById(R.id.spinner);
 			cd_editText = (EditText) view
 					.findViewById(R.id.custom_dialog_etext);
 
@@ -212,49 +205,13 @@ public class Recensioni_Activity extends Activity {
 							new PostGiudizioConnector(getActivity(),
 									giudizioDataToPost).execute(
 									mensa.getMensa_id(), piatto.getPiatto_id());
+							dismiss();
 						}
 					});
 
-			// MyCursorAdapter adapter = new MyCursorAdapter(getActivity(),
-			// listaMense);
-			// spinner.setAdapter(adapter);
-
 			return view;
 		}
-
 	}
-
-	/*
-	 * public class MyCursorAdapter extends BaseAdapter implements
-	 * SpinnerAdapter { private Activity activity; private List<Mensa>
-	 * lista_mense;
-	 * 
-	 * public MyCursorAdapter(Activity activity, List<Mensa> lista_mense) {
-	 * this.activity = activity; this.lista_mense = lista_mense; }
-	 * 
-	 * public int getCount() { return lista_mense.size(); }
-	 * 
-	 * public Object getItem(int position) { return lista_mense.get(position); }
-	 * 
-	 * @Override public long getItemId(int position) { return
-	 * lista_mense.get(position).getMensa_id(); }
-	 * 
-	 * public View getView(int position, View convertView, ViewGroup parent) {
-	 * 
-	 * View spinView; if (convertView == null) { LayoutInflater inflater =
-	 * activity.getLayoutInflater(); spinView =
-	 * inflater.inflate(R.layout.layout_listview_igradito, null); } else {
-	 * spinView = convertView; } TextView nome_mensa = (TextView) spinView
-	 * .findViewById(R.id.nome_mensa);
-	 * 
-	 * nome_mensa.setText(lista_mense.get(position).getMensa_nome());
-	 * 
-	 * return spinView;
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
 
 	/**
 	 * CONNECTOR TO GET THE LIST OF COMMENTS
@@ -395,7 +352,7 @@ public class Recensioni_Activity extends Activity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			createGiudiziList(result);
-
+			Toast.makeText(getApplicationContext(), "Recensione Aggiunta", Toast.LENGTH_LONG).show(); 
 		}
 	}
 
@@ -407,49 +364,5 @@ public class Recensioni_Activity extends Activity {
 
 		giudiziListview.setAdapter(adapter);
 	}
-	/**
-	 * 
-	 * CONNECTOR TO GET THE MENSA DATA
-	 * 
-	 */
-	/*
-	 * private class RecensioniMensaConnector extends AsyncTask<Void, Void,
-	 * List<Mensa>> {
-	 * 
-	 * private ProtocolCarrier mProtocolCarrier; public Context context; public
-	 * String appToken = "test smartcampus"; public String authToken =
-	 * "aee58a92-d42d-42e8-b55e-12e4289586fc";
-	 * 
-	 * public RecensioniMensaConnector(Context applicationContext) { context =
-	 * applicationContext; }
-	 * 
-	 * private List<Mensa> getMense() { mProtocolCarrier = new
-	 * ProtocolCarrier(context, appToken);
-	 * 
-	 * MessageRequest request = new MessageRequest(
-	 * "http://smartcampuswebifame.app.smartcampuslab.it", "getmense");
-	 * request.setMethod(Method.GET);
-	 * 
-	 * MessageResponse response; try { response =
-	 * mProtocolCarrier.invokeSync(request, appToken, authToken);
-	 * 
-	 * if (response.getHttpStatus() == 200) { String body = response.getBody();
-	 * List<Mensa> list = Utils.convertJSONToObjects(body, Mensa.class); return
-	 * list; } else { return null; }
-	 * 
-	 * } catch (ConnectionException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } catch (ProtocolException e) { // TODO
-	 * Auto-generated catch block e.printStackTrace(); } catch
-	 * (SecurityException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } return null; }
-	 * 
-	 * @Override protected List<Mensa> doInBackground(Void... params) { // TODO
-	 * Auto-generated method stub return getMense(); }
-	 * 
-	 * @Override protected void onPostExecute(List<Mensa> result) { // TODO
-	 * Auto-generated method stub super.onPostExecute(result); listaMense =
-	 * result;
-	 * 
-	 * } }
-	 */
+
 }
