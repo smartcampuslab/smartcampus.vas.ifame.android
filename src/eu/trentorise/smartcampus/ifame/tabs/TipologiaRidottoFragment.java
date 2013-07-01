@@ -82,10 +82,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			}
 		} else
 			buyable.setVisibility(View.GONE);
-		
-		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 
-		Toast.makeText(getSherlockActivity(), "isCalled: "+isCalled+"\nSelected: "+selected_menu, Toast.LENGTH_LONG).show();
+		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
 		isPrimoAvail = i
 				.getBooleanExtra(Fai_il_tuo_menu.PRIMO_AVAILABLE, false);
 		isSecondoAvail = i.getBooleanExtra(Fai_il_tuo_menu.SECONDO_AVAILABLE,
@@ -399,6 +397,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 						|| selected_menu.equals("Snack2")
 						|| selected_menu.equals("Snack3") || selected_menu
 							.equals("Snack4"))) {
+			
 			boolean isPrimoSelected = i.getBooleanExtra(
 					Fai_il_tuo_menu.IS_PRIMO, false);
 			boolean isSecondoSelected = i.getBooleanExtra(
@@ -413,52 +412,101 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 					Fai_il_tuo_menu.IS_INSALATONA, false);
 			boolean isPaninoSelected = i.getBooleanExtra(
 					Fai_il_tuo_menu.IS_PANINO, false);
+			boolean isPizzaSelected = i.getBooleanExtra(
+					Fai_il_tuo_menu.IS_PIZZA, false);
 
-			pizza4.setTextColor(Color.parseColor("#08D126"));
-			pane1.setTextColor(Color.parseColor("#08D126"));
-			pane2.setTextColor(Color.parseColor("#08D126"));
-			pane3.setTextColor(Color.parseColor("#08D126"));
-			pane4.setTextColor(Color.parseColor("#08D126"));
-
-			if (!isPrimoSelected)
-				primo1.setTextColor(Color.parseColor("#08D126"));
-			if (!isSecondoSelected)
-				secondo2.setTextColor(Color.parseColor("#08D126"));
-			if (!isC2Selected || !isC1Selected) {
-				contorni1.setTextColor(Color.parseColor("#08D126"));
-				contorni2.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (!isInsalatonaSelected)
-				insalatona3.setTextColor(Color.parseColor("#08D126"));
-
-			if (!isDessertSelected) {
-				dessert1.setTextColor(Color.parseColor("#08D126"));
-				dessert2.setTextColor(Color.parseColor("#08D126"));
-			}
 			
-			if (!isDessertSelected && !isC1Selected && !isC2Selected){
+			if (isInsalatonaSelected){
 				due_a_scelta_tra3.setTextColor(Color.parseColor("#08D126"));
-				due_a_scelta_tra4.setTextColor(Color.parseColor("#08D126"));
 				contorni3.setTextColor(Color.parseColor("#08D126"));
-				contorni4.setTextColor(Color.parseColor("#08D126"));
+				pane3.setTextColor(Color.parseColor("#08D126"));
 				dessert3.setTextColor(Color.parseColor("#08D126"));
-				dessert4.setTextColor(Color.parseColor("#08D126"));
+				//grigio gli altri
+				primo1.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni1.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert1.setTextColor(Color.parseColor("#C4C4C4"));
+				pane1.setTextColor(Color.parseColor("#C4C4C4"));
+				secondo2.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni2.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert2.setTextColor(Color.parseColor("#C4C4C4"));
+				pane2.setTextColor(Color.parseColor("#C4C4C4"));
+				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
+				pane4.setTextColor(Color.parseColor("#C4C4C4"));
 			}
-			
-			if (isDessertSelected && !isC1Selected && !isC2Selected){
-				contorni3.setTextColor(Color.parseColor("#08D126"));
-				contorni4.setTextColor(Color.parseColor("#08D126"));
+			else if (isSecondoSelected){
+				if (!isDessertSelected)
+					dessert2.setTextColor(Color.parseColor("#08D126"));
+				contorni2.setTextColor(Color.parseColor("#08D126"));
+				pane2.setTextColor(Color.parseColor("#08D126"));
+				
+				//grigio gli altri
+				primo1.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni1.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert1.setTextColor(Color.parseColor("#C4C4C4"));
+				pane1.setTextColor(Color.parseColor("#C4C4C4"));
+				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
+				pane4.setTextColor(Color.parseColor("#C4C4C4"));
+				e3.setTextColor(Color.parseColor("#C4C4C4"));
+				e4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni3.setTextColor(Color.parseColor("#C4C4C4"));
+				insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
+				pane3.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert3.setTextColor(Color.parseColor("#C4C4C4"));
 			}
-			if ((!isDessertSelected && isC1Selected && !isC2Selected)||(!isDessertSelected && !isC1Selected && isC2Selected)){
-				dessert3.setTextColor(Color.parseColor("#08D126"));
-				dessert4.setTextColor(Color.parseColor("#08D126"));
-				contorni3.setTextColor(Color.parseColor("#08D126"));
-				contorni4.setTextColor(Color.parseColor("#08D126"));
+			else if (isPrimoSelected){
+				if (!isDessertSelected)
+					dessert1.setTextColor(Color.parseColor("#08D126"));
+				contorni1.setTextColor(Color.parseColor("#08D126"));
+				pane1.setTextColor(Color.parseColor("#08D126"));
+				//grigio gli altri
+				secondo2.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni2.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert2.setTextColor(Color.parseColor("#C4C4C4"));
+				pane2.setTextColor(Color.parseColor("#C4C4C4"));
+				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
+				pane4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
+				insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
+				e3.setTextColor(Color.parseColor("#C4C4C4"));
+				e4.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni3.setTextColor(Color.parseColor("#C4C4C4"));
+				pane3.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert3.setTextColor(Color.parseColor("#C4C4C4"));
 				
 			}
-
 			
-
+			else if ((isC1Selected || isC2Selected || isDessertSelected) && !isPrimoSelected && !isSecondoSelected && !isInsalatonaSelected && !isPaninoSelected && isPizzaSelected){
+				primo1.setTextColor(Color.parseColor("#08D126"));
+				contorni1.setTextColor(Color.parseColor("#08D126"));
+				if (!isDessertSelected){
+					dessert1.setTextColor(Color.parseColor("#08D126"));
+					dessert2.setTextColor(Color.parseColor("#08D126"));
+					dessert3.setTextColor(Color.parseColor("#08D126"));
+					dessert4.setTextColor(Color.parseColor("#08D126"));
+				}
+				pane1.setTextColor(Color.parseColor("#08D126"));
+				secondo2.setTextColor(Color.parseColor("#08D126"));
+				contorni2.setTextColor(Color.parseColor("#08D126"));
+				pane2.setTextColor(Color.parseColor("#08D126"));
+				insalatona3.setTextColor(Color.parseColor("#08D126"));
+				contorni3.setTextColor(Color.parseColor("#08D126"));
+				pane3.setTextColor(Color.parseColor("#08D126"));
+				pizza4.setTextColor(Color.parseColor("#08D126"));
+				contorni4.setTextColor(Color.parseColor("#08D126"));
+				pane4.setTextColor(Color.parseColor("#08D126"));
+				
+			}
+			
 		}
 
 		super.onResume();
