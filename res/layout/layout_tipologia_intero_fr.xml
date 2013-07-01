@@ -37,7 +37,7 @@
             android:textSize="17sp"/>
         
         <TextView
-            android:id="@+id/tipologia_intero_biglabel"
+            android:id="@+id/tipologia_intero_primo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -45,13 +45,23 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
             android:textSize="17sp" />
+        
+        <TextView
+            android:id="@+id/tipologia_intero_secondo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tipologia_intero_buyable"
+            android:layout_toRightOf="@+id/tipologia_intero_primo"
+            android:layout_marginTop="5dp"
+            android:textSize="17sp" />
+        
 
         <TextView
             android:id="@+id/tipologia_intero_2contorni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_biglabel"
+            android:layout_below="@+id/tipologia_intero_primo"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 

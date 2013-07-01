@@ -82,14 +82,19 @@ public class TipologiaInteroFragment extends SherlockFragment {
 			buyable.setVisibility(View.GONE);
 
 		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
-		TextView bigLabel = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_biglabel);
-		bigLabel.setText("- "
+		
+		TextView primo = (TextView) theContainer
+				.findViewById(R.id.tipologia_intero_primo);
+		primo.setText("- "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_first)
-				+ ", "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_second));
-		bigLabel.setTypeface(null, Typeface.BOLD);
+				+ ",");
+		primo.setTypeface(null, Typeface.BOLD);
 
+		TextView secondo = (TextView) theContainer.findViewById(R.id.tipologia_intero_secondo);
+		secondo.setText(" "
+				+ getString(R.string.iDeciso_compose_menu_checkbox_second));
+		secondo.setTypeface(null, Typeface.BOLD);
+		
 		TextView contorni = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_2contorni);
 		contorni.setText("+ " + getString(R.string.iDeciso_2contorni));
@@ -103,18 +108,29 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				.findViewById(R.id.tipologia_intero_pane);
 		pane.setText("+ " + getString(R.string.iDeciso_pane));
 
-		if (isCalled && selected_menu.equals(getString(R.string.iDeciso_menu_types_intero))) {
+		if (isCalled) {
 			isC1Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_1_AVAILABLE,
 					false);
 			isC2Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_2_AVAILABLE,
 					false);
 			isDessertAvail = i.getBooleanExtra(
 					Fai_il_tuo_menu.DESSERT_AVAILABLE, false);
+			boolean isPrimoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PRIMO, false);
+			boolean isSecondoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_SECONDO, false);
+			boolean isC1Selected = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_1, false);
+			boolean isC2Selected = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_2, false);
+			boolean isDessertSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_DESSERT, false);
+			
+			
+			if (!isPrimoSelected)
+				primo.setTextColor(Color.parseColor("#08D126"));
+			if (!isSecondoSelected)
+				secondo.setTextColor(Color.parseColor("#08D126"));
+			
 
-			if (isC1Avail || isC2Avail) {
+			if ((isC1Avail || isC2Avail)||(!isC1Selected || !isC2Selected)) 
 				contorni.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isDessertAvail) {
+			if (isDessertAvail || !isDessertSelected) {
 				dessert.setTextColor(Color.parseColor("#08D126"));
 			}
 
