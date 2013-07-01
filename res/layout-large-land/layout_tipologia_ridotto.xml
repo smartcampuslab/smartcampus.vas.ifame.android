@@ -1,0 +1,249 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/iDeciso_tipologia_ridotto_scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context=".TipologiaRidotto" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".TipologiaRidotto" >
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_buyable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_primo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_buyable"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_contorni1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_primo1"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_primo1"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_dessert1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_primo1"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_pane1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_dessert1"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_secondo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_pane1"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_contorni2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_secondo2"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_secondo2"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_dessert2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_secondo2"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_pane2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_dessert2"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <!-- pasta station cambia dal primo??????????? sul sito sembra di si....per ora non ne tengo conto perchè credo sia sbagliato -->
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_insalatona3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_pane2"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_2a_scelta_tra3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_insalatona3"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_contorni3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_2a_scelta_tra3"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_e3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_contorni3"
+                    android:text="@string/iDeciso_e"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_dessert3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_e3"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_pane3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_2a_scelta_tra3"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_pizza4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_pane3"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_2a_scelta_tra4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_pizza4"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_contorni4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra4"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_2a_scelta_tra4"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_e4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra4"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_contorni4"
+                    android:text="@string/iDeciso_e"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_dessert4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra4"
+                    android:layout_toRightOf="@+id/tipologia_ridotto_e4"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_pane4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tipologia_ridotto_2a_scelta_tra4"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:id="@+id/tipologia_ridotto_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="9dp"
+                    android:src="@drawable/ridotto_menu" />
+
+                <TextView
+                    android:id="@+id/tipologia_ridotto_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tipologia_ridotto_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/iDeciso_menu_ridotto_price"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
