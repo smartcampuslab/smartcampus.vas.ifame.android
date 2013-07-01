@@ -94,7 +94,6 @@
     <!-- iGradito -->
     <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
     <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
-    <string name="iGradito_recensioni_order_by_canteen">Ordina per mensa</string>
     <string name="iGradito_spinner">Scegli una categoria</string>
     <string name="iGradito_search">Ricerca un piatto</string>
     <string name="iGradito_add_comment">Aggiungi una recensione</string>

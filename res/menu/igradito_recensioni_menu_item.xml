@@ -23,11 +23,7 @@
                 android:orderInCategory="2"
                 android:showAsAction="always"
                 android:title="@string/iGradito_recensioni_order_by_likes"/>
-            <item
-                android:id="@+id/iGradito_recensioni_order_by_canteen"
-                android:orderInCategory="3"
-                android:showAsAction="always"
-                android:title="@string/iGradito_recensioni_order_by_canteen"/>
+
         </menu>
     </item>
 
