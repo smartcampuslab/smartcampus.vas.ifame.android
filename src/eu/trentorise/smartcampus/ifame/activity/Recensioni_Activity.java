@@ -2,6 +2,8 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.List;
 
+import org.w3c.dom.Text;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -19,6 +21,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -117,6 +121,7 @@ public class Recensioni_Activity extends Activity {
 
 		EditText cd_editText;
 		String commento;
+		SeekBar cd_seekbar;
 
 		public CustomDialog() {
 			// NO ARG CONSTRUCTOR---REQUIRED
@@ -132,6 +137,34 @@ public class Recensioni_Activity extends Activity {
 
 			cd_editText = (EditText) view
 					.findViewById(R.id.custom_dialog_etext);
+			
+			//Get the seekbar asscociated with this view
+			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
+			
+			//ADD LISTENER TO THE SEEKBAR
+			cd_seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+				
+				int progressChanged = 0; 
+				
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+					// TODO Auto-generated method stub
+					Toast.makeText(getApplicationContext(), progressChanged + "", Toast.LENGTH_LONG).show(); 
+				}
+				
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+				}
+				
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress,
+						boolean fromUser) {
+					progressChanged = progress; 
+					//seekBar.incrementProgressBy(1);
+					
+					
+				}
+			});
 
 			// ADD LISTENER TO THE ANNULA BUTTON
 			view.findViewById(R.id.annulla_button).setOnClickListener(
@@ -236,15 +269,11 @@ public class Recensioni_Activity extends Activity {
 					likes.setIs_like(true);
 					likes.setUser_id(Long.parseLong(user_id));
 
-					like_count.setText((count++) + "");
-					
+					count++; 
+					new PostLikeConnector(Recensioni_Activity.this, count)
+					.execute(likes);
 
-					new PostLikeConnector(Recensioni_Activity.this)
-							.execute(likes);
-
-					Toast.makeText(getApplicationContext(),
-					 likes.getGiudizio_id() + " " + likes.getIs_like() + " " +
-					 likes.getUser_id() + count + "", Toast.LENGTH_LONG).show();
+//					like_count.setText((count++) + "");
 				}
 			});
 
@@ -418,8 +447,8 @@ public class Recensioni_Activity extends Activity {
 
 		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
 				android.R.layout.simple_list_item_1, reviews);
-
 		giudiziListview.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 
 	/**
@@ -433,11 +462,25 @@ public class Recensioni_Activity extends Activity {
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-
-		public PostLikeConnector(Context applicationContext) {
+		int counter = 0; 
+		TextView txtView;
+		
+		public PostLikeConnector(Context applicationContext,
+				int counter) {
 			context = applicationContext;
-
+			this.counter = counter;
 		}
+		
+		@Override
+		protected void onPreExecute() {
+			txtView = (TextView) findViewById(R.id.like_count); //tell asyntask to find the view before perfoming other tasks
+			txtView.setText((counter++) + ""); //in case this line becomes problematic, move it to the onPostExecute method
+		}
+
+//		public PostLikeConnector(Context applicationContext) {
+//			context = applicationContext;
+//
+//		}
 
 		@Override
 		protected Void doInBackground(Likes... like) {
@@ -458,7 +501,7 @@ public class Recensioni_Activity extends Activity {
 						authToken);
 
 				if (response.getHttpStatus() == 200) {
-
+					//system out success 
 				} else {
 					return null;
 				}
@@ -482,6 +525,7 @@ public class Recensioni_Activity extends Activity {
 			super.onPostExecute(result);
 			// Toast.makeText(getApplicationContext(), "Like assegnato",
 			// Toast.LENGTH_LONG).show();
+			
 		}
 	}
 
