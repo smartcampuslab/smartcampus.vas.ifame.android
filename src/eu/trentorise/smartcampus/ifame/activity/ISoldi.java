@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,7 +30,7 @@ import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
 import eu.trentorise.smartcampus.ifame.model.Transaction;
 
-public class ISoldi extends Activity {
+public class ISoldi extends SherlockActivity {
 
 	public final static String GET_AMOUNT_MONEY = "get_money";
 	Button stats_button;
@@ -213,6 +217,30 @@ public class ISoldi extends Activity {
 						}
 					}
 				});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.isoldi, menu);
+		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+
 	}
 
 }

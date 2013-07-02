@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
@@ -16,8 +21,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -36,7 +39,7 @@ import eu.trentorise.smartcampus.profileservice.ProfileService;
 import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 
-public class IFame_Main_Activity extends Activity {
+public class IFame_Main_Activity extends SherlockActivity {
 
 	/** Logging tag */
 	private static final String TAG = "Main";
@@ -98,6 +101,13 @@ public class IFame_Main_Activity extends Activity {
 			finish();
 		}
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.ifame__main_, menu);
+		return true;
 	}
 
 	@Override
@@ -235,13 +245,6 @@ public class IFame_Main_Activity extends Activity {
 			}
 			return null;
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.ifame__main_, menu);
-		return true;
 	}
 
 }

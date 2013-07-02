@@ -3,6 +3,10 @@ package eu.trentorise.smartcampus.ifame.activity;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoAlternativeFragment;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment;
@@ -41,11 +45,31 @@ public class Menu_giorno_tab extends SherlockFragmentActivity {
 			getSupportActionBar().setNavigationMode(
 					ActionBar.NAVIGATION_MODE_TABS);
 		}
-		
-		
-		
-		
-		
+				
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.menu_giorno_tab, menu);
+		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+
+	}
+	
 }

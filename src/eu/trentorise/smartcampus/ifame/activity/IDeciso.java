@@ -3,12 +3,15 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +22,7 @@ import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
 
-public class IDeciso extends Activity {
+public class IDeciso extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +108,29 @@ public class IDeciso extends Activity {
 		});
 
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.ideciso, menu);
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.ideciso, menu);
 		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+
 	}
 
 }

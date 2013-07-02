@@ -2,6 +2,11 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,7 +40,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
  * This Activity shows the list of dishes for a given mensa
  */
 
-public class IGradito extends Activity {
+public class IGradito extends SherlockActivity {
 
 	private ProgressDialog pd;
 	private View view;
@@ -67,6 +72,30 @@ public class IGradito extends Activity {
 
 		new MensaConnector(IGradito.this).execute();
 		new PiattiConnector(IGradito.this).execute();
+	}
+	
+	@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getSupportMenuInflater();
+    inflater.inflate(R.menu.igradito, menu);
+    return true;
+}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+
 	}
 	
 	

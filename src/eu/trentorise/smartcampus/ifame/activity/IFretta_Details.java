@@ -4,7 +4,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,15 +15,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.ifame.R;
 
-public class IFretta_Details extends Activity {
+public class IFretta_Details extends SherlockActivity {
 
 	private MenuItem menuItem;
 	String mensa_name;
@@ -83,17 +84,28 @@ public class IFretta_Details extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.ifretta_menu, menu);
 		return true;
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		/*
 		 * case R.id.action_settings: menuItem = item; break;
 		 */
+		
+		case android.R.id.home: onBackPressed();
+		break;
 		case R.id.iFretta_set_as_favourite_webcam:
 
 			SharedPreferences pref = getSharedPreferences(

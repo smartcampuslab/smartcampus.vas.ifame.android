@@ -4,6 +4,11 @@ import java.util.List;
 
 import org.w3c.dom.Text;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -12,8 +17,6 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,7 +43,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class Recensioni_Activity extends Activity {
+public class Recensioni_Activity extends SherlockActivity {
 
 	List<Mensa> listaMense = null;
 	Piatto piatto;
@@ -90,15 +93,26 @@ public class Recensioni_Activity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.igradito_recensioni_menu_item, menu);
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.igradito_recensioni_menu_item, menu);
 		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 
+		case android.R.id.home:
+			onBackPressed();
+			break;
 		case R.id.action_add_comments:
 
 			showCustomizedDialog();
@@ -137,34 +151,36 @@ public class Recensioni_Activity extends Activity {
 
 			cd_editText = (EditText) view
 					.findViewById(R.id.custom_dialog_etext);
-			
-			//Get the seekbar asscociated with this view
+
+			// Get the seekbar asscociated with this view
 			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
-			
-			//ADD LISTENER TO THE SEEKBAR
-			cd_seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-				
-				int progressChanged = 0; 
-				
-				@Override
-				public void onStopTrackingTouch(SeekBar seekBar) {
-					// TODO Auto-generated method stub
-					Toast.makeText(getApplicationContext(), progressChanged + "", Toast.LENGTH_LONG).show(); 
-				}
-				
-				@Override
-				public void onStartTrackingTouch(SeekBar seekBar) {
-				}
-				
-				@Override
-				public void onProgressChanged(SeekBar seekBar, int progress,
-						boolean fromUser) {
-					progressChanged = progress; 
-					//seekBar.incrementProgressBy(1);
-					
-					
-				}
-			});
+
+			// ADD LISTENER TO THE SEEKBAR
+			cd_seekbar
+					.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+						int progressChanged = 0;
+
+						@Override
+						public void onStopTrackingTouch(SeekBar seekBar) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									progressChanged + "", Toast.LENGTH_LONG)
+									.show();
+						}
+
+						@Override
+						public void onStartTrackingTouch(SeekBar seekBar) {
+						}
+
+						@Override
+						public void onProgressChanged(SeekBar seekBar,
+								int progress, boolean fromUser) {
+							progressChanged = progress;
+							// seekBar.incrementProgressBy(1);
+
+						}
+					});
 
 			// ADD LISTENER TO THE ANNULA BUTTON
 			view.findViewById(R.id.annulla_button).setOnClickListener(
@@ -202,8 +218,8 @@ public class Recensioni_Activity extends Activity {
 	/**
 	 * 
 	 * 
-	 * ADAPTER FOR DISPLAYING REVIEWS
-	 * PROBLEM : LIKE IS NOT UPDATED INSTANTANEOUSLY
+	 * ADAPTER FOR DISPLAYING REVIEWS PROBLEM : LIKE IS NOT UPDATED
+	 * INSTANTANEOUSLY
 	 * 
 	 */
 	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {
@@ -269,11 +285,11 @@ public class Recensioni_Activity extends Activity {
 					likes.setIs_like(true);
 					likes.setUser_id(Long.parseLong(user_id));
 
-					count++; 
+					count++;
 					new PostLikeConnector(Recensioni_Activity.this, count)
-					.execute(likes);
+							.execute(likes);
 
-//					like_count.setText((count++) + "");
+					// like_count.setText((count++) + "");
 				}
 			});
 
@@ -293,7 +309,7 @@ public class Recensioni_Activity extends Activity {
 
 			like_count.setText(likes_count.toString());
 			dislike_count.setText(dislikes.toString());
-			
+
 			return convertView;
 		}
 	}
@@ -462,25 +478,30 @@ public class Recensioni_Activity extends Activity {
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-		int counter = 0; 
+		int counter = 0;
 		TextView txtView;
-		
-		public PostLikeConnector(Context applicationContext,
-				int counter) {
+
+		public PostLikeConnector(Context applicationContext, int counter) {
 			context = applicationContext;
 			this.counter = counter;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
-			txtView = (TextView) findViewById(R.id.like_count); //tell asyntask to find the view before perfoming other tasks
-			txtView.setText((counter++) + ""); //in case this line becomes problematic, move it to the onPostExecute method
+			txtView = (TextView) findViewById(R.id.like_count); // tell asyntask
+																// to find the
+																// view before
+																// perfoming
+																// other tasks
+			txtView.setText((counter++) + ""); // in case this line becomes
+												// problematic, move it to the
+												// onPostExecute method
 		}
 
-//		public PostLikeConnector(Context applicationContext) {
-//			context = applicationContext;
-//
-//		}
+		// public PostLikeConnector(Context applicationContext) {
+		// context = applicationContext;
+		//
+		// }
 
 		@Override
 		protected Void doInBackground(Likes... like) {
@@ -501,7 +522,7 @@ public class Recensioni_Activity extends Activity {
 						authToken);
 
 				if (response.getHttpStatus() == 200) {
-					//system out success 
+					// system out success
 				} else {
 					return null;
 				}
@@ -525,7 +546,7 @@ public class Recensioni_Activity extends Activity {
 			super.onPostExecute(result);
 			// Toast.makeText(getApplicationContext(), "Like assegnato",
 			// Toast.LENGTH_LONG).show();
-			
+
 		}
 	}
 
