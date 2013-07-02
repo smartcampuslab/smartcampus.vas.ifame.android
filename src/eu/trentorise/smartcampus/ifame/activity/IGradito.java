@@ -9,8 +9,10 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,9 +23,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
@@ -46,6 +50,8 @@ public class IGradito extends SherlockActivity {
 	private View view;
 	private String user_id;
 	private Spinner mense_spinner;
+	String actual_mensa;
+	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
 	//List<Mensa> listaMense = null;
 
 	@Override
@@ -61,9 +67,7 @@ public class IGradito extends SherlockActivity {
 		
 		user_id = (String) extras.get("user_id");
 		
-		// set the process dialog
-		pd = ProgressDialog.show(this, "Loading... ", "please wait...");
-
+		
 		// don't show anything until the data is retrieved
 		view = findViewById(R.id.igradito_piatti_mensa_view); // change to relative
 														// layout view if it
@@ -75,11 +79,39 @@ public class IGradito extends SherlockActivity {
 	}
 	
 	@Override
-public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getSupportMenuInflater();
-    inflater.inflate(R.menu.igradito, menu);
-    return true;
-}
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.igradito, menu);
+
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu
+				.findItem(R.id.igradito_search).getActionView();
+		if (null != searchManager) {
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+			searchView.setIconifiedByDefault(false);
+		}
+		
+		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+			public boolean onQueryTextChange(String newText) {
+				// this is your adapter that will be filtered
+				//adapter.getFilter().filter(newText);
+				return true;
+			}
+
+			public boolean onQueryTextSubmit(String query) {
+				// this is your adapter that will be filtered
+				//adapter.getFilter().filter(query);
+
+				return true;
+			}
+		};
+
+		searchView.setOnQueryTextListener(queryTextListener);
+
+		return super.onCreateOptionsMenu(menu);
+	}
 
 	@Override
 	protected void onResume() {
@@ -91,11 +123,30 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			onBackPressed();
-		}
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+		/*
+		 * case R.id.action_settings: menuItem = item; break;
+		 */
+		case android.R.id.home: onBackPressed();
+		break;
+		case R.id.iGradito_set_favourite_canteen:
 
+			SharedPreferences pref = getSharedPreferences(
+					getString(R.string.iGradito_preference_file),
+					Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putString(GET_FAVOURITE_CANTEEN, actual_mensa);
+			editor.commit();
+			
+			Toast.makeText(getApplicationContext(),
+					"Hai settato come preferita: " + actual_mensa,
+					Toast.LENGTH_LONG).show();
+			break;
+			
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 	
 	
@@ -137,8 +188,10 @@ public boolean onCreateOptionsMenu(Menu menu) {
 	         spinView = convertView;
 	    }
 	    TextView nome_mensa = (TextView) spinView.findViewById(R.id.nome_mensa);
-	    	    
-	    nome_mensa.setText(lista_mense.get(position).getMensa_nome());
+	    
+	    actual_mensa = lista_mense.get(position).getMensa_nome();
+	    nome_mensa.setText(actual_mensa);
+	    
 	    
 	    return spinView;
 	    
@@ -271,6 +324,14 @@ public boolean onCreateOptionsMenu(Menu menu) {
 				e.printStackTrace();
 			}
 			return null;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(getApplicationContext()).show(
+					IGradito.this, "IGradito",
+					"Loading...");
+			super.onPreExecute();
 		}
 
 		@Override

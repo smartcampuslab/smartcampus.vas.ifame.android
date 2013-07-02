@@ -42,7 +42,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class IGradito_PiattiMensa_Activity extends Activity {
 
 	ProgressDialog pd;
-	private Spinner portataSpinner;
 	private Mensa mensa;
 	String mensa_name;
 	IGraditoAdapter adapter;
@@ -54,25 +53,7 @@ public class IGradito_PiattiMensa_Activity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_piattimensa);
 
-		// Aggiungo lo spinner
-		portataSpinner = (Spinner) findViewById(R.id.spinner_portata);
-		portataSpinner
-				.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-
-					@Override
-					public void onItemSelected(AdapterView<?> adapter,
-							View view, int position, long id) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-					}
-
-				});
-
+		
 		Bundle extras = getIntent().getExtras();
 
 		// if there are no available intents return
