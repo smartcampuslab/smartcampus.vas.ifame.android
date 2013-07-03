@@ -40,14 +40,20 @@ public class IFretta extends SherlockActivity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.ifretta);
 
 		pd = new ProgressDialog(IFretta.this).show(IFretta.this, "iFretta",
 				"Loading...");
 
 		new IFrettaConnector(IFretta.this).execute();
+
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 

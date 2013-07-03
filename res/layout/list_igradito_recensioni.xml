@@ -67,7 +67,9 @@
         android:layout_toLeftOf="@id/like_count"
         android:layout_below="@id/iGradito_recensioni_review_content"
         android:background="@android:color/transparent"
-        android:src="@drawable/icon_like_up" />
+        android:focusable="false"
+        android:src="@drawable/icon_like_up"
+        android:onClick="like_button_onClick" />
     
      <ImageButton
         android:id="@+id/dislike_button"

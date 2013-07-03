@@ -1,9 +1,14 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,7 +19,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
 
-public class Fai_il_tuo_menu extends Activity {
+public class Fai_il_tuo_menu extends SherlockActivity {
 
 	private boolean isPrimoPiatto;
 	private boolean isSecondoPiatto;
@@ -340,9 +345,25 @@ public class Fai_il_tuo_menu extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.fai_il_tuo_menu, menu);
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.fai_il_tuo_menu, menu);
 		return true;
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+
 	}
 
 	public void componiMenu() {

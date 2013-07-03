@@ -18,25 +18,27 @@
    <!-- android:entries="@array/lista_mense" -->
    
     <SeekBar
-        android:id="@+id/seekBar1"
+        android:id="@+id/recensioni_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="30dp" 
-        android:progress="50"/>
+        android:layout_marginTop="30dp"
+        android:max="10" 
+        android:progress="5"
+        />
 
     <TextView
         android:id="@+id/pessimo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar1"
+        android:layout_below="@+id/recensioni_seekbar"
         android:text="Pessimo" />
     
      <TextView
         android:id="@+id/ottimo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar1"
+        android:layout_below="@+id/recensioni_seekbar"
         android:layout_alignParentRight="true"
         android:text="Ottimo" />
 
