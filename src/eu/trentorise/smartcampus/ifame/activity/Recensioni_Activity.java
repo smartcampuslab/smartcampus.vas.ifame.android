@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.GiudizioNew;
 import eu.trentorise.smartcampus.ifame.model.Likes;
@@ -52,6 +53,8 @@ public class Recensioni_Activity extends SherlockActivity {
 	// PostLikeConnector postLike;
 	GiudizioDataToPost giudizioDataToPost = null;
 
+	ListView giudiziListview;
+
 	String add = "http://192.168.33.106:8080/web-ifame";
 
 	@Override
@@ -60,7 +63,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_pagina_recensioni);
 		Bundle extras = getIntent().getExtras();
-
+		giudiziListview = (ListView) findViewById(R.id.recensioni_list);
 		if (extras == null) {
 			return;
 		}
@@ -224,16 +227,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	 */
 	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {
 
-		GiudizioNew giudizio;
-		TextView username;
-		TextView review_date;
-		TextView review_content;
-		TextView like_count;
-		TextView dislike_count;
-		ImageButton like_button;
-		ImageButton dislike_button;
-		Integer count = 0;
-
 		public ReviewAdapter(Activity activity, int layout_id,
 				List<GiudizioNew> reviews) {
 			super(activity, layout_id, reviews);
@@ -241,77 +234,91 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			giudizio = getItem(position);
+			View v = convertView;
 
-			convertView = inflater.inflate(R.layout.list_igradito_recensioni,
-					null);
+			final DataHandler handler;
+			final GiudizioNew giudizio = getItem(position);
+			if (v == null) {
 
-			username = (TextView) convertView
-					.findViewById(R.id.iGradito_recensioni_nome_utente);
-			review_date = (TextView) convertView
-					.findViewById(R.id.iGradito_recensioni_data_inserimento);
-			review_content = (TextView) convertView
-					.findViewById(R.id.iGradito_recensioni_review_content);
-			like_count = (TextView) convertView.findViewById(R.id.like_count);
-			dislike_count = (TextView) convertView
-					.findViewById(R.id.dislike_count);
-			like_button = (ImageButton) convertView
-					.findViewById(R.id.like_button);
-			dislike_button = (ImageButton) convertView
-					.findViewById(R.id.dislike_button);
+				LayoutInflater inflater = (LayoutInflater) getContext()
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = inflater.inflate(R.layout.list_igradito_recensioni, null);
 
-			List<Likes> list_likes = giudizio.getLikes();
-			Integer likes_count = 0;
-			Integer dislikes = 0;
+				handler = new DataHandler();
 
-			for (Likes l : list_likes) {
-				if (l.getIs_like()) {
-					likes_count++;
-				} else {
-					dislikes++;
+				handler.username = (TextView) v
+						.findViewById(R.id.iGradito_recensioni_nome_utente);
+				handler.review_date = (TextView) v
+						.findViewById(R.id.iGradito_recensioni_data_inserimento);
+				handler.review_content = (TextView) v
+						.findViewById(R.id.iGradito_recensioni_review_content);
+				handler.like_count_view = (TextView) v
+						.findViewById(R.id.like_count);
+				handler.dislike_count_view = (TextView) v
+						.findViewById(R.id.dislike_count);
+				handler.like_button = (ImageButton) v
+						.findViewById(R.id.like_button);
+				handler.dislike_button = (ImageButton) v
+						.findViewById(R.id.dislike_button);
+
+				List<Likes> list_likes = giudizio.getLikes();
+				Integer likes_count = 0;
+				Integer dislikes_count = 0;
+
+				for (Likes l : list_likes) {
+					if (l.getIs_like()) {
+						likes_count++;
+					} else {
+						dislikes_count++;
+					}
 				}
+				handler.like_count = likes_count;
+				handler.dislike_count = dislikes_count;
+
+				v.setTag(handler);
+			} else {
+				handler = (DataHandler) v.getTag();
 			}
 
-			count = likes_count;
+			handler.username.setText(giudizio.getUser_id().toString());
+			handler.review_date.setText(giudizio.getUltimo_aggiornamento()
+					.toString());
+			handler.review_content.setText(giudizio.getCommento());
+			handler.like_count_view.setText(handler.like_count + "");
+			handler.dislike_count_view.setText(handler.dislike_count + "");
+
 			// ADD LISTENER TO THE LIKE BUTTON
-			like_button.setOnClickListener(new OnClickListener() {
+			handler.like_button.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
+					handler.like_count++;
+					handler.like_count_view.setText(handler.like_count + "");
+					
 					Likes likes = new Likes();
 					likes.setGiudizio_id(giudizio.getGiudizio_id());
 					likes.setIs_like(true);
 					likes.setUser_id(Long.parseLong(user_id));
-
-					count++;
-					new PostLikeConnector(Recensioni_Activity.this, count)
+					new PostLikeConnector(Recensioni_Activity.this)
 							.execute(likes);
-
-					// like_count.setText((count++) + "");
 				}
 			});
 
-			// ADD LISTENER TO THE DISLIKE BUTTON
-			dislike_button.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-
-			username.setText(giudizio.getUser_id().toString());
-			review_date.setText(giudizio.getUltimo_aggiornamento().toString());
-			review_content.setText(giudizio.getCommento());
-
-			like_count.setText(likes_count.toString());
-			dislike_count.setText(dislikes.toString());
-
-			return convertView;
+			return v;
 		}
+
+	}
+
+	static class DataHandler {
+		TextView username;
+		TextView review_date;
+		TextView review_content;
+		TextView like_count_view;
+		TextView dislike_count_view;
+		ImageButton like_button;
+		ImageButton dislike_button;
+		Integer like_count;
+		Integer dislike_count;
 	}
 
 	/**
@@ -459,10 +466,10 @@ public class Recensioni_Activity extends SherlockActivity {
 	}
 
 	private void createGiudiziList(List<GiudizioNew> reviews) {
-		ListView giudiziListview = (ListView) findViewById(R.id.recensioni_list);
 
 		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
 				android.R.layout.simple_list_item_1, reviews);
+
 		giudiziListview.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
@@ -478,30 +485,11 @@ public class Recensioni_Activity extends SherlockActivity {
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-		int counter = 0;
-		TextView txtView;
 
-		public PostLikeConnector(Context applicationContext, int counter) {
+		public PostLikeConnector(Context applicationContext) {
 			context = applicationContext;
-			this.counter = counter;
-		}
 
-		@Override
-		protected void onPreExecute() {
-			txtView = (TextView) findViewById(R.id.like_count); // tell asyntask
-																// to find the
-																// view before
-																// perfoming
-																// other tasks
-			txtView.setText((counter++) + ""); // in case this line becomes
-												// problematic, move it to the
-												// onPostExecute method
 		}
-
-		// public PostLikeConnector(Context applicationContext) {
-		// context = applicationContext;
-		//
-		// }
 
 		@Override
 		protected Void doInBackground(Likes... like) {
@@ -522,7 +510,8 @@ public class Recensioni_Activity extends SherlockActivity {
 						authToken);
 
 				if (response.getHttpStatus() == 200) {
-					// system out success
+					Toast.makeText(getApplicationContext(), "Like assegnato",
+							Toast.LENGTH_LONG).show();
 				} else {
 					return null;
 				}
@@ -544,9 +533,6 @@ public class Recensioni_Activity extends SherlockActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			// Toast.makeText(getApplicationContext(), "Like assegnato",
-			// Toast.LENGTH_LONG).show();
-
 		}
 	}
 
