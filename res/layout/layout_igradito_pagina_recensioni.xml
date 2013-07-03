@@ -30,7 +30,7 @@
         android:padding="5dp"
         android:paddingLeft="2dp"
         android:paddingTop="4dp"
-        android:text="5.10"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#CC0000" />
 
@@ -55,7 +55,7 @@
         android:layout_toRightOf="@+id/espresso_da_text"
         android:paddingLeft="2dp"
         android:paddingBottom="4dp"
-        android:text="10 utenti"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ListView

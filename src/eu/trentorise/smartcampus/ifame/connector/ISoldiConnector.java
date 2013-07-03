@@ -34,7 +34,7 @@ public class ISoldiConnector extends AsyncTask {
 		mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 		MessageRequest request = new MessageRequest(
-				"http://smartcampuswebifame.app.smartcampuslab.it", "getsoldi");
+				"http://smartcampuswebifame.app.smartcampuslab.it", "isoldi/getsoldi");
 		request.setMethod(Method.GET);
 
 		MessageResponse response;

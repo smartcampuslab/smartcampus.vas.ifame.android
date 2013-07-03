@@ -211,7 +211,8 @@ public class IFretta extends SherlockActivity {
 				Mensa m = (Mensa) adapter.getItemAtPosition(position);
 				Intent i = new Intent(IFretta.this, IFretta_Details.class);
 				i.putExtra("mensa", m.getMensa_nome());
-				i.putExtra("img_url", m.getMensa_link_offline());
+				i.putExtra("online_img_url", m.getMensa_link_online());
+				i.putExtra("offline_img_url", m.getMensa_link_offline());
 				startActivity(i);
 
 			}

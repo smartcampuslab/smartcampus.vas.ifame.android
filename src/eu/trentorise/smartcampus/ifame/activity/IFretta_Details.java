@@ -47,13 +47,15 @@ public class IFretta_Details extends SherlockActivity {
 		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		String date_s = s.format(new Date());
 
-		String img_url = (String) extras.get("img_url"); // Get the mensa url
+		String online_img_url = (String) extras.get("online_img_url"); // Get the mensa online url
 															// from
 															// activity:ifretta
+		
+		String offline_img_url = (String) extras.get("offline_img_url"); 
 
 		// if there is no webcam available for the given mensa, assign an image
 		// that says "not available"
-		if (img_url.equals("")) {
+		if (online_img_url.equals("")) {
 			findViewById(R.id.imageViewID).setBackgroundResource(
 					R.drawable.image_not_available);
 		} else {
@@ -73,7 +75,7 @@ public class IFretta_Details extends SherlockActivity {
 
 			img_view.getLayoutParams().width = rect.width()-3;
 
-			new RetrieveImage(img_view).execute(img_url);
+			new RetrieveImage(img_view).execute(online_img_url);
 		}
 
 		// mensa_name.setTextColor(Color.parseColor("#228B22"));

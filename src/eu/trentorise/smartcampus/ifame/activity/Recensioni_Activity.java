@@ -54,6 +54,8 @@ public class Recensioni_Activity extends SherlockActivity {
 	Piatto piatto;
 	String user_id;
 	Mensa mensa;
+	TextView giudizio_espresso_da;
+	TextView giudizio_medio_txt;
 	// PostLikeConnector postLike;
 	GiudizioDataToPost giudizioDataToPost = null;
 
@@ -68,6 +70,8 @@ public class Recensioni_Activity extends SherlockActivity {
 		setContentView(R.layout.layout_igradito_pagina_recensioni);
 		Bundle extras = getIntent().getExtras();
 		giudiziListview = (ListView) findViewById(R.id.recensioni_list);
+		giudizio_espresso_da = (TextView) findViewById(R.id.espresso_da);
+		giudizio_medio_txt = (TextView) findViewById(R.id.giudizio);
 		if (extras == null) {
 			return;
 		}
@@ -82,6 +86,21 @@ public class Recensioni_Activity extends SherlockActivity {
 		new GetGiudizioConnector(Recensioni_Activity.this).execute(
 				mensa.getMensa_id(), piatto.getPiatto_id());
 
+	}
+	
+	/**
+	 * 
+	 * GET AVERAGE VOTES
+	 */
+
+	public float getAverageValue(List<GiudizioNew> giudizi_list) {
+
+		float sum = 0;
+		for (GiudizioNew g : giudizi_list) {
+			sum += g.getVoto();
+			System.out.println(g.getVoto()); 
+		}
+		return sum / (float) giudizi_list.size();
 	}
 
 	/**
@@ -143,6 +162,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		EditText cd_editText;
 		String commento;
 		SeekBar cd_seekbar;
+		int progressChanged = 0;
 
 		public CustomDialog() {
 			// NO ARG CONSTRUCTOR---REQUIRED
@@ -165,8 +185,6 @@ public class Recensioni_Activity extends SherlockActivity {
 			// ADD LISTENER TO THE SEEKBAR
 			cd_seekbar
 					.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
-						int progressChanged = 0;
 
 						@Override
 						public void onStopTrackingTouch(SeekBar seekBar) {
@@ -209,7 +227,7 @@ public class Recensioni_Activity extends SherlockActivity {
 							commento = cd_editText.getText().toString();
 							giudizioDataToPost.commento = commento;
 							giudizioDataToPost.userId = Long.parseLong(user_id);
-							giudizioDataToPost.voto = (float) 7;
+							giudizioDataToPost.voto = (float) progressChanged;
 
 							new PostGiudizioConnector(getActivity(),
 									giudizioDataToPost).execute(
@@ -601,8 +619,25 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
 				android.R.layout.simple_list_item_1, reviews);
-
+		
+		//SET THE NUMBER OF USERS
+		String utenti = "";
+		int num_utenti = adapter.getCount();
+		if (num_utenti != 1) {
+			utenti = "utenti";
+		} else {
+			utenti = "utente";
+		}
 		giudiziListview.setAdapter(adapter);
+		giudizio_espresso_da.setText(num_utenti + " " + utenti);
+		
+		//SET THE AVERAGE VOTE
+		Float giudizio_medio = getAverageValue(reviews);
+		if(giudizio_medio.isNaN()){
+			giudizio_medio = 0f;
+		}
+		giudizio_medio_txt.setText(giudizio_medio + "");
+
 		adapter.notifyDataSetChanged();
 	}
 
