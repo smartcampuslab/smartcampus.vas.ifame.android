@@ -57,7 +57,7 @@ public class IGradito extends SherlockActivity {
 	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
 	List<Piatto> lista_piatti;
 	PiattiListAdapter adapter;
-
+	SearchView searchView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,7 +114,7 @@ public class IGradito extends SherlockActivity {
 		inflater.inflate(R.menu.igradito, menu);
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu
+		searchView = (SearchView) menu
 				.findItem(R.id.igradito_search).getActionView();
 		if (null != searchManager) {
 			searchView.setSearchableInfo(searchManager
@@ -132,6 +132,7 @@ public class IGradito extends SherlockActivity {
 			public boolean onQueryTextSubmit(String query) {
 				// this is your adapter that will be filtered
 				adapter.getFilter().filter(query);
+				searchView.clearFocus();
 
 				return true;
 			}
