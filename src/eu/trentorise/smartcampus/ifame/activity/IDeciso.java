@@ -32,7 +32,7 @@ public class IDeciso extends SherlockActivity {
 		// preferences
 		float cash;
 		Saldo saldoReturn;
-		try {
+		/*try {
 			saldoReturn = (Saldo) new ISoldiConnector(getApplicationContext())
 					.execute().get();
 
@@ -60,7 +60,7 @@ public class IDeciso extends SherlockActivity {
 			Toast.makeText(getApplicationContext(), "ExecutionException", Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
-
+*/
 		setContentView(R.layout.layout_ideciso);
 
 		String[] features = { getString(R.string.iDeciso_home_daily_menu), getString(R.string.iDeciso_home_menu_types),

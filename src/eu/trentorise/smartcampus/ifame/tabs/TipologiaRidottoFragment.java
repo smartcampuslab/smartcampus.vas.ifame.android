@@ -485,7 +485,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				
 			}
 			
-			else if ((isC1Selected || isC2Selected || isDessertSelected) && !isPrimoSelected && !isSecondoSelected && !isInsalatonaSelected && !isPaninoSelected && isPizzaSelected){
+			else if ((isC1Selected || isC2Selected || isDessertSelected) && !isPrimoSelected && !isSecondoSelected && !isInsalatonaSelected && !isPaninoSelected && !isPizzaSelected){
 				primo1.setTextColor(Color.parseColor("#08D126"));
 				contorni1.setTextColor(Color.parseColor("#08D126"));
 				if (!isDessertSelected){
