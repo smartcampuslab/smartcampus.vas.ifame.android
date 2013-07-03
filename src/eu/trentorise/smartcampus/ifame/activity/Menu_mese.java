@@ -218,10 +218,11 @@ public class Menu_mese extends SherlockFragmentActivity {
 					android.R.layout.simple_spinner_dropdown_item,
 					spinner_date_list);
 
-			String[] months = { "January", "February", "March", "April", "May",
-					"June", "July", "August", "September", "October",
-					"November", "December" };
-			setTitle("Menu of " + months[c.get(Calendar.MONTH)]);
+			String[] months = { getString(R.string.iDeciso_monthly_menu_january), getString(R.string.iDeciso_monthly_menu_february), getString(R.string.iDeciso_monthly_menu_march), getString(R.string.iDeciso_monthly_menu_april), getString(R.string.iDeciso_monthly_menu_may),
+					getString(R.string.iDeciso_monthly_menu_june), getString(R.string.iDeciso_monthly_menu_july), getString(R.string.iDeciso_monthly_menu_august), getString(R.string.iDeciso_monthly_menu_september), getString(R.string.iDeciso_monthly_menu_october),
+					getString(R.string.iDeciso_monthly_menu_november), getString(R.string.iDeciso_monthly_menu_december) };
+			
+			setTitle(getString(R.string.iDeciso_monthly_menu_of)+" " + months[c.get(Calendar.MONTH)]);
 
 			// ciclo sulle settimane e prendo tutti i piatti della settimana
 			// corrente
@@ -237,7 +238,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 				c.set(Calendar.DATE, end_day);
 				String end_day_string = dateFormat.format(c.getTime());
 				// setto l'item dello spinner
-				spinner_adapter.add("Da " + start_day_string + " a "
+				spinner_adapter.add(getString(R.string.iDeciso_monthly_menu_from)+" " + start_day_string + " "+ getString(R.string.iDeciso_monthly_menu_to) + " "
 						+ end_day_string);
 
 				// se il giorno corrente è tra il giorno iniziale e quelo finale
