@@ -1,18 +1,17 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,12 +19,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
@@ -41,11 +46,12 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class Menu_mese extends SherlockActivity {
+public class Menu_mese extends SherlockFragmentActivity {
 
 	private Spinner weekSpinner;
 	private ListView listacibi_view;
 	ProgressDialog pd;
+	String selectedDish;
 	private MenuDelMese menuDelMese;
 
 	@Override
@@ -280,6 +286,17 @@ public class Menu_mese extends SherlockActivity {
 		}
 
 		listacibi_view.setAdapter(adapter);
+		listacibi_view.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1, int position,
+					long arg3) {
+				selectedDish = ((Piatto) parent.getItemAtPosition(position)).getPiatto_nome();
+				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
+
+				//dialog.show(getFragmentManager(), "");
+			}
+		});
 	}
 
 	/*
@@ -353,4 +370,43 @@ public class Menu_mese extends SherlockActivity {
 		}
 	}
 
+	private class StartWebSearchAlertDialog extends SherlockDialogFragment{
+		
+
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			builder.setMessage(
+					getString(R.string.iDeciso_GoogleSearchAlertText) + " "
+							+ selectedDish + "?")
+					.setPositiveButton(
+							getString(R.string.iDeciso_GoogleSearchAlertAccept),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+
+									Intent intent = new Intent(
+											Intent.ACTION_WEB_SEARCH);
+									intent.putExtra(SearchManager.QUERY,
+											selectedDish); // query contains
+									// search string
+									startActivity(intent);
+
+								}
+							})
+					.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+								}
+							});
+			// Create the AlertDialog object and return it
+			return builder.create();
+
+		}
+
+
+	}
 }

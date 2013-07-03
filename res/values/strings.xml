@@ -38,7 +38,7 @@
 
 
     <!-- iDeciso -->
-    <string name="iDeciso_title_activity">iDeciso</string>
+    <string name="iDeciso_title_activity">iFame</string>
     <string name="iDeciso_home_daily_menu">Menu del giorno</string>
     <string name="iDeciso_home_menu_types">Tipologie di menu</string>
     <string name="iDeciso_home_compose_menu">Fai il tuo menu</string>
@@ -89,6 +89,22 @@
     <string name="iDeciso_GoogleSearchAlertAccept">Avvia ricerca</string>
     <string name="iDeciso_alternatives_title_activity">Alternative</string>
     <string name="iDeciso_compose_menu_no_items_selected">Seleziona almeno un piatto!</string>
+    <string name="iDeciso_monthly_menu_january">Gennaio</string>
+    <string name="iDeciso_monthly_menu_february">Febbraio</string>
+    <string name="iDeciso_monthly_menu_march">Marzo</string>
+    <string name="iDeciso_monthly_menu_april">Aprile</string>
+    <string name="iDeciso_monthly_menu_may">Maggio</string>
+    <string name="iDeciso_monthly_menu_june">Giugno</string>
+    <string name="iDeciso_monthly_menu_july">Luglio</string>
+    <string name="iDeciso_monthly_menu_august">Agosto</string>
+    <string name="iDeciso_monthly_menu_september">Settembre</string>
+    <string name="iDeciso_monthly_menu_october">Ottobre</string>
+    <string name="iDeciso_monthly_menu_november">Novembre</string>
+    <string name="iDeciso_monthly_menu_december">Dicembre</string>
+    <string name="iDeciso_monthly_menu_of">Menu di</string>
+    <string name="iDeciso_monthly_menu_from">Da</string>
+    <string name="iDeciso_monthly_menu_to">a</string>
+    
     <!-- /iDeciso -->
 
 
