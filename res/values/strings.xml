@@ -30,7 +30,6 @@
     <!-- iFretta -->
     <string name="iFretta_title_activity">iFretta</string>
     <string name="iFretta_details_title_activity">Webcam mensa</string>
-    <string name="iFretta_set_as_favourite_canteen">Mensa preferita</string>
     <string name="iFretta_search_in_ViviTrento">Cerca in ViviTrento</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <string name="iFretta_details_set_favourite_canteen">Hai settato come mensa preferita: </string>

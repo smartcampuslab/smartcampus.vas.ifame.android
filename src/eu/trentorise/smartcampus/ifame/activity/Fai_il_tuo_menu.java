@@ -398,7 +398,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 		// setto gli OnclickListener per le ImageView per espandere il menu in
 		// modo dinamico; inverte il senso della freccia per il menu espandibile
 
-		primo_button.setOnClickListener(new OnClickListener() {
+	/*	primo_button.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -448,7 +448,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				if (contorno_freddo_view.getVisibility() == View.GONE) {
-					contorno2_button.setImageResource(R.drawable.arrow_up);
+					//contorno2_button.setImageResource(R.drawable.arrow_up);
 					contorno_freddo_view.setVisibility(View.VISIBLE);
 				} else {
 					contorno_freddo_view.setVisibility(View.GONE);
@@ -516,17 +516,17 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 				}
 			}
 
-		});
+		});*/
 
-		// quando rilascio, se c1 c2 e dessert allora non devo liberare
-		// insalatona
+		 //quando rilascio, se c1 c2 e dessert allora non devo liberare
+		 //insalatona
 		primo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					primo_button.setVisibility(View.VISIBLE);
+				//	primo_button.setVisibility(View.VISIBLE);
 					
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
@@ -572,7 +572,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					secondo_button.setVisibility(View.VISIBLE);
+				//	secondo_button.setVisibility(View.VISIBLE);
 					
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
@@ -616,7 +616,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					pane_button.setVisibility(View.VISIBLE);
+			//		pane_button.setVisibility(View.VISIBLE);
 					
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
@@ -659,7 +659,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					insalatona_button.setVisibility(View.VISIBLE);
+			//		insalatona_button.setVisibility(View.VISIBLE);
 					
 					panino.setEnabled(false);
 					// panino.setChecked(false);
@@ -685,7 +685,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					}
 
 				} else {
-					insalatona_button.setVisibility(View.GONE);
+			//		insalatona_button.setVisibility(View.GONE);
 					insalatona_view.setVisibility(View.GONE);
 					insalatona_button.setImageResource(R.drawable.arrow_down);
 
@@ -711,7 +711,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					pizza_button.setVisibility(View.VISIBLE);
+		//			pizza_button.setVisibility(View.VISIBLE);
 					
 					panino.setEnabled(false);
 					// panino.setChecked(false);
@@ -751,7 +751,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					contorno1_button.setVisibility(View.VISIBLE);
+		//			contorno1_button.setVisibility(View.VISIBLE);
 
 					if (contorno2.isChecked() && dessert.isChecked()) {
 						insalatona.setEnabled(false);
@@ -803,7 +803,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					contorno2_button.setVisibility(View.VISIBLE);
+		//			contorno2_button.setVisibility(View.VISIBLE);
 
 					if (contorno1.isChecked() && dessert.isChecked()) {
 						insalatona.setEnabled(false);
@@ -856,7 +856,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					boolean isChecked) {
 
 				if (isChecked) {
-					dessert_button.setVisibility(View.VISIBLE);
+		//			dessert_button.setVisibility(View.VISIBLE);
 					
 					if (contorno2.isChecked() && contorno1.isChecked()) {
 						insalatona.setEnabled(false);

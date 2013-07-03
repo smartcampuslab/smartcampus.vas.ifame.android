@@ -37,7 +37,7 @@ public class IDeciso extends SherlockActivity {
 					.execute().get();
 
 			if (saldoReturn == null) {
-				Toast.makeText(getApplicationContext(), "Saldo in denaro mancante", Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), "Saldo in denaro mancante", Toast.LENGTH_LONG).show();
 			} else {
 
 				cash = Float.parseFloat(saldoReturn.getCredit());
@@ -47,7 +47,7 @@ public class IDeciso extends SherlockActivity {
 						Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 
-				Toast.makeText(getApplicationContext(), "Cash: "+cash, Toast.LENGTH_LONG).show();
+			//	Toast.makeText(getApplicationContext(), "Cash: "+cash, Toast.LENGTH_LONG).show();
 				editor.remove(ISoldi.GET_AMOUNT_MONEY);
 				editor.putFloat(ISoldi.GET_AMOUNT_MONEY, cash);
 				editor.commit();

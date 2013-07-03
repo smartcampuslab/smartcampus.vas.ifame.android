@@ -506,8 +506,31 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				pane4.setTextColor(Color.parseColor("#08D126"));
 				
 			}
-			
-		}
+		}	
+			if (isCalled && selected_menu.equals("Intero")){
+				secondo2.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni2.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert2.setTextColor(Color.parseColor("#C4C4C4"));
+				pane2.setTextColor(Color.parseColor("#C4C4C4"));
+				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
+				pane4.setTextColor(Color.parseColor("#C4C4C4"));
+				due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
+				insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
+				e3.setTextColor(Color.parseColor("#C4C4C4"));
+				e4.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni3.setTextColor(Color.parseColor("#C4C4C4"));
+				pane3.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert3.setTextColor(Color.parseColor("#C4C4C4"));
+				primo1.setTextColor(Color.parseColor("#C4C4C4"));
+				contorni1.setTextColor(Color.parseColor("#C4C4C4"));
+				dessert1.setTextColor(Color.parseColor("#C4C4C4"));
+				pane1.setTextColor(Color.parseColor("#C4C4C4"));
+				
+			}
+		
 
 		super.onResume();
 
