@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -231,9 +232,12 @@ public class Recensioni_Activity extends SherlockActivity {
 	 */
 	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {
 
+		SimpleDateFormat dateformat = null;
+
 		public ReviewAdapter(Activity activity, int layout_id,
 				List<GiudizioNew> reviews) {
 			super(activity, layout_id, reviews);
+			dateformat = new SimpleDateFormat("HH:mm  dd/MM/yy");
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -276,6 +280,8 @@ public class Recensioni_Activity extends SherlockActivity {
 						if (l.getUser_id() == Long.parseLong(user_id)) {
 							handler.non_ha_ancora_fatto_like_o_dislike = false;
 							handler.is_like = true;
+							handler.like_button
+									.setImageResource(R.drawable.icon_like_up);
 						}
 
 					} else {
@@ -284,6 +290,8 @@ public class Recensioni_Activity extends SherlockActivity {
 						if (l.getUser_id() == Long.parseLong(user_id)) {
 							handler.non_ha_ancora_fatto_like_o_dislike = false;
 							handler.is_like = false;
+							handler.dislike_button
+									.setImageResource(R.drawable.icon_like_down);
 						}
 					}
 				}
@@ -297,8 +305,8 @@ public class Recensioni_Activity extends SherlockActivity {
 			}
 
 			handler.username.setText(giudizio.getUser_id().toString());
-			handler.review_date.setText(giudizio.getUltimo_aggiornamento()
-					.toString());
+			handler.review_date.setText(dateformat.format(
+					giudizio.getUltimo_aggiornamento()).toString());
 			handler.review_content.setText(giudizio.getCommento());
 			handler.like_count_view.setText(handler.like_count + "");
 			handler.dislike_count_view.setText(handler.dislike_count + "");
@@ -315,6 +323,7 @@ public class Recensioni_Activity extends SherlockActivity {
 					likes.setUser_id(Long.parseLong(user_id));
 
 					if (handler.non_ha_ancora_fatto_like_o_dislike) {
+						// caso base faccio like
 						handler.non_ha_ancora_fatto_like_o_dislike = false;
 						handler.is_like = true;
 
@@ -322,6 +331,9 @@ public class Recensioni_Activity extends SherlockActivity {
 						handler.like_count++;
 						handler.like_count_view
 								.setText(handler.like_count + "");
+
+						handler.like_button
+								.setImageResource(R.drawable.icon_like_up);
 
 						new PostLikeConnector(Recensioni_Activity.this)
 								.execute(likes);
@@ -343,6 +355,12 @@ public class Recensioni_Activity extends SherlockActivity {
 							handler.like_count_view.setText(handler.like_count
 									+ "");
 
+							handler.like_button
+									.setImageResource(R.drawable.icon_like_up);
+
+							handler.dislike_button
+									.setImageResource(R.drawable.icon_like_down_outline);
+
 							new PostLikeConnector(Recensioni_Activity.this)
 									.execute(likes);
 
@@ -355,8 +373,11 @@ public class Recensioni_Activity extends SherlockActivity {
 							likes.setIs_like(true);
 
 							handler.like_count--;
-							handler.like_count_view
-									.setText(handler.dislike_count + "");
+							handler.like_count_view.setText(handler.like_count
+									+ "");
+
+							handler.like_button
+									.setImageResource(R.drawable.icon_like_up_outline);
 
 							new DeleteLikeConnector(Recensioni_Activity.this)
 									.execute(likes);
@@ -388,6 +409,9 @@ public class Recensioni_Activity extends SherlockActivity {
 						handler.dislike_count_view
 								.setText(handler.dislike_count + "");
 
+						handler.dislike_button
+								.setImageResource(R.drawable.icon_like_down);
+
 						new PostLikeConnector(Recensioni_Activity.this)
 								.execute(likes);
 
@@ -409,6 +433,12 @@ public class Recensioni_Activity extends SherlockActivity {
 							handler.like_count_view.setText(handler.like_count
 									+ "");
 
+							handler.dislike_button
+									.setImageResource(R.drawable.icon_like_down);
+
+							handler.like_button
+									.setImageResource(R.drawable.icon_like_up_outline);
+
 							new PostLikeConnector(Recensioni_Activity.this)
 									.execute(likes);
 
@@ -423,6 +453,9 @@ public class Recensioni_Activity extends SherlockActivity {
 							handler.dislike_count--;
 							handler.dislike_count_view
 									.setText(handler.dislike_count + "");
+
+							handler.dislike_button
+									.setImageResource(R.drawable.icon_like_down_outline);
 
 							new DeleteLikeConnector(Recensioni_Activity.this)
 									.execute(likes);
@@ -668,7 +701,6 @@ public class Recensioni_Activity extends SherlockActivity {
 			super.onPostExecute(result);
 
 			if (result) {
-				Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(context, "Oooops! Not Liked", Toast.LENGTH_SHORT)
 						.show();
@@ -735,8 +767,6 @@ public class Recensioni_Activity extends SherlockActivity {
 			super.onPostExecute(result);
 
 			if (result) {
-				Toast.makeText(context, "Like deleted", Toast.LENGTH_SHORT)
-						.show();
 			} else {
 				Toast.makeText(context, "Oooops! Like not deleted",
 						Toast.LENGTH_SHORT).show();

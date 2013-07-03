@@ -68,7 +68,7 @@
         android:layout_below="@id/iGradito_recensioni_review_content"
         android:background="@android:color/transparent"
         android:focusable="false"
-        android:src="@drawable/icon_like_up"
+        android:src="@drawable/icon_like_up_outline"
         android:onClick="like_button_onClick" />
     
      <ImageButton
@@ -78,6 +78,6 @@
         android:layout_toLeftOf="@id/dislike_count"
         android:background="@android:color/transparent"
         android:layout_below="@id/iGradito_recensioni_review_content"
-        android:src="@drawable/icon_like_down" />
+        android:src="@drawable/icon_like_down_outline" />
 
 </RelativeLayout>
