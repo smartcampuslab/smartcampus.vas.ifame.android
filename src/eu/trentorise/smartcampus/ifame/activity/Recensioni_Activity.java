@@ -1,20 +1,19 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.w3c.dom.Text;
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +27,14 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.GiudizioNew;
 import eu.trentorise.smartcampus.ifame.model.Likes;
@@ -266,18 +270,21 @@ public class Recensioni_Activity extends SherlockActivity {
 				Integer dislikes_count = 0;
 
 				for (Likes l : list_likes) {
-
-					if (l.getUser_id() == Long.parseLong(user_id)) {
-						handler.not_already_liked = false;
-						Toast.makeText(getApplicationContext(),
-								"Like -> " + handler.not_already_liked,
-								Toast.LENGTH_SHORT).show();
-					}
-
 					if (l.getIs_like()) {
 						likes_count++;
+
+						if (l.getUser_id() == Long.parseLong(user_id)) {
+							handler.non_ha_ancora_fatto_like_o_dislike = false;
+							handler.is_like = true;
+						}
+
 					} else {
 						dislikes_count++;
+
+						if (l.getUser_id() == Long.parseLong(user_id)) {
+							handler.non_ha_ancora_fatto_like_o_dislike = false;
+							handler.is_like = false;
+						}
 					}
 				}
 
@@ -301,30 +308,134 @@ public class Recensioni_Activity extends SherlockActivity {
 
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(getApplicationContext(),
-							"Like -> " + handler.not_already_liked,
-							Toast.LENGTH_SHORT).show();
-					if (handler.not_already_liked) {
-						handler.not_already_liked = false;
+
+					Likes likes = new Likes();
+
+					likes.setGiudizio_id(giudizio.getGiudizio_id());
+					likes.setUser_id(Long.parseLong(user_id));
+
+					if (handler.non_ha_ancora_fatto_like_o_dislike) {
+						handler.non_ha_ancora_fatto_like_o_dislike = false;
+						handler.is_like = true;
+
+						likes.setIs_like(true);
 						handler.like_count++;
 						handler.like_count_view
 								.setText(handler.like_count + "");
 
-						Likes likes = new Likes();
-						likes.setGiudizio_id(giudizio.getGiudizio_id());
-						likes.setIs_like(true);
-						likes.setUser_id(Long.parseLong(user_id));
 						new PostLikeConnector(Recensioni_Activity.this)
 								.execute(likes);
+					} else {
+						// ho gia messo un like o dislike
+						if (!handler.is_like) {
+							// sto cambiando idea da dislike a like
+							handler.is_like = true;
+
+							likes.setIs_like(true);
+
+							// aumento i dislike
+							handler.dislike_count--;
+							handler.dislike_count_view
+									.setText(handler.dislike_count + "");
+
+							// riduco i like
+							handler.like_count++;
+							handler.like_count_view.setText(handler.like_count
+									+ "");
+
+							new PostLikeConnector(Recensioni_Activity.this)
+									.execute(likes);
+
+						} else {
+							// ho fatto like ancora tolgo il like
+							handler.non_ha_ancora_fatto_like_o_dislike = true;
+							// lo metto null ma dovrebbe fottere cosa sia
+							handler.is_like = null;
+
+							likes.setIs_like(true);
+
+							handler.like_count--;
+							handler.like_count_view
+									.setText(handler.dislike_count + "");
+
+							new DeleteLikeConnector(Recensioni_Activity.this)
+									.execute(likes);
+						}
 					}
 				}
 			});
 
+			// ADD LISTENER TO THE LIKE BUTTON
+			handler.dislike_button.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					Likes likes = new Likes();
+
+					likes.setGiudizio_id(giudizio.getGiudizio_id());
+					likes.setUser_id(Long.parseLong(user_id));
+
+					if (handler.non_ha_ancora_fatto_like_o_dislike) {
+						// non ho ancora fatto like o dislike e clicco su
+						// dislike
+						handler.non_ha_ancora_fatto_like_o_dislike = false;
+						handler.is_like = false;
+
+						likes.setIs_like(false);
+
+						handler.dislike_count++;
+						handler.dislike_count_view
+								.setText(handler.dislike_count + "");
+
+						new PostLikeConnector(Recensioni_Activity.this)
+								.execute(likes);
+
+					} else {
+						// ho gia messo un like o dislike
+						if (handler.is_like) {
+							// sto cambiando idea da like a dislike
+							handler.is_like = false;
+
+							likes.setIs_like(false);
+
+							// aumento i dislike
+							handler.dislike_count++;
+							handler.dislike_count_view
+									.setText(handler.dislike_count + "");
+
+							// riduco i like
+							handler.like_count--;
+							handler.like_count_view.setText(handler.like_count
+									+ "");
+
+							new PostLikeConnector(Recensioni_Activity.this)
+									.execute(likes);
+
+						} else {
+							// ho fatto dislike ancora tolgo il dislike
+							handler.non_ha_ancora_fatto_like_o_dislike = true;
+							// lo metto null ma dovrebbe fottere cosa sia
+							handler.is_like = null;
+
+							likes.setIs_like(false);
+
+							handler.dislike_count--;
+							handler.dislike_count_view
+									.setText(handler.dislike_count + "");
+
+							new DeleteLikeConnector(Recensioni_Activity.this)
+									.execute(likes);
+						}
+					}
+				}
+			});
 			return v;
 		}
 	}
 
 	static class DataHandler {
+
 		TextView username;
 		TextView review_date;
 		TextView review_content;
@@ -334,10 +445,11 @@ public class Recensioni_Activity extends SherlockActivity {
 		ImageButton dislike_button;
 		Integer like_count;
 		Integer dislike_count;
-		Boolean not_already_liked;
+		Boolean non_ha_ancora_fatto_like_o_dislike;
+		Boolean is_like;
 
 		public DataHandler() {
-			not_already_liked = true;
+			non_ha_ancora_fatto_like_o_dislike = true;
 		}
 	}
 
@@ -500,19 +612,19 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 */
 
-	private class PostLikeConnector extends AsyncTask<Likes, Void, Void> {
+	private class PostLikeConnector extends AsyncTask<Likes, Void, Boolean> {
+
 		private ProtocolCarrier mProtocolCarrier;
-		public Context context;
-		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		private Context context;
+		private String appToken = "test smartcampus";
+		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
 		public PostLikeConnector(Context applicationContext) {
 			context = applicationContext;
-
 		}
 
 		@Override
-		protected Void doInBackground(Likes... like) {
+		protected Boolean doInBackground(Likes... like) {
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
@@ -529,10 +641,12 @@ public class Recensioni_Activity extends SherlockActivity {
 				response = mProtocolCarrier.invokeSync(request, appToken,
 						authToken);
 
+				System.out.println(response.getHttpStatus());
+
 				if (response.getHttpStatus() == 200) {
-					return null;
+					return true;
 				} else {
-					return null;
+					return false;
 				}
 
 			} catch (ConnectionException e) {
@@ -545,14 +659,88 @@ public class Recensioni_Activity extends SherlockActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return null;
+			return false;
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Boolean result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
+
+			if (result) {
+				Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(context, "Oooops! Not Liked", Toast.LENGTH_SHORT)
+						.show();
+			}
+
 		}
 	}
 
+	private class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
+
+		private ProtocolCarrier mProtocolCarrier;
+		private Context context;
+		private String appToken = "test smartcampus";
+		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		public DeleteLikeConnector(Context applicationContext) {
+			context = applicationContext;
+		}
+
+		@Override
+		protected Boolean doInBackground(Likes... like) {
+
+			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+			// giudizio/43/user/67/like/delete
+			MessageRequest request = new MessageRequest(
+					"http://smartcampuswebifame.app.smartcampuslab.it",
+					"giudizio/" + like[0].getGiudizio_id() + "/like/delete");
+
+			request.setMethod(Method.POST);
+
+			request.setBody(Utils.convertToJSON(like[0]));
+
+			System.out.println(request.getMethod());
+
+			MessageResponse response;
+			try {
+				response = mProtocolCarrier.invokeSync(request, appToken,
+						authToken);
+
+				System.out.println(response.getHttpStatus());
+
+				if (response.getHttpStatus() == 200) {
+					return true;
+				} else {
+					return false;
+				}
+
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+
+			if (result) {
+				Toast.makeText(context, "Like deleted", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				Toast.makeText(context, "Oooops! Like not deleted",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }
