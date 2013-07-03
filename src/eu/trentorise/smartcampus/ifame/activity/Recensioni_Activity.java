@@ -266,6 +266,9 @@ public class Recensioni_Activity extends SherlockActivity {
 				Integer dislikes_count = 0;
 
 				for (Likes l : list_likes) {
+					if (l.getUser_id().equals(user_id)) {
+						handler.already_liked = true;
+					}
 					if (l.getIs_like()) {
 						likes_count++;
 					} else {
@@ -292,21 +295,24 @@ public class Recensioni_Activity extends SherlockActivity {
 
 				@Override
 				public void onClick(View v) {
-					handler.like_count++;
-					handler.like_count_view.setText(handler.like_count + "");
-					
-					Likes likes = new Likes();
-					likes.setGiudizio_id(giudizio.getGiudizio_id());
-					likes.setIs_like(true);
-					likes.setUser_id(Long.parseLong(user_id));
-					new PostLikeConnector(Recensioni_Activity.this)
-							.execute(likes);
+					if (!handler.already_liked) {
+						handler.already_liked = true;
+						handler.like_count++;
+						handler.like_count_view
+								.setText(handler.like_count + "");
+
+						Likes likes = new Likes();
+						likes.setGiudizio_id(giudizio.getGiudizio_id());
+						likes.setIs_like(true);
+						likes.setUser_id(Long.parseLong(user_id));
+						new PostLikeConnector(Recensioni_Activity.this)
+								.execute(likes);
+					}
 				}
 			});
 
 			return v;
 		}
-
 	}
 
 	static class DataHandler {
@@ -319,6 +325,11 @@ public class Recensioni_Activity extends SherlockActivity {
 		ImageButton dislike_button;
 		Integer like_count;
 		Integer dislike_count;
+		Boolean already_liked;
+
+		public DataHandler() {
+			already_liked = false;
+		}
 	}
 
 	/**
@@ -510,8 +521,7 @@ public class Recensioni_Activity extends SherlockActivity {
 						authToken);
 
 				if (response.getHttpStatus() == 200) {
-					Toast.makeText(getApplicationContext(), "Like assegnato",
-							Toast.LENGTH_LONG).show();
+					return null;
 				} else {
 					return null;
 				}
@@ -533,6 +543,8 @@ public class Recensioni_Activity extends SherlockActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
+			Toast.makeText(getApplicationContext(), "Like assegnato",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
