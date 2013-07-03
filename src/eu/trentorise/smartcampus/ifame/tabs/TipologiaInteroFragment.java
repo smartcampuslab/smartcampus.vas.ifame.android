@@ -140,7 +140,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		
 		if (isCalled && !selected_menu.equals("Intero") && !isPaninoSelected && !isInsalatonaSelected && !isPizzaSelected) {
 			
-			
+			pane.setTextColor(Color.parseColor("#08D126"));
 
 			if (!isPrimoSelected)
 				primo.setTextColor(Color.parseColor("#08D126"));
