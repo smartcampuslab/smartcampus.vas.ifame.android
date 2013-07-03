@@ -52,6 +52,9 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class Recensioni_Activity extends SherlockActivity {
 
 	List<Mensa> listaMense = null;
+
+	String myReview;
+
 	Piatto piatto;
 	String user_id;
 	Mensa mensa;
@@ -88,7 +91,7 @@ public class Recensioni_Activity extends SherlockActivity {
 				mensa.getMensa_id(), piatto.getPiatto_id());
 
 	}
-	
+
 	/**
 	 * 
 	 * GET AVERAGE VOTES
@@ -99,12 +102,13 @@ public class Recensioni_Activity extends SherlockActivity {
 		float sum = 0;
 		for (GiudizioNew g : giudizi_list) {
 			sum += g.getVoto();
-			System.out.println(g.getVoto()); 
+			System.out.println(g.getVoto());
 		}
 		return sum / (float) giudizi_list.size();
 	}
 
 	/**
+	 * 
 	 * DISPLAY THE CUSTOMIZED DIALOG
 	 * 
 	 */
@@ -179,6 +183,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			cd_editText = (EditText) view
 					.findViewById(R.id.custom_dialog_etext);
+
+			cd_editText.setText("" + myReview);
 
 			// Get the seekbar asscociated with this view
 			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
@@ -650,10 +656,20 @@ public class Recensioni_Activity extends SherlockActivity {
 
 	private void createGiudiziList(List<GiudizioNew> reviews) {
 
+		Boolean is_in = false;
+		for (GiudizioNew g : reviews) {
+			if (g.getUser_id() == Long.parseLong(user_id)) {
+				myReview = g.getCommento();
+				is_in = true;
+			}
+		}
+		if (!is_in) {
+			myReview = "";
+		}
+
 		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
 				android.R.layout.simple_list_item_1, reviews);
-		
-		//SET THE NUMBER OF USERS
+
 		String utenti = "";
 		int num_utenti = adapter.getCount();
 		if (num_utenti != 1) {
@@ -663,10 +679,10 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 		giudiziListview.setAdapter(adapter);
 		giudizio_espresso_da.setText(num_utenti + " " + utenti);
-		
-		//SET THE AVERAGE VOTE
+
+		// SET THE AVERAGE VOTE
 		Float giudizio_medio = getAverageValue(reviews);
-		if(giudizio_medio.isNaN()){
+		if (giudizio_medio.isNaN()) {
 			giudizio_medio = 0f;
 		}
 		giudizio_medio_txt.setText(giudizio_medio + "");
@@ -708,8 +724,6 @@ public class Recensioni_Activity extends SherlockActivity {
 			try {
 				response = mProtocolCarrier.invokeSync(request, appToken,
 						authToken);
-
-				System.out.println(response.getHttpStatus());
 
 				if (response.getHttpStatus() == 200) {
 					return true;
@@ -768,14 +782,10 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			request.setBody(Utils.convertToJSON(like[0]));
 
-			System.out.println(request.getMethod());
-
 			MessageResponse response;
 			try {
 				response = mProtocolCarrier.invokeSync(request, appToken,
 						authToken);
-
-				System.out.println(response.getHttpStatus());
 
 				if (response.getHttpStatus() == 200) {
 					return true;
