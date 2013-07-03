@@ -266,15 +266,21 @@ public class Recensioni_Activity extends SherlockActivity {
 				Integer dislikes_count = 0;
 
 				for (Likes l : list_likes) {
-					if (l.getUser_id().equals(user_id)) {
-						handler.already_liked = true;
+
+					if (l.getUser_id() == Long.parseLong(user_id)) {
+						handler.not_already_liked = false;
+						Toast.makeText(getApplicationContext(),
+								"Like -> " + handler.not_already_liked,
+								Toast.LENGTH_SHORT).show();
 					}
+
 					if (l.getIs_like()) {
 						likes_count++;
 					} else {
 						dislikes_count++;
 					}
 				}
+
 				handler.like_count = likes_count;
 				handler.dislike_count = dislikes_count;
 
@@ -295,8 +301,11 @@ public class Recensioni_Activity extends SherlockActivity {
 
 				@Override
 				public void onClick(View v) {
-					if (!handler.already_liked) {
-						handler.already_liked = true;
+					Toast.makeText(getApplicationContext(),
+							"Like -> " + handler.not_already_liked,
+							Toast.LENGTH_SHORT).show();
+					if (handler.not_already_liked) {
+						handler.not_already_liked = false;
 						handler.like_count++;
 						handler.like_count_view
 								.setText(handler.like_count + "");
@@ -325,10 +334,10 @@ public class Recensioni_Activity extends SherlockActivity {
 		ImageButton dislike_button;
 		Integer like_count;
 		Integer dislike_count;
-		Boolean already_liked;
+		Boolean not_already_liked;
 
 		public DataHandler() {
-			already_liked = false;
+			not_already_liked = true;
 		}
 	}
 
@@ -543,8 +552,6 @@ public class Recensioni_Activity extends SherlockActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			Toast.makeText(getApplicationContext(), "Like assegnato",
-					Toast.LENGTH_LONG).show();
 		}
 	}
 
