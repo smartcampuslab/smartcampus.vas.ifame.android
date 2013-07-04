@@ -85,8 +85,8 @@ public class ISoldi extends SherlockActivity {
 					selected = "Ridotto1234";
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
 				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, selected);
-				Toast.makeText(getApplicationContext(), selected,
-						Toast.LENGTH_LONG).show();
+				// Toast.makeText(getApplicationContext(), selected,
+				// Toast.LENGTH_LONG).show();
 				startActivity(i);
 
 			}
