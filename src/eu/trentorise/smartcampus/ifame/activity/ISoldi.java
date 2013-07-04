@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
@@ -146,8 +147,15 @@ public class ISoldi extends SherlockActivity {
 	}
 
 	public void getAmount(float amount) {
+		String euro_string = "€ ";
 		if (amount >= 4.90) {
-			centerText.setText("€ " + String.valueOf(amount));
+			//set utf-8 enconding on the euro string
+			try {
+				euro_string.getBytes("UTF8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			centerText.setText(euro_string + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
@@ -159,7 +167,7 @@ public class ISoldi extends SherlockActivity {
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 4.20 && amount < 4.90) {
-			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setText(euro_string + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FFD700"));
 
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
@@ -170,7 +178,7 @@ public class ISoldi extends SherlockActivity {
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 2.90 && amount < 4.20) {
-			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setText(euro_string + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF8800"));
 
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
@@ -179,7 +187,7 @@ public class ISoldi extends SherlockActivity {
 			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 		} else {
-			centerText.setText("€ " + String.valueOf(amount));
+			centerText.setText(euro_string + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#CC0000"));
 
 			bottomText.setText(getString(R.string.iSoldi_devi_ricaricare));
