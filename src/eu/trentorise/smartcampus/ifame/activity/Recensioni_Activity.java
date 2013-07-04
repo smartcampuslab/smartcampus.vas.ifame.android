@@ -52,9 +52,9 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class Recensioni_Activity extends SherlockActivity {
 
 	List<Mensa> listaMense = null;
-
-	String myReview;
-
+	MenuItem menuItem = null;
+	String myReview = "";
+	ReviewAdapter adapter = null;
 	Piatto piatto;
 	String user_id;
 	Mensa mensa;
@@ -94,21 +94,6 @@ public class Recensioni_Activity extends SherlockActivity {
 
 	/**
 	 * 
-	 * GET AVERAGE VOTES
-	 */
-
-	public float getAverageValue(List<GiudizioNew> giudizi_list) {
-
-		float sum = 0;
-		for (GiudizioNew g : giudizi_list) {
-			sum += g.getVoto();
-			System.out.println(g.getVoto());
-		}
-		return sum / (float) giudizi_list.size();
-	}
-
-	/**
-	 * 
 	 * DISPLAY THE CUSTOMIZED DIALOG
 	 * 
 	 */
@@ -140,7 +125,15 @@ public class Recensioni_Activity extends SherlockActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-
+		case R.id.action_refresh:
+			menuItem = item;
+			menuItem.setActionView(R.layout.actionbar_progressbar_circle);
+			menuItem.expandActionView();
+			adapter.clear();
+			adapter.notifyDataSetChanged();
+			new GetGiudizioConnector(Recensioni_Activity.this).execute(
+					mensa.getMensa_id(), piatto.getPiatto_id());
+			break;
 		case android.R.id.home:
 			onBackPressed();
 			break;
@@ -293,6 +286,9 @@ public class Recensioni_Activity extends SherlockActivity {
 				handler.dislike_button = (ImageButton) v
 						.findViewById(R.id.dislike_button);
 
+				handler.voto = (TextView) v
+						.findViewById(R.id.iGradito_recensioni_voto);
+
 				List<Likes> list_likes = giudizio.getLikes();
 				Integer likes_count = 0;
 				Integer dislikes_count = 0;
@@ -334,6 +330,7 @@ public class Recensioni_Activity extends SherlockActivity {
 			handler.review_content.setText(giudizio.getCommento());
 			handler.like_count_view.setText(handler.like_count + "");
 			handler.dislike_count_view.setText(handler.dislike_count + "");
+			handler.voto.setText(giudizio.getVoto() + "");
 
 			// ADD LISTENER TO THE LIKE BUTTON
 			handler.like_button.setOnClickListener(new OnClickListener() {
@@ -492,6 +489,8 @@ public class Recensioni_Activity extends SherlockActivity {
 	}
 
 	static class DataHandler {
+
+		TextView voto;
 
 		TextView username;
 		TextView review_date;
@@ -656,38 +655,37 @@ public class Recensioni_Activity extends SherlockActivity {
 
 	private void createGiudiziList(List<GiudizioNew> reviews) {
 
-		Boolean is_in = false;
-		for (GiudizioNew g : reviews) {
-			if (g.getUser_id() == Long.parseLong(user_id)) {
-				myReview = g.getCommento();
-				is_in = true;
+		int review_size = reviews.size();
+		float avg = 0;
+		if (review_size > 0) {
+			for (GiudizioNew g : reviews) {
+				// vedo se c'è un mio commento
+				if (g.getUser_id() == Long.parseLong(user_id)) {
+					myReview = g.getCommento();
+				}
+				// calcolo la media
+				avg += g.getVoto();
 			}
-		}
-		if (!is_in) {
-			myReview = "";
+			avg = avg / (float) review_size;
 		}
 
-		ReviewAdapter adapter = new ReviewAdapter(Recensioni_Activity.this,
-				android.R.layout.simple_list_item_1, reviews);
-
-		String utenti = "";
-		int num_utenti = adapter.getCount();
-		if (num_utenti != 1) {
-			utenti = "utenti";
+		if (adapter == null) {
+			adapter = new ReviewAdapter(Recensioni_Activity.this,
+					android.R.layout.simple_list_item_1, reviews);
+			giudiziListview.setAdapter(adapter);
 		} else {
-			utenti = "utente";
+			adapter.clear();
+			adapter.addAll(reviews);
 		}
-		giudiziListview.setAdapter(adapter);
-		giudizio_espresso_da.setText(num_utenti + " " + utenti);
 
-		// SET THE AVERAGE VOTE
-		Float giudizio_medio = getAverageValue(reviews);
-		if (giudizio_medio.isNaN()) {
-			giudizio_medio = 0f;
-		}
-		giudizio_medio_txt.setText(giudizio_medio + "");
-
+		giudizio_espresso_da.setText(review_size + " utent"
+				+ (review_size == 1 ? "e" : "i"));
+		giudizio_medio_txt.setText(avg + "");
 		adapter.notifyDataSetChanged();
+		if (menuItem != null) {
+			menuItem.collapseActionView();
+			menuItem.setActionView(null);
+		}
 	}
 
 	/**

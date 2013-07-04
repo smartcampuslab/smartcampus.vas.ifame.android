@@ -13,32 +13,52 @@
             android:id="@+id/iGradito_recensioni_nome_utente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
             android:layout_weight="1"
-            android:textColor="#E32033"
+            android:gravity="left"
             android:paddingLeft="5dp"
             android:text="Nome Utente"
+            android:textColor="#E32033"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingLeft="5dp"
+            android:text="Voto:"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/iGradito_recensioni_voto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="5dp"
+            android:text="0"
             android:textSize="14dp" />
 
         <TextView
             android:id="@+id/iGradito_recensioni_data_inserimento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#E32033"
-            android:gravity="right"
             android:layout_weight="1"
+            android:gravity="right"
             android:paddingRight="5dp"
             android:text="17/06/13"
+            android:textColor="#E32033"
             android:textSize="13dp" />
     </LinearLayout>
 
-    <TextView android:id="@+id/iGradito_recensioni_review_content" 
-        android:layout_below="@+id/iGradito_recensioni_nome_data_linear_layout"
-        android:layout_marginLeft="10dp"
+    <TextView
+        android:id="@+id/iGradito_recensioni_review_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/iGradito_recensioni_nome_data_linear_layout"
+        android:layout_marginLeft="10dp"
         android:text="questa è solo una prova di recensione, niente male"
-        android:textSize="11dp"/>
+        android:textSize="11dp" />
 
     <TextView
         android:id="@+id/dislike_count"
@@ -64,20 +84,20 @@
         android:id="@+id/like_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/like_count"
         android:layout_below="@id/iGradito_recensioni_review_content"
+        android:layout_toLeftOf="@id/like_count"
         android:background="@android:color/transparent"
         android:focusable="false"
-        android:src="@drawable/icon_like_up_outline"
-        android:onClick="like_button_onClick" />
-    
-     <ImageButton
+        android:onClick="like_button_onClick"
+        android:src="@drawable/icon_like_up_outline" />
+
+    <ImageButton
         android:id="@+id/dislike_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/iGradito_recensioni_review_content"
         android:layout_toLeftOf="@id/dislike_count"
         android:background="@android:color/transparent"
-        android:layout_below="@id/iGradito_recensioni_review_content"
         android:src="@drawable/icon_like_down_outline" />
 
 </RelativeLayout>

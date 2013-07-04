@@ -98,12 +98,10 @@ public class ISoldi extends SherlockActivity {
 				getAmount(0);
 			} else {
 				getAmount(Float.parseFloat(saldoReturn.getCredit()));
-				
 
 				ListAdapter listAdapter = isoldi_listview.getAdapter();
 
-				
-				//schifo indicibile
+				// schifo indicibile
 				int rows = listAdapter.getCount();
 				int height = 70 * rows;
 				ViewGroup.LayoutParams params = isoldi_listview
@@ -147,9 +145,9 @@ public class ISoldi extends SherlockActivity {
 	}
 
 	public void getAmount(float amount) {
-		String euro_string = "â‚¬ ";
+		String euro_string = "€ ";
 		if (amount >= 4.90) {
-			//set utf-8 enconding on the euro string
+			// set utf-8 enconding on the euro string
 			try {
 				euro_string.getBytes("UTF8");
 			} catch (UnsupportedEncodingException e) {
@@ -161,9 +159,12 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#228B22"));
 
-			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_intero));
-			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_ridotto));
-			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
+			acquisti_possibili
+					.add(getString(R.string.iDeciso_menu_types_intero));
+			acquisti_possibili
+					.add(getString(R.string.iDeciso_menu_types_ridotto));
+			acquisti_possibili
+					.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 4.20 && amount < 4.90) {
@@ -173,8 +174,10 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#FFD700"));
 
-			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_ridotto));
-			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
+			acquisti_possibili
+					.add(getString(R.string.iDeciso_menu_types_ridotto));
+			acquisti_possibili
+					.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 
 		} else if (amount >= 2.90 && amount < 4.20) {
@@ -184,7 +187,8 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#FF8800"));
 
-			acquisti_possibili.add(getString(R.string.iDeciso_menu_types_snack));
+			acquisti_possibili
+					.add(getString(R.string.iDeciso_menu_types_snack));
 			adapter.notifyDataSetChanged();
 		} else {
 			centerText.setText(euro_string + String.valueOf(amount));
