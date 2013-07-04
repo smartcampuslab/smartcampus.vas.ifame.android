@@ -619,8 +619,14 @@ public class Recensioni_Activity extends SherlockActivity {
 		protected void onPostExecute(List<GiudizioNew> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			createGiudiziList(result);
-			progressDialog.dismiss();
+			if (result == null) {
+				progressDialog.dismiss();
+				Toast.makeText(context, "Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_LONG).show();
+			} else {
+				createGiudiziList(result);
+				progressDialog.dismiss();
+			}
 		}
 	}
 
@@ -712,10 +718,15 @@ public class Recensioni_Activity extends SherlockActivity {
 		protected void onPostExecute(List<GiudizioNew> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			createGiudiziList(result);
-			progressDialog.dismiss();
-			Toast.makeText(context, "Recensione aggiunta correttamente",
-					Toast.LENGTH_LONG).show();
+			if (result == null) {
+				Toast.makeText(context, "Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_LONG).show();
+			} else {
+				createGiudiziList(result);
+				progressDialog.dismiss();
+				Toast.makeText(context, "Recensione aggiunta correttamente",
+						Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 

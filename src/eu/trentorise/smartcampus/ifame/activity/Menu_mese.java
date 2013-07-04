@@ -204,73 +204,84 @@ public class Menu_mese extends SherlockFragmentActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(mdm);
 
-			// setto il menu del mese ricevuto come variabile di classe
-			menuDelMese = mdm;
+			if (mdm == null) {
+				Toast.makeText(Menu_mese.this,
+						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
+						.show();
+				finish();
+			} else {
 
-			// cerco la settimana corrente e la mostro
-			Calendar c = Calendar.getInstance();
-			int currentDay = c.get(Calendar.DAY_OF_MONTH);
+				// setto il menu del mese ricevuto come variabile di classe
+				menuDelMese = mdm;
 
-			// prendo la lista di menu della settimana
-			ArrayList<MenuDellaSettimana> mds = (ArrayList<MenuDellaSettimana>) mdm
-					.getMenuDellaSettimana();
+				// cerco la settimana corrente e la mostro
+				Calendar c = Calendar.getInstance();
+				int currentDay = c.get(Calendar.DAY_OF_MONTH);
 
-			// creo la lista per lo spinner
-			ArrayList<String> spinner_date_list = new ArrayList<String>();
-			ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(
-					Menu_mese.this,
-					android.R.layout.simple_spinner_dropdown_item,
-					spinner_date_list);
+				// prendo la lista di menu della settimana
+				ArrayList<MenuDellaSettimana> mds = (ArrayList<MenuDellaSettimana>) mdm
+						.getMenuDellaSettimana();
 
-			String[] months = {
-					getString(R.string.iDeciso_monthly_menu_january),
-					getString(R.string.iDeciso_monthly_menu_february),
-					getString(R.string.iDeciso_monthly_menu_march),
-					getString(R.string.iDeciso_monthly_menu_april),
-					getString(R.string.iDeciso_monthly_menu_may),
-					getString(R.string.iDeciso_monthly_menu_june),
-					getString(R.string.iDeciso_monthly_menu_july),
-					getString(R.string.iDeciso_monthly_menu_august),
-					getString(R.string.iDeciso_monthly_menu_september),
-					getString(R.string.iDeciso_monthly_menu_october),
-					getString(R.string.iDeciso_monthly_menu_november),
-					getString(R.string.iDeciso_monthly_menu_december) };
+				// creo la lista per lo spinner
+				ArrayList<String> spinner_date_list = new ArrayList<String>();
+				ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(
+						Menu_mese.this,
+						android.R.layout.simple_spinner_dropdown_item,
+						spinner_date_list);
 
-			setTitle(getString(R.string.iDeciso_monthly_menu_of) + " "
-					+ months[c.get(Calendar.MONTH)]);
+				String[] months = {
+						getString(R.string.iDeciso_monthly_menu_january),
+						getString(R.string.iDeciso_monthly_menu_february),
+						getString(R.string.iDeciso_monthly_menu_march),
+						getString(R.string.iDeciso_monthly_menu_april),
+						getString(R.string.iDeciso_monthly_menu_may),
+						getString(R.string.iDeciso_monthly_menu_june),
+						getString(R.string.iDeciso_monthly_menu_july),
+						getString(R.string.iDeciso_monthly_menu_august),
+						getString(R.string.iDeciso_monthly_menu_september),
+						getString(R.string.iDeciso_monthly_menu_october),
+						getString(R.string.iDeciso_monthly_menu_november),
+						getString(R.string.iDeciso_monthly_menu_december) };
 
-			// ciclo sulle settimane e prendo tutti i piatti della settimana
-			// corrente
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+				setTitle(getString(R.string.iDeciso_monthly_menu_of) + " "
+						+ months[c.get(Calendar.MONTH)]);
 
-			int iter = 0;
-			int position = 0;
-			for (MenuDellaSettimana m : mds) {
-				int start_day = m.getStart_day();
-				int end_day = m.getEnd_day();
-				c.set(Calendar.DATE, start_day);
-				String start_day_string = dateFormat.format(c.getTime());
-				c.set(Calendar.DATE, end_day);
-				String end_day_string = dateFormat.format(c.getTime());
-				// setto l'item dello spinner
-				spinner_adapter
-						.add(getString(R.string.iDeciso_monthly_menu_from)
-								+ " " + start_day_string + " "
-								+ getString(R.string.iDeciso_monthly_menu_to)
-								+ " " + end_day_string);
+				// ciclo sulle settimane e prendo tutti i piatti della settimana
+				// corrente
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
-				// se il giorno corrente è tra il giorno iniziale e quelo finale
-				// della settimana sono nella settimana che mi interessa
-				if (currentDay >= start_day && currentDay <= end_day) {
-					position = iter;
+				int iter = 0;
+				int position = 0;
+				for (MenuDellaSettimana m : mds) {
+					int start_day = m.getStart_day();
+					int end_day = m.getEnd_day();
+					c.set(Calendar.DATE, start_day);
+					String start_day_string = dateFormat.format(c.getTime());
+					c.set(Calendar.DATE, end_day);
+					String end_day_string = dateFormat.format(c.getTime());
+					// setto l'item dello spinner
+					spinner_adapter
+							.add(getString(R.string.iDeciso_monthly_menu_from)
+									+ " "
+									+ start_day_string
+									+ " "
+									+ getString(R.string.iDeciso_monthly_menu_to)
+									+ " " + end_day_string);
+
+					// se il giorno corrente è tra il giorno iniziale e quelo
+					// finale
+					// della settimana sono nella settimana che mi interessa
+					if (currentDay >= start_day && currentDay <= end_day) {
+						position = iter;
+					}
+					iter++;
 				}
-				iter++;
-			}
-			weekSpinner.setAdapter(spinner_adapter);
-			weekSpinner.setSelection(position);
+				weekSpinner.setAdapter(spinner_adapter);
+				weekSpinner.setSelection(position);
 
-			// chiudo il loading...
-			progressDialog.dismiss();
+				// chiudo il loading...
+				progressDialog.dismiss();
+			}
 		}
 	}
 

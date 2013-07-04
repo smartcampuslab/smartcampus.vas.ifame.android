@@ -259,7 +259,8 @@ public class IGradito extends SherlockActivity {
 			context = applicationContext;
 		}
 
-		private List<Mensa> getMense() {
+		@Override
+		protected List<Mensa> doInBackground(Void... params) {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -299,20 +300,19 @@ public class IGradito extends SherlockActivity {
 		}
 
 		@Override
-		protected List<Mensa> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getMense();
-		}
-
-		@Override
 		protected void onPostExecute(List<Mensa> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			createMenseSpinner(result);
-			// once the data is available dismiss the dialog
-			view.setVisibility(View.VISIBLE);
+			if (result == null) {
+				Toast.makeText(IGradito.this,
+						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
+						.show();
+				finish();
+			} else {
+				createMenseSpinner(result);
+				view.setVisibility(View.VISIBLE);
+			}
 		}
-
 	}
 
 	/*
@@ -386,16 +386,22 @@ public class IGradito extends SherlockActivity {
 		@Override
 		protected void onPostExecute(List<Piatto> result) {
 			// TODO Auto-generated method stub
-			if (result != null) {
+			if (result == null) {
+				Toast.makeText(IGradito.this,
+						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
+						.show();
+				finish();
+			} else {
 				adapter.complete_list = result;
 				adapter.clear();
 				for (Piatto p : result) {
 					adapter.add(p);
 				}
 				lista_piatti = result;
+				view.setVisibility(View.VISIBLE);
+				progressDialog.dismiss();
 			}
-			view.setVisibility(View.VISIBLE);
-			progressDialog.dismiss();
+
 		}
 	}
 
