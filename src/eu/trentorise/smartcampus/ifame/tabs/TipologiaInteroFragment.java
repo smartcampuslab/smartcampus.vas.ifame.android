@@ -1,7 +1,5 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
-import java.util.concurrent.ExecutionException;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,16 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
-import eu.trentorise.smartcampus.ifame.activity.IFretta_Details;
 import eu.trentorise.smartcampus.ifame.activity.ISoldi;
-import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
-import eu.trentorise.smartcampus.ifame.model.Saldo;
 
 public class TipologiaInteroFragment extends SherlockFragment {
 
@@ -118,9 +112,8 @@ public class TipologiaInteroFragment extends SherlockFragment {
 					Fai_il_tuo_menu.DESSERT_AVAILABLE, false);
 			pane.setTextColor(Color.parseColor("#08D126"));
 
-			
 		}
-		
+
 		boolean isPrimoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PRIMO,
 				false);
 		boolean isSecondoSelected = i.getBooleanExtra(
@@ -137,9 +130,10 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				false);
 		boolean isPizzaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PIZZA,
 				false);
-		
-		if (isCalled && !selected_menu.equals("Intero") && !isPaninoSelected && !isInsalatonaSelected && !isPizzaSelected) {
-			
+
+		if (isCalled && !selected_menu.equals("Intero") && !isPaninoSelected
+				&& !isInsalatonaSelected && !isPizzaSelected) {
+
 			pane.setTextColor(Color.parseColor("#08D126"));
 
 			if (!isPrimoSelected)
@@ -147,23 +141,23 @@ public class TipologiaInteroFragment extends SherlockFragment {
 			if (!isSecondoSelected)
 				secondo.setTextColor(Color.parseColor("#08D126"));
 
-			if ((isC1Avail || isC2Avail)
-					|| (!isC1Selected || !isC2Selected))
+			if ((isC1Avail || isC2Avail) || (!isC1Selected || !isC2Selected))
 				contorni.setTextColor(Color.parseColor("#08D126"));
 			if (isDessertAvail || !isDessertSelected) {
 				dessert.setTextColor(Color.parseColor("#08D126"));
 			}
 
 		}
-		
-		if (isCalled && (isPaninoSelected || isInsalatonaSelected || isPizzaSelected)){
+
+		if (isCalled
+				&& (isPaninoSelected || isInsalatonaSelected || isPizzaSelected)) {
 			primo.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni.setTextColor(Color.parseColor("#C4C4C4"));
 			secondo.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert.setTextColor(Color.parseColor("#C4C4C4"));
 			pane.setTextColor(Color.parseColor("#C4C4C4"));
 		}
-		
+
 		super.onResume();
 
 	}

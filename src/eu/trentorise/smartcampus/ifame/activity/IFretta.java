@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -26,6 +27,7 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -36,19 +38,23 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IFretta extends SherlockActivity {
 
-	ProgressDialog pd;
+	ProgressDialog progressDialog;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta);
 
-		pd = new ProgressDialog(IFretta.this).show(IFretta.this, "iFretta",
-				"Loading...");
+		new ProgressDialog(this);
 
-		new IFrettaConnector(IFretta.this).execute();
-
+		if (ConnectionUtils.isOnline(getApplicationContext())) {
+			new IFrettaConnector(IFretta.this).execute();
+		} else {
+			Toast.makeText(this, "Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -137,7 +143,16 @@ public class IFretta extends SherlockActivity {
 			context = applicationContext;
 		}
 
-		private List<Mensa> getWebCamMense() {
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(context, "iFretta",
+					"Loading...");
+		}
+
+		@Override
+		protected List<Mensa> doInBackground(Void... params) {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -156,7 +171,7 @@ public class IFretta extends SherlockActivity {
 
 					List<Mensa> list_mense = Utils.convertJSONToObjects(body,
 							Mensa.class);
-					
+
 					return list_mense;
 				} else {
 					return null;
@@ -176,18 +191,12 @@ public class IFretta extends SherlockActivity {
 		}
 
 		@Override
-		protected List<Mensa> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getWebCamMense();
-		}
-
-		@Override
 		protected void onPostExecute(List<Mensa> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			createWebcamList(result);
 			// quando ho i risultati del web service stoppo il caricamento
-			pd.dismiss();
+			progressDialog.dismiss();
 		}
 
 	}
@@ -198,8 +207,6 @@ public class IFretta extends SherlockActivity {
 	 */
 	private void createWebcamList(List<Mensa> mense) {
 		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
-
-		
 
 		MyArrayAdapter adapter = new MyArrayAdapter(this,
 				R.layout.layout_list_view_ifretta, mense);

@@ -35,6 +35,7 @@ import eu.trentorise.smartcampus.ifame.model.GiudizioNew;
 import eu.trentorise.smartcampus.ifame.model.Likes;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -85,8 +86,14 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		new ProgressDialog(Recensioni_Activity.this);
 		// get list of comments
-		new GetGiudizioConnector(Recensioni_Activity.this).execute(
-				mensa.getMensa_id(), piatto.getPiatto_id());
+		if (ConnectionUtils.isOnline(this)) {
+			new GetGiudizioConnector(Recensioni_Activity.this).execute(
+					mensa.getMensa_id(), piatto.getPiatto_id());
+		} else {
+			Toast.makeText(this, "Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
 	}
 
 	/**

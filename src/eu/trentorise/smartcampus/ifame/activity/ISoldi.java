@@ -1,17 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
-
-import org.apache.http.entity.StringEntity;
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,24 +9,26 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
-import eu.trentorise.smartcampus.ifame.model.Transaction;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -61,9 +52,9 @@ public class ISoldi extends SherlockActivity {
 	public ArrayList<Long> t_list;
 	public ArrayList<String> v_list;
 	private ArrayAdapter<String> adapter;
-	TextView isoldi_euro_txt; 
+	TextView isoldi_euro_txt;
 	ProgressDialog progressDialog;
-	View isoldi_layout_view; 
+	View isoldi_layout_view;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -82,16 +73,17 @@ public class ISoldi extends SherlockActivity {
 		stats_button = (Button) findViewById(R.id.isoldi_statistics_button);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
 		isoldi_layout_view = (RelativeLayout) findViewById(R.id.isoldi_layout);
-		
+
 		new ProgressDialog(ISoldi.this);
 
-		if(ConnectionUtils.isOnline(this)){
+		if (ConnectionUtils.isOnline(this)) {
 			new ISoldiConnector(this).execute();
-		}else{
-			Toast.makeText(ISoldi.this, "Connection not available", Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this, "Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
 			finish();
 		}
-		
+
 		acquisti_possibili = new ArrayList<String>();
 
 		int resID = android.R.layout.simple_list_item_1;
@@ -121,7 +113,6 @@ public class ISoldi extends SherlockActivity {
 
 		});
 
-
 		stats_button.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -136,11 +127,12 @@ public class ISoldi extends SherlockActivity {
 	public void getAmount(float amount) {
 
 		if (amount >= 4.90) {
-	
-			centerText.setText( String.valueOf(amount));
+
+			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
-			bottomText.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
+			bottomText
+					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#228B22"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#228B22"));
 
@@ -170,7 +162,8 @@ public class ISoldi extends SherlockActivity {
 			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF8800"));
 
-			bottomText.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
+			bottomText
+					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setBackgroundColor(Color.parseColor("#FF8800"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
 
@@ -181,7 +174,8 @@ public class ISoldi extends SherlockActivity {
 			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#CC0000"));
 
-			bottomText.setText(" " + getString(R.string.iSoldi_devi_ricaricare));
+			bottomText
+					.setText(" " + getString(R.string.iSoldi_devi_ricaricare));
 			bottomText.setTextSize(25);
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
@@ -242,12 +236,12 @@ public class ISoldi extends SherlockActivity {
 		return super.onOptionsItemSelected(item);
 
 	}
-	
+
 	/**
 	 * 
 	 * CONNECTOR TO TO GET DATA
 	 */
-	
+
 	public class ISoldiConnector extends AsyncTask<Saldo, Void, Saldo> {
 
 		private ProtocolCarrier mProtocolCarrier;
@@ -268,13 +262,14 @@ public class ISoldi extends SherlockActivity {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it", "isoldi/getsoldi");
+					"http://smartcampuswebifame.app.smartcampuslab.it",
+					"isoldi/getsoldi");
 			request.setMethod(Method.GET);
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier
-						.invokeSync(request, appToken, authToken);
+				response = mProtocolCarrier.invokeSync(request, appToken,
+						authToken);
 
 				if (response.getHttpStatus() == 200) {
 
@@ -297,28 +292,28 @@ public class ISoldi extends SherlockActivity {
 			}
 			return null;
 
-			
 		}
 
-		@Override 
-		protected void onPreExecute(){
+		@Override
+		protected void onPreExecute() {
 			super.onPreExecute();
 			isoldi_layout_view.setVisibility(View.GONE);
-			progressDialog = ProgressDialog.show(context, "iSoldi", "Loading..."); 
+			progressDialog = ProgressDialog.show(context, "iSoldi",
+					"Loading...");
 		}
 
 		@Override
 		protected Saldo doInBackground(Saldo... saldo) {
-			
+
 			return getSaldo();
 		}
-		
-		 @Override
-		 protected void onPostExecute(Saldo result){
-			 getAmount(Float.parseFloat(result.getCredit()));
-			 progressDialog.dismiss(); 
-			 isoldi_layout_view.setVisibility(View.VISIBLE);
-		 }
+
+		@Override
+		protected void onPostExecute(Saldo result) {
+			getAmount(Float.parseFloat(result.getCredit()));
+			progressDialog.dismiss();
+			isoldi_layout_view.setVisibility(View.VISIBLE);
+		}
 	}
 
 }

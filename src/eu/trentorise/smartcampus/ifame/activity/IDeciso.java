@@ -1,25 +1,21 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
 
 public class IDeciso extends SherlockActivity {
