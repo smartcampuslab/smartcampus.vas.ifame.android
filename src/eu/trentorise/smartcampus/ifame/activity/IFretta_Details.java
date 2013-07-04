@@ -2,6 +2,7 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -47,17 +48,44 @@ public class IFretta_Details extends SherlockActivity {
 		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		String date_s = s.format(new Date());
 
-		String online_img_url = (String) extras.get("online_img_url"); // Get the mensa online url
-															// from
-															// activity:ifretta
+		Calendar c = Calendar.getInstance();
+
+		// SET CURRENT TIME
+		int current_hour = c.get(Calendar.HOUR_OF_DAY);
+		int start_hour = 12; 
+		int end_hour = 14; 
+
+		//GET THE MENSA ONLINE_URL
+		String online_img_url = (String) extras.get("online_img_url");
 		
-		String offline_img_url = (String) extras.get("offline_img_url"); 
+		//GET THE MENSA OFFLINE_URL
+		String offline_img_url = (String) extras.get("offline_img_url");
 
 		// if there is no webcam available for the given mensa, assign an image
 		// that says "not available"
-		if (online_img_url.equals("")) {
+		if ((online_img_url.equals("")) || (offline_img_url.equals(""))) {
 			findViewById(R.id.imageViewID).setBackgroundResource(
 					R.drawable.image_not_available);
+			
+		} else if(current_hour > start_hour && current_hour < end_hour){
+			// retrieve the image from unitn website
+			ImageView img_view = (ImageView) findViewById(R.id.imageViewID);
+
+			Display myDisplay = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			Rect rect = new Rect();
+			Display screen = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			screen.getRectSize(rect);
+
+			int y = rect.height();
+			y = (int) ((int) y * 0.77);
+			img_view.getLayoutParams().height = (y);
+
+			img_view.getLayoutParams().width = rect.width() - 3;
+
+			new RetrieveImage(img_view).execute(online_img_url);
+
 		} else {
 			// retrieve the image from unitn website
 			ImageView img_view = (ImageView) findViewById(R.id.imageViewID);
@@ -70,12 +98,12 @@ public class IFretta_Details extends SherlockActivity {
 			screen.getRectSize(rect);
 
 			int y = rect.height();
-			y = (int) ((int) y*0.77);
+			y = (int) ((int) y * 0.77);
 			img_view.getLayoutParams().height = (y);
 
-			img_view.getLayoutParams().width = rect.width()-3;
+			img_view.getLayoutParams().width = rect.width() - 3;
 
-			new RetrieveImage(img_view).execute(online_img_url);
+			new RetrieveImage(img_view).execute(offline_img_url);
 		}
 
 		// mensa_name.setTextColor(Color.parseColor("#228B22"));
@@ -90,7 +118,7 @@ public class IFretta_Details extends SherlockActivity {
 		inflater.inflate(R.menu.ifretta_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -98,16 +126,17 @@ public class IFretta_Details extends SherlockActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		/*
 		 * case R.id.action_settings: menuItem = item; break;
 		 */
-		
-		case android.R.id.home: onBackPressed();
-		break;
+
+		case android.R.id.home:
+			onBackPressed();
+			break;
 		case R.id.iFretta_set_as_favourite_webcam:
 
 			SharedPreferences pref = getSharedPreferences(
@@ -116,9 +145,10 @@ public class IFretta_Details extends SherlockActivity {
 			SharedPreferences.Editor editor = pref.edit();
 			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
 			editor.commit();
-			Toast.makeText(getApplicationContext(),
-					getString(R.string.iFretta_details_set_favourite_canteen)+" "+ mensa_name,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					getApplicationContext(),
+					getString(R.string.iFretta_details_set_favourite_canteen)
+							+ " " + mensa_name, Toast.LENGTH_LONG).show();
 			break;
 
 		case R.id.iFretta_search_in_ViviTrento:
