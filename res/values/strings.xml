@@ -147,5 +147,6 @@
     <string name="action_settings">Settings</string>
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
     <!-- /others -->
+    <string name="isoldi_euro_string">€</string>
 
 </resources>
