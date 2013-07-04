@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -28,6 +29,7 @@ import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -38,7 +40,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MenuGiornoAlternativeFragment extends SherlockFragment {
 
-	ViewGroup theContainer;
+	private ViewGroup theContainer;
 	private View view;
 	private ProgressDialog pd;
 	private String selectedDish;
@@ -64,24 +66,26 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 	@Override
 	public void onResume() {
 
-		// logic
-		new ProgressDialog(getActivity());
-		// Dont show anything until the data is loaded
-		pd = ProgressDialog
-				.show(getActivity(), "Loading... ", "please wait...");
 		view = theContainer.findViewById(R.id.menu_alternative_view);
 		// set the visibility of gthe layout to gone so that nothing will be
 		// visible
 		view.setVisibility(View.GONE);
+		if (ConnectionUtils.isOnline(getActivity())) {
+			new AlternativeConnector(getActivity()).execute();
+		} else {
+			Toast.makeText(getActivity(),
+					"Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
+			getActivity().finish();
+		}
 
-		new AlternativeConnector(getActivity()).execute();
 		super.onResume();
 
 	}
 
 	public void createMenuAlternative(List<Piatto> alternative) {
-		
-		if(alternative == null){
+
+		if (alternative == null) {
 			System.out.println("La lista è vuota....");
 		} else {
 			System.out.println("La lista non è vuota....");
@@ -101,7 +105,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		for (int i = 0; i < alternative.size(); i++) {
 			piatti_alternativi.add(alternative.get(i));
 			if (i == 2) {
-				piatti_alternativi.add(new Piatto("2", "")); // sentinel for 
+				piatti_alternativi.add(new Piatto("2", "")); // sentinel for
 																// secondi
 			}
 			if (i == 5) {
@@ -157,8 +161,17 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 			context = applicationContext;
 		}
 
-		private List<Piatto> getAlternative() {
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			new ProgressDialog(getActivity());
+			// Dont show anything until the data is loaded
+			pd = ProgressDialog.show(getActivity(), "iFame", "Loading...");
+		}
 
+		@Override
+		protected List<Piatto> doInBackground(Void... params) {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -177,12 +190,8 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 
 					List<Piatto> alternative = Utils.convertJSONToObjects(body,
 							Piatto.class);
-					
-				
 
 					return alternative;
-
-				} else {
 
 				}
 			} catch (ConnectionException e) {
@@ -196,12 +205,6 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 				e.printStackTrace();
 			}
 			return null;
-
-		}
-
-		@Override
-		protected List<Piatto> doInBackground(Void... params) {
-			return getAlternative();
 		}
 
 		@Override
@@ -276,13 +279,17 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 				TextView nome_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_day_header_adapter);
 				if (num == 1) {
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_primi));
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_primi));
 				} else if (num == 2) {
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_secondi));
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_secondi));
 				} else if (num == 3) {
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_piatti_freddi));
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_piatti_freddi));
 				} else if (num == 4) {
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_contorni));
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_contorni));
 				}
 
 			} else {

@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -38,6 +39,7 @@ import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -50,7 +52,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 
 	private Spinner weekSpinner;
 	private ListView listacibi_view;
-	ProgressDialog pd;
+	ProgressDialog progressDialog;
 	String selectedDish;
 	private MenuDelMese menuDelMese;
 
@@ -93,12 +95,16 @@ public class Menu_mese extends SherlockFragmentActivity {
 
 				});
 
-		String title =  getString(R.string.iDeciso_title_activity);
-		pd = new ProgressDialog(Menu_mese.this).show(Menu_mese.this, title,
-				"Loading...");
+		String title = getString(R.string.iDeciso_title_activity);
 
-		// new MenuDellaSettimanaConnector(Menu_mese.this).execute();
-		new MenuDelMeseConnector(Menu_mese.this).execute();
+		new ProgressDialog(this);
+		if (ConnectionUtils.isOnline(this)) {
+			new MenuDelMeseConnector(Menu_mese.this).execute();
+		} else {
+			Toast.makeText(this, "Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
 	}
 
 	@Override
@@ -155,7 +161,16 @@ public class Menu_mese extends SherlockFragmentActivity {
 			context = applicationContext;
 		}
 
-		private MenuDelMese getMenuDelMese() {
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			progressDialog = ProgressDialog
+					.show(context, "iFame", "Loading...");
+		}
+
+		@Override
+		protected MenuDelMese doInBackground(Void... params) {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 			MessageRequest request = new MessageRequest(
 					"http://smartcampuswebifame.app.smartcampuslab.it",
@@ -185,24 +200,13 @@ public class Menu_mese extends SherlockFragmentActivity {
 		}
 
 		@Override
-		protected MenuDelMese doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getMenuDelMese();
-		}
-
-		@Override
 		protected void onPostExecute(MenuDelMese mdm) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(mdm);
-			
-			
-			
+
 			// setto il menu del mese ricevuto come variabile di classe
 			menuDelMese = mdm;
-			
-			
-			
-			
+
 			// cerco la settimana corrente e la mostro
 			Calendar c = Calendar.getInstance();
 			int currentDay = c.get(Calendar.DAY_OF_MONTH);
@@ -218,11 +222,22 @@ public class Menu_mese extends SherlockFragmentActivity {
 					android.R.layout.simple_spinner_dropdown_item,
 					spinner_date_list);
 
-			String[] months = { getString(R.string.iDeciso_monthly_menu_january), getString(R.string.iDeciso_monthly_menu_february), getString(R.string.iDeciso_monthly_menu_march), getString(R.string.iDeciso_monthly_menu_april), getString(R.string.iDeciso_monthly_menu_may),
-					getString(R.string.iDeciso_monthly_menu_june), getString(R.string.iDeciso_monthly_menu_july), getString(R.string.iDeciso_monthly_menu_august), getString(R.string.iDeciso_monthly_menu_september), getString(R.string.iDeciso_monthly_menu_october),
-					getString(R.string.iDeciso_monthly_menu_november), getString(R.string.iDeciso_monthly_menu_december) };
-			
-			setTitle(getString(R.string.iDeciso_monthly_menu_of)+" " + months[c.get(Calendar.MONTH)]);
+			String[] months = {
+					getString(R.string.iDeciso_monthly_menu_january),
+					getString(R.string.iDeciso_monthly_menu_february),
+					getString(R.string.iDeciso_monthly_menu_march),
+					getString(R.string.iDeciso_monthly_menu_april),
+					getString(R.string.iDeciso_monthly_menu_may),
+					getString(R.string.iDeciso_monthly_menu_june),
+					getString(R.string.iDeciso_monthly_menu_july),
+					getString(R.string.iDeciso_monthly_menu_august),
+					getString(R.string.iDeciso_monthly_menu_september),
+					getString(R.string.iDeciso_monthly_menu_october),
+					getString(R.string.iDeciso_monthly_menu_november),
+					getString(R.string.iDeciso_monthly_menu_december) };
+
+			setTitle(getString(R.string.iDeciso_monthly_menu_of) + " "
+					+ months[c.get(Calendar.MONTH)]);
 
 			// ciclo sulle settimane e prendo tutti i piatti della settimana
 			// corrente
@@ -238,8 +253,11 @@ public class Menu_mese extends SherlockFragmentActivity {
 				c.set(Calendar.DATE, end_day);
 				String end_day_string = dateFormat.format(c.getTime());
 				// setto l'item dello spinner
-				spinner_adapter.add(getString(R.string.iDeciso_monthly_menu_from)+" " + start_day_string + " "+ getString(R.string.iDeciso_monthly_menu_to) + " "
-						+ end_day_string);
+				spinner_adapter
+						.add(getString(R.string.iDeciso_monthly_menu_from)
+								+ " " + start_day_string + " "
+								+ getString(R.string.iDeciso_monthly_menu_to)
+								+ " " + end_day_string);
 
 				// se il giorno corrente è tra il giorno iniziale e quelo finale
 				// della settimana sono nella settimana che mi interessa
@@ -252,7 +270,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 			weekSpinner.setSelection(position);
 
 			// chiudo il loading...
-			pd.dismiss();
+			progressDialog.dismiss();
 		}
 	}
 
@@ -263,8 +281,8 @@ public class Menu_mese extends SherlockFragmentActivity {
 		ArrayList<Piatto> currentWeek = new ArrayList<Piatto>();
 		// creo l'adapter per la lista di piatti
 
-		ArrayAdapter<Piatto> adapter = new ListHeaderAdapter(
-				Menu_mese.this, currentWeek);
+		ArrayAdapter<Piatto> adapter = new ListHeaderAdapter(Menu_mese.this,
+				currentWeek);
 
 		for (MenuDellaSettimana m : mds) {
 			if (start_day == m.getStart_day()) {
@@ -288,14 +306,15 @@ public class Menu_mese extends SherlockFragmentActivity {
 
 		listacibi_view.setAdapter(adapter);
 		listacibi_view.setOnItemClickListener(new OnItemClickListener() {
-			
+
 			@Override
-			public void onItemClick(AdapterView<?> parent, View arg1, int position,
-					long arg3) {
-				selectedDish = ((Piatto) parent.getItemAtPosition(position)).getPiatto_nome();
+			public void onItemClick(AdapterView<?> parent, View arg1,
+					int position, long arg3) {
+				selectedDish = ((Piatto) parent.getItemAtPosition(position))
+						.getPiatto_nome();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
-				//dialog.show(getFragmentManager(), "");
+				// dialog.show(getFragmentManager(), "");
 			}
 		});
 	}
@@ -371,8 +390,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 		}
 	}
 
-	private class StartWebSearchAlertDialog extends SherlockDialogFragment{
-		
+	private class StartWebSearchAlertDialog extends SherlockDialogFragment {
 
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -407,7 +425,6 @@ public class Menu_mese extends SherlockFragmentActivity {
 			return builder.create();
 
 		}
-
 
 	}
 }

@@ -20,13 +20,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.Menu_mese;
+import eu.trentorise.smartcampus.ifame.activity.Menu_mese.MenuDelMeseConnector;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -39,8 +44,9 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 	private ViewGroup theContainer;
 	private String selectedDish;
-	ProgressDialog pd;
-	View view;
+	private ProgressDialog pd;
+	private View view;
+
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
@@ -51,38 +57,29 @@ public class MenuGiornoFragment extends SherlockFragment {
 	}
 
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		theContainer = container;
 		return inflater.inflate(R.layout.layout_menu_giorno, container, false);
 	}
 
-	
-	
 	@Override
 	public void onResume() {
-		
-		
-		//logic
-		new ProgressDialog(getActivity());
-		// Dont show anything until the data is loaded
-		pd = ProgressDialog.show(getActivity(), "Loading... ",
-				"please wait...");
+
 		view = theContainer.findViewById(R.id.menu_del_giorno_view);
 		view.setVisibility(View.GONE);
-
-		new MenuDelGiornoConnector(getActivity()).execute();
+		if (ConnectionUtils.isOnline(getActivity())) {
+			new MenuDelGiornoConnector(getActivity()).execute();
+		} else {
+			Toast.makeText(getActivity(),
+					"Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
+			getActivity().finish();
+		}
 		super.onResume();
-		
-		
-		
 	}
-	
-	
-	
-	
-	
+
 	private class StartWebSearchAlertDialog extends SherlockDialogFragment {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -118,15 +115,12 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 		}
 	}
-	
-	
-	
-	
-	
+
 	public void createMenuDelGiorno(MenuDelGiorno menuDelGiorno) {
 
-		ListView lista_piatti_view = (ListView) theContainer.findViewById(R.id.lista_piatti);
-		
+		ListView lista_piatti_view = (ListView) theContainer
+				.findViewById(R.id.lista_piatti);
+
 		List<Piatto> lista_piatti = new ArrayList<Piatto>();
 
 		List<Piatto> piattiList = menuDelGiorno.getPiattiDelGiorno();
@@ -140,8 +134,8 @@ public class MenuGiornoFragment extends SherlockFragment {
 				lista_piatti.add(new Piatto("3", ""));
 		}
 
-
-		MenuGiornoAdapter adapter_piatti = new MenuGiornoAdapter(getActivity(), android.R.layout.simple_list_item_1,lista_piatti);
+		MenuGiornoAdapter adapter_piatti = new MenuGiornoAdapter(getActivity(),
+				android.R.layout.simple_list_item_1, lista_piatti);
 		lista_piatti_view.setAdapter(adapter_piatti);
 
 		lista_piatti_view.setOnItemClickListener(new OnItemClickListener() {
@@ -149,23 +143,21 @@ public class MenuGiornoFragment extends SherlockFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
-				selectedDish = ((Piatto) parent.getItemAtPosition(position)).getPiatto_nome();
+				selectedDish = ((Piatto) parent.getItemAtPosition(position))
+						.getPiatto_nome();
 				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 
 				dialog.show(getFragmentManager(), null);
 
 			}
 		});
-		
 
 	}
 
-	private class MenuDelGiornoConnector extends AsyncTask<Void, Void, MenuDelGiorno> {
+	private class MenuDelGiornoConnector extends
+			AsyncTask<Void, Void, MenuDelGiorno> {
 
 		private ProtocolCarrier mProtocolCarrier;
-		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
-		private static final String auth_token = "AUTH_TOKEN";
-		private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
@@ -174,9 +166,17 @@ public class MenuGiornoFragment extends SherlockFragment {
 			context = applicationContext;
 		}
 
-		private MenuDelGiorno getMenuDelGiorno() {
-			// try {
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			new ProgressDialog(getActivity());
+			// Dont show anything until the data is loaded
+			pd = ProgressDialog.show(getActivity(), "iFame", "Loading...");
+		}
 
+		@Override
+		protected MenuDelGiorno doInBackground(Void... params) {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -212,12 +212,6 @@ public class MenuGiornoFragment extends SherlockFragment {
 				e.printStackTrace();
 			}
 			return null;
-
-		}
-
-		@Override
-		protected MenuDelGiorno doInBackground(Void... params) {
-			return getMenuDelGiorno();
 		}
 
 		@Override
@@ -245,43 +239,43 @@ public class MenuGiornoFragment extends SherlockFragment {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			
-
 			Piatto piattoDelGiorno = getItem(position);
-			
-			if (piattoDelGiorno.getPiatto_nome().matches("[0-9]+")){
-				
-				convertView = inflater.inflate(R.layout.layout_row_header_menu_adapter,
-						null);
-				
+
+			if (piattoDelGiorno.getPiatto_nome().matches("[0-9]+")) {
+
+				convertView = inflater.inflate(
+						R.layout.layout_row_header_menu_adapter, null);
+
 				int num = Integer.parseInt(piattoDelGiorno.getPiatto_nome());
 
-				
 				TextView nome_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_day_header_adapter);
-				if(num == 1){
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_primi)); 
-				} else if (num == 2){
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_secondi)); 
-				} else if(num == 3){
-					nome_piatto_del_giorno.setText(getString(R.string.iDeciso_menu_del_giorno_contorni)); 
+				if (num == 1) {
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_primi));
+				} else if (num == 2) {
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_secondi));
+				} else if (num == 3) {
+					nome_piatto_del_giorno
+							.setText(getString(R.string.iDeciso_menu_del_giorno_contorni));
 				}
-				
-				
+
 			} else {
-				
-				convertView = inflater.inflate(R.layout.layout_row_menu_adapter,
-						null);
+
+				convertView = inflater.inflate(
+						R.layout.layout_row_menu_adapter, null);
 
 				TextView nome_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_name_adapter);
 				TextView kcal_piatto_del_giorno = (TextView) convertView
 						.findViewById(R.id.menu_kcal_adapter);
 
-				
-				nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());
-				kcal_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_kcal());
-			
+				nome_piatto_del_giorno
+						.setText(piattoDelGiorno.getPiatto_nome());
+				kcal_piatto_del_giorno
+						.setText(piattoDelGiorno.getPiatto_kcal());
+
 			}
 			return convertView;
 		}

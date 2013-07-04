@@ -194,9 +194,15 @@ public class IFretta extends SherlockActivity {
 		protected void onPostExecute(List<Mensa> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			createWebcamList(result);
-			// quando ho i risultati del web service stoppo il caricamento
-			progressDialog.dismiss();
+			if (result == null) {
+				Toast.makeText(IFretta.this,
+						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
+						.show();
+				finish();
+			} else {
+				createWebcamList(result);
+				progressDialog.dismiss();
+			}
 		}
 
 	}
