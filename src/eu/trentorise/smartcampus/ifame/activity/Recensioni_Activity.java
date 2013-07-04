@@ -141,10 +141,19 @@ public class Recensioni_Activity extends SherlockActivity {
 			menuItem = item;
 			menuItem.setActionView(R.layout.actionbar_progressbar_circle);
 			menuItem.expandActionView();
-			adapter.clear();
-			adapter.notifyDataSetChanged();
-			new GetGiudizioConnector(Recensioni_Activity.this).execute(
-					mensa.getMensa_id(), piatto.getPiatto_id());
+			if (adapter != null) {
+				adapter.clear();
+				adapter.notifyDataSetChanged();
+			}
+			if (ConnectionUtils.isOnline(this)) {
+				new GetGiudizioConnector(Recensioni_Activity.this).execute(
+						mensa.getMensa_id(), piatto.getPiatto_id());
+			} else {
+				Toast.makeText(this,
+						"Controlla la tua connessione ad internet!",
+						Toast.LENGTH_LONG).show();
+				finish();
+			}
 			break;
 		case android.R.id.home:
 			onBackPressed();
@@ -198,7 +207,6 @@ public class Recensioni_Activity extends SherlockActivity {
 			// Get the seekbar asscociated with this view
 			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
 			progressChanged = cd_seekbar.getProgress();
-			
 
 			// ADD LISTENER TO THE SEEKBAR
 			cd_seekbar
