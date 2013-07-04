@@ -197,6 +197,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			// Get the seekbar asscociated with this view
 			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
+			progressChanged = cd_seekbar.getProgress();
+			
 
 			// ADD LISTENER TO THE SEEKBAR
 			cd_seekbar
