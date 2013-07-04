@@ -3,6 +3,7 @@
     android:layout_height="wrap_content" >
 
     <RelativeLayout
+        android:id="@+id/isoldi_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp" >
@@ -44,7 +45,7 @@
             android:layout_marginTop="10dp"
             android:textSize="40sp"
             />
-               
+        
         <TextView
             android:id="@+id/isoldi_bottom_text"
             android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
             android:layout_marginTop="16dp"
             android:text=""
             android:textSize="18sp" />
-
+               
+        
         <ToggleButton
             android:id="@+id/isoldi_statistics_button"
             android:layout_width="match_parent"
@@ -72,6 +74,16 @@
             android:visibility="gone"
             android:layout_below="@id/isoldi_statistics_button"
             layout="@layout/stats_layout" />
+
+        <TextView
+            android:id="@+id/isoldi_demo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/isoldi_center_text"
+            android:layout_toRightOf="@+id/isoldi_center_text"
+            android:text="(only for demonstration purpose)"
+            android:textSize="10sp" />
+
     </RelativeLayout>
 
 </ScrollView>

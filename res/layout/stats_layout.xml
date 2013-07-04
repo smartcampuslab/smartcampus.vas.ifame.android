@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/isoldi_statistics_button"
-        android:text="Studente"
+        android:text="DATA CURRENTLY NOT AVAILABLE!"
         android:textSize="20sp"
         />
-
+<!--  
     <TextView
         android:id="@+id/time_textview"
         android:layout_width="wrap_content"
@@ -25,5 +25,7 @@
         android:layout_marginRight="19dp"
         android:text="Matricola"
         android:textSize="20sp" />
+        
+    -->
 
 </RelativeLayout>

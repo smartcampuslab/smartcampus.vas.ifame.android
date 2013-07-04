@@ -67,7 +67,7 @@ public class IFretta_Details extends SherlockActivity {
 			findViewById(R.id.imageViewID).setBackgroundResource(
 					R.drawable.image_not_available);
 			
-		} else if(current_hour > start_hour && current_hour < end_hour){
+		} else if(current_hour >= start_hour && current_hour < end_hour){
 			// retrieve the image from unitn website
 			ImageView img_view = (ImageView) findViewById(R.id.imageViewID);
 

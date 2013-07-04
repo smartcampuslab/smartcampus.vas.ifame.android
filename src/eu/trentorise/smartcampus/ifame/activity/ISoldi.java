@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
@@ -12,8 +13,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +29,23 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.connector.ISoldiConnector;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
 import eu.trentorise.smartcampus.ifame.model.Transaction;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
+import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
+import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
+import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class ISoldi extends SherlockActivity {
 
@@ -48,6 +62,8 @@ public class ISoldi extends SherlockActivity {
 	public ArrayList<String> v_list;
 	private ArrayAdapter<String> adapter;
 	TextView isoldi_euro_txt; 
+	ProgressDialog progressDialog;
+	View isoldi_layout_view; 
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -65,7 +81,17 @@ public class ISoldi extends SherlockActivity {
 		isoldi_listview = (ListView) findViewById(R.id.isoldi_listview);
 		stats_button = (Button) findViewById(R.id.isoldi_statistics_button);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
+		isoldi_layout_view = (RelativeLayout) findViewById(R.id.isoldi_layout);
+		
+		new ProgressDialog(ISoldi.this);
 
+		if(ConnectionUtils.isOnline(this)){
+			new ISoldiConnector(this).execute();
+		}else{
+			Toast.makeText(ISoldi.this, "Connection not available", Toast.LENGTH_LONG).show();
+			finish();
+		}
+		
 		acquisti_possibili = new ArrayList<String>();
 
 		int resID = android.R.layout.simple_list_item_1;
@@ -95,47 +121,6 @@ public class ISoldi extends SherlockActivity {
 
 		});
 
-		try {
-			saldoReturn = (Saldo) new ISoldiConnector(getApplicationContext())
-					.execute().get();
-			if (saldoReturn == null) {
-				getAmount(0);
-			} else {
-				getAmount(Float.parseFloat(saldoReturn.getCredit()));
-
-				ListAdapter listAdapter = isoldi_listview.getAdapter();
-
-				// schifo indicibile
-				int rows = listAdapter.getCount();
-				int height = 70 * rows;
-				ViewGroup.LayoutParams params = isoldi_listview
-						.getLayoutParams();
-				params.height = height;
-				isoldi_listview.setLayoutParams(params);
-				isoldi_listview.requestLayout();
-			}
-
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Iterator<Transaction> i = saldoReturn.getTransactions().iterator();
-		t_list = new ArrayList<Long>();
-		v_list = new ArrayList<String>();
-
-		while (i.hasNext()) {
-			// Transaction t = (Transaction) i.next();
-			Transaction t = new Transaction();
-			t = (Transaction) i.next();
-			// transaction_time = t.getTimemillis();
-			// transaction_value = t.getValue();
-			t_list.add(t.getTimemillis());
-			v_list.add(t.getValue());
-		}
 
 		stats_button.setOnClickListener(new OnClickListener() {
 
@@ -256,6 +241,84 @@ public class ISoldi extends SherlockActivity {
 		}
 		return super.onOptionsItemSelected(item);
 
+	}
+	
+	/**
+	 * 
+	 * CONNECTOR TO TO GET DATA
+	 */
+	
+	public class ISoldiConnector extends AsyncTask<Saldo, Void, Saldo> {
+
+		private ProtocolCarrier mProtocolCarrier;
+		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
+		private static final String auth_token = "AUTH_TOKEN";
+		private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		public Context context;
+		public String appToken = "test smartcampus";
+		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		public ISoldiConnector(Context applicationContext) {
+			context = applicationContext;
+		}
+
+		private Saldo getSaldo() {
+			// try {
+
+			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+
+			MessageRequest request = new MessageRequest(
+					"http://smartcampuswebifame.app.smartcampuslab.it", "isoldi/getsoldi");
+			request.setMethod(Method.GET);
+
+			MessageResponse response;
+			try {
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, authToken);
+
+				if (response.getHttpStatus() == 200) {
+
+					String body = response.getBody();
+
+					return Utils.convertJSONToObject(body, Saldo.class);
+
+				} else {
+
+				}
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+
+			
+		}
+
+		@Override 
+		protected void onPreExecute(){
+			super.onPreExecute();
+			isoldi_layout_view.setVisibility(View.GONE);
+			progressDialog = ProgressDialog.show(context, "iSoldi", "Loading..."); 
+		}
+
+		@Override
+		protected Saldo doInBackground(Saldo... saldo) {
+			
+			return getSaldo();
+		}
+		
+		 @Override
+		 protected void onPostExecute(Saldo result){
+			 getAmount(Float.parseFloat(result.getCredit()));
+			 progressDialog.dismiss(); 
+			 isoldi_layout_view.setVisibility(View.VISIBLE);
+		 }
 	}
 
 }

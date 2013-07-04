@@ -23,7 +23,7 @@ public class Stats_Activity extends SherlockActivity {
 		}
 
 		val_txt = (TextView) findViewById(R.id.val_textview);
-		time_txt = (TextView) findViewById(R.id.time_textview);
+		//time_txt = (TextView) findViewById(R.id.time_textview);
 
 		Object[] time_list = (Object[]) extras.get("time_value");
 		Object[] val_list = (Object[]) extras.get("values");
