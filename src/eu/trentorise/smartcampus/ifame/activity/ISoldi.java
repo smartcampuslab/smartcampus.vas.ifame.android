@@ -158,7 +158,7 @@ public class ISoldi extends SherlockActivity {
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FFD700"));
 
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
-			stats_button.setTextColor(Color.parseColor("#FFD700"));
+			stats_button.setTextColor(Color.parseColor("#FFFFFF"));
 
 			acquisti_possibili
 					.add(getString(R.string.iDeciso_menu_types_ridotto));
