@@ -3,17 +3,14 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +28,13 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
@@ -49,7 +53,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGradito extends SherlockActivity {
 
-	private ProgressDialog pd;
+	private ProgressDialog progressDialog;
 	private View view;
 	private String user_id;
 	private Spinner mense_spinner;
@@ -58,55 +62,66 @@ public class IGradito extends SherlockActivity {
 	List<Piatto> lista_piatti;
 	PiattiListAdapter adapter;
 	SearchView searchView;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_piattimensa);
-		
-		//Get user_id intent
-		Bundle extras = getIntent().getExtras(); 
-		if(extras == null){
-			return; 
+
+		// Get user_id intent
+		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			return;
 		}
-		
-		user_id = (String) extras.get("user_id");		
-		
+
+		user_id = (String) extras.get("user_id");
+
 		// don't show anything until the data is retrieved
-		view = findViewById(R.id.igradito_piatti_mensa_view); // change to relative
-														// layout view if it
-														// doesn't work		
+		view = findViewById(R.id.igradito_piatti_mensa_view); // change to
+																// relative
+		// layout view if it
+		// doesn't work
 		view.setVisibility(View.GONE);
-		
+
 		ListView piattilist_view = (ListView) findViewById(R.id.list_view_igradito);
 
-		adapter = new PiattiListAdapter(IGradito.this, android.R.layout.simple_list_item_1);
-		
-		piattilist_view.setAdapter(adapter); 
-		
-		//add a listener to the list 
+		adapter = new PiattiListAdapter(IGradito.this,
+				android.R.layout.simple_list_item_1);
+
+		piattilist_view.setAdapter(adapter);
+
+		// add a listener to the list
 		piattilist_view.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> adapter, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> adapter, View view,
+					int position, long id) {
 				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
 
-				Mensa spinner_mensa_value = (Mensa) mense_spinner.getSelectedItem();
-				
-				//Pass values to next activity through an intent
-				Intent intent = new Intent(IGradito.this, Recensioni_Activity.class);
+				Mensa spinner_mensa_value = (Mensa) mense_spinner
+						.getSelectedItem();
+
+				// Pass values to next activity through an intent
+				Intent intent = new Intent(IGradito.this,
+						Recensioni_Activity.class);
 				intent.putExtra("nome_piatto", piatto);
 				intent.putExtra("user_id", user_id);
 				intent.putExtra("igradito_spinner_mense", spinner_mensa_value);
 				startActivity(intent);
 			}
-			
-		});
 
-		new MensaConnector(IGradito.this).execute();
-		new PiattiConnector(getApplicationContext(), adapter).execute();
+		});
+		new ProgressDialog(this);
+		if (ConnectionUtils.isOnline(getApplicationContext())) {
+			new MensaConnector(this).execute();
+			new PiattiConnector(this, adapter).execute();
+		} else {
+			Toast.makeText(this, "Controlla la tua connessione ad internet!",
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -114,14 +129,14 @@ public class IGradito extends SherlockActivity {
 		inflater.inflate(R.menu.igradito, menu);
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		searchView = (SearchView) menu
-				.findItem(R.id.igradito_search).getActionView();
+		searchView = (SearchView) menu.findItem(R.id.igradito_search)
+				.getActionView();
 		if (null != searchManager) {
 			searchView.setSearchableInfo(searchManager
 					.getSearchableInfo(getComponentName()));
 			searchView.setIconifiedByDefault(false);
 		}
-		
+
 		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 			public boolean onQueryTextChange(String newText) {
 				// this is your adapter that will be filtered
@@ -157,8 +172,9 @@ public class IGradito extends SherlockActivity {
 		/*
 		 * case R.id.action_settings: menuItem = item; break;
 		 */
-		case android.R.id.home: onBackPressed();
-		break;
+		case android.R.id.home:
+			onBackPressed();
+			break;
 		case R.id.iGradito_set_favourite_canteen:
 
 			SharedPreferences pref = getSharedPreferences(
@@ -167,65 +183,64 @@ public class IGradito extends SherlockActivity {
 			SharedPreferences.Editor editor = pref.edit();
 			editor.putString(GET_FAVOURITE_CANTEEN, actual_mensa);
 			editor.commit();
-			
+
 			Toast.makeText(getApplicationContext(),
 					"Hai settato come preferita: " + actual_mensa,
 					Toast.LENGTH_LONG).show();
 			break;
-			
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * 
 	 * MODIFY THE SPINNER LIST ADAPTER
-	 *
+	 * 
 	 */
-	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter{
-	    private Activity activity;
-	    private List<Mensa> lista_mense; 
+	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter {
+		private Activity activity;
+		private List<Mensa> lista_mense;
 
-	    public MyCursorAdapter(Activity activity, List<Mensa> lista_mense){
-	        this.activity = activity;
-	        this.lista_mense = lista_mense;
-	    }
+		public MyCursorAdapter(Activity activity, List<Mensa> lista_mense) {
+			this.activity = activity;
+			this.lista_mense = lista_mense;
+		}
 
-	    public int getCount() {
-	        return lista_mense.size();
-	    }
+		public int getCount() {
+			return lista_mense.size();
+		}
 
-	    public Object getItem(int position) {
-	        return lista_mense.get(position);
-	    }
+		public Object getItem(int position) {
+			return lista_mense.get(position);
+		}
 
-	    @Override
+		@Override
 		public long getItemId(int position) {
 			return lista_mense.get(position).getMensa_id();
 		}
-	    
-	    public View getView(int position, View convertView, ViewGroup parent) {
 
-	    	
-	    View spinView;
-	    if( convertView == null ){
-	        LayoutInflater inflater = activity.getLayoutInflater();
-	        spinView = inflater.inflate(R.layout.layout_listview_igradito, null);
-	    } else {
-	         spinView = convertView;
-	    }
-	    TextView nome_mensa = (TextView) spinView.findViewById(R.id.nome_mensa);
-	    
-	    actual_mensa = lista_mense.get(position).getMensa_nome();
-	    nome_mensa.setText(actual_mensa);
-	    
-	    
-	    return spinView;
-	    
-	    }
+		public View getView(int position, View convertView, ViewGroup parent) {
+
+			View spinView;
+			if (convertView == null) {
+				LayoutInflater inflater = activity.getLayoutInflater();
+				spinView = inflater.inflate(R.layout.layout_listview_igradito,
+						null);
+			} else {
+				spinView = convertView;
+			}
+			TextView nome_mensa = (TextView) spinView
+					.findViewById(R.id.nome_mensa);
+
+			actual_mensa = lista_mense.get(position).getMensa_nome();
+			nome_mensa.setText(actual_mensa);
+
+			return spinView;
+
+		}
 
 	}
 
@@ -296,7 +311,6 @@ public class IGradito extends SherlockActivity {
 			createMenseSpinner(result);
 			// once the data is available dismiss the dialog
 			view.setVisibility(View.VISIBLE);
-			pd.dismiss();
 		}
 
 	}
@@ -314,12 +328,23 @@ public class IGradito extends SherlockActivity {
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		PiattiListAdapter adapter;
 
-		public PiattiConnector(Context applicationContext, PiattiListAdapter adapter) {
+		public PiattiConnector(Context applicationContext,
+				PiattiListAdapter adapter) {
 			context = applicationContext;
 			this.adapter = adapter;
 		}
 
-		private List<Piatto> getPiatti() {
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(context, "iGradito",
+					"Loading...");
+		}
+
+		@Override
+		protected List<Piatto> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -357,63 +382,41 @@ public class IGradito extends SherlockActivity {
 			}
 			return null;
 		}
-		
-		@Override
-		protected void onPreExecute() {
-			pd = new ProgressDialog(getApplicationContext()).show(
-					IGradito.this, "IGradito",
-					"Loading...");
-			super.onPreExecute();
-		}
-
-		@Override
-		protected List<Piatto> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return getPiatti();
-		}
 
 		@Override
 		protected void onPostExecute(List<Piatto> result) {
 			// TODO Auto-generated method stub
 			if (result != null) {
-
 				adapter.complete_list = result;
-
 				adapter.clear();
 				for (Piatto p : result) {
-
 					adapter.add(p);
-
 				}
-				System.out.println("Sono nel onpostexecute");
 				lista_piatti = result;
 			}
-
-			// once the data is available dismiss the dialog
-			view.setVisibility(View.VISIBLE); //DA METTERE O NO?
-			pd.dismiss();
+			view.setVisibility(View.VISIBLE);
+			progressDialog.dismiss();
 		}
-
 	}
-	
-	private void createMenseSpinner(List<Mensa> listamense){
+
+	private void createMenseSpinner(List<Mensa> listamense) {
 		mense_spinner = (Spinner) findViewById(R.id.spinner_portata);
-		
+
 		MyCursorAdapter adapter = new MyCursorAdapter(this, listamense);
 		mense_spinner.setAdapter(adapter);
- 
+
 	}
-	
 
 	/*
 	 * 
 	 * CUSTOM ADAPTER FOR THE LIST OF CANTEENS
 	 */
 
-	private class PiattiListAdapter extends ArrayAdapter<Piatto> implements Filterable {
+	private class PiattiListAdapter extends ArrayAdapter<Piatto> implements
+			Filterable {
 
 		List<Piatto> complete_list = new ArrayList<Piatto>();
-		
+
 		public PiattiListAdapter(Context context, int textViewResourceId) {
 			super(IGradito.this, textViewResourceId);
 			// TODO Auto-generated constructor stub
@@ -423,7 +426,7 @@ public class IGradito extends SherlockActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			
+
 			convertView = inflater.inflate(R.layout.layout_row_menu_adapter,
 					null);
 
@@ -440,7 +443,7 @@ public class IGradito extends SherlockActivity {
 
 			return convertView;
 		}
-		
+
 		@Override
 		public Filter getFilter() {
 			Filter filter = new Filter() {

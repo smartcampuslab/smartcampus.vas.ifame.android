@@ -30,7 +30,7 @@
         android:padding="5dp"
         android:paddingLeft="2dp"
         android:paddingTop="4dp"
-        android:text=""
+        android:text="Non disponibile"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#CC0000" />
 
@@ -42,8 +42,8 @@
         android:layout_alignBottom="@+id/espresso_da"
         android:layout_alignParentLeft="true"
         android:padding="5dp"
-        android:paddingLeft="5dp"
         android:paddingBottom="4dp"
+        android:paddingLeft="5dp"
         android:text="Espresso da: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -53,16 +53,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/giudizio_text"
         android:layout_toRightOf="@+id/espresso_da_text"
-        android:paddingLeft="2dp"
         android:paddingBottom="4dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:paddingLeft="2dp"
+        android:text="Non disponibile"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#CC0000" />
 
     <ListView
         android:id="@+id/recensioni_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recensioni_label" />
+        android:layout_below="@+id/recensioni_label"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/recensioni_label"
@@ -74,5 +76,17 @@
         android:padding="5dp"
         android:text="Recensioni"
         android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/giudizio_no_data_to_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recensioni_label"
+        android:padding="5dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="4dp"
+        android:text="Nessuna recensione e&apos; stata ancora aggiunta"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -1,18 +1,12 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,19 +47,19 @@ public class Recensioni_Activity extends SherlockActivity {
 
 	List<Mensa> listaMense = null;
 	MenuItem menuItem = null;
-	String myReview = "";
 	ReviewAdapter adapter = null;
 	Piatto piatto;
 	String user_id;
 	Mensa mensa;
 	TextView giudizio_espresso_da;
 	TextView giudizio_medio_txt;
+	TextView no_data_to_display;
 	// PostLikeConnector postLike;
 	GiudizioDataToPost giudizioDataToPost = null;
 
 	ListView giudiziListview;
 
-	String add = "http://192.168.33.106:8080/web-ifame";
+	// String add = "http://192.168.33.106:8080/web-ifame";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +70,9 @@ public class Recensioni_Activity extends SherlockActivity {
 		giudiziListview = (ListView) findViewById(R.id.recensioni_list);
 		giudizio_espresso_da = (TextView) findViewById(R.id.espresso_da);
 		giudizio_medio_txt = (TextView) findViewById(R.id.giudizio);
+		no_data_to_display = (TextView) findViewById(R.id.giudizio_no_data_to_display);
+
+		// whattttt????
 		if (extras == null) {
 			return;
 		}
@@ -86,13 +83,21 @@ public class Recensioni_Activity extends SherlockActivity {
 		user_id = (String) extras.get("user_id");
 		mensa = (Mensa) extras.get("igradito_spinner_mense");
 
+		new ProgressDialog(Recensioni_Activity.this);
 		// get list of comments
 		new GetGiudizioConnector(Recensioni_Activity.this).execute(
 				mensa.getMensa_id(), piatto.getPiatto_id());
-
 	}
 
 	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 * 
 	 * DISPLAY THE CUSTOMIZED DIALOG
 	 * 
@@ -151,6 +156,12 @@ public class Recensioni_Activity extends SherlockActivity {
 	/**
 	 * 
 	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 * CLASS TO CREATE A CUSTOM DIALOG BOX FOR THE REVIEWS
 	 * 
 	 */
@@ -176,8 +187,6 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			cd_editText = (EditText) view
 					.findViewById(R.id.custom_dialog_etext);
-
-			cd_editText.setText("" + myReview);
 
 			// Get the seekbar asscociated with this view
 			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
@@ -229,6 +238,11 @@ public class Recensioni_Activity extends SherlockActivity {
 							giudizioDataToPost.userId = Long.parseLong(user_id);
 							giudizioDataToPost.voto = (float) progressChanged;
 
+							if (adapter != null) {
+								adapter.clear();
+								adapter.notifyDataSetChanged();
+							}
+
 							new PostGiudizioConnector(getActivity(),
 									giudizioDataToPost).execute(
 									mensa.getMensa_id(), piatto.getPiatto_id());
@@ -241,6 +255,16 @@ public class Recensioni_Activity extends SherlockActivity {
 	}
 
 	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 * 
 	 * 
 	 * ADAPTER FOR DISPLAYING REVIEWS PROBLEM : LIKE IS NOT UPDATED
@@ -488,10 +512,9 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 	}
 
-	static class DataHandler {
+	private static class DataHandler {
 
 		TextView voto;
-
 		TextView username;
 		TextView review_date;
 		TextView review_content;
@@ -505,11 +528,24 @@ public class Recensioni_Activity extends SherlockActivity {
 		Boolean is_like;
 
 		public DataHandler() {
+			Integer like_count = 0;
+			Integer dislike_count = 0;
 			non_ha_ancora_fatto_like_o_dislike = true;
 		}
 	}
 
 	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 * CONNECTOR TO GET THE LIST OF COMMENTS
 	 * 
 	 */
@@ -517,12 +553,21 @@ public class Recensioni_Activity extends SherlockActivity {
 	private class GetGiudizioConnector extends
 			AsyncTask<Long, Void, List<GiudizioNew>> {
 		private ProtocolCarrier mProtocolCarrier;
-		public Context context;
-		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		private ProgressDialog progressDialog;
+		private Context context;
+		private String appToken = "test smartcampus";
+		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
 		public GetGiudizioConnector(Context applicationContext) {
 			context = applicationContext;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(context, "iGradito",
+					"Loading...");
 		}
 
 		@Override
@@ -534,12 +579,7 @@ public class Recensioni_Activity extends SherlockActivity {
 					"http://smartcampuswebifame.app.smartcampuslab.it",
 					"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio");
 
-			// MessageRequest request = new MessageRequest(add, "mensa/"
-			// + params[0] + "/piatto/" + params[1] + "/giudizio/add");
-
 			request.setMethod(Method.GET);
-
-			// request.setBody(Utils.convertToJSON(data));
 
 			MessageResponse response;
 			try {
@@ -573,11 +613,20 @@ public class Recensioni_Activity extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			createGiudiziList(result);
-
+			progressDialog.dismiss();
 		}
 	}
 
 	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 * 
 	 * CONNECTOR TO POST COMMENTS
 	 * 
@@ -586,16 +635,25 @@ public class Recensioni_Activity extends SherlockActivity {
 	private class PostGiudizioConnector extends
 			AsyncTask<Long, Void, List<GiudizioNew>> {
 		private ProtocolCarrier mProtocolCarrier;
-		public Context context;
-		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		private Context context;
+		private String appToken = "test smartcampus";
+		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
-		GiudizioDataToPost data = null;
+		private ProgressDialog progressDialog;
+		private GiudizioDataToPost data = null;
 
 		public PostGiudizioConnector(Context applicationContext,
 				GiudizioDataToPost data) {
 			context = applicationContext;
 			this.data = data;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(context, "iGradito",
+					"Loading...");
 		}
 
 		@Override
@@ -648,40 +706,48 @@ public class Recensioni_Activity extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			createGiudiziList(result);
-			Toast.makeText(getApplicationContext(), "Recensione Aggiunta",
+			progressDialog.dismiss();
+			Toast.makeText(context, "Recensione aggiunta correttamente",
 					Toast.LENGTH_LONG).show();
 		}
 	}
 
+	/*
+	 * 
+	 * METHOD CALLED AFTER POST OR GET GIUDIZI FROM THE EWB
+	 */
 	private void createGiudiziList(List<GiudizioNew> reviews) {
 
 		int review_size = reviews.size();
 		float avg = 0;
 		if (review_size > 0) {
 			for (GiudizioNew g : reviews) {
-				// vedo se c'è un mio commento
-				if (g.getUser_id() == Long.parseLong(user_id)) {
-					myReview = g.getCommento();
-				}
 				// calcolo la media
 				avg += g.getVoto();
 			}
 			avg = avg / (float) review_size;
-		}
 
-		if (adapter == null) {
-			adapter = new ReviewAdapter(Recensioni_Activity.this,
-					android.R.layout.simple_list_item_1, reviews);
-			giudiziListview.setAdapter(adapter);
+			if (adapter == null) {
+				adapter = new ReviewAdapter(Recensioni_Activity.this,
+						android.R.layout.simple_list_item_1, reviews);
+				giudiziListview.setAdapter(adapter);
+			} else {
+				adapter.clear();
+				adapter.addAll(reviews);
+			}
+
+			giudizio_espresso_da.setText(review_size + " utent"
+					+ (review_size == 1 ? "e" : "i"));
+			giudizio_medio_txt.setText(avg + "");
+			adapter.notifyDataSetChanged();
+			giudiziListview.setVisibility(View.VISIBLE);
+			no_data_to_display.setVisibility(View.GONE);
 		} else {
-			adapter.clear();
-			adapter.addAll(reviews);
-		}
 
-		giudizio_espresso_da.setText(review_size + " utent"
-				+ (review_size == 1 ? "e" : "i"));
-		giudizio_medio_txt.setText(avg + "");
-		adapter.notifyDataSetChanged();
+			giudiziListview.setVisibility(View.GONE);
+			no_data_to_display.setVisibility(View.VISIBLE);
+		}
+		// PER IL CARICAMENTO NELL ACTION BAR
 		if (menuItem != null) {
 			menuItem.collapseActionView();
 			menuItem.setActionView(null);
@@ -690,7 +756,20 @@ public class Recensioni_Activity extends SherlockActivity {
 
 	/**
 	 * 
-	 * CONNECTOR TO POST LIKES
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * LIKE CONNECTORS
 	 * 
 	 */
 
