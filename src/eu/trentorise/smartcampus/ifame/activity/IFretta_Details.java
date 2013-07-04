@@ -122,8 +122,8 @@ public class IFretta_Details extends SherlockActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getActionBar().setHomeButtonEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
