@@ -80,7 +80,7 @@ public class ISoldi extends SherlockActivity {
 			new ISoldiConnector(this).execute();
 		} else {
 			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 			finish();
 		}
 
@@ -105,8 +105,8 @@ public class ISoldi extends SherlockActivity {
 					selected = "Ridotto1234";
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
 				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, selected);
-				Toast.makeText(getApplicationContext(), selected,
-						Toast.LENGTH_LONG).show();
+				// Toast.makeText(getApplicationContext(), selected,
+				// Toast.LENGTH_SHORT).show();
 				startActivity(i);
 
 			}
@@ -256,9 +256,16 @@ public class ISoldi extends SherlockActivity {
 			context = applicationContext;
 		}
 
-		private Saldo getSaldo() {
-			// try {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			isoldi_layout_view.setVisibility(View.GONE);
+			progressDialog = ProgressDialog.show(context, "iSoldi",
+					"Loading...");
+		}
 
+		@Override
+		protected Saldo doInBackground(Saldo... saldo) {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -295,24 +302,17 @@ public class ISoldi extends SherlockActivity {
 		}
 
 		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			isoldi_layout_view.setVisibility(View.GONE);
-			progressDialog = ProgressDialog.show(context, "iSoldi",
-					"Loading...");
-		}
-
-		@Override
-		protected Saldo doInBackground(Saldo... saldo) {
-
-			return getSaldo();
-		}
-
-		@Override
 		protected void onPostExecute(Saldo result) {
-			getAmount(Float.parseFloat(result.getCredit()));
-			progressDialog.dismiss();
-			isoldi_layout_view.setVisibility(View.VISIBLE);
+			if (result == null) {
+				Toast.makeText(ISoldi.this,
+						"Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_SHORT).show();
+				finish();
+			} else {
+				getAmount(Float.parseFloat(result.getCredit()));
+				progressDialog.dismiss();
+				isoldi_layout_view.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 

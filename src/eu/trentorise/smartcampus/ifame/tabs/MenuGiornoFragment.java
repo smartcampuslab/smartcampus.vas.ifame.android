@@ -27,6 +27,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 import eu.trentorise.smartcampus.ifame.activity.Menu_mese;
 import eu.trentorise.smartcampus.ifame.activity.Menu_mese.MenuDelMeseConnector;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
@@ -217,13 +218,17 @@ public class MenuGiornoFragment extends SherlockFragment {
 		@Override
 		protected void onPostExecute(MenuDelGiorno result) {
 			super.onPostExecute(result);
-			createMenuDelGiorno(result);
-			// Make data visible after it has been fetched and dismiss the
-			// dialog loader
-			view.setVisibility(View.VISIBLE);
-			pd.dismiss();
+			if (result == null) {
+				Toast.makeText(getActivity(),
+						"Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_SHORT).show();
+				getActivity().finish();
+			} else {
+				createMenuDelGiorno(result);
+				view.setVisibility(View.VISIBLE);
+				pd.dismiss();
+			}
 		}
-
 	}
 
 	private class MenuGiornoAdapter extends ArrayAdapter<Piatto> {

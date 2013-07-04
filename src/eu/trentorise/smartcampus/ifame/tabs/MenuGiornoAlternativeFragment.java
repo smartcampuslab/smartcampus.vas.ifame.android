@@ -210,13 +210,17 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		@Override
 		protected void onPostExecute(List<Piatto> result) {
 			super.onPostExecute(result);
-			createMenuAlternative(result);
-			// Make data visible after it has been fetched and dismiss the
-			// dialog loader
-			view.setVisibility(View.VISIBLE);
-			pd.dismiss();
+			if (result == null) {
+				Toast.makeText(getActivity(),
+						"Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_SHORT).show();
+				getActivity().finish();
+			} else {
+				createMenuAlternative(result);
+				view.setVisibility(View.VISIBLE);
+				pd.dismiss();
+			}
 		}
-
 	}
 
 	private class StartWebSearchAlertDialog extends SherlockDialogFragment {

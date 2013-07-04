@@ -117,7 +117,7 @@ public class IGradito extends SherlockActivity {
 			new PiattiConnector(this, adapter).execute();
 		} else {
 			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 			finish();
 		}
 	}
@@ -186,7 +186,7 @@ public class IGradito extends SherlockActivity {
 
 			Toast.makeText(getApplicationContext(),
 					"Hai settato come preferita: " + actual_mensa,
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 			break;
 
 		default:
@@ -305,8 +305,8 @@ public class IGradito extends SherlockActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				Toast.makeText(IGradito.this,
-						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
-						.show();
+						"Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
 				createMenseSpinner(result);
@@ -388,8 +388,8 @@ public class IGradito extends SherlockActivity {
 			// TODO Auto-generated method stub
 			if (result == null) {
 				Toast.makeText(IGradito.this,
-						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
-						.show();
+						"Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
 				adapter.complete_list = result;

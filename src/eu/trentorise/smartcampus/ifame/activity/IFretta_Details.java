@@ -52,13 +52,13 @@ public class IFretta_Details extends SherlockActivity {
 
 		// SET CURRENT TIME
 		int current_hour = c.get(Calendar.HOUR_OF_DAY);
-		int start_hour = 12; 
-		int end_hour = 14; 
+		int start_hour = 12;
+		int end_hour = 14;
 
-		//GET THE MENSA ONLINE_URL
+		// GET THE MENSA ONLINE_URL
 		String online_img_url = (String) extras.get("online_img_url");
-		
-		//GET THE MENSA OFFLINE_URL
+
+		// GET THE MENSA OFFLINE_URL
 		String offline_img_url = (String) extras.get("offline_img_url");
 
 		// if there is no webcam available for the given mensa, assign an image
@@ -66,8 +66,8 @@ public class IFretta_Details extends SherlockActivity {
 		if ((online_img_url.equals("")) || (offline_img_url.equals(""))) {
 			findViewById(R.id.imageViewID).setBackgroundResource(
 					R.drawable.image_not_available);
-			
-		} else if(current_hour >= start_hour && current_hour < end_hour){
+
+		} else if (current_hour >= start_hour && current_hour < end_hour) {
 			// retrieve the image from unitn website
 			ImageView img_view = (ImageView) findViewById(R.id.imageViewID);
 
@@ -148,13 +148,13 @@ public class IFretta_Details extends SherlockActivity {
 			Toast.makeText(
 					getApplicationContext(),
 					getString(R.string.iFretta_details_set_favourite_canteen)
-							+ " " + mensa_name, Toast.LENGTH_LONG).show();
+							+ " " + mensa_name, Toast.LENGTH_SHORT).show();
 			break;
 
 		case R.id.iFretta_search_in_ViviTrento:
 			Toast.makeText(getApplicationContext(),
-					"implementare collegamento a vivitrento", Toast.LENGTH_LONG)
-					.show();
+					"implementare collegamento a vivitrento",
+					Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

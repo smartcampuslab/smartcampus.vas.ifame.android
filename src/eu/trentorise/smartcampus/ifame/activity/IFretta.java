@@ -50,7 +50,7 @@ public class IFretta extends SherlockActivity {
 			new IFrettaConnector(IFretta.this).execute();
 		} else {
 			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 			finish();
 		}
 	}
@@ -196,8 +196,8 @@ public class IFretta extends SherlockActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				Toast.makeText(IFretta.this,
-						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
-						.show();
+						"Ooooops! Qualcosa è andato storto!",
+						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
 				createWebcamList(result);
