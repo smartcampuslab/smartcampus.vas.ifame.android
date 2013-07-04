@@ -79,8 +79,8 @@
             android:id="@+id/isoldi_demo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/isoldi_center_text"
-            android:layout_toRightOf="@+id/isoldi_center_text"
+            android:layout_below="@+id/isoldi_euro_text"
+            android:layout_centerHorizontal="true"
             android:text="(only for demonstration purpose)"
             android:textSize="10sp" />
 
