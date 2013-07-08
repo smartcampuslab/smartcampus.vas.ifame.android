@@ -1,6 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,8 +11,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +28,6 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -39,6 +38,7 @@ import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -62,6 +62,7 @@ public class IGradito extends SherlockActivity {
 	List<Piatto> lista_piatti;
 	PiattiListAdapter adapter;
 	SearchView searchView;
+	ListView piattilist_view;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -83,11 +84,12 @@ public class IGradito extends SherlockActivity {
 		// doesn't work
 		view.setVisibility(View.GONE);
 
-		ListView piattilist_view = (ListView) findViewById(R.id.list_view_igradito);
+		piattilist_view = (ListView) findViewById(R.id.list_view_igradito);
 
 		adapter = new PiattiListAdapter(IGradito.this,
 				android.R.layout.simple_list_item_1);
 
+		piattilist_view.setFastScrollEnabled(true);
 		piattilist_view.setAdapter(adapter);
 
 		// add a listener to the list
@@ -148,7 +150,6 @@ public class IGradito extends SherlockActivity {
 				// this is your adapter that will be filtered
 				adapter.getFilter().filter(query);
 				searchView.clearFocus();
-
 				return true;
 			}
 		};
@@ -364,7 +365,7 @@ public class IGradito extends SherlockActivity {
 
 					List<Piatto> lista_piatti = Utils.convertJSONToObjects(
 							body, Piatto.class);
-
+					Collections.sort(lista_piatti, new Comparatore());
 					return lista_piatti;
 				} else {
 					return null;
@@ -392,12 +393,15 @@ public class IGradito extends SherlockActivity {
 						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
+				
 				adapter.complete_list = result;
 				adapter.clear();
+				
 				for (Piatto p : result) {
 					adapter.add(p);
 				}
 				lista_piatti = result;
+
 				view.setVisibility(View.VISIBLE);
 				progressDialog.dismiss();
 			}
@@ -417,6 +421,18 @@ public class IGradito extends SherlockActivity {
 	 * 
 	 * CUSTOM ADAPTER FOR THE LIST OF CANTEENS
 	 */
+
+	private class Comparatore implements Comparator<Piatto> {
+
+		public Comparatore(){}
+		@Override
+		public int compare(Piatto lhs, Piatto rhs) {
+			final String s1 = (String) lhs.getPiatto_nome();
+			final String s2 = (String) rhs.getPiatto_nome();
+			return s1.compareToIgnoreCase(s2);
+		}
+
+	}
 
 	private class PiattiListAdapter extends ArrayAdapter<Piatto> implements
 			Filterable {
@@ -521,4 +537,5 @@ public class IGradito extends SherlockActivity {
 		}
 
 	}
+
 }
