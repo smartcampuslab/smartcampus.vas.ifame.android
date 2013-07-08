@@ -461,7 +461,7 @@ public class IGradito extends SherlockActivity {
 					.findViewById(R.id.menu_kcal_adapter);
 
 			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());
-			kcal_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_kcal());
+			kcal_piatto_del_giorno.setText("");
 
 			return convertView;
 		}
