@@ -11,7 +11,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,7 +53,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGradito extends SherlockActivity {
 
-	private ProgressDialog progressDialog;
 	private View view;
 	private String user_id;
 	private Spinner mense_spinner;
@@ -114,8 +112,9 @@ public class IGradito extends SherlockActivity {
 			}
 
 		});
-		new ProgressDialog(this);
+
 		if (ConnectionUtils.isOnline(getApplicationContext())) {
+			new ProgressDialog(this);
 			new MensaConnector(this).execute();
 			new PiattiConnector(this, adapter).execute();
 		} else {
@@ -196,10 +195,12 @@ public class IGradito extends SherlockActivity {
 		return true;
 	}
 
-	/**
+	/*
+	 * 
+	 * 
+	 * 
 	 * 
 	 * MODIFY THE SPINNER LIST ADAPTER
-	 * 
 	 */
 	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter {
 		private Activity activity;
@@ -247,6 +248,9 @@ public class IGradito extends SherlockActivity {
 
 	/*
 	 * 
+	 * 
+	 * 
+	 * 
 	 * THIS CONNECTOR CONNECTS TO THE WEB SERVICE AND COLLECTS THE MENSA DATA
 	 */
 	private class MensaConnector extends AsyncTask<Void, Void, List<Mensa>> {
@@ -255,9 +259,18 @@ public class IGradito extends SherlockActivity {
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		private ProgressDialog progressDialog;
 
 		public MensaConnector(Context applicationContext) {
 			context = applicationContext;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(context, "iGradito",
+					"Loading...");
 		}
 
 		@Override
@@ -310,11 +323,16 @@ public class IGradito extends SherlockActivity {
 			} else {
 				createMenseSpinner(result);
 				view.setVisibility(View.VISIBLE);
+				progressDialog.dismiss();
 			}
 		}
 	}
 
 	/*
+	 * 
+	 * 
+	 * 
+	 * 
 	 * 
 	 * THIS CONNECTOR CONNECTS TO THE WEB SERVICE AND COLLECTS THE DISH DATA
 	 */
@@ -326,6 +344,7 @@ public class IGradito extends SherlockActivity {
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		PiattiListAdapter adapter;
+		private ProgressDialog progressDialog;
 
 		public PiattiConnector(Context applicationContext,
 				PiattiListAdapter adapter) {

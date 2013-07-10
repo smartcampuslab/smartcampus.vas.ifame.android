@@ -15,8 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -45,16 +45,20 @@ public class ISoldi extends SherlockActivity {
 	Saldo saldoReturn;
 	TextView centerText;
 	TextView bottomText;
-	ListView isoldi_listview;
+
+	TextView interoText;
+	TextView ridottoText;
+	TextView snackText;
+
 	ArrayList<String> acquisti_possibili;
 	Long transaction_time;
 	String transaction_value;
-	public ArrayList<Long> t_list;
-	public ArrayList<String> v_list;
-	private ArrayAdapter<String> adapter;
+	ArrayList<Long> t_list;
+	ArrayList<String> v_list;
+	ArrayAdapter<String> adapter;
 	TextView isoldi_euro_txt;
-	ProgressDialog progressDialog;
-	View isoldi_layout_view;
+
+	LinearLayout isoldi_layout_view;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,58 +71,57 @@ public class ISoldi extends SherlockActivity {
 			return;
 		}
 
+		ridottoText = (TextView) findViewById(R.id.isoldi_ridotto_text);
+		interoText = (TextView) findViewById(R.id.isoldi_intero_text);
+		snackText = (TextView) findViewById(R.id.isoldi_snack_text);
+
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
-		isoldi_listview = (ListView) findViewById(R.id.isoldi_listview);
 		stats_button = (Button) findViewById(R.id.isoldi_statistics_button);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
-		isoldi_layout_view = (RelativeLayout) findViewById(R.id.isoldi_layout);
-
-		new ProgressDialog(ISoldi.this);
+		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 
 		if (ConnectionUtils.isOnline(this)) {
+			new ProgressDialog(ISoldi.this);
 			new ISoldiConnector(this).execute();
 		} else {
 			ConnectionUtils.showToastNotConnected(this);
 			finish();
 		}
 
-		acquisti_possibili = new ArrayList<String>();
-
-		int resID = android.R.layout.simple_list_item_1;
-		adapter = new ArrayAdapter<String>(this, resID, acquisti_possibili);
-
-		isoldi_listview.setAdapter(adapter);
-
-		isoldi_listview.setOnItemClickListener(new OnItemClickListener() {
+		interoText.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				// trova qual'è l'oggetto schiacciato
-				String selected = (String) parent.getItemAtPosition(position);
-				if (selected.equals("Snack"))
-					selected = "Snack1234";
-				if (selected.equals("Ridotto"))
-					selected = "Ridotto1234";
+			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
-				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, selected);
-				// Toast.makeText(getApplicationContext(), selected,
-				// Toast.LENGTH_SHORT).show();
+				startActivity(i);
+			}
+		});
+		ridottoText.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, "Ridotto1234");
 				startActivity(i);
 
 			}
-
 		});
+		snackText.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, "Snack1");
+				startActivity(i);
+
+			}
+		});
 		stats_button.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-
 				showUserStats();
-
 			}
 		});
 	}
@@ -135,13 +138,9 @@ public class ISoldi extends SherlockActivity {
 			stats_button.setBackgroundColor(Color.parseColor("#228B22"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#228B22"));
 
-			acquisti_possibili
-					.add(getString(R.string.iDeciso_menu_types_intero));
-			acquisti_possibili
-					.add(getString(R.string.iDeciso_menu_types_ridotto));
-			acquisti_possibili
-					.add(getString(R.string.iDeciso_menu_types_snack));
-			adapter.notifyDataSetChanged();
+			interoText.setVisibility(View.VISIBLE);
+			ridottoText.setVisibility(View.VISIBLE);
+			snackText.setVisibility(View.VISIBLE);
 
 		} else if (amount >= 4.20 && amount < 4.90) {
 			centerText.setText(" " + String.valueOf(amount));
@@ -151,11 +150,8 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 			stats_button.setTextColor(Color.parseColor("#FFFFFF"));
 
-			acquisti_possibili
-					.add(getString(R.string.iDeciso_menu_types_ridotto));
-			acquisti_possibili
-					.add(getString(R.string.iDeciso_menu_types_snack));
-			adapter.notifyDataSetChanged();
+			ridottoText.setVisibility(View.VISIBLE);
+			snackText.setVisibility(View.VISIBLE);
 
 		} else if (amount >= 2.90 && amount < 4.20) {
 			centerText.setText(String.valueOf(amount));
@@ -166,9 +162,8 @@ public class ISoldi extends SherlockActivity {
 			stats_button.setBackgroundColor(Color.parseColor("#FF8800"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
 
-			acquisti_possibili
-					.add(getString(R.string.iDeciso_menu_types_snack));
-			adapter.notifyDataSetChanged();
+			snackText.setVisibility(View.VISIBLE);
+
 		} else {
 			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#CC0000"));
@@ -236,7 +231,11 @@ public class ISoldi extends SherlockActivity {
 
 	}
 
-	/**
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
 	 * 
 	 * CONNECTOR TO TO GET DATA
 	 */
@@ -244,12 +243,10 @@ public class ISoldi extends SherlockActivity {
 	public class ISoldiConnector extends AsyncTask<Saldo, Void, Saldo> {
 
 		private ProtocolCarrier mProtocolCarrier;
-		private static final String URL = "http://smartcampuswebifame.app.smartcampuslab.it/getsoldi";
-		private static final String auth_token = "AUTH_TOKEN";
-		private static final String token_value = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		public Context context;
 		public String appToken = "test smartcampus";
 		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		ProgressDialog progressDialog;
 
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;

@@ -25,12 +25,12 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getSupportMenuInflater();
-	    inflater.inflate(R.menu.tipologie_menu_fr, menu);
-	    return true;
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.tipologie_menu_fr, menu);
+		return true;
 	}
 
 	@Override
@@ -46,17 +46,9 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		boolean from_componi = getIntent().getBooleanExtra(
-				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
-		String selected_menu = null;
-		
-		if (from_componi) {
-			selected_menu = getIntent().getStringExtra(
-					Fai_il_tuo_menu.SELECTED_MENU);
-		}
+		String selected_menu = getIntent().getStringExtra(
+				Fai_il_tuo_menu.SELECTED_MENU);
 
-		
-		
 		// getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// getSupportActionBar().setDisplayShowTitleEnabled(true);
 		setContentView(R.layout.empty_layout);
@@ -65,29 +57,30 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		Tab interoTab = getSupportActionBar().newTab();
 		interoTab.setText(R.string.iDeciso_menu_types_intero);
 		interoTab.setTabListener(new TabListener<TipologiaInteroFragment>(this,
-				getString(R.string.iDeciso_tipologie_menu_fragment_intero), TipologiaInteroFragment.class,
-				android.R.id.content));
+				getString(R.string.iDeciso_tipologie_menu_fragment_intero),
+				TipologiaInteroFragment.class, android.R.id.content));
 		getSupportActionBar().addTab(interoTab);
 
 		Tab ridottoTab = getSupportActionBar().newTab();
 		ridottoTab.setTabListener(new TabListener<TipologiaRidottoFragment>(
-				this, getString(R.string.iDeciso_tipologie_menu_fragment_ridotto),
+				this,
+				getString(R.string.iDeciso_tipologie_menu_fragment_ridotto),
 				TipologiaRidottoFragment.class, android.R.id.content));
 		ridottoTab.setText(R.string.iDeciso_menu_types_ridotto);
 		getSupportActionBar().addTab(ridottoTab);
 
 		Tab snackTab = getSupportActionBar().newTab();
 		snackTab.setTabListener(new TabListener<TipologiaSnackFragment>(this,
-				getString(R.string.iDeciso_tipologie_menu_fragment_snack), TipologiaSnackFragment.class,
-				android.R.id.content));
+				getString(R.string.iDeciso_tipologie_menu_fragment_snack),
+				TipologiaSnackFragment.class, android.R.id.content));
 
 		snackTab.setText(R.string.iDeciso_menu_types_snack);
 		getSupportActionBar().addTab(snackTab);
 
-		
-		if (/*from_componi && */selected_menu != null){
+		if (/* from_componi && */selected_menu != null) {
 
-			if (selected_menu.equals(getString(R.string.iDeciso_menu_types_intero)))
+			if (selected_menu
+					.equals(getString(R.string.iDeciso_menu_types_intero)))
 				interoTab.select();
 
 			else if (selected_menu.equals("Ridotto1")
@@ -105,8 +98,8 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 					|| selected_menu.equals("Snack12"))
 
 				snackTab.select();
-
 		}
+
 		if (getSupportActionBar().getNavigationMode() != ActionBar.NAVIGATION_MODE_TABS) {
 			getSupportActionBar().setNavigationMode(
 					ActionBar.NAVIGATION_MODE_TABS);
