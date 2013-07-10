@@ -79,7 +79,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 		super.onResume();
 	}
 
-	private class StartWebSearchAlertDialog extends SherlockDialogFragment {
+	public class StartWebSearchAlertDialog extends SherlockDialogFragment {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -145,7 +145,8 @@ public class MenuGiornoFragment extends SherlockFragment {
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto_nome();
 				//Toast.makeText(getActivity(), selectedDish, Toast.LENGTH_LONG).show(); 
-				if(!selectedDish.equals("1") && !selectedDish.equals("2") && !selectedDish.equals("3")){
+				
+				if(!selectedDish.matches("[0-9]+")){ // assure that search is not valid for numbers, since we use numbers(1, 2, 3) as sentinels
 					StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 					dialog.show(getFragmentManager(), null);
 				}

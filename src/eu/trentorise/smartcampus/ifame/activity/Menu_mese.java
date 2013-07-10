@@ -39,6 +39,7 @@ import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment.StartWebSearchAlertDialog;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -320,9 +321,11 @@ public class Menu_mese extends SherlockFragmentActivity {
 					int position, long arg3) {
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto_nome();
-				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-
-				// dialog.show(getFragmentManager(), "");
+				
+				if(!selectedDish.matches("[0-9]+")){ //assure that the date number values are not included in the search
+					StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
+					dialog.show(getSupportFragmentManager(), null);
+				}
 			}
 		});
 	}
