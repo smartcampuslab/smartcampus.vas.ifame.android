@@ -150,12 +150,13 @@ public class IFretta_Details extends SherlockActivity {
 					getString(R.string.iFretta_details_set_favourite_canteen)
 							+ " " + mensa_name, Toast.LENGTH_SHORT).show();
 			break;
-
+		/*	
 		case R.id.iFretta_search_in_ViviTrento:
 			Toast.makeText(getApplicationContext(),
 					"implementare collegamento a vivitrento",
 					Toast.LENGTH_SHORT).show();
 			break;
+			*/
 		default:
 			return super.onOptionsItemSelected(item);
 		}

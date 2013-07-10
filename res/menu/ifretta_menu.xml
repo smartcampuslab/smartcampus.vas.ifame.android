@@ -12,11 +12,14 @@
                 android:orderInCategory="1"
                 android:showAsAction="always"
                 android:title="@string/iFame_set_favourite_canteen_menu_item"/>
+            <!--  
             <item
                 android:id="@+id/iFretta_search_in_ViviTrento"
                 android:orderInCategory="2"
                 android:showAsAction="always"
                 android:title="@string/iFretta_search_in_ViviTrento"/>
+                
+                -->
         </menu>
     </item>
 
