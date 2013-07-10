@@ -73,9 +73,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		if (ConnectionUtils.isOnline(getActivity())) {
 			new AlternativeConnector(getActivity()).execute();
 		} else {
-			Toast.makeText(getActivity(),
-					"Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+			ConnectionUtils.showToastNotConnected(getActivity());
 			getActivity().finish();
 		}
 
@@ -84,12 +82,6 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 	}
 
 	public void createMenuAlternative(List<Piatto> alternative) {
-
-		if (alternative == null) {
-			System.out.println("La lista è vuota....");
-		} else {
-			System.out.println("La lista non è vuota....");
-		}
 
 		// Get the listview
 		ListView lista_alternative = (ListView) theContainer
@@ -211,9 +203,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		protected void onPostExecute(List<Piatto> result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				Toast.makeText(getActivity(),
-						"Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_SHORT).show();
+				ConnectionUtils.showToastConnectionError(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuAlternative(result);

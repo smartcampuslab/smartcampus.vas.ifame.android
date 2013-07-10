@@ -39,18 +39,23 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class IFretta extends SherlockActivity {
 
 	ProgressDialog progressDialog;
+	ListView ifretta_listView;
+	MyArrayAdapter adapter;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta);
+
+		ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
+
+		adapter = new MyArrayAdapter(this, R.layout.layout_list_view_ifretta);
 
 		new ProgressDialog(this);
 
 		if (ConnectionUtils.isOnline(getApplicationContext())) {
 			new IFrettaConnector(IFretta.this).execute();
 		} else {
-			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_SHORT).show();
+			ConnectionUtils.showToastNotConnected(this);
 			finish();
 		}
 	}
@@ -61,6 +66,7 @@ public class IFretta extends SherlockActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -84,9 +90,8 @@ public class IFretta extends SherlockActivity {
 
 	private class MyArrayAdapter extends ArrayAdapter<Mensa> {
 
-		public MyArrayAdapter(Context context, int textViewResourceId,
-				List<Mensa> objects) {
-			super(context, textViewResourceId, objects);
+		public MyArrayAdapter(Context context, int textViewResourceId) {
+			super(context, textViewResourceId);
 			// TODO Auto-generated constructor stub
 		}
 
@@ -195,9 +200,7 @@ public class IFretta extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
-				Toast.makeText(IFretta.this,
-						"Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_SHORT).show();
+				ConnectionUtils.showToastConnectionError(IFretta.this);
 				finish();
 			} else {
 				createWebcamList(result);
@@ -212,12 +215,11 @@ public class IFretta extends SherlockActivity {
 	 * CON I RISULTATI DA SERVER CREA LA LISTA DI WEBCAM
 	 */
 	private void createWebcamList(List<Mensa> mense) {
-		ListView ifretta_listView = (ListView) findViewById(R.id.ifretta_page_list);
 
-		MyArrayAdapter adapter = new MyArrayAdapter(this,
-				R.layout.layout_list_view_ifretta, mense);
+		adapter.addAll(mense);
 
 		ifretta_listView.setAdapter(adapter);
+
 		ifretta_listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapter, View v,
 					int position, long id) {
@@ -231,6 +233,7 @@ public class IFretta extends SherlockActivity {
 			}
 		});
 
+		adapter.notifyDataSetChanged();
 	}
 
 }

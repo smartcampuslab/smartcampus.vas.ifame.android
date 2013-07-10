@@ -73,9 +73,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 		if (ConnectionUtils.isOnline(getActivity())) {
 			new MenuDelGiornoConnector(getActivity()).execute();
 		} else {
-			Toast.makeText(getActivity(),
-					"Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+			ConnectionUtils.showToastNotConnected(getActivity());
 			getActivity().finish();
 		}
 		super.onResume();
@@ -219,9 +217,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 		protected void onPostExecute(MenuDelGiorno result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				Toast.makeText(getActivity(),
-						"Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_SHORT).show();
+				ConnectionUtils.showToastConnectionError(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuDelGiorno(result);

@@ -101,8 +101,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 		if (ConnectionUtils.isOnline(this)) {
 			new MenuDelMeseConnector(Menu_mese.this).execute();
 		} else {
-			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+			ConnectionUtils.showToastNotConnected(this);
 			finish();
 		}
 	}
@@ -205,9 +204,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 			super.onPostExecute(mdm);
 
 			if (mdm == null) {
-				Toast.makeText(Menu_mese.this,
-						"Ooooops! Qualcosa è andato storto!", Toast.LENGTH_LONG)
-						.show();
+				ConnectionUtils.showToastConnectionError(Menu_mese.this);
 				finish();
 			} else {
 
@@ -278,7 +275,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 				}
 				weekSpinner.setAdapter(spinner_adapter);
 				weekSpinner.setSelection(position);
-
+				weekSpinner.setVisibility(View.VISIBLE);
 				// chiudo il loading...
 				progressDialog.dismiss();
 			}

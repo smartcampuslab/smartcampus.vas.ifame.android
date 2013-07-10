@@ -79,8 +79,7 @@ public class ISoldi extends SherlockActivity {
 		if (ConnectionUtils.isOnline(this)) {
 			new ISoldiConnector(this).execute();
 		} else {
-			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_SHORT).show();
+			ConnectionUtils.showToastNotConnected(this);
 			finish();
 		}
 
@@ -304,9 +303,7 @@ public class ISoldi extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
-				Toast.makeText(ISoldi.this,
-						"Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_SHORT).show();
+				ConnectionUtils.showToastConnectionError(ISoldi.this);
 				finish();
 			} else {
 				getAmount(Float.parseFloat(result.getCredit()));

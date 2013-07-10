@@ -11,6 +11,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -118,8 +119,7 @@ public class IGradito extends SherlockActivity {
 			new MensaConnector(this).execute();
 			new PiattiConnector(this, adapter).execute();
 		} else {
-			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_SHORT).show();
+			ConnectionUtils.showToastNotConnected(this);
 			finish();
 		}
 	}
@@ -305,9 +305,7 @@ public class IGradito extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
-				Toast.makeText(IGradito.this,
-						"Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_SHORT).show();
+				ConnectionUtils.showToastConnectionError(IGradito.this);
 				finish();
 			} else {
 				createMenseSpinner(result);
@@ -388,15 +386,13 @@ public class IGradito extends SherlockActivity {
 		protected void onPostExecute(List<Piatto> result) {
 			// TODO Auto-generated method stub
 			if (result == null) {
-				Toast.makeText(IGradito.this,
-						"Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_SHORT).show();
+				ConnectionUtils.showToastConnectionError(IGradito.this);
 				finish();
 			} else {
-				
+
 				adapter.complete_list = result;
 				adapter.clear();
-				
+
 				for (Piatto p : result) {
 					adapter.add(p);
 				}
@@ -424,7 +420,9 @@ public class IGradito extends SherlockActivity {
 
 	private class Comparatore implements Comparator<Piatto> {
 
-		public Comparatore(){}
+		public Comparatore() {
+		}
+
 		@Override
 		public int compare(Piatto lhs, Piatto rhs) {
 			final String s1 = (String) lhs.getPiatto_nome();

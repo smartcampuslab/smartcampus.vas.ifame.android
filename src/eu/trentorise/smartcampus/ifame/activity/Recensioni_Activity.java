@@ -90,8 +90,7 @@ public class Recensioni_Activity extends SherlockActivity {
 			new GetGiudizioConnector(Recensioni_Activity.this).execute(
 					mensa.getMensa_id(), piatto.getPiatto_id());
 		} else {
-			Toast.makeText(this, "Controlla la tua connessione ad internet!",
-					Toast.LENGTH_LONG).show();
+			ConnectionUtils.showToastNotConnected(this);
 			finish();
 		}
 	}
@@ -149,9 +148,7 @@ public class Recensioni_Activity extends SherlockActivity {
 				new GetGiudizioConnector(Recensioni_Activity.this).execute(
 						mensa.getMensa_id(), piatto.getPiatto_id());
 			} else {
-				Toast.makeText(this,
-						"Controlla la tua connessione ad internet!",
-						Toast.LENGTH_LONG).show();
+				ConnectionUtils.showToastNotConnected(this);
 				finish();
 			}
 			break;
@@ -631,8 +628,8 @@ public class Recensioni_Activity extends SherlockActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				progressDialog.dismiss();
-				Toast.makeText(context, "Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_LONG).show();
+				ConnectionUtils
+						.showToastConnectionError(Recensioni_Activity.this);
 			} else {
 				createGiudiziList(result);
 				progressDialog.dismiss();
@@ -729,8 +726,8 @@ public class Recensioni_Activity extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
-				Toast.makeText(context, "Ooooops! Qualcosa è andato storto!",
-						Toast.LENGTH_LONG).show();
+				ConnectionUtils
+						.showToastConnectionError(Recensioni_Activity.this);
 			} else {
 				createGiudiziList(result);
 				progressDialog.dismiss();
