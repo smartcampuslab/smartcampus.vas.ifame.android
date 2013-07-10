@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:gravity="center"
-        android:text="" />
+        android:text="hello"
+        android:textSize="30sp" />
 
     <!-- android:entries="@array/lista_mense" -->
 
@@ -19,7 +20,7 @@
         android:id="@+id/recensioni_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:max="10"
         android:progress="5" />
 
