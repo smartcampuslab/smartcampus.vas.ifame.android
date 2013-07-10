@@ -1,12 +1,11 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -18,7 +17,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -56,13 +57,14 @@ public class Recensioni_Activity extends SherlockActivity {
 	ReviewAdapter adapter = null;
 	Piatto piatto;
 	String user_id;
+	String mioCommento = null;
+	Integer mioVoto = null;
 	Mensa mensa;
 	TextView giudizio_espresso_da;
 	TextView giudizio_medio_txt;
 	TextView no_data_to_display;
 	// PostLikeConnector postLike;
 	GiudizioDataToPost giudizioDataToPost = null;
-
 	ListView giudiziListview;
 
 	// String add = "http://192.168.33.106:8080/web-ifame";
@@ -100,7 +102,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 	}
 
-	/**
+	/*
 	 * 
 	 * 
 	 * 
@@ -111,7 +113,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 * 
 	 * DISPLAY THE CUSTOMIZED DIALOG
-	 * 
 	 */
 	private void showCustomizedDialog() {
 		// hide the title bar
@@ -171,7 +172,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		return true;
 	}
 
-	/**
+	/*
 	 * 
 	 * 
 	 * 
@@ -181,7 +182,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 * 
 	 * CLASS TO CREATE A CUSTOM DIALOG BOX FOR THE REVIEWS
-	 * 
 	 */
 
 	class CustomDialog extends DialogFragment {
@@ -190,7 +190,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		TextView cd_header;
 		String commento;
 		SeekBar cd_seekbar;
-		int progressChanged = 0;
+		int voto = 0;
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -200,14 +200,14 @@ public class Recensioni_Activity extends SherlockActivity {
 			LayoutInflater inflator = getActivity().getLayoutInflater();
 			View dialogView = inflator.inflate(
 					R.layout.igradito_custom_dialogbox, null);
-			
+
 			// Add a title to the dialog
-						builder.setTitle("La tua recensione...");
+			builder.setTitle("La tua recensione...");
 
 			// Get Header TextView-> Mensa name
 			cd_header = (TextView) dialogView
 					.findViewById(R.id.custom_dialog_header);
-			//set text to the name of the mensa
+			// set text to the name of the mensa
 			cd_header.setText(mensa.getMensa_nome());
 
 			// Get editText associated with this view
@@ -217,7 +217,31 @@ public class Recensioni_Activity extends SherlockActivity {
 			// Get the seekbar asscociated with this view
 			cd_seekbar = (SeekBar) dialogView
 					.findViewById(R.id.recensioni_seekbar);
-			progressChanged = cd_seekbar.getProgress();
+			if (mioCommento != null) {
+				cd_editText.setText(mioCommento);
+				// cd_editText.selectAll();
+			}
+			if (mioVoto != null) {
+				cd_seekbar.setProgress(mioVoto);
+			}
+			voto = cd_seekbar.getProgress();
+			// SHOW KEYBOARD
+			cd_editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					cd_editText.post(new Runnable() {
+						@Override
+						public void run() {
+							InputMethodManager imm = (InputMethodManager) getActivity()
+									.getSystemService(
+											Context.INPUT_METHOD_SERVICE);
+							imm.showSoftInput(cd_editText,
+									InputMethodManager.SHOW_IMPLICIT);
+						}
+					});
+				}
+			});
+			cd_editText.requestFocus();
 
 			// Add Listener to seekbar
 			cd_seekbar
@@ -225,7 +249,7 @@ public class Recensioni_Activity extends SherlockActivity {
 
 						@Override
 						public void onStopTrackingTouch(SeekBar seekBar) {
-							
+
 						}
 
 						@Override
@@ -235,7 +259,7 @@ public class Recensioni_Activity extends SherlockActivity {
 						@Override
 						public void onProgressChanged(SeekBar seekBar,
 								int progress, boolean fromUser) {
-							progressChanged = progress;
+							voto = progress;
 							// seekBar.incrementProgressBy(1);
 
 						}
@@ -252,11 +276,11 @@ public class Recensioni_Activity extends SherlockActivity {
 								public void onClick(DialogInterface dialog,
 										int id) {
 									giudizioDataToPost = new GiudizioDataToPost();
-									commento = cd_editText.getText().toString();
-									giudizioDataToPost.commento = commento;
+									giudizioDataToPost.commento = cd_editText
+											.getText().toString();
 									giudizioDataToPost.userId = Long
 											.parseLong(user_id);
-									giudizioDataToPost.voto = (float) progressChanged;
+									giudizioDataToPost.voto = (float) voto;
 
 									if (adapter != null) {
 										adapter.clear();
@@ -281,13 +305,12 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 	}
 
-	/**
+	/*
 	 * 
 	 * 
 	 * 
 	 * 
 	 * ADAPTER FOR DISPLAYING REVIEWS PROBLEM
-	 * 
 	 */
 	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {
 
@@ -301,34 +324,35 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 
-			View v = convertView;
+			View view = convertView;
 
 			final DataHandler handler;
 			final GiudizioNew giudizio = getItem(position);
-			if (v == null) {
+			if (view == null) {
 
 				LayoutInflater inflater = (LayoutInflater) getContext()
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = inflater.inflate(R.layout.list_igradito_recensioni, null);
+				view = inflater
+						.inflate(R.layout.list_igradito_recensioni, null);
 
 				handler = new DataHandler();
 
-				handler.username = (TextView) v
+				handler.username = (TextView) view
 						.findViewById(R.id.iGradito_recensioni_nome_utente);
-				handler.review_date = (TextView) v
+				handler.review_date = (TextView) view
 						.findViewById(R.id.iGradito_recensioni_data_inserimento);
-				handler.review_content = (TextView) v
+				handler.review_content = (TextView) view
 						.findViewById(R.id.iGradito_recensioni_review_content);
-				handler.like_count_view = (TextView) v
+				handler.like_count_view = (TextView) view
 						.findViewById(R.id.like_count);
-				handler.dislike_count_view = (TextView) v
+				handler.dislike_count_view = (TextView) view
 						.findViewById(R.id.dislike_count);
-				handler.like_button = (ImageButton) v
+				handler.like_button = (ImageButton) view
 						.findViewById(R.id.like_button);
-				handler.dislike_button = (ImageButton) v
+				handler.dislike_button = (ImageButton) view
 						.findViewById(R.id.dislike_button);
 
-				handler.voto = (TextView) v
+				handler.voto = (TextView) view
 						.findViewById(R.id.iGradito_recensioni_voto);
 
 				List<Likes> list_likes = giudizio.getLikes();
@@ -361,9 +385,9 @@ public class Recensioni_Activity extends SherlockActivity {
 				handler.like_count = likes_count;
 				handler.dislike_count = dislikes_count;
 
-				v.setTag(handler);
+				view.setTag(handler);
 			} else {
-				handler = (DataHandler) v.getTag();
+				handler = (DataHandler) view.getTag();
 			}
 
 			handler.username.setText(giudizio.getUser_id().toString());
@@ -526,7 +550,7 @@ public class Recensioni_Activity extends SherlockActivity {
 					}
 				}
 			});
-			return v;
+			return view;
 		}
 	}
 
@@ -753,8 +777,20 @@ public class Recensioni_Activity extends SherlockActivity {
 			for (GiudizioNew g : reviews) {
 				// calcolo la media
 				avg += g.getVoto();
+				if (g.getUser_id() == Long.parseLong(user_id)) {
+					mioCommento = g.getCommento();
+					mioVoto = Math.round(g.getVoto());
+				}
 			}
 			avg = avg / (float) review_size;
+
+			// non mostro i commenti vuoti
+			Iterator<GiudizioNew> i = reviews.iterator();
+			while (i.hasNext()) {
+				if (i.next().getCommento().equals("")) {
+					i.remove();
+				}
+			}
 
 			if (adapter == null) {
 				adapter = new ReviewAdapter(Recensioni_Activity.this,
@@ -764,15 +800,22 @@ public class Recensioni_Activity extends SherlockActivity {
 				adapter.clear();
 				adapter.addAll(reviews);
 			}
-
 			giudizio_espresso_da.setText(review_size + " utent"
 					+ (review_size == 1 ? "e" : "i"));
 			giudizio_medio_txt.setText(avg + "");
 			adapter.notifyDataSetChanged();
-			giudiziListview.setVisibility(View.VISIBLE);
-			no_data_to_display.setVisibility(View.GONE);
+			// se ho solo recensioni senza commenti
+			if (adapter.getCount() == 0) {
+				giudiziListview.setVisibility(View.GONE);
+				no_data_to_display.setText("Nessun utente lasciato un commento!");
+				no_data_to_display.setVisibility(View.VISIBLE);
+			} else {
+				giudiziListview.setVisibility(View.VISIBLE);
+				no_data_to_display.setVisibility(View.GONE);
+			}
 		} else {
-
+			mioCommento = null;
+			mioVoto = null;
 			giudiziListview.setVisibility(View.GONE);
 			no_data_to_display.setVisibility(View.VISIBLE);
 		}

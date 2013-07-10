@@ -53,11 +53,13 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGradito extends SherlockActivity {
 
-	private View view;
-	private String user_id;
-	private Spinner mense_spinner;
+	View view;
+	String user_id;
+	Spinner mense_spinner;
 	String actual_mensa;
+
 	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
+
 	List<Piatto> lista_piatti;
 	PiattiListAdapter adapter;
 	SearchView searchView;
