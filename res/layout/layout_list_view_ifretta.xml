@@ -5,4 +5,5 @@
     android:paddingBottom="12dp"
     android:paddingLeft="10dp"
     android:paddingTop="12dp"
+ 
     android:textAppearance="?android:attr/textAppearanceMedium" />

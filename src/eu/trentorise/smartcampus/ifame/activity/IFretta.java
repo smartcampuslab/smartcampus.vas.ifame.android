@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -115,12 +116,15 @@ public class IFretta extends SherlockActivity {
 			String mensa_name = pref.getString(
 					IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
 
+			
 			if (m.getMensa_nome().equals(mensa_name)) {
+				Drawable icon_to_right = convertView.getResources().getDrawable(android.R.drawable.star_off);
+				nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null, null, icon_to_right, null);
 				nome_mensa.setTypeface(null, Typeface.BOLD);
-				SpannableString content = new SpannableString(m.getMensa_nome());
-				content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
-						.length(), 0);
-				nome_mensa.setText(content);
+				//SpannableString content = new SpannableString(m.getMensa_nome());
+				//content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
+						//.length(), 0);
+				//nome_mensa.setText(m.getMensa_nome());
 			}
 			return convertView;
 		}
