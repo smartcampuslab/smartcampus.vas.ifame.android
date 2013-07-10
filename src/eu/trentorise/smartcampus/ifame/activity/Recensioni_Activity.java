@@ -2,12 +2,17 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -179,42 +184,48 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 */
 
-	public class CustomDialog extends DialogFragment {
+	class CustomDialog extends DialogFragment {
 
 		EditText cd_editText;
+		TextView cd_header;
 		String commento;
 		SeekBar cd_seekbar;
 		int progressChanged = 0;
 
-		public CustomDialog() {
-			// NO ARG CONSTRUCTOR---REQUIRED
-		}
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View view = inflater.inflate(R.layout.igradito_custom_dialogbox,
-					container);
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			// Get the layout inflater
+			LayoutInflater inflator = getActivity().getLayoutInflater();
+			View dialogView = inflator.inflate(
+					R.layout.igradito_custom_dialogbox, null);
+			
+			// Add a title to the dialog
+						builder.setTitle("La tua recensione...");
 
-			// set the title of the dialog box
-			getDialog().setTitle("La tua recensione... ");
+			// Get Header TextView-> Mensa name
+			cd_header = (TextView) dialogView
+					.findViewById(R.id.custom_dialog_header);
+			//set text to the name of the mensa
+			cd_header.setText(mensa.getMensa_nome());
 
-			cd_editText = (EditText) view
+			// Get editText associated with this view
+			cd_editText = (EditText) dialogView
 					.findViewById(R.id.custom_dialog_etext);
 
 			// Get the seekbar asscociated with this view
-			cd_seekbar = (SeekBar) view.findViewById(R.id.recensioni_seekbar);
+			cd_seekbar = (SeekBar) dialogView
+					.findViewById(R.id.recensioni_seekbar);
 			progressChanged = cd_seekbar.getProgress();
 
-			// ADD LISTENER TO THE SEEKBAR
+			// Add Listener to seekbar
 			cd_seekbar
 					.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 						@Override
 						public void onStopTrackingTouch(SeekBar seekBar) {
-							// TODO Auto-generated method stub
-							Toast.makeText(getApplicationContext(),
-									progressChanged + "", Toast.LENGTH_LONG)
-									.show();
+							
 						}
 
 						@Override
@@ -230,41 +241,43 @@ public class Recensioni_Activity extends SherlockActivity {
 						}
 					});
 
-			// ADD LISTENER TO THE ANNULA BUTTON
-			view.findViewById(R.id.annulla_button).setOnClickListener(
-					new OnClickListener() {
+			// Inflate and set the layout for the dialog
+			// Pass null as the parent view because its going in the dialog
+			// layout
+			builder.setView(dialogView)
+					// Add action buttons
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									giudizioDataToPost = new GiudizioDataToPost();
+									commento = cd_editText.getText().toString();
+									giudizioDataToPost.commento = commento;
+									giudizioDataToPost.userId = Long
+											.parseLong(user_id);
+									giudizioDataToPost.voto = (float) progressChanged;
 
-						@Override
-						public void onClick(View v) {
-							dismiss();
-						}
-					});
+									if (adapter != null) {
+										adapter.clear();
+										adapter.notifyDataSetChanged();
+									}
 
-			// ADD LISTENER TO THE OK BUTTON
-			view.findViewById(R.id.OK_button).setOnClickListener(
-					new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							giudizioDataToPost = new GiudizioDataToPost();
-							commento = cd_editText.getText().toString();
-							giudizioDataToPost.commento = commento;
-							giudizioDataToPost.userId = Long.parseLong(user_id);
-							giudizioDataToPost.voto = (float) progressChanged;
-
-							if (adapter != null) {
-								adapter.clear();
-								adapter.notifyDataSetChanged();
-							}
-
-							new PostGiudizioConnector(getActivity(),
-									giudizioDataToPost).execute(
-									mensa.getMensa_id(), piatto.getPiatto_id());
-							dismiss();
-						}
-					});
-
-			return view;
+									new PostGiudizioConnector(getActivity(),
+											giudizioDataToPost).execute(
+											mensa.getMensa_id(),
+											piatto.getPiatto_id());
+									dismiss();
+								}
+							})
+					.setNegativeButton("Annulla",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									CustomDialog.this.getDialog().cancel();
+								}
+							});
+			return builder.create();
 		}
 	}
 
@@ -273,16 +286,7 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 * 
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * ADAPTER FOR DISPLAYING REVIEWS PROBLEM : LIKE IS NOT UPDATED
-	 * INSTANTANEOUSLY
+	 * ADAPTER FOR DISPLAYING REVIEWS PROBLEM
 	 * 
 	 */
 	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {

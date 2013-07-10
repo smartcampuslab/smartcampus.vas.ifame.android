@@ -1,77 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    <!-- -
+    android:orientation="vertical" 
+    android:padding="15dp">
+
     <TextView
-        android:id="@+id/header"
+        android:id="@+id/custom_dialog_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF0000"
-        android:padding="10dp"
-        android:text="La tua recensione" />
-        
-         -->
-         
-   <!-- android:entries="@array/lista_mense" -->
-   
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="" />
+
+    <!-- android:entries="@array/lista_mense" -->
+
     <SeekBar
         android:id="@+id/recensioni_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_marginTop="30dp"
-        android:max="10" 
-        android:progress="5"
-        />
+        android:max="10"
+        android:progress="5" />
 
-    <TextView
-        android:id="@+id/pessimo_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recensioni_seekbar"
-        android:text="Pessimo" />
-    
-     <TextView
-        android:id="@+id/ottimo_text"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+         >
+
+        <TextView
+            android:id="@+id/pessimo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:text="Pessimo" 
+            android:layout_weight="1"
+            />
+        
+        <TextView
+            android:id="@+id/ottimo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+       		android:gravity="right|center_vertical"
+            android:layout_weight="1"
+            android:text="Ottimo" />
+        
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/custom_dialog_etext"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recensioni_seekbar"
-        android:layout_alignParentRight="true"
-        android:text="Ottimo" />
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:hint="Scrivi qui il tuo commento" >
 
-     <EditText
-         android:id="@+id/custom_dialog_etext"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentRight="true"
-         android:layout_below="@+id/pessimo_text"
-         android:layout_marginTop="22dp"
-         android:hint="Scrivi qui il tuo commento"
-         android:ems="10" >
+        <requestFocus />
+    </EditText>
 
-         <requestFocus />
-     </EditText>
-
-     <Button
-         android:id="@+id/annulla_button"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/custom_dialog_etext"
-         android:layout_marginTop="29dp"
-         android:text="Annulla" />
-
-     <Button
-         android:id="@+id/OK_button"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/annulla_button"
-         android:layout_alignBottom="@+id/annulla_button"
-         android:layout_alignParentRight="true"
-         android:text="OK" />
-
-</RelativeLayout>
+</LinearLayout>
