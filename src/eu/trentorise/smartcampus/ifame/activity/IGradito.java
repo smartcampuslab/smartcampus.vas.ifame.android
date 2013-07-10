@@ -177,20 +177,19 @@ public class IGradito extends SherlockActivity {
 		case android.R.id.home:
 			onBackPressed();
 			break;
-		case R.id.iGradito_set_favourite_canteen:
-
-			SharedPreferences pref = getSharedPreferences(
-					getString(R.string.iGradito_preference_file),
-					Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = pref.edit();
-			editor.putString(GET_FAVOURITE_CANTEEN, actual_mensa);
-			editor.commit();
-
-			Toast.makeText(getApplicationContext(),
-					"Hai settato come preferita: " + actual_mensa,
-					Toast.LENGTH_SHORT).show();
-			break;
-
+		// case R.id.iGradito_set_favourite_canteen:
+		//
+		// SharedPreferences pref = getSharedPreferences(
+		// getString(R.string.iGradito_preference_file),
+		// Context.MODE_PRIVATE);
+		// SharedPreferences.Editor editor = pref.edit();
+		// editor.putString(GET_FAVOURITE_CANTEEN, actual_mensa);
+		// editor.commit();
+		//
+		// Toast.makeText(getApplicationContext(),
+		// "Hai settato come preferita: " + actual_mensa,
+		// Toast.LENGTH_SHORT).show();
+		// break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -431,6 +430,25 @@ public class IGradito extends SherlockActivity {
 
 		MyCursorAdapter adapter = new MyCursorAdapter(this, listamense);
 		mense_spinner.setAdapter(adapter);
+
+		SharedPreferences pref = getSharedPreferences(
+				getString(R.string.iGradito_preference_file),
+				Context.MODE_PRIVATE);
+
+		String notfound = "notfound";
+
+		String mensa = pref.getString(GET_FAVOURITE_CANTEEN, notfound);
+		if (!mensa.equalsIgnoreCase(notfound)) {
+			// ok avevo settato qualcosa
+			int pos = 0;
+			for (Mensa m : listamense) {
+				if (mensa.equalsIgnoreCase(m.getMensa_nome())) {
+					mense_spinner.setSelection(pos);
+				}
+				pos++;
+			}
+
+		}
 
 	}
 
