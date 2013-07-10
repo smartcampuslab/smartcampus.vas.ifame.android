@@ -144,10 +144,11 @@ public class MenuGiornoFragment extends SherlockFragment {
 					int position, long arg3) {
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto_nome();
-				StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
-
-				dialog.show(getFragmentManager(), null);
-
+				//Toast.makeText(getActivity(), selectedDish, Toast.LENGTH_LONG).show(); 
+				if(!selectedDish.equals("1") && !selectedDish.equals("2") && !selectedDish.equals("3")){
+					StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
+					dialog.show(getFragmentManager(), null);
+				}
 			}
 		});
 
