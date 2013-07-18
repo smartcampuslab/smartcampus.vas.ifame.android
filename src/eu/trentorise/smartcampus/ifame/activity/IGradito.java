@@ -105,12 +105,14 @@ public class IGradito extends SherlockActivity {
 						.getSelectedItem();
 
 				// Pass values to next activity through an intent
+				if ((piatto.getPiatto_nome().length())!=1){
 				Intent intent = new Intent(IGradito.this,
 						Recensioni_Activity.class);
 				intent.putExtra("nome_piatto", piatto);
 				intent.putExtra("user_id", user_id);
 				intent.putExtra("igradito_spinner_mense", spinner_mensa_value);
-				startActivity(intent);
+				startActivity(intent);}
+				else{}
 			}
 
 		});
@@ -381,28 +383,30 @@ public class IGradito extends SherlockActivity {
 
 					String body = response.getBody();
 
-					List<Piatto> lista_piatti_temp = Utils.convertJSONToObjects(
-							body, Piatto.class);
+					List<Piatto> lista_piatti_temp = Utils
+							.convertJSONToObjects(body, Piatto.class);
 					Collections.sort(lista_piatti_temp, new Comparatore());
-					
+
 					List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
-					
+
 					String letter = "A";
 					lista_piatti_with_headers.add(new Piatto(letter, ""));
-					
-					for (int i = 0; i < lista_piatti_temp.size();i++){
-						
-						String nome_piatto = lista_piatti_temp.get(i).getPiatto_nome();
-						
-						if (!nome_piatto.startsWith(letter)){
-							
+
+					for (int i = 0; i < lista_piatti_temp.size(); i++) {
+
+						String nome_piatto = lista_piatti_temp.get(i)
+								.getPiatto_nome();
+
+						if (!nome_piatto.startsWith(letter)) {
+
 							letter = Character.toString(nome_piatto.charAt(0));
-							lista_piatti_with_headers.add(new Piatto(letter, ""));
+							lista_piatti_with_headers
+									.add(new Piatto(letter, ""));
 						}
-						
+
 						lista_piatti_with_headers.add(lista_piatti_temp.get(i));
 					}
-					
+
 					return lista_piatti_with_headers;
 				} else {
 					return null;
@@ -505,20 +509,34 @@ public class IGradito extends SherlockActivity {
 			LayoutInflater inflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.layout_row_menu_adapter,
-					null);
-
 			Piatto piattoDelGiorno = getItem(position);
+			
+			TextView nome_piatto_del_giorno;
+			TextView kcal_piatto_del_giorno;
+			
+			if ((piattoDelGiorno.getPiatto_nome().length()) == 1){
+				convertView = inflater.inflate(
+						R.layout.layout_row_header_menu_adapter, null);
+				
+				nome_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu_day_header_adapter);
+				kcal_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu__kcal_header_adapter);
+			}
+			else{
+				convertView = inflater.inflate(
+						R.layout.layout_row_menu_adapter, null);
 
-			TextView nome_piatto_del_giorno = (TextView) convertView
+			
+			nome_piatto_del_giorno = (TextView) convertView
 					.findViewById(R.id.menu_name_adapter);
 
-			TextView kcal_piatto_del_giorno = (TextView) convertView
+			kcal_piatto_del_giorno = (TextView) convertView
 					.findViewById(R.id.menu_kcal_adapter);
+
+			
+			}
 
 			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());
 			kcal_piatto_del_giorno.setText("");
-
 			return convertView;
 		}
 
