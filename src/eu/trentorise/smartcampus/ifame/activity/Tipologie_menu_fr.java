@@ -28,9 +28,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.tipologie_menu_fr, menu);
-		return true;
+		return false;
 	}
 
 	@Override

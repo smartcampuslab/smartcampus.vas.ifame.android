@@ -345,9 +345,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.fai_il_tuo_menu, menu);
-		return true;
+		return false;
 	}
 	@Override
 	protected void onResume() {

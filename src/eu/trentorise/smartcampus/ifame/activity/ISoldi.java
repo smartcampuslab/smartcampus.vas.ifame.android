@@ -201,9 +201,7 @@ public class ISoldi extends SherlockActivity {
 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.isoldi, menu);
-		return true;
+		return false;
 	}
 
 	@Override

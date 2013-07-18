@@ -109,9 +109,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.menu_mese, menu);
-		return true;
+		return false;
 	}
 
 	@Override

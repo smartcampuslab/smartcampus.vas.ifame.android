@@ -50,9 +50,7 @@ public class Menu_giorno_tab extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.menu_giorno_tab, menu);
-		return true;
+		return false;
 	}
 
 	@Override
