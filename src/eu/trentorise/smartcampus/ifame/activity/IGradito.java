@@ -381,10 +381,29 @@ public class IGradito extends SherlockActivity {
 
 					String body = response.getBody();
 
-					List<Piatto> lista_piatti = Utils.convertJSONToObjects(
+					List<Piatto> lista_piatti_temp = Utils.convertJSONToObjects(
 							body, Piatto.class);
-					Collections.sort(lista_piatti, new Comparatore());
-					return lista_piatti;
+					Collections.sort(lista_piatti_temp, new Comparatore());
+					
+					List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
+					
+					String letter = "A";
+					lista_piatti_with_headers.add(new Piatto(letter, ""));
+					
+					for (int i = 0; i < lista_piatti_temp.size();i++){
+						
+						String nome_piatto = lista_piatti_temp.get(i).getPiatto_nome();
+						
+						if (!nome_piatto.startsWith(letter)){
+							
+							letter = Character.toString(nome_piatto.charAt(0));
+							lista_piatti_with_headers.add(new Piatto(letter, ""));
+						}
+						
+						lista_piatti_with_headers.add(lista_piatti_temp.get(i));
+					}
+					
+					return lista_piatti_with_headers;
 				} else {
 					return null;
 				}

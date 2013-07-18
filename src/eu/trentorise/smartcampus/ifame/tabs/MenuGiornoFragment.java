@@ -127,7 +127,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 		for (int i = 0; i < piattiList.size(); i++) {
 			lista_piatti.add(piattiList.get(i));
 			if (i == 2) {
-				lista_piatti.add(new Piatto("2", ""));
+			//	lista_piatti.add(new Piatto("2", ""));
 			}
 			if (i == 4)
 				lista_piatti.add(new Piatto("3", ""));
