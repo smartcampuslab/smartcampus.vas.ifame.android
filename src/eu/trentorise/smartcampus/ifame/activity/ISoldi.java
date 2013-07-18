@@ -41,11 +41,10 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class ISoldi extends SherlockActivity {
 
 	public final static String GET_AMOUNT_MONEY = "get_money";
-	Button stats_button;
 	Saldo saldoReturn;
 	TextView centerText;
 	TextView bottomText;
-
+	TextView statsButton;
 	TextView interoText;
 	TextView ridottoText;
 	TextView snackText;
@@ -74,10 +73,9 @@ public class ISoldi extends SherlockActivity {
 		ridottoText = (TextView) findViewById(R.id.isoldi_ridotto_text);
 		interoText = (TextView) findViewById(R.id.isoldi_intero_text);
 		snackText = (TextView) findViewById(R.id.isoldi_snack_text);
-
+		statsButton = (TextView)findViewById(R.id.isoldi_statistics_button);
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
-		stats_button = (Button) findViewById(R.id.isoldi_statistics_button);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 
@@ -117,13 +115,7 @@ public class ISoldi extends SherlockActivity {
 
 			}
 		});
-		stats_button.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				showUserStats();
-			}
-		});
 	}
 
 	public void getAmount(float amount) {
@@ -135,7 +127,7 @@ public class ISoldi extends SherlockActivity {
 
 			bottomText
 					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
-			stats_button.setBackgroundColor(Color.parseColor("#228B22"));
+			statsButton.setBackgroundColor(Color.parseColor("#228B22"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#228B22"));
 
 			interoText.setVisibility(View.VISIBLE);
@@ -148,7 +140,7 @@ public class ISoldi extends SherlockActivity {
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FFD700"));
 
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
-			stats_button.setTextColor(Color.parseColor("#FFFFFF"));
+			statsButton.setTextColor(Color.parseColor("#FFFFFF"));
 
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
@@ -159,7 +151,7 @@ public class ISoldi extends SherlockActivity {
 
 			bottomText
 					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
-			stats_button.setBackgroundColor(Color.parseColor("#FF8800"));
+			statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
 
 			snackText.setVisibility(View.VISIBLE);
@@ -173,12 +165,12 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setTextSize(25);
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
-			stats_button.setBackgroundColor(Color.parseColor("#CC0000"));
+			statsButton.setBackgroundColor(Color.parseColor("#CC0000"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#CC0000"));
 
 		}
 	}
-
+/*
 	public void showUserStats() {
 
 		final View userStatsLayout = (View) findViewById(R.id.user_stats);
@@ -206,7 +198,7 @@ public class ISoldi extends SherlockActivity {
 					}
 				});
 	}
-
+*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();

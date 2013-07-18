@@ -89,23 +89,22 @@
             android:textSize="16sp"
             android:visibility="gone" />
 
-        <ToggleButton
+        <TextView
             android:id="@+id/isoldi_statistics_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="#2BA63B"
+            android:padding="12dp"
+            android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textOff="@string/iSoldi_statistic_button_text"
-            android:textOn="@string/iSoldi_statistic_button_text" />
+            android:text="@string/iSoldi_statistic_button_text"/>
 
-        <include
+        <TextView
             android:id="@+id/user_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/isoldi_statistics_button"
-            layout="@layout/stats_layout"
-            android:visibility="gone" />
+            layout="@layout/stats_layout" />
     </LinearLayout>
 
 </ScrollView>

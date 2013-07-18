@@ -107,9 +107,7 @@ public class IDeciso extends SherlockActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.ideciso, menu);
-		return true;
+		return false;
 	}
 
 	@Override

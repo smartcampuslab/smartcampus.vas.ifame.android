@@ -202,13 +202,13 @@ public class Recensioni_Activity extends SherlockActivity {
 					R.layout.igradito_custom_dialogbox, null);
 
 			// Add a title to the dialog
-			builder.setTitle("La tua recensione...");
+			builder.setTitle(mensa.getMensa_nome());
 
 			// Get Header TextView-> Mensa name
 			cd_header = (TextView) dialogView
 					.findViewById(R.id.custom_dialog_header);
 			// set text to the name of the mensa
-			cd_header.setText(mensa.getMensa_nome());
+			cd_header.setText(piatto.getPiatto_nome());
 
 			// Get editText associated with this view
 			cd_editText = (EditText) dialogView

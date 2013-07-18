@@ -105,9 +105,7 @@ public class IFame_Main_Activity extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.ifame__main_, menu);
-		return true;
+		return false;
 	}
 
 	@Override

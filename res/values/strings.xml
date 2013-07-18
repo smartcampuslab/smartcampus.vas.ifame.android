@@ -51,8 +51,8 @@
     <string name="iDeciso_tipologie_menu_credito_insufficiente">Credito insufficiente ad acquistare il menu</string>
     <string name="iDeciso_compose_menu_checkbox_first">Primo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Primo Contorno</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Secondo Contorno</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno A</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno B</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
     <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenu o Trancio di pizza</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
