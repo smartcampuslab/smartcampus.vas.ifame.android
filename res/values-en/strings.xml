@@ -17,11 +17,11 @@
 <resources>
 
     <!-- iFameMain -->
-    <string name="iFame_set_favourite_canteen_title">Scegli la tua mensa</string>
-    <string name="iFame_set_favourite_canteen_explanation">Benvenuto in iFame!\nScegli la mensa che frequenti abitualmente</string>
-    <string name="iFame_set_favourite_canteen_details">Sarà poi possibile modificare la scelta dalla pagina di iFretta</string>
-    <string name="iFame_set_favourite_canteen_confirm_button">Conferma</string>
-    <string name="iFame_set_favourite_canteen_menu_item">Imposta mensa preferita</string>
+    <string name="iFame_set_favourite_canteen_title">Choose your usual canteen</string>
+    <string name="iFame_set_favourite_canteen_explanation">Welcome to iFame! Choose the canteen in which you go more often</string>
+    <string name="iFame_set_favourite_canteen_details">Then will be possible to modify your choice from iFretta\'s page</string>
+    <string name="iFame_set_favourite_canteen_confirm_button">Confirm</string>
+    <string name="iFame_set_favourite_canteen_menu_item">Set favourite canteen</string>
     <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iFame_main_title_activity">iFame</string>
     <!-- /iFameMain -->
@@ -29,35 +29,35 @@
 
     <!-- iFretta -->
     <string name="iFretta_title_activity">iFretta</string>
-    <string name="iFretta_details_title_activity">Webcam mensa</string>
-    <string name="iFretta_search_in_ViviTrento">Cerca in ViviTrento</string>
+    <string name="iFretta_details_title_activity">Canteen webcam</string>
+    <string name="iFretta_search_in_ViviTrento">Search in ViviTrento</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
-    <string name="iFretta_details_set_favourite_canteen">Hai settato come mensa preferita: </string>
+    <string name="iFretta_details_set_favourite_canteen">You set as favourite canteen: </string>
     <!-- /iFretta -->
 
 
     <!-- iDeciso -->
     <string name="iDeciso_title_activity">iFame</string>
-    <string name="iDeciso_home_daily_menu">Menù del giorno</string>
-    <string name="iDeciso_home_menu_types">Tipologie di menù</string>
-    <string name="iDeciso_home_compose_menu">Componi il tuo menu</string>
-    <string name="iDeciso_home_monthly_menu">Menù del mese</string>
+    <string name="iDeciso_home_daily_menu">Daily</string>
+    <string name="iDeciso_home_menu_types">Menù types</string>
+    <string name="iDeciso_home_compose_menu">Compose your own menù</string>
+    <string name="iDeciso_home_monthly_menu">Monthly menù</string>
     <string name="iDeciso_tipologie_menu_fragment_intero">tipologiaInteroFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_ridotto">tipologiaRidottoFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_snack">tipologiaSnackFragment</string>
     <string name="iDeciso_daily_menu_daily_fragment">menuGiornoFragment</string>
     <string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
-    <string name="iDeciso_tipologie_menu_credito_sufficiente">Il tuo credito è sufficiente: €</string>
-    <string name="iDeciso_tipologie_menu_credito_insufficiente">Credito insufficiente ad acquistare il menù</string>
+    <string name="iDeciso_tipologie_menu_credito_sufficiente">You don\'t have enough credit: €</string>
+    <string name="iDeciso_tipologie_menu_credito_insufficiente">Not enought credit to buy this menu</string>
     <string name="iDeciso_compose_menu_checkbox_first">Primo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno A</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno B</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
     <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenù o Trancio di pizza</string>
-    <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
+    <string name="iDeciso_compose_menu_calcola_btn">Calculate</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
-    <string name="iDeciso_alternative_btn">Alternative</string>
+    <string name="iDeciso_alternative_btn">Alternatives</string>
     <string name="iDeciso_menu_del_giorno_primi">Primi</string>
     <string name="iDeciso_menu_del_giorno_secondi">Secondi</string>
     <string name="iDeciso_menu_del_giorno_contorni">Contorni</string>
@@ -65,12 +65,12 @@
     <string name="iDeciso_alternative_primi">PRIMI PIATTI</string>
     <string name="iDeciso_alternative_secondi">SECONDI PIATTI</string>
     <string name="iDeciso_alternative_contorni">CONTORNI CALDI</string>
-    <string name="iDeciso_alternative_menu">Alternative al menù odierno</string>
+    <string name="iDeciso_alternative_menu">Alternatives to the daily menù</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenù</string>
     <string name="iDeciso_2contorni">2 Contorni</string>
-    <string name="iDeciso_pane">Pane</string>
-    <string name="iDeciso_pizza_trancio">Pizza (trancio)</string>
-    <string name="iDeciso_acqua_o_caffe">Acqua o caffè</string>
+    <string name="iDeciso_pane">Bread</string>
+    <string name="iDeciso_pizza_trancio">Pizza (slice)</string>
+    <string name="iDeciso_acqua_o_caffe">Water or Coffee</string>
     <string name="iDeciso_panino">Panino</string>
     <string name="iDeciso_2a_scelta_tra">2 a scelta tra</string>
     <string name="iDeciso_contorni">Contorni</string>
