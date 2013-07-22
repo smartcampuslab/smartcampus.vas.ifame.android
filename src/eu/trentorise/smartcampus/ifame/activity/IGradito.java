@@ -388,8 +388,12 @@ public class IGradito extends SherlockActivity {
 					Collections.sort(lista_piatti_temp, new Comparatore());
 
 					List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
-
+			
 					String letter = "A";
+					
+					List <String> startingLetters = new ArrayList<String>();
+					startingLetters.add("A");
+					
 					lista_piatti_with_headers.add(new Piatto(letter, ""));
 
 					for (int i = 0; i < lista_piatti_temp.size(); i++) {
@@ -400,6 +404,7 @@ public class IGradito extends SherlockActivity {
 						if (!nome_piatto.startsWith(letter)) {
 
 							letter = Character.toString(nome_piatto.charAt(0));
+							startingLetters.add(letter);
 							lista_piatti_with_headers
 									.add(new Piatto(letter, ""));
 						}
