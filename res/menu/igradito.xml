@@ -9,7 +9,7 @@
         android:title="@string/iGradito_search"/>
     <item
         android:id="@+id/iGradito_option_menu"
-        android:icon="@drawable/abs__ic_menu_moreoverflow_normal_holo_light"
+        android:icon="@drawable/abs__ic_menu_moreoverflow_normal_holo_dark"
         android:showAsAction="always"
         android:title="@string/action_settings">
         <menu>
