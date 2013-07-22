@@ -38,7 +38,7 @@
 
     <!-- iDeciso -->
     <string name="iDeciso_title_activity">iFame</string>
-    <string name="iDeciso_home_daily_menu">Daily</string>
+    <string name="iDeciso_home_daily_menu">Daily menù</string>
     <string name="iDeciso_home_menu_types">Menù types</string>
     <string name="iDeciso_home_compose_menu">Compose your own menù</string>
     <string name="iDeciso_home_monthly_menu">Monthly menù</string>
