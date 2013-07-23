@@ -21,6 +21,7 @@ import eu.trentorise.smartcampus.ifame.R;
 
 public class Fai_il_tuo_menu extends SherlockActivity {
 
+	//queste variabili salvano, alla pressione del bottone, lo stato delle checkboxes
 	private boolean isPrimoPiatto;
 	private boolean isSecondoPiatto;
 	private boolean isContorno1;
@@ -30,6 +31,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 	private boolean isPanino;
 	private boolean isPizza;
 
+	//stringhe statiche da usare come keys per gli intent extras
 	public static final String SELECTED_MENU = "selected_menu";
 	public static final String HAS_CALLED_TIPOLOGIE = "has_called_tipologie";
 	public static final String PRIMO_AVAILABLE = "primoAvailable";
@@ -77,6 +79,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_fai_il_tuo_menu);
 
+		//istanzia gli elementi dell'UI e assegna i vari listeners alle checkboxes
 		componiMenu();
 
 		Button confirm = (Button) findViewById(R.id.confirm_menu_btn);
@@ -85,6 +88,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 
+				//alla pressione del pulsante, controllo quali checkboxes sono selezionate
 				isPrimoPiatto = primo.isChecked();
 				isSecondoPiatto = secondo.isChecked();
 				isContorno1 = contorno1.isChecked();
@@ -94,6 +98,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 				isPizza = pizza.isChecked();
 				isPanino = panino.isChecked();
 
+				//queste variabili servono a salvare se un piatto può essere ancora acquistato rimanendo comunque nel menu scelto, senza dunque aumentare il prezzo
 				boolean primoAvail = false;
 				boolean secondoAvail = false;
 				boolean c1Avail = false;
@@ -106,14 +111,13 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 				if (!isPrimoPiatto && !isSecondoPiatto && !isContorno1
 						&& !isContorno2 && !isInsalatona && !isDessert
 						&& !isPizza && !isPanino) {
-					Toast toast = Toast.makeText(getApplicationContext(),
+					Toast.makeText(getApplicationContext(),
 							R.string.iDeciso_compose_menu_no_items_selected,
-							Toast.LENGTH_LONG);
-					toast.show();
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 
-				// intero
+				// intero (ssse abbiamo il primo e il secondo (condizione necessaria e sufficiente)
 				else if (primo.isChecked() && secondo.isChecked()) {
 					Fai_il_tuo_menu.menu = chosenMenu.Intero;
 					if (!isContorno1)
@@ -203,7 +207,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					}
 
 					// se oltre all'insalata ha preso 2 tra contorni e dessert
-					// non fare niente, non puoi piï¿½ prendere altro a parte il
+					// non fare niente, non puoi più prendere altro a parte il
 					// pane
 
 					/*
@@ -241,7 +245,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 				else if (isPizza)
 					menu = chosenMenu.Ridotto4;
 
-				// se ha preso 2 contorni e 1 dessert a questo puï¿½ scegliere da
+				// se ha preso 2 contorni e 1 dessert a questo può scegliere da
 				// R1 e R2 e quindi tra primo o secondo
 
 				else if (isContorno1 && isContorno2 && isDessert) {
@@ -516,8 +520,14 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 
 		});*/
 
-		 //quando rilascio, se c1 c2 e dessert allora non devo liberare
-		 //insalatona
+		 
+		/*
+		 * 
+		 * logica delle checkboxes, controlla cosa è selezionato ed esclude i piatti non consoni con la scelta
+		 */
+		
+		
+		
 		primo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override

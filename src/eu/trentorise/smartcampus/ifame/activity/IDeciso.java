@@ -25,7 +25,7 @@ public class IDeciso extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		// per ora da qui ottengo i soldi presenti nella card e salvo in
-		// preferences
+		// preferences, salveremo nel bundle spero e quindi prenderemo semplicemente il valore da li
 		float cash;
 		Saldo saldoReturn;
 		/*try {
@@ -59,6 +59,8 @@ public class IDeciso extends SherlockActivity {
 */
 		setContentView(R.layout.layout_ideciso);
 
+		
+		//popoliamo la listview
 		String[] features = { getString(R.string.iDeciso_home_daily_menu), getString(R.string.iDeciso_home_menu_types),
 				getString(R.string.iDeciso_home_compose_menu), getString(R.string.iDeciso_home_monthly_menu) };
 		ArrayList<String> features_list = new ArrayList<String>();
