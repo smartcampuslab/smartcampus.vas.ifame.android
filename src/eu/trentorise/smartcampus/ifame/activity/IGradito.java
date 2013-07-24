@@ -200,9 +200,6 @@ public class IGradito extends SherlockActivity {
 
 	/*
 	 * 
-	 * 
-	 * 
-	 * 
 	 * MODIFY THE SPINNER LIST ADAPTER
 	 */
 	public class MyCursorAdapter extends BaseAdapter implements SpinnerAdapter {
@@ -365,7 +362,6 @@ public class IGradito extends SherlockActivity {
 
 		@Override
 		protected List<Piatto> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
@@ -387,12 +383,13 @@ public class IGradito extends SherlockActivity {
 							.convertJSONToObjects(body, Piatto.class);
 					Collections.sort(lista_piatti_temp, new Comparatore());
 
+					//creo una nuova lista che oltre a contenere i piatti contiene le lettere con cui essi iniziano : ("A", "Anatre", "Ananas", "B", "Banane", "D", "Datteri" ...)
 					List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
 			
 					String letter = "A";
-					
-					List <String> startingLetters = new ArrayList<String>();
-					startingLetters.add("A");
+				
+				//	List <String> startingLetters = new ArrayList<String>();
+					//startingLetters.add("A");
 					
 					lista_piatti_with_headers.add(new Piatto(letter, ""));
 
@@ -404,13 +401,13 @@ public class IGradito extends SherlockActivity {
 						if (!nome_piatto.startsWith(letter)) {
 
 							letter = Character.toString(nome_piatto.charAt(0));
-							startingLetters.add(letter);
+						//	startingLetters.add(letter);
 							lista_piatti_with_headers
 									.add(new Piatto(letter, ""));
 						}
 
 						lista_piatti_with_headers.add(lista_piatti_temp.get(i));
-					}
+					}	
 
 					return lista_piatti_with_headers;
 				} else {
@@ -453,6 +450,7 @@ public class IGradito extends SherlockActivity {
 		}
 	}
 
+	
 	private void createMenseSpinner(List<Mensa> listamense) {
 		mense_spinner = (Spinner) findViewById(R.id.spinner_portata);
 
@@ -467,7 +465,7 @@ public class IGradito extends SherlockActivity {
 
 		String mensa = pref.getString(GET_FAVOURITE_CANTEEN, notfound);
 		if (!mensa.equalsIgnoreCase(notfound)) {
-			// ok avevo settato qualcosa
+			// ok avevo settato mensa preferita
 			int pos = 0;
 			for (Mensa m : listamense) {
 				if (mensa.equalsIgnoreCase(m.getMensa_nome())) {
@@ -499,6 +497,7 @@ public class IGradito extends SherlockActivity {
 
 	}
 
+	//adapter for dishes
 	private class PiattiListAdapter extends ArrayAdapter<Piatto> implements
 			Filterable {
 

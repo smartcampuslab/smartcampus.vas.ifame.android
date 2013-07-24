@@ -37,7 +37,7 @@ public class IFretta_Details extends SherlockActivity {
 
 		setContentView(R.layout.ifretta_details);
 
-		// if there are no available intents return
+		// if there are no available intents return, ain't possible btw
 		if (extras == null) {
 			return;
 		}

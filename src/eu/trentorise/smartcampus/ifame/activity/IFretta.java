@@ -66,10 +66,12 @@ public class IFretta extends SherlockActivity {
 		super.onResume();
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+		//nel caso in cui si cambi la mensa preferita in "ifretta details" questo comando assicura che si apportino le opportune modifiche
 		adapter.notifyDataSetChanged();
 	}
 
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
@@ -116,7 +118,7 @@ public class IFretta extends SherlockActivity {
 			String mensa_name = pref.getString(
 					IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
 
-			
+			//se la mensa preferita salvata, è quella che stiamo esaminando, allora la sottolineamo e ci aggiungiamo l'icona star
 			if (m.getMensa_nome().equals(mensa_name)) {
 				Drawable icon_to_right = convertView.getResources().getDrawable(android.R.drawable.star_off);
 				nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null, null, icon_to_right, null);
