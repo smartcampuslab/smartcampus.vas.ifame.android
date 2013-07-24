@@ -2,6 +2,15 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
 
+
+/*
+ * 
+ * per ora è tutto basato sul recupero dell'importo nella tessera FASULLO (cambia di volta in volta)
+ * in base all'importo vengono mostrati i tipi di menu che sono acquistabili, o nessuno altrimenti
+ * 
+ * le statistiche non sono ancora disponibili per mancanza di dati forniteci da OU
+ */
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -120,7 +129,7 @@ public class ISoldi extends SherlockActivity {
 
 	public void getAmount(float amount) {
 
-		if (amount >= 4.90) {
+		if (amount >= 4.70) {
 
 			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
@@ -134,7 +143,7 @@ public class ISoldi extends SherlockActivity {
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 4.20 && amount < 4.90) {
+		} else if (amount >= 4.20 && amount < 4.70) {
 			centerText.setText(" " + String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FFD700"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FFD700"));

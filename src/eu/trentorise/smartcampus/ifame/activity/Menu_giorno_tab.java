@@ -1,5 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
-
+/*
+ * 
+ * sherlock activity con tabs (2)
+ */
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;

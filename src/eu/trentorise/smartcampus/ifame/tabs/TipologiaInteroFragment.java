@@ -1,5 +1,8 @@
 package eu.trentorise.smartcampus.ifame.tabs;
-
+/*
+ * 
+ * fragment per il menu intero
+ */
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -131,7 +134,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		boolean isPizzaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PIZZA,
 				false);
 
-		if (isCalled && !selected_menu.equals("Intero") && !isPaninoSelected
+		if (isCalled && selected_menu.equals("Intero") && !isPaninoSelected
 				&& !isInsalatonaSelected && !isPizzaSelected) {
 
 			pane.setTextColor(Color.parseColor("#08D126"));
@@ -149,6 +152,24 @@ public class TipologiaInteroFragment extends SherlockFragment {
 
 		}
 
+		if (isCalled && !selected_menu.equals("Intero") && !isPaninoSelected
+				&& !isInsalatonaSelected && !isPizzaSelected ){
+			if (!isPrimoSelected)
+				primo.setTextColor(Color.parseColor("#08D126"));
+			if (!isSecondoSelected)
+				secondo.setTextColor(Color.parseColor("#08D126"));
+			if (!isC1Selected || !isC2Selected)
+				contorni.setTextColor(Color.parseColor("#08D126"));
+			if (!isDessertSelected)
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			pane.setTextColor(Color.parseColor("#08D126"));
+			
+		}
+		
+		/*
+		 * 
+		 * qui significa che arriviamo da un'altra tab e avamo selezionato uno dei tre piatti che non sono matchabili con il menu intero
+		 */
 		if (isCalled
 				&& (isPaninoSelected || isInsalatonaSelected || isPizzaSelected)) {
 			primo.setTextColor(Color.parseColor("#C4C4C4"));
@@ -172,4 +193,6 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		super.onDestroyView();
 	}
 
+	private void setEverythingUp(){}
+	
 }

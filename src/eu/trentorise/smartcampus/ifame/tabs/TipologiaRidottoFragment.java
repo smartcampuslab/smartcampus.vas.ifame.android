@@ -1,5 +1,17 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
+//TODO:  è meglio cambiare 2contorni con contorno A e B separati, e cambiare la logica ovviamente
+//errore: se seleziono solo dessert non mi fa vedere paninomenu
+//TODO: cambiare dinamicamente il "2 a scelta" per trasformarlo in "1 a scelta" quando necessario?
+
+
+/*
+ * 
+ * fragment per la tipologia di menu ridotto
+ */
+
+//TODO: selezionando 2 contorni colora di verde il dessert, sbagliato 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +34,26 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 	ViewGroup theContainer;
 	Intent i;
-
+	TextView primo1;
+	TextView contorni1;
+	TextView dessert1;
+	TextView pane1;
+	TextView secondo2;
+	TextView contorni2;
+	TextView dessert2;
+	TextView pane2;
+	TextView insalatona3;
+	TextView due_a_scelta_tra3;
+	TextView pane3;
+	TextView contorni3;
+	TextView e3;
+	TextView dessert3;
+	TextView pizza4;
+	TextView due_a_scelta_tra4;
+	TextView contorni4;
+	TextView dessert4;
+	TextView e4;
+	TextView pane4;
 	boolean isPrimoAvail;
 	boolean isSecondoAvail;
 	boolean isC1Avail;
@@ -30,9 +61,14 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 	boolean isDessertAvail;
 	boolean isInsalatonaAvail;
 	boolean isPizzaAvail;
-	private boolean isContorno1;
-	private boolean isContorno2;
-	private boolean isDessert;
+	boolean isPrimoSelected;
+	boolean isSecondoSelected;
+	boolean isC1Selected;
+	boolean isC2Selected;
+	boolean isDessertSelected;
+	boolean isInsalatonaSelected;
+	boolean isPaninoSelected;
+	boolean isPizzaSelected;
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -56,10 +92,20 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 	public void onResume() {
 
 		i = getSherlockActivity().getIntent();
+
 		boolean isCalled = i.getBooleanExtra(
 				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_buyable);
+
+		/*
+		 * 
+		 * se è stata chiamata da "componi menu" allora prendiamo l'importo dei
+		 * soldi presenti nella tessera, e modifichiamo la textview di
+		 * conseguenza
+		 */
+
 		if (isCalled) {
 
 			SharedPreferences pref = getSherlockActivity()
@@ -84,6 +130,260 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			buyable.setVisibility(View.GONE);
 
 		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
+
+		setEverythingUp();
+
+		if (isCalled) {
+
+			if (selected_menu.equals("Ridotto1234")) {
+
+				coloraVerde(1);
+				coloraVerde(2);
+				coloraVerde(3);
+				coloraVerde(4);
+
+			}
+
+			else if (selected_menu.equals("Ridotto12")) {
+				coloraVerde(1);
+				coloraVerde(2);
+				// metti in grigio 3 e 4
+				coloraGrigio(3);
+				coloraGrigio(4);
+
+			} else if (selected_menu.equals("Ridotto1")) {
+				coloraVerde(1);
+				// metti grigio 2 3 4
+				coloraGrigio(2);
+				coloraGrigio(3);
+				coloraGrigio(4);
+
+			} else if (selected_menu.equals("Ridotto2")) {
+
+				coloraVerde(2);
+
+				// metti grigio 1 3 4
+				coloraGrigio(1);
+				coloraGrigio(3);
+				coloraGrigio(4);
+
+			} else if (selected_menu.equals("Ridotto3")) {
+
+				coloraVerde(3);
+
+				// metti in grigio tutto il resto 124
+				coloraGrigio(1);
+				coloraGrigio(2);
+				coloraGrigio(4);
+
+			} else if (selected_menu.equals("Ridotto4")) {
+
+				coloraVerde(4);
+
+				// metti in grigio 1 2 3
+				coloraGrigio(1);
+				coloraGrigio(2);
+				coloraGrigio(3);
+
+			}
+
+			/*
+			 * se sono stato reindirizzato allo snack e poi seleziono il
+			 * ridotto, allora i controlli sulla disponibilità non vanno
+			 * affrontati, perchè arrivando dallo snack sono sicuro che non
+			 * siano stati selezionati
+			 */
+			else if ((selected_menu.equals("Snack1")
+					|| selected_menu.equals("Snack12")
+					|| selected_menu.equals("Snack2")
+					|| selected_menu.equals("Snack3") || selected_menu
+						.equals("Snack4"))) {
+
+				// se aveva scelto lo snack con insalatona
+				if (isInsalatonaSelected) {
+					due_a_scelta_tra3.setTextColor(Color.parseColor("#08D126"));
+					contorni3.setTextColor(Color.parseColor("#08D126"));
+					pane3.setTextColor(Color.parseColor("#08D126"));
+					dessert3.setTextColor(Color.parseColor("#08D126"));
+					// grigio gli altri
+					coloraGrigio(1);
+					coloraGrigio(2);
+					coloraGrigio(4);
+				} else if (isSecondoSelected) {
+					if (!isDessertSelected)
+						dessert2.setTextColor(Color.parseColor("#08D126"));
+					contorni2.setTextColor(Color.parseColor("#08D126"));
+					pane2.setTextColor(Color.parseColor("#08D126"));
+
+					// grigio gli altri
+					coloraGrigio(1);
+					coloraGrigio(3);
+					coloraGrigio(4);
+				} else if (isPrimoSelected) {
+					if (!isDessertSelected)
+						dessert1.setTextColor(Color.parseColor("#08D126"));
+					contorni1.setTextColor(Color.parseColor("#08D126"));
+					pane1.setTextColor(Color.parseColor("#08D126"));
+					// grigio gli altri
+					coloraGrigio(3);
+					coloraGrigio(2);
+					coloraGrigio(4);
+
+				} else if (isPaninoSelected) {
+					coloraGrigio(1);
+					coloraGrigio(2);
+					coloraGrigio(3);
+					coloraGrigio(4);
+				}
+
+				else if ((isC1Selected || isC2Selected || isDessertSelected)
+						&& !isPrimoSelected && !isSecondoSelected
+						&& !isInsalatonaSelected && !isPaninoSelected
+						&& !isPizzaSelected) {
+					primo1.setTextColor(Color.parseColor("#08D126"));
+					contorni1.setTextColor(Color.parseColor("#08D126"));
+					if (!isDessertSelected) {
+						dessert1.setTextColor(Color.parseColor("#08D126"));
+						dessert2.setTextColor(Color.parseColor("#08D126"));
+						dessert3.setTextColor(Color.parseColor("#08D126"));
+						dessert4.setTextColor(Color.parseColor("#08D126"));
+					}
+					pane1.setTextColor(Color.parseColor("#08D126"));
+					secondo2.setTextColor(Color.parseColor("#08D126"));
+					contorni2.setTextColor(Color.parseColor("#08D126"));
+					pane2.setTextColor(Color.parseColor("#08D126"));
+					insalatona3.setTextColor(Color.parseColor("#08D126"));
+					contorni3.setTextColor(Color.parseColor("#08D126"));
+					pane3.setTextColor(Color.parseColor("#08D126"));
+					pizza4.setTextColor(Color.parseColor("#08D126"));
+					contorni4.setTextColor(Color.parseColor("#08D126"));
+					pane4.setTextColor(Color.parseColor("#08D126"));
+
+				}
+			}
+
+		}
+
+		/*
+		 * se sono stato indirizzato all'intero, ma poi clicco su ridotto,
+		 * allora metto tutto in grigio (primo + secondo = intero e nessuno dei
+		 * ridotti li comprende)
+		 */
+		if (isCalled && selected_menu.equals("Intero")) {
+			coloraGrigio(1);
+			coloraGrigio(2);
+			coloraGrigio(3);
+			coloraGrigio(4);
+		}
+
+		super.onResume();
+
+	}
+
+	private void coloraGrigio(int menuNumber) {
+		if (menuNumber == 1) {
+			primo1.setTextColor(Color.parseColor("#C4C4C4"));
+			contorni1.setTextColor(Color.parseColor("#C4C4C4"));
+			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
+			pane1.setTextColor(Color.parseColor("#C4C4C4"));
+		}
+		else if (menuNumber == 2) {
+			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
+			contorni2.setTextColor(Color.parseColor("#C4C4C4"));
+			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
+			pane2.setTextColor(Color.parseColor("#C4C4C4"));
+		}
+		else if (menuNumber == 3) {
+			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
+			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
+			e3.setTextColor(Color.parseColor("#C4C4C4"));
+			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
+			pane3.setTextColor(Color.parseColor("#C4C4C4"));
+			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
+		}
+		else if (menuNumber == 4) {
+			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
+			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
+			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
+			dessert4.setTextColor(Color.parseColor("#C4C4C4"));
+			pane4.setTextColor(Color.parseColor("#C4C4C4"));
+			e4.setTextColor(Color.parseColor("#C4C4C4"));
+		}
+
+	}
+
+	private void coloraVerde(int menuNumber) {
+		if (menuNumber == 1) {
+			pane1.setTextColor(Color.parseColor("#08D126"));
+			if (isPrimoAvail) {
+				primo1.setTextColor(Color.parseColor("#08D126"));
+			}
+
+				if (isC1Avail || isC2Avail) {
+					contorni1.setTextColor(Color.parseColor("#08D126"));
+				}
+				if (!isDessertSelected) {
+					dessert1.setTextColor(Color.parseColor("#08D126"));
+				}
+			
+		}
+		else if (menuNumber == 2) {
+			pane2.setTextColor(Color.parseColor("#08D126"));
+
+			if (isSecondoAvail) {
+				secondo2.setTextColor(Color.parseColor("#08D126"));
+			}
+
+				if (isC1Avail || isC2Avail) {
+					contorni2.setTextColor(Color.parseColor("#08D126"));
+				}
+				if (!isDessertSelected) {
+					dessert2.setTextColor(Color.parseColor("#08D126"));
+				
+			}
+		}
+		else if (menuNumber == 3) {
+
+			if ((isC1Selected && isC2Selected)
+					|| (isC1Selected && isDessertSelected)
+					|| (isC2Selected && isDessertSelected)) {
+			} else {
+				if ((!isC1Selected && (!isC1Selected || !isC2Selected))
+						|| (!isC2Selected && (!isC1Selected || !isC2Selected))) {
+					contorni3.setTextColor(Color.parseColor("#08D126"));
+				}
+				if (!isDessertSelected && (!isC1Selected || !isC2Selected)) {
+					dessert3.setTextColor(Color.parseColor("#08D126"));
+				}
+
+				if (isInsalatonaAvail)
+					insalatona3.setTextColor(Color.parseColor("#08D126"));
+			}
+			pane3.setTextColor(Color.parseColor("#08D126"));
+		}
+		else if (menuNumber == 4) {
+			if ((isC1Selected && isC2Selected)
+					|| (isC1Selected && isDessertSelected)
+					|| (isC2Selected && isDessertSelected)) {
+			} else {
+				if (!isC1Selected || !isC2Selected) {
+					contorni4.setTextColor(Color.parseColor("#08D126"));
+				}
+				if (!isDessertSelected) {
+					dessert4.setTextColor(Color.parseColor("#08D126"));
+				}
+
+				if (!isC1Selected && !isC2Selected && !isDessertSelected)
+				due_a_scelta_tra4.setTextColor(Color.parseColor("#08D126"));
+			}
+			pane4.setTextColor(Color.parseColor("#08D126"));
+
+		}
+	}
+
+	// istanzia gli oggetti necessari dichiarati globalmente
+
+	private void setEverythingUp() {
 		isPrimoAvail = i
 				.getBooleanExtra(Fai_il_tuo_menu.PRIMO_AVAILABLE, false);
 		isSecondoAvail = i.getBooleanExtra(Fai_il_tuo_menu.SECONDO_AVAILABLE,
@@ -99,17 +399,26 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		isPizzaAvail = i
 				.getBooleanExtra(Fai_il_tuo_menu.PIZZA_AVAILABLE, false);
 
-		isContorno1 = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_1, false);
-		isContorno2 = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_2, false);
-		isDessert = i.getBooleanExtra(Fai_il_tuo_menu.IS_DESSERT, false);
+		isPrimoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PRIMO, false);
+		isSecondoSelected = i
+				.getBooleanExtra(Fai_il_tuo_menu.IS_SECONDO, false);
+		isC1Selected = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_1, false);
+		isC2Selected = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_2, false);
+		isDessertSelected = i
+				.getBooleanExtra(Fai_il_tuo_menu.IS_DESSERT, false);
+		isInsalatonaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_INSALATONA,
+				false);
+		isPaninoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PANINO, false);
+		isPizzaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PIZZA, false);
+
 		// menu ridotto 1
-		TextView primo1 = (TextView) theContainer
+		primo1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_primo1);
-		TextView contorni1 = (TextView) theContainer
+		contorni1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_contorni1);
-		TextView dessert1 = (TextView) theContainer
+		dessert1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert1);
-		TextView pane1 = (TextView) theContainer
+		pane1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pane1);
 
 		primo1.setText("- "
@@ -122,13 +431,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		pane1.setText("+ " + getString(R.string.iDeciso_pane));
 
 		// menu ridotto2
-		TextView secondo2 = (TextView) theContainer
+		secondo2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_secondo2);
-		TextView contorni2 = (TextView) theContainer
+		contorni2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_contorni2);
-		TextView dessert2 = (TextView) theContainer
+		dessert2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert2);
-		TextView pane2 = (TextView) theContainer
+		pane2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pane2);
 
 		secondo2.setText("- "
@@ -143,17 +452,16 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 		// menu ridotto3 pasta station cambia dal primo??????????? sul sito
 		// sembra di si....per ora non ne tengo conto perchè credo sia sbagliato
-		TextView insalatona3 = (TextView) theContainer
+		insalatona3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_insalatona3);
-		TextView due_a_scelta_tra3 = (TextView) theContainer
+		due_a_scelta_tra3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_2a_scelta_tra3);
-		TextView pane3 = (TextView) theContainer
+		pane3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pane3);
-		TextView contorni3 = (TextView) theContainer
+		contorni3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_contorni3);
-		TextView e3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_e3);
-		TextView dessert3 = (TextView) theContainer
+		e3 = (TextView) theContainer.findViewById(R.id.tipologia_ridotto_e3);
+		dessert3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert3);
 
 		insalatona3.setText("- "
@@ -168,17 +476,16 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 
 		// menu ridotto4
-		TextView pizza4 = (TextView) theContainer
+		pizza4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pizza4);
-		TextView due_a_scelta_tra4 = (TextView) theContainer
+		due_a_scelta_tra4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_2a_scelta_tra4);
-		TextView contorni4 = (TextView) theContainer
+		contorni4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_contorni4);
-		TextView dessert4 = (TextView) theContainer
+		dessert4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert4);
-		TextView e4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_e4);
-		TextView pane4 = (TextView) theContainer
+		e4 = (TextView) theContainer.findViewById(R.id.tipologia_ridotto_e4);
+		pane4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pane4);
 
 		pizza4.setText("- " + getString(R.string.iDeciso_pizza) + ", ");
@@ -189,351 +496,6 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		dessert4.setText(" "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane4.setText("+ " + getString(R.string.iDeciso_pane));
-
-		if (isCalled && selected_menu.equals("Ridotto1234")) {
-
-			if (isPrimoAvail) {
-				primo1.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isSecondoAvail) {
-				secondo2.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isC1Avail || isC2Avail) {
-				contorni1.setTextColor(Color.parseColor("#08D126"));
-				contorni2.setTextColor(Color.parseColor("#08D126"));
-				if (!(isContorno1 && isContorno2 && !isDessert)
-						&& !(isContorno1 && !isContorno2 && isDessert)
-						&& !(!isContorno1 && isContorno2 && isDessert)) {
-					contorni3.setTextColor(Color.parseColor("#08D126"));
-					contorni4.setTextColor(Color.parseColor("#08D126"));
-				}
-			}
-			if (isDessertAvail) {
-				dessert1.setTextColor(Color.parseColor("#08D126"));
-				dessert2.setTextColor(Color.parseColor("#08D126"));
-				if (!(isContorno1 && isContorno2 && !isDessert)
-						&& !(isContorno1 && !isContorno2 && isDessert)
-						&& !(!isContorno1 && isContorno2 && isDessert)) {
-					dessert3.setTextColor(Color.parseColor("#08D126"));
-					dessert4.setTextColor(Color.parseColor("#08D126"));
-				}
-			}
-			// panino non l'ho messo
-			if (isInsalatonaAvail)
-				insalatona3.setTextColor(Color.parseColor("#08D126"));
-
-			if (isPizzaAvail)
-				pizza4.setTextColor(Color.parseColor("#08D126"));
-
-			pane1.setTextColor(Color.parseColor("#08D126"));
-			pane2.setTextColor(Color.parseColor("#08D126"));
-			pane3.setTextColor(Color.parseColor("#08D126"));
-			pane4.setTextColor(Color.parseColor("#08D126"));
-
-		}
-
-		else if (isCalled && selected_menu.equals("Ridotto12")) {
-			pane1.setTextColor(Color.parseColor("#08D126"));
-			pane2.setTextColor(Color.parseColor("#08D126"));
-
-			if (isPrimoAvail) {
-				primo1.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isSecondoAvail) {
-				secondo2.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isC1Avail || isC2Avail) {
-				contorni1.setTextColor(Color.parseColor("#08D126"));
-				contorni2.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isDessertAvail) {
-				dessert1.setTextColor(Color.parseColor("#08D126"));
-				dessert2.setTextColor(Color.parseColor("#08D126"));
-			}
-
-			// metti in grigio 3 e 4
-			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-			pane3.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-			e3.setTextColor(Color.parseColor("#C4C4C4"));
-			e4.setTextColor(Color.parseColor("#C4C4C4"));
-			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-
-		} else if (isCalled && selected_menu.equals("Ridotto1")) {
-			pane1.setTextColor(Color.parseColor("#08D126"));
-			if (isPrimoAvail) {
-				primo1.setTextColor(Color.parseColor("#08D126"));
-			}
-
-			if (isC1Avail || isC2Avail) {
-				contorni1.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isDessertAvail) {
-				dessert1.setTextColor(Color.parseColor("#08D126"));
-			}
-
-			// metti grigio 2 3 4
-			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni2.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-			pane2.setTextColor(Color.parseColor("#C4C4C4"));
-			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-			pane3.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-			e3.setTextColor(Color.parseColor("#C4C4C4"));
-			e4.setTextColor(Color.parseColor("#C4C4C4"));
-			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-
-		} else if (isCalled && selected_menu.equals("Ridotto2")) {
-
-			pane2.setTextColor(Color.parseColor("#08D126"));
-
-			if (isSecondoAvail) {
-				secondo2.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isC1Avail || isC2Avail) {
-				contorni2.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isDessertAvail) {
-				dessert2.setTextColor(Color.parseColor("#08D126"));
-			}
-
-			// metti grigio 1 3 4
-			primo1.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni1.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-			pane3.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-			e3.setTextColor(Color.parseColor("#C4C4C4"));
-			e4.setTextColor(Color.parseColor("#C4C4C4"));
-			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-
-		} else if (isCalled && selected_menu.equals("Ridotto3")) {
-
-			if (isC1Avail || isC2Avail) {
-				contorni3.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isDessertAvail) {
-				dessert3.setTextColor(Color.parseColor("#08D126"));
-			}
-			// panino non l'ho messo
-			if (isInsalatonaAvail)
-				insalatona3.setTextColor(Color.parseColor("#08D126"));
-
-			pane3.setTextColor(Color.parseColor("#08D126"));
-
-			// metti in grigio tutto il resto 124
-			primo1.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni1.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni2.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-			pane2.setTextColor(Color.parseColor("#C4C4C4"));
-			e4.setTextColor(Color.parseColor("#C4C4C4"));
-			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-
-		} else if (isCalled && selected_menu.equals("Ridotto4")) {
-
-			if (isC1Avail || isC2Avail) {
-				contorni4.setTextColor(Color.parseColor("#08D126"));
-			}
-			if (isDessertAvail) {
-				dessert4.setTextColor(Color.parseColor("#08D126"));
-			}
-
-			if (isPizzaAvail)
-				pizza4.setTextColor(Color.parseColor("#08D126"));
-
-			pane4.setTextColor(Color.parseColor("#08D126"));
-
-			// metti in grigio 1 2 3
-			primo1.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni1.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni2.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-			pane2.setTextColor(Color.parseColor("#C4C4C4"));
-			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-			e3.setTextColor(Color.parseColor("#C4C4C4"));
-			pane3.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-
-		}
-		// se in realtà sono stato reindirizzato allo snack e poi seleziono il
-		// ridotto
-		else if (isCalled
-				&& (selected_menu.equals("Snack1")
-						|| selected_menu.equals("Snack12")
-						|| selected_menu.equals("Snack2")
-						|| selected_menu.equals("Snack3") || selected_menu
-							.equals("Snack4"))) {
-			
-			boolean isPrimoSelected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_PRIMO, false);
-			boolean isSecondoSelected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_SECONDO, false);
-			boolean isC1Selected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_CONTORNO_1, false);
-			boolean isC2Selected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_CONTORNO_2, false);
-			boolean isDessertSelected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_DESSERT, false);
-			boolean isInsalatonaSelected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_INSALATONA, false);
-			boolean isPaninoSelected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_PANINO, false);
-			boolean isPizzaSelected = i.getBooleanExtra(
-					Fai_il_tuo_menu.IS_PIZZA, false);
-
-			
-			if (isInsalatonaSelected){
-				due_a_scelta_tra3.setTextColor(Color.parseColor("#08D126"));
-				contorni3.setTextColor(Color.parseColor("#08D126"));
-				pane3.setTextColor(Color.parseColor("#08D126"));
-				dessert3.setTextColor(Color.parseColor("#08D126"));
-				//grigio gli altri
-				primo1.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni1.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-				pane1.setTextColor(Color.parseColor("#C4C4C4"));
-				secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni2.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-				pane2.setTextColor(Color.parseColor("#C4C4C4"));
-				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-				pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			}
-			else if (isSecondoSelected){
-				if (!isDessertSelected)
-					dessert2.setTextColor(Color.parseColor("#08D126"));
-				contorni2.setTextColor(Color.parseColor("#08D126"));
-				pane2.setTextColor(Color.parseColor("#08D126"));
-				
-				//grigio gli altri
-				primo1.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni1.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-				pane1.setTextColor(Color.parseColor("#C4C4C4"));
-				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-				pane4.setTextColor(Color.parseColor("#C4C4C4"));
-				e3.setTextColor(Color.parseColor("#C4C4C4"));
-				e4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-				insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-				pane3.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-			}
-			else if (isPrimoSelected){
-				if (!isDessertSelected)
-					dessert1.setTextColor(Color.parseColor("#08D126"));
-				contorni1.setTextColor(Color.parseColor("#08D126"));
-				pane1.setTextColor(Color.parseColor("#08D126"));
-				//grigio gli altri
-				secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni2.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-				pane2.setTextColor(Color.parseColor("#C4C4C4"));
-				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-				pane4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-				insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-				e3.setTextColor(Color.parseColor("#C4C4C4"));
-				e4.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-				pane3.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-				
-			}
-			
-			else if ((isC1Selected || isC2Selected || isDessertSelected) && !isPrimoSelected && !isSecondoSelected && !isInsalatonaSelected && !isPaninoSelected && !isPizzaSelected){
-				primo1.setTextColor(Color.parseColor("#08D126"));
-				contorni1.setTextColor(Color.parseColor("#08D126"));
-				if (!isDessertSelected){
-					dessert1.setTextColor(Color.parseColor("#08D126"));
-					dessert2.setTextColor(Color.parseColor("#08D126"));
-					dessert3.setTextColor(Color.parseColor("#08D126"));
-					dessert4.setTextColor(Color.parseColor("#08D126"));
-				}
-				pane1.setTextColor(Color.parseColor("#08D126"));
-				secondo2.setTextColor(Color.parseColor("#08D126"));
-				contorni2.setTextColor(Color.parseColor("#08D126"));
-				pane2.setTextColor(Color.parseColor("#08D126"));
-				insalatona3.setTextColor(Color.parseColor("#08D126"));
-				contorni3.setTextColor(Color.parseColor("#08D126"));
-				pane3.setTextColor(Color.parseColor("#08D126"));
-				pizza4.setTextColor(Color.parseColor("#08D126"));
-				contorni4.setTextColor(Color.parseColor("#08D126"));
-				pane4.setTextColor(Color.parseColor("#08D126"));
-				
-			}
-		}	
-			if (isCalled && selected_menu.equals("Intero")){
-				secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni2.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-				pane2.setTextColor(Color.parseColor("#C4C4C4"));
-				pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-				pane4.setTextColor(Color.parseColor("#C4C4C4"));
-				due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
-				insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-				e3.setTextColor(Color.parseColor("#C4C4C4"));
-				e4.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni3.setTextColor(Color.parseColor("#C4C4C4"));
-				pane3.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-				primo1.setTextColor(Color.parseColor("#C4C4C4"));
-				contorni1.setTextColor(Color.parseColor("#C4C4C4"));
-				dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-				pane1.setTextColor(Color.parseColor("#C4C4C4"));
-				
-			}
-		
-
-		super.onResume();
-
 	}
 
 	@Override
