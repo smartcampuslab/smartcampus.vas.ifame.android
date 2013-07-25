@@ -47,11 +47,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 	TextView contornoA3;
 	TextView dessert3;
 	TextView pizza4;
-	TextView due_a_scelta_tra4;
-	TextView contorni4;
-	TextView dessert4;
-	TextView e4;
-	TextView pane4;
+	TextView contorno_o_dessert4;
+	TextView caffe_o_acqua4;
 	
 	boolean isPrimoAvail;
 	boolean isSecondoAvail;
@@ -252,8 +249,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 						dessert1.setTextColor(Color.parseColor("#08D126"));
 						dessert2.setTextColor(Color.parseColor("#08D126"));
 						dessert3.setTextColor(Color.parseColor("#08D126"));
-						if (!isC1Selected && !isC2Selected)
-							dessert4.setTextColor(Color.parseColor("#08D126"));
+
 					}
 					pane1.setTextColor(Color.parseColor("#08D126"));
 					secondo2.setTextColor(Color.parseColor("#08D126"));
@@ -263,9 +259,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 					insalatona3.setTextColor(Color.parseColor("#08D126"));
 					contornoA3.setTextColor(Color.parseColor("#08D126"));
 					pane3.setTextColor(Color.parseColor("#08D126"));
-					pizza4.setTextColor(Color.parseColor("#08D126"));
-					contorni4.setTextColor(Color.parseColor("#08D126"));
-					pane4.setTextColor(Color.parseColor("#08D126"));
+
 
 				}
 			}
@@ -307,11 +301,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
 		} else if (menuNumber == 4) {
 			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
-			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert4.setTextColor(Color.parseColor("#C4C4C4"));
-			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-			e4.setTextColor(Color.parseColor("#C4C4C4"));
+			contorno_o_dessert4.setTextColor(Color.parseColor("#C4C4C4"));
+			caffe_o_acqua4.setTextColor(Color.parseColor("#C4C4C4"));
 		}
 
 	}
@@ -357,21 +348,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 			pane3.setTextColor(Color.parseColor("#08D126"));
 		} else if (menuNumber == 4) {
-			if ((isC1Selected && isC2Selected)
-					|| (isC1Selected && isDessertSelected)
-					|| (isC2Selected && isDessertSelected)) {
-			} else {
-				if (!isC1Selected || !isC2Selected) {
-					contorni4.setTextColor(Color.parseColor("#08D126"));
-				}
-				if (!isDessertSelected) {
-					dessert4.setTextColor(Color.parseColor("#08D126"));
-				}
-
-				if (!isC1Selected && !isC2Selected && !isDessertSelected)
-					due_a_scelta_tra4.setTextColor(Color.parseColor("#08D126"));
-			}
-			pane4.setTextColor(Color.parseColor("#08D126"));
+			contorno_o_dessert4.setTextColor(Color.parseColor("#08D126"));
+			caffe_o_acqua4.setTextColor(Color.parseColor("#08D126"));
 
 		}
 	}
@@ -475,24 +453,16 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		// menu ridotto4
 		pizza4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pizza4);
-		due_a_scelta_tra4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_2a_scelta_tra4);
-		contorni4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_contorni4);
-		dessert4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_dessert4);
-		e4 = (TextView) theContainer.findViewById(R.id.tipologia_ridotto_e4);
-		pane4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_pane4);
+		contorno_o_dessert4 = (TextView) theContainer
+				.findViewById(R.id.tipologia_ridotto_contorno_o_dessert4);
+		caffe_o_acqua4 = (TextView) theContainer
+				.findViewById(R.id.tipologia_ridotto_caffe_o_acqua4);
 
 		pizza4.setText("- " + getString(R.string.iDeciso_pizza) + ", ");
 		pizza4.setTypeface(null, Typeface.BOLD);
-		due_a_scelta_tra4.setText("+ "
-				+ getString(R.string.iDeciso_2a_scelta_tra) + ":");
-		contorni4.setText(" " + getString(R.string.iDeciso_contorni) + " ");
-		dessert4.setText(" "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
-		pane4.setText("+ " + getString(R.string.iDeciso_pane));
+		contorno_o_dessert4.setText("+ "
+				+ getString(R.string.iDeciso_contorno_o_dessert));
+		caffe_o_acqua4.setText("+ " + getString(R.string.iDeciso_acqua_o_caffe));
 	}
 
 	@Override
