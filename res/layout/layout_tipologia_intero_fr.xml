@@ -65,7 +65,6 @@
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
         
-        <!-- cont B -->
         <TextView
             android:id="@+id/tipologia_intero_contorno_b"
             android:layout_width="wrap_content"

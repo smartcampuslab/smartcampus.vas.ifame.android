@@ -1,9 +1,7 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
-//TODO:  è meglio cambiare 2contorni con contorno A e B separati, e cambiare la logica ovviamente
 //errore: se seleziono solo dessert non mi fa vedere paninomenu
 //TODO: cambiare dinamicamente il "2 a scelta" per trasformarlo in "1 a scelta" quando necessario?
-
 
 /*
  * 
@@ -33,20 +31,20 @@ import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 public class TipologiaRidottoFragment extends SherlockFragment {
 
 	ViewGroup theContainer;
+	
 	Intent i;
 	TextView primo1;
-	TextView contorni1;
+	TextView contornoA1;
+	TextView contornoB1;
 	TextView dessert1;
 	TextView pane1;
 	TextView secondo2;
-	TextView contorni2;
+	TextView contornoA2;
 	TextView dessert2;
 	TextView pane2;
 	TextView insalatona3;
-	TextView due_a_scelta_tra3;
 	TextView pane3;
-	TextView contorni3;
-	TextView e3;
+	TextView contornoA3;
 	TextView dessert3;
 	TextView pizza4;
 	TextView due_a_scelta_tra4;
@@ -54,6 +52,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 	TextView dessert4;
 	TextView e4;
 	TextView pane4;
+	
 	boolean isPrimoAvail;
 	boolean isSecondoAvail;
 	boolean isC1Avail;
@@ -201,8 +200,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 				// se aveva scelto lo snack con insalatona
 				if (isInsalatonaSelected) {
-					due_a_scelta_tra3.setTextColor(Color.parseColor("#08D126"));
-					contorni3.setTextColor(Color.parseColor("#08D126"));
+					contornoA3.setTextColor(Color.parseColor("#08D126"));
 					pane3.setTextColor(Color.parseColor("#08D126"));
 					dessert3.setTextColor(Color.parseColor("#08D126"));
 					// grigio gli altri
@@ -212,7 +210,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				} else if (isSecondoSelected) {
 					if (!isDessertSelected)
 						dessert2.setTextColor(Color.parseColor("#08D126"));
-					contorni2.setTextColor(Color.parseColor("#08D126"));
+					if (!isC1Selected && !isC2Selected)
+						contornoA2.setTextColor(Color.parseColor("#08D126"));
 					pane2.setTextColor(Color.parseColor("#08D126"));
 
 					// grigio gli altri
@@ -222,7 +221,10 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				} else if (isPrimoSelected) {
 					if (!isDessertSelected)
 						dessert1.setTextColor(Color.parseColor("#08D126"));
-					contorni1.setTextColor(Color.parseColor("#08D126"));
+					if (!isC1Selected)
+						contornoA1.setTextColor(Color.parseColor("#08D126"));
+					if (!isC2Selected)
+						contornoB1.setTextColor(Color.parseColor("#08D126"));
 					pane1.setTextColor(Color.parseColor("#08D126"));
 					// grigio gli altri
 					coloraGrigio(3);
@@ -241,19 +243,25 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 						&& !isInsalatonaSelected && !isPaninoSelected
 						&& !isPizzaSelected) {
 					primo1.setTextColor(Color.parseColor("#08D126"));
-					contorni1.setTextColor(Color.parseColor("#08D126"));
+					if (!isC1Selected)
+						contornoA1.setTextColor(Color.parseColor("#08D126"));
+					if (!isC2Selected)
+						contornoB1.setTextColor(Color.parseColor("#08D126"));
+
 					if (!isDessertSelected) {
 						dessert1.setTextColor(Color.parseColor("#08D126"));
 						dessert2.setTextColor(Color.parseColor("#08D126"));
 						dessert3.setTextColor(Color.parseColor("#08D126"));
-						dessert4.setTextColor(Color.parseColor("#08D126"));
+						if (!isC1Selected && !isC2Selected)
+							dessert4.setTextColor(Color.parseColor("#08D126"));
 					}
 					pane1.setTextColor(Color.parseColor("#08D126"));
 					secondo2.setTextColor(Color.parseColor("#08D126"));
-					contorni2.setTextColor(Color.parseColor("#08D126"));
+					if (!isC1Selected && !isC2Selected)
+						contornoA2.setTextColor(Color.parseColor("#08D126"));
 					pane2.setTextColor(Color.parseColor("#08D126"));
 					insalatona3.setTextColor(Color.parseColor("#08D126"));
-					contorni3.setTextColor(Color.parseColor("#08D126"));
+					contornoA3.setTextColor(Color.parseColor("#08D126"));
 					pane3.setTextColor(Color.parseColor("#08D126"));
 					pizza4.setTextColor(Color.parseColor("#08D126"));
 					contorni4.setTextColor(Color.parseColor("#08D126"));
@@ -283,25 +291,21 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 	private void coloraGrigio(int menuNumber) {
 		if (menuNumber == 1) {
 			primo1.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni1.setTextColor(Color.parseColor("#C4C4C4"));
+			contornoA1.setTextColor(Color.parseColor("#C4C4C4"));
+			contornoB1.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
 			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-		else if (menuNumber == 2) {
+		} else if (menuNumber == 2) {
 			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni2.setTextColor(Color.parseColor("#C4C4C4"));
+			contornoA2.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
 			pane2.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-		else if (menuNumber == 3) {
-			due_a_scelta_tra3.setTextColor(Color.parseColor("#C4C4C4"));
+		} else if (menuNumber == 3) {
 			insalatona3.setTextColor(Color.parseColor("#C4C4C4"));
-			e3.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni3.setTextColor(Color.parseColor("#C4C4C4"));
+			contornoA3.setTextColor(Color.parseColor("#C4C4C4"));
 			pane3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-		else if (menuNumber == 4) {
+		} else if (menuNumber == 4) {
 			pizza4.setTextColor(Color.parseColor("#C4C4C4"));
 			contorni4.setTextColor(Color.parseColor("#C4C4C4"));
 			due_a_scelta_tra4.setTextColor(Color.parseColor("#C4C4C4"));
@@ -318,50 +322,41 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			if (isPrimoAvail) {
 				primo1.setTextColor(Color.parseColor("#08D126"));
 			}
+			if (!isC1Selected)
+				contornoA1.setTextColor(Color.parseColor("#08D126"));
+			if (!isC2Selected)
+				contornoB1.setTextColor(Color.parseColor("#08D126"));
 
-				if (isC1Avail || isC2Avail) {
-					contorni1.setTextColor(Color.parseColor("#08D126"));
-				}
-				if (!isDessertSelected) {
-					dessert1.setTextColor(Color.parseColor("#08D126"));
-				}
-			
-		}
-		else if (menuNumber == 2) {
+			if (!isDessertSelected) {
+				dessert1.setTextColor(Color.parseColor("#08D126"));
+			}
+
+		} else if (menuNumber == 2) {
 			pane2.setTextColor(Color.parseColor("#08D126"));
 
 			if (isSecondoAvail) {
 				secondo2.setTextColor(Color.parseColor("#08D126"));
 			}
 
-				if (isC1Avail || isC2Avail) {
-					contorni2.setTextColor(Color.parseColor("#08D126"));
-				}
-				if (!isDessertSelected) {
-					dessert2.setTextColor(Color.parseColor("#08D126"));
-				
+			if (!isC1Selected && !isC2Selected) {
+				contornoA2.setTextColor(Color.parseColor("#08D126"));
 			}
-		}
-		else if (menuNumber == 3) {
+			if (!isDessertSelected) {
+				dessert2.setTextColor(Color.parseColor("#08D126"));
 
-			if ((isC1Selected && isC2Selected)
-					|| (isC1Selected && isDessertSelected)
-					|| (isC2Selected && isDessertSelected)) {
-			} else {
-				if ((!isC1Selected && (!isC1Selected || !isC2Selected))
-						|| (!isC2Selected && (!isC1Selected || !isC2Selected))) {
-					contorni3.setTextColor(Color.parseColor("#08D126"));
-				}
-				if (!isDessertSelected && (!isC1Selected || !isC2Selected)) {
-					dessert3.setTextColor(Color.parseColor("#08D126"));
-				}
-
-				if (isInsalatonaAvail)
-					insalatona3.setTextColor(Color.parseColor("#08D126"));
 			}
+		} else if (menuNumber == 3) {
+
+			if (!isC1Selected && !isC2Selected)
+				contornoA3.setTextColor(Color.parseColor("#08D126"));
+			if (!isDessertSelected)
+				dessert3.setTextColor(Color.parseColor("#08D126"));
+
+			if (!isInsalatonaSelected)
+				insalatona3.setTextColor(Color.parseColor("#08D126"));
+
 			pane3.setTextColor(Color.parseColor("#08D126"));
-		}
-		else if (menuNumber == 4) {
+		} else if (menuNumber == 4) {
 			if ((isC1Selected && isC2Selected)
 					|| (isC1Selected && isDessertSelected)
 					|| (isC2Selected && isDessertSelected)) {
@@ -374,7 +369,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				}
 
 				if (!isC1Selected && !isC2Selected && !isDessertSelected)
-				due_a_scelta_tra4.setTextColor(Color.parseColor("#08D126"));
+					due_a_scelta_tra4.setTextColor(Color.parseColor("#08D126"));
 			}
 			pane4.setTextColor(Color.parseColor("#08D126"));
 
@@ -414,8 +409,10 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		// menu ridotto 1
 		primo1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_primo1);
-		contorni1 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_contorni1);
+		contornoA1 = (TextView) theContainer
+				.findViewById(R.id.tipologia_ridotto_contorno_a1);
+		contornoB1 = (TextView) theContainer
+				.findViewById(R.id.tipologia_ridotto_contorno_b1);
 		dessert1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert1);
 		pane1 = (TextView) theContainer
@@ -424,8 +421,12 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		primo1.setText("- "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_first) + ",");
 		primo1.setTypeface(null, Typeface.BOLD);
-		contorni1.setText(" " + getString(R.string.iDeciso_2contorni));
-		contorni1.setTypeface(null, Typeface.BOLD);
+		contornoA1
+				.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
+		contornoB1
+				.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_freddo));
 		dessert1.setText("+ "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane1.setText("+ " + getString(R.string.iDeciso_pane));
@@ -433,8 +434,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		// menu ridotto2
 		secondo2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_secondo2);
-		contorni2 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_contorni2);
+		contornoA2 = (TextView) theContainer
+				.findViewById(R.id.tipologia_ridotto_contorno_a2);
 		dessert2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert2);
 		pane2 = (TextView) theContainer
@@ -444,8 +445,9 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				+ getString(R.string.iDeciso_compose_menu_checkbox_second)
 				+ ",");
 		secondo2.setTypeface(null, Typeface.BOLD);
-		contorni2.setText(" " + getString(R.string.iDeciso_2contorni));
-		contorni2.setTypeface(null, Typeface.BOLD);
+		contornoA2
+				.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
 		dessert2.setText("+ "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane2.setText("+ " + getString(R.string.iDeciso_pane));
@@ -454,13 +456,10 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		// sembra di si....per ora non ne tengo conto perchè credo sia sbagliato
 		insalatona3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_insalatona3);
-		due_a_scelta_tra3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_2a_scelta_tra3);
 		pane3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_pane3);
-		contorni3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_contorni3);
-		e3 = (TextView) theContainer.findViewById(R.id.tipologia_ridotto_e3);
+		contornoA3 = (TextView) theContainer
+				.findViewById(R.id.tipologia_ridotto_contorno_a3);
 		dessert3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_dessert3);
 
@@ -468,11 +467,9 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				+ getString(R.string.iDeciso_compose_menu_checkbox_insalatona)
 				+ ", ");
 		insalatona3.setTypeface(null, Typeface.BOLD);
-		due_a_scelta_tra3.setText("+ "
-				+ getString(R.string.iDeciso_2a_scelta_tra) + ":");
 		pane3.setText("+ " + getString(R.string.iDeciso_pane));
-		contorni3.setText(" " + getString(R.string.iDeciso_contorni) + " ");
-		dessert3.setText(" "
+		contornoA3.setText("+ "+getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
+		dessert3.setText("+ "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 
 		// menu ridotto4

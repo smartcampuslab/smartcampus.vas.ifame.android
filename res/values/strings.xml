@@ -56,7 +56,7 @@
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
     <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenù o Trancio di pizza</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
-    <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
+    <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona o Piatto Freddo</string>
     <string name="iDeciso_alternative_btn">Alternative</string>
     <string name="iDeciso_menu_del_giorno_primi">Primi</string>
     <string name="iDeciso_menu_del_giorno_secondi">Secondi</string>

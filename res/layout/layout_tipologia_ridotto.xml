@@ -44,14 +44,26 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
             android:textSize="17sp" />
+        
+        <!-- cont a -->
         <TextView
-            android:id="@+id/tipologia_ridotto_contorni1"
+            android:id="@+id/tipologia_ridotto_contorno_a1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tipologia_ridotto_primo1"
-            android:layout_alignBottom="@+id/tipologia_ridotto_primo1"
-            android:layout_marginTop="5dp"
-            android:textSize="17sp" />
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_ridotto_primo1"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
+        
+        <!-- cont b -->
+        <TextView
+            android:id="@+id/tipologia_ridotto_contorno_b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_ridotto_contorno_a1"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
         
 
         <TextView
@@ -59,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_ridotto_primo1"
+            android:layout_below="@+id/tipologia_ridotto_contorno_b1"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -83,20 +95,20 @@
             android:textSize="17sp" />
         
         <TextView
-            android:id="@+id/tipologia_ridotto_contorni2"
+            android:id="@+id/tipologia_ridotto_contorno_a2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tipologia_ridotto_secondo2"
-            android:layout_alignBottom="@+id/tipologia_ridotto_secondo2"
-            android:layout_marginTop="5dp"
-            android:textSize="17sp" />
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_ridotto_secondo2"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tipologia_ridotto_dessert2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_ridotto_secondo2"
+            android:layout_below="@+id/tipologia_ridotto_contorno_a2"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -122,45 +134,29 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/tipologia_ridotto_2a_scelta_tra3"
+            android:id="@+id/tipologia_ridotto_contorno_a3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_ridotto_insalatona3"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
-        
-        <TextView
-            android:id="@+id/tipologia_ridotto_contorni3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tipologia_ridotto_2a_scelta_tra3"
-            android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
-            android:textSize="15sp" />
-        
-        <TextView
-            android:id="@+id/tipologia_ridotto_e3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tipologia_ridotto_contorni3"
-            android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
-            android:textSize="15sp"
-            android:text="@string/iDeciso_e" />
-        
+         
         <TextView
             android:id="@+id/tipologia_ridotto_dessert3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tipologia_ridotto_e3"
-            android:layout_alignBottom="@+id/tipologia_ridotto_2a_scelta_tra3"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_ridotto_contorno_a3"
+            android:layout_marginLeft="20dp"
             android:textSize="15sp" />
-
+		
         <TextView
             android:id="@+id/tipologia_ridotto_pane3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_ridotto_2a_scelta_tra3"
+            android:layout_below="@+id/tipologia_ridotto_dessert3"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
