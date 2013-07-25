@@ -36,11 +36,14 @@ public class TipologiaSnackFragment extends SherlockFragment {
 	TextView pane2;
 	TextView panino_o_pizza3;
 	TextView dessert3;
-	TextView acqua_o_caffe3;
+	TextView acqua3;
+	TextView caffe_salse3;
 	TextView insalatona4;
 	TextView pane4;
 	TextView o1;
 	TextView o2;
+	TextView caffe_salse2;
+	TextView caffe_salse1;
 	boolean isPrimoAvail;
 	boolean isSecondoAvail;
 	boolean isC1Avail;
@@ -206,8 +209,10 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			if (isDessertAvail)
 				dessert1.setTextColor(Color.parseColor("#08D126"));
-		}
-		else if (menuNumber == 2) {
+
+			caffe_salse1.setTextColor(Color.parseColor("#08D126"));
+
+		} else if (menuNumber == 2) {
 			pane2.setTextColor(Color.parseColor("#08D126"));
 			if (isSecondoAvail)
 				secondo2.setTextColor(Color.parseColor("#08D126"));
@@ -215,12 +220,12 @@ public class TipologiaSnackFragment extends SherlockFragment {
 				contorno2.setTextColor(Color.parseColor("#08D126"));
 			if (isDessertAvail)
 				dessert2.setTextColor(Color.parseColor("#08D126"));
-		}
-		else if (menuNumber == 3) {
+			caffe_salse2.setTextColor(Color.parseColor("#08D126"));
+		} else if (menuNumber == 3) {
 			dessert3.setTextColor(Color.parseColor("#08D126"));
-			acqua_o_caffe3.setTextColor(Color.parseColor("#08D126"));
-		}
-		else if (menuNumber == 4) {
+			caffe_salse3.setTextColor(Color.parseColor("#08D126"));
+			acqua3.setTextColor(Color.parseColor("#08D126"));
+		} else if (menuNumber == 4) {
 			pane4.setTextColor(Color.parseColor("#08D126"));
 		}
 
@@ -234,20 +239,20 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
 			pane1.setTextColor(Color.parseColor("#C4C4C4"));
 			o1.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-		else if (menuNumber == 2) {
+			caffe_salse1.setTextColor(Color.parseColor("#C4C4C4"));
+		} else if (menuNumber == 2) {
 			o2.setTextColor(Color.parseColor("#C4C4C4"));
 			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
 			contorno2.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
 			pane2.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-		else if (menuNumber == 3) {
+			caffe_salse2.setTextColor(Color.parseColor("#C4C4C4"));
+		} else if (menuNumber == 3) {
 			panino_o_pizza3.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-			acqua_o_caffe3.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-		else if (menuNumber == 4) {
+			acqua3.setTextColor(Color.parseColor("#C4C4C4"));
+			caffe_salse3.setTextColor(Color.parseColor("#C4C4C4"));
+		} else if (menuNumber == 4) {
 			insalatona4.setTextColor(Color.parseColor("#C4C4C4"));
 			pane4.setTextColor(Color.parseColor("#C4C4C4"));
 		}
@@ -285,7 +290,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		o1 = (TextView) theContainer.findViewById(R.id.tipologia_snack_o1);
 		pane1 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_pane1);
-
+		caffe_salse1 = (TextView) theContainer
+				.findViewById(R.id.tipologia_snack_caffe_o_salse1);
 		primo1.setText("- "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_first)
 				+ ", ");
@@ -297,10 +303,12 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		dessert1.setText(" "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane1.setText("+ " + getString(R.string.iDeciso_pane));
-
+		caffe_salse1.setText("+ "+getString(R.string.iDeciso_caffe_o_2_salse));
 		// menu snack 2
 		secondo2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_secondo2);
+		caffe_salse2 = (TextView) theContainer
+				.findViewById(R.id.tipologia_snack_caffe_o_salse2);
 		contorno2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_contorno2);
 		dessert2 = (TextView) theContainer
@@ -319,23 +327,23 @@ public class TipologiaSnackFragment extends SherlockFragment {
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane2.setText("+ " + getString(R.string.iDeciso_pane));
 		o2 = (TextView) theContainer.findViewById(R.id.tipologia_snack_o2);
-
+		caffe_salse2.setText("+ "+getString(R.string.iDeciso_caffe_o_2_salse));
 		// menu snack 3
 		panino_o_pizza3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_panino_o_pizza3);
 		dessert3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_dessert3);
-		acqua_o_caffe3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_acqua_o_caffe3);
-
+		acqua3 = (TextView) theContainer
+				.findViewById(R.id.tipologia_snack_acqua3);
+		caffe_salse3 = (TextView) theContainer
+				.findViewById(R.id.tipologia_snack_caffe_o_salse3);
 		panino_o_pizza3.setText("- " + getString(R.string.iDeciso_panino)
 				+ " o " + getString(R.string.iDeciso_pizza_trancio));
 		panino_o_pizza3.setTypeface(null, Typeface.BOLD);
 		dessert3.setText("+ "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
-		acqua_o_caffe3
-				.setText("+ " + getString(R.string.iDeciso_acqua_o_caffe));
-
+		acqua3.setText("+ " + getString(R.string.iDeciso_acqua));
+		caffe_salse3.setText("+ "+getString(R.string.iDeciso_caffe_o_2_salse));
 		// menu snack 4
 		insalatona4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_insalatona4);

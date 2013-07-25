@@ -64,11 +64,13 @@
     <string name="iDeciso_menu_del_giorno_piatti_freddi">Piatti Freddi</string>
     <string name="iDeciso_alternative_primi">PRIMI PIATTI</string>
     <string name="iDeciso_alternative_secondi">SECONDI PIATTI</string>
+    <string name="iDeciso_caffe_o_2_salse">Caffè o 2 salse</string>
     <string name="iDeciso_alternative_contorni">CONTORNI CALDI</string>
     <string name="iDeciso_alternative_menu">Alternative al menù odierno</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenù</string>
     <string name="iDeciso_2contorni">2 Contorni</string>
     <string name="iDeciso_pane">Pane</string>
+    <string name="iDeciso_acqua">Acqua</string>
     <string name="iDeciso_pizza_trancio">Pizza (trancio)</string>
     <string name="iDeciso_contorno_o_dessert">Contorno o Dessert</string>
     <string name="iDeciso_acqua_o_caffe">Acqua o caffè</string>

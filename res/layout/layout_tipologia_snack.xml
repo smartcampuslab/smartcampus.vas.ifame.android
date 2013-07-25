@@ -71,13 +71,22 @@
             android:layout_alignBottom="@+id/tipologia_snack_contorno1"
             android:textSize="15sp" />
         
-
+		 <TextView
+            android:id="@+id/tipologia_snack_caffe_o_salse1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_snack_contorno1"
+            android:layout_marginLeft="20dp"
+            android:text="@string/iDeciso_caffe_o_2_salse"
+            android:textSize="15sp" />
+        
         <TextView
             android:id="@+id/tipologia_snack_pane1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_contorno1"
+            android:layout_below="@+id/tipologia_snack_caffe_o_salse1"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -117,12 +126,22 @@
             android:layout_alignBottom="@+id/tipologia_snack_contorno2"
             android:textSize="15sp" />
         
+        
+         <TextView
+            android:id="@+id/tipologia_snack_caffe_o_salse2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_snack_contorno2"
+            android:layout_marginLeft="20dp"
+            android:text="@string/iDeciso_caffe_o_2_salse"
+            android:textSize="15sp" />
         <TextView
             android:id="@+id/tipologia_snack_pane2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_contorno2"
+            android:layout_below="@+id/tipologia_snack_caffe_o_salse2"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -146,12 +165,22 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tipologia_snack_acqua_o_caffe3"
+            android:id="@+id/tipologia_snack_acqua3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_snack_dessert3"
             android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/tipologia_snack_caffe_o_salse3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_snack_acqua3"
+            android:layout_marginLeft="20dp"
+            android:text="@string/iDeciso_caffe_o_2_salse"
             android:textSize="15sp" />
 
         
@@ -160,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_snack_acqua_o_caffe3"
+            android:layout_below="@+id/tipologia_snack_caffe_o_salse3"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="11dp"
             android:textSize="17sp" />
