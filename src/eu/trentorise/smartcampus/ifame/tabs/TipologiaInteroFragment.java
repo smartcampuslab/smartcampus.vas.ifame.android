@@ -93,9 +93,12 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				+ getString(R.string.iDeciso_compose_menu_checkbox_second));
 		secondo.setTypeface(null, Typeface.BOLD);
 
-		TextView contorni = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_2contorni);
-		contorni.setText("+ " + getString(R.string.iDeciso_2contorni));
+		TextView contornoA = (TextView) theContainer
+				.findViewById(R.id.tipologia_intero_contorno_a);
+		TextView contornoB = (TextView) theContainer.findViewById(R.id.tipologia_intero_contorno_b);
+		
+		contornoA.setText("+ " + getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
+		contornoB.setText("+ " + getString(R.string.iDeciso_compose_menu_checkbox_contorno_freddo));
 
 		TextView dessert = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_dessert);
@@ -134,7 +137,12 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		boolean isPizzaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PIZZA,
 				false);
 
-		if (isCalled && selected_menu.equals("Intero") && !isPaninoSelected
+		
+		/*
+		 * 
+		 * mi assicuro di non trovarmi nei tre casi dove non è possibile acquistare l'intero
+		 */
+		if (isCalled && !isPaninoSelected
 				&& !isInsalatonaSelected && !isPizzaSelected) {
 
 			pane.setTextColor(Color.parseColor("#08D126"));
@@ -143,37 +151,28 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				primo.setTextColor(Color.parseColor("#08D126"));
 			if (!isSecondoSelected)
 				secondo.setTextColor(Color.parseColor("#08D126"));
-
-			if ((isC1Avail || isC2Avail) || (!isC1Selected || !isC2Selected))
-				contorni.setTextColor(Color.parseColor("#08D126"));
-			if (isDessertAvail || !isDessertSelected) {
+			if (!isC1Selected)
+				contornoA.setTextColor(Color.parseColor("#08D126"));
+			if (!isC2Selected)
+				contornoB.setTextColor(Color.parseColor("#08D126"));
+			if (!isDessertSelected) {
 				dessert.setTextColor(Color.parseColor("#08D126"));
 			}
 
 		}
 
-		if (isCalled && !selected_menu.equals("Intero") && !isPaninoSelected
-				&& !isInsalatonaSelected && !isPizzaSelected ){
-			if (!isPrimoSelected)
-				primo.setTextColor(Color.parseColor("#08D126"));
-			if (!isSecondoSelected)
-				secondo.setTextColor(Color.parseColor("#08D126"));
-			if (!isC1Selected || !isC2Selected)
-				contorni.setTextColor(Color.parseColor("#08D126"));
-			if (!isDessertSelected)
-				dessert.setTextColor(Color.parseColor("#08D126"));
-			pane.setTextColor(Color.parseColor("#08D126"));
-			
-		}
-		
 		/*
 		 * 
 		 * qui significa che arriviamo da un'altra tab e avamo selezionato uno dei tre piatti che non sono matchabili con il menu intero
 		 */
 		if (isCalled
 				&& (isPaninoSelected || isInsalatonaSelected || isPizzaSelected)) {
+			
+			
+			//coloro di grigio
 			primo.setTextColor(Color.parseColor("#C4C4C4"));
-			contorni.setTextColor(Color.parseColor("#C4C4C4"));
+			contornoA.setTextColor(Color.parseColor("#C4C4C4"));
+			contornoB.setTextColor(Color.parseColor("#C4C4C4"));
 			secondo.setTextColor(Color.parseColor("#C4C4C4"));
 			dessert.setTextColor(Color.parseColor("#C4C4C4"));
 			pane.setTextColor(Color.parseColor("#C4C4C4"));
@@ -193,6 +192,5 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		super.onDestroyView();
 	}
 
-	private void setEverythingUp(){}
 	
 }

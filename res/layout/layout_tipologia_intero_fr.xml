@@ -57,11 +57,21 @@
         
 
         <TextView
-            android:id="@+id/tipologia_intero_2contorni"
+            android:id="@+id/tipologia_intero_contorno_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_intero_primo"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp" />
+        
+        <!-- cont B -->
+        <TextView
+            android:id="@+id/tipologia_intero_contorno_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tipologia_intero_contorno_a"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
 
@@ -71,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_2contorni"
+            android:layout_below="@+id/tipologia_intero_contorno_b"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
         
