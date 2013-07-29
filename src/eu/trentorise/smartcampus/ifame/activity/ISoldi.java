@@ -299,7 +299,7 @@ public class ISoldi extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
-				ConnectionUtils.showToastConnectionError(ISoldi.this);
+				ConnectionUtils.showToastErrorToConnectToWebService(ISoldi.this);
 				finish();
 			} else {
 				getAmount(Float.parseFloat(result.getCredit()));

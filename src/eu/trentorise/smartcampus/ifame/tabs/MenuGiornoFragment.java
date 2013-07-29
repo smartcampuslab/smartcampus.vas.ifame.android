@@ -219,7 +219,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 		protected void onPostExecute(MenuDelGiorno result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				ConnectionUtils.showToastConnectionError(getActivity());
+				ConnectionUtils.showToastErrorToConnectToWebService(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuDelGiorno(result);

@@ -21,7 +21,7 @@ public class ConnectionUtils {
 				Toast.LENGTH_SHORT).show();
 	}
 
-	public static void showToastConnectionError(Context context) {
+	public static void showToastErrorToConnectToWebService(Context context) {
 		Toast.makeText(context, "Ooops! Qualcosa e' andato storto!",
 				Toast.LENGTH_SHORT).show();
 	}

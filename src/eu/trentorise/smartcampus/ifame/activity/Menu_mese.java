@@ -203,7 +203,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 			super.onPostExecute(mdm);
 
 			if (mdm == null) {
-				ConnectionUtils.showToastConnectionError(Menu_mese.this);
+				ConnectionUtils.showToastErrorToConnectToWebService(Menu_mese.this);
 				finish();
 			} else {
 

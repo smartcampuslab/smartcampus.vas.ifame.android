@@ -29,6 +29,7 @@ import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -66,12 +67,11 @@ public class IFretta extends SherlockActivity {
 		super.onResume();
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		//nel caso in cui si cambi la mensa preferita in "ifretta details" questo comando assicura che si apportino le opportune modifiche
+		// nel caso in cui si cambi la mensa preferita in "ifretta details"
+		// questo comando assicura che si apportino le opportune modifiche
 		adapter.notifyDataSetChanged();
 	}
 
-	
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
@@ -106,27 +106,30 @@ public class IFretta extends SherlockActivity {
 			convertView = inflater.inflate(R.layout.layout_list_view_ifretta,
 					null);
 
-			TextView nome_mensa = (TextView) convertView
+			TextView text_view_nome_mensa = (TextView) convertView
 					.findViewById(R.id.list_ifretta);
 			Mensa m = getItem(position);
 
-			nome_mensa.setText(m.getMensa_nome());
+			text_view_nome_mensa.setText(m.getMensa_nome());
 
-			SharedPreferences pref = getSharedPreferences(
-					getString(R.string.iFretta_preference_file),
-					Context.MODE_PRIVATE);
-			String mensa_name = pref.getString(
-					IFretta_Details.GET_FAVOURITE_CANTEEN, "No String");
+			String favourite_mensa_name = SharedPreferencesUtils
+					.getDefaultMensa(IFretta.this);
 
-			//se la mensa preferita salvata, è quella che stiamo esaminando, allora la sottolineamo e ci aggiungiamo l'icona star
-			if (m.getMensa_nome().equals(mensa_name)) {
-				Drawable icon_to_right = convertView.getResources().getDrawable(android.R.drawable.star_off);
-				nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null, null, icon_to_right, null);
-				nome_mensa.setTypeface(null, Typeface.BOLD);
-				//SpannableString content = new SpannableString(m.getMensa_nome());
-				//content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
-						//.length(), 0);
-				//nome_mensa.setText(m.getMensa_nome());
+			// se la mensa preferita salvata, è quella che stiamo esaminando,
+			// allora la sottolineamo e ci aggiungiamo l'icona star
+			if (favourite_mensa_name != null
+					&& m.getMensa_nome().equals(favourite_mensa_name)) {
+
+				Drawable icon_to_right = convertView.getResources()
+						.getDrawable(android.R.drawable.star_off);
+				text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(
+						null, null, icon_to_right, null);
+				text_view_nome_mensa.setTypeface(null, Typeface.BOLD);
+				// SpannableString content = new
+				// SpannableString(m.getMensa_nome());
+				// content.setSpan(new UnderlineSpan(), 0, m.getMensa_nome()
+				// .length(), 0);
+				// nome_mensa.setText(m.getMensa_nome());
 			}
 			return convertView;
 		}
@@ -206,7 +209,8 @@ public class IFretta extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
-				ConnectionUtils.showToastConnectionError(IFretta.this);
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(IFretta.this);
 				finish();
 			} else {
 				createWebcamList(result);

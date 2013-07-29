@@ -1,25 +1,39 @@
 package eu.trentorise.smartcampus.ifame.model;
 
 import java.util.Date;
-
+import java.util.List;
 
 public class Giudizio {
 
 	private Long giudizio_id;
-	
-	private Float voto;
 
+	private Float voto;
 
 	private String commento;
 
-
 	private Date ultimo_aggiornamento;
-
 
 	private Long user_id;
 
+	private Long mensa_id;
 
-	private Piatto_Mensa piatto_mensa;
+	private Long piatto_id;
+	
+	private List<Likes> likes; 
+
+	/**
+	 * @return the likes
+	 */
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+	/**
+	 * @param likes the likes to set
+	 */
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
 
 	public Giudizio() {
 		super();
@@ -65,12 +79,20 @@ public class Giudizio {
 		this.user_id = user_id;
 	}
 
-	public Piatto_Mensa getPiatto_mensa() {
-		return piatto_mensa;
+	public Long getMensa_id() {
+		return mensa_id;
 	}
 
-	public void setPiatto_mensa(Piatto_Mensa piatto_mensa) {
-		this.piatto_mensa = piatto_mensa;
+	public void setMensa_id(Long mensa_id) {
+		this.mensa_id = mensa_id;
+	}
+
+	public Long getPiatto_id() {
+		return piatto_id;
+	}
+
+	public void setPiatto_id(Long piatto_id) {
+		this.piatto_id = piatto_id;
 	}
 
 }

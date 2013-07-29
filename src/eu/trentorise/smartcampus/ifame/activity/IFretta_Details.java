@@ -5,10 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.actionbarsherlock.app.SherlockActivity;
-
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -18,18 +15,19 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 
 public class IFretta_Details extends SherlockActivity {
 
 	private MenuItem menuItem;
 	String mensa_name;
-
-	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -139,24 +137,15 @@ public class IFretta_Details extends SherlockActivity {
 			break;
 		case R.id.iFretta_set_as_favourite_webcam:
 
-			SharedPreferences pref = getSharedPreferences(
-					getString(R.string.iFretta_preference_file),
-					Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = pref.edit();
-			editor.putString(GET_FAVOURITE_CANTEEN, mensa_name);
-			editor.commit();
-			Toast.makeText(
-					getApplicationContext(),
-					getString(R.string.iFretta_details_set_favourite_canteen)
-							+ " " + mensa_name, Toast.LENGTH_SHORT).show();
+			SharedPreferencesUtils.setDefaultMensa(this, mensa_name);
+
 			break;
-		/*	
-		case R.id.iFretta_search_in_ViviTrento:
-			Toast.makeText(getApplicationContext(),
-					"implementare collegamento a vivitrento",
-					Toast.LENGTH_SHORT).show();
-			break;
-			*/
+		/*
+		 * case R.id.iFretta_search_in_ViviTrento:
+		 * Toast.makeText(getApplicationContext(),
+		 * "implementare collegamento a vivitrento", Toast.LENGTH_SHORT).show();
+		 * break;
+		 */
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +26,6 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -39,6 +37,7 @@ import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -105,14 +104,16 @@ public class IGradito extends SherlockActivity {
 						.getSelectedItem();
 
 				// Pass values to next activity through an intent
-				if ((piatto.getPiatto_nome().length())!=1){
-				Intent intent = new Intent(IGradito.this,
-						Recensioni_Activity.class);
-				intent.putExtra("nome_piatto", piatto);
-				intent.putExtra("user_id", user_id);
-				intent.putExtra("igradito_spinner_mense", spinner_mensa_value);
-				startActivity(intent);}
-				else{}
+				if ((piatto.getPiatto_nome().length()) != 1) {
+					Intent intent = new Intent(IGradito.this,
+							Recensioni_Activity.class);
+					intent.putExtra("nome_piatto", piatto);
+					intent.putExtra("user_id", user_id);
+					intent.putExtra("igradito_spinner_mense",
+							spinner_mensa_value);
+					startActivity(intent);
+				} else {
+				}
 			}
 
 		});
@@ -318,7 +319,8 @@ public class IGradito extends SherlockActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
-				ConnectionUtils.showToastConnectionError(IGradito.this);
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(IGradito.this);
 				finish();
 			} else {
 				createMenseSpinner(result);
@@ -383,14 +385,16 @@ public class IGradito extends SherlockActivity {
 							.convertJSONToObjects(body, Piatto.class);
 					Collections.sort(lista_piatti_temp, new Comparatore());
 
-					//creo una nuova lista che oltre a contenere i piatti contiene le lettere con cui essi iniziano : ("A", "Anatre", "Ananas", "B", "Banane", "D", "Datteri" ...)
+					// creo una nuova lista che oltre a contenere i piatti
+					// contiene le lettere con cui essi iniziano : ("A",
+					// "Anatre", "Ananas", "B", "Banane", "D", "Datteri" ...)
 					List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
-			
+
 					String letter = "A";
-				
-				//	List <String> startingLetters = new ArrayList<String>();
-					//startingLetters.add("A");
-					
+
+					// List <String> startingLetters = new ArrayList<String>();
+					// startingLetters.add("A");
+
 					lista_piatti_with_headers.add(new Piatto(letter, ""));
 
 					for (int i = 0; i < lista_piatti_temp.size(); i++) {
@@ -401,13 +405,13 @@ public class IGradito extends SherlockActivity {
 						if (!nome_piatto.startsWith(letter)) {
 
 							letter = Character.toString(nome_piatto.charAt(0));
-						//	startingLetters.add(letter);
+							// startingLetters.add(letter);
 							lista_piatti_with_headers
 									.add(new Piatto(letter, ""));
 						}
 
 						lista_piatti_with_headers.add(lista_piatti_temp.get(i));
-					}	
+					}
 
 					return lista_piatti_with_headers;
 				} else {
@@ -431,7 +435,8 @@ public class IGradito extends SherlockActivity {
 		protected void onPostExecute(List<Piatto> result) {
 			// TODO Auto-generated method stub
 			if (result == null) {
-				ConnectionUtils.showToastConnectionError(IGradito.this);
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(IGradito.this);
 				finish();
 			} else {
 
@@ -450,21 +455,20 @@ public class IGradito extends SherlockActivity {
 		}
 	}
 
-	
+	/*
+	 * mostra le mense disponibili nello spinner
+	 */
 	private void createMenseSpinner(List<Mensa> listamense) {
+
 		mense_spinner = (Spinner) findViewById(R.id.spinner_portata);
 
-		MyCursorAdapter adapter = new MyCursorAdapter(this, listamense);
+		MyCursorAdapter adapter = new MyCursorAdapter(IGradito.this, listamense);
+
 		mense_spinner.setAdapter(adapter);
 
-		SharedPreferences pref = getSharedPreferences(
-				getString(R.string.iGradito_preference_file),
-				Context.MODE_PRIVATE);
+		String mensa = SharedPreferencesUtils.getDefaultMensa(IGradito.this);
 
-		String notfound = "notfound";
-
-		String mensa = pref.getString(GET_FAVOURITE_CANTEEN, notfound);
-		if (!mensa.equalsIgnoreCase(notfound)) {
+		if (mensa != null) {
 			// ok avevo settato mensa preferita
 			int pos = 0;
 			for (Mensa m : listamense) {
@@ -473,9 +477,7 @@ public class IGradito extends SherlockActivity {
 				}
 				pos++;
 			}
-
 		}
-
 	}
 
 	/*
@@ -497,7 +499,7 @@ public class IGradito extends SherlockActivity {
 
 	}
 
-	//adapter for dishes
+	// adapter for dishes
 	private class PiattiListAdapter extends ArrayAdapter<Piatto> implements
 			Filterable {
 
@@ -514,29 +516,28 @@ public class IGradito extends SherlockActivity {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			Piatto piattoDelGiorno = getItem(position);
-			
+
 			TextView nome_piatto_del_giorno;
 			TextView kcal_piatto_del_giorno;
-			
-			if ((piattoDelGiorno.getPiatto_nome().length()) == 1){
+
+			if ((piattoDelGiorno.getPiatto_nome().length()) == 1) {
 				convertView = inflater.inflate(
 						R.layout.layout_row_header_menu_adapter, null);
-				
-				nome_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu_day_header_adapter);
-				kcal_piatto_del_giorno = (TextView) convertView.findViewById(R.id.menu__kcal_header_adapter);
-			}
-			else{
+
+				nome_piatto_del_giorno = (TextView) convertView
+						.findViewById(R.id.menu_day_header_adapter);
+				kcal_piatto_del_giorno = (TextView) convertView
+						.findViewById(R.id.menu__kcal_header_adapter);
+			} else {
 				convertView = inflater.inflate(
 						R.layout.layout_row_menu_adapter, null);
 
-			
-			nome_piatto_del_giorno = (TextView) convertView
-					.findViewById(R.id.menu_name_adapter);
+				nome_piatto_del_giorno = (TextView) convertView
+						.findViewById(R.id.menu_name_adapter);
 
-			kcal_piatto_del_giorno = (TextView) convertView
-					.findViewById(R.id.menu_kcal_adapter);
+				kcal_piatto_del_giorno = (TextView) convertView
+						.findViewById(R.id.menu_kcal_adapter);
 
-			
 			}
 
 			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());

@@ -37,7 +37,7 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
-import eu.trentorise.smartcampus.ifame.model.GiudizioNew;
+import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.Likes;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
@@ -53,21 +53,30 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class Recensioni_Activity extends SherlockActivity {
 
 	List<Mensa> listaMense = null;
-	MenuItem menuItem = null;
-	ReviewAdapter adapter = null;
-	Piatto piatto;
-	String user_id;
-	String mioCommento = null;
-	Integer mioVoto = null;
-	Mensa mensa;
-	TextView giudizio_espresso_da;
-	TextView giudizio_medio_txt;
-	TextView no_data_to_display;
-	// PostLikeConnector postLike;
-	GiudizioDataToPost giudizioDataToPost = null;
-	ListView giudiziListview;
 
-	// String add = "http://192.168.33.106:8080/web-ifame";
+	MenuItem menuItem = null;
+
+	ReviewAdapter adapter = null;
+
+	Piatto piatto;
+
+	String user_id;
+
+	String mioCommento = null;
+
+	Integer mioVoto = null;
+
+	Mensa mensa;
+
+	TextView giudizio_espresso_da;
+
+	TextView giudizio_medio_txt;
+
+	TextView no_data_to_display;
+
+	GiudizioDataToPost giudizioDataToPost = null;
+
+	ListView giudiziListview;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +112,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	}
 
 	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * 
 	 * 
 	 * DISPLAY THE CUSTOMIZED DIALOG
@@ -312,12 +314,12 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 * ADAPTER FOR DISPLAYING REVIEWS PROBLEM
 	 */
-	public class ReviewAdapter extends ArrayAdapter<GiudizioNew> {
+	public class ReviewAdapter extends ArrayAdapter<Giudizio> {
 
 		SimpleDateFormat dateformat = null;
 
 		public ReviewAdapter(Activity activity, int layout_id,
-				List<GiudizioNew> reviews) {
+				List<Giudizio> reviews) {
 			super(activity, layout_id, reviews);
 			dateformat = new SimpleDateFormat("HH:mm  dd/MM/yy");
 		}
@@ -327,7 +329,7 @@ public class Recensioni_Activity extends SherlockActivity {
 			View view = convertView;
 
 			final DataHandler handler;
-			final GiudizioNew giudizio = getItem(position);
+			final Giudizio giudizio = getItem(position);
 			if (view == null) {
 
 				LayoutInflater inflater = (LayoutInflater) getContext()
@@ -593,7 +595,7 @@ public class Recensioni_Activity extends SherlockActivity {
 	 */
 
 	private class GetGiudizioConnector extends
-			AsyncTask<Long, Void, List<GiudizioNew>> {
+			AsyncTask<Long, Void, List<Giudizio>> {
 		private ProtocolCarrier mProtocolCarrier;
 		private ProgressDialog progressDialog;
 		private Context context;
@@ -613,7 +615,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 
 		@Override
-		protected List<GiudizioNew> doInBackground(Long... params) {
+		protected List<Giudizio> doInBackground(Long... params) {
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
@@ -630,8 +632,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
-					List<GiudizioNew> list = Utils.convertJSONToObjects(body,
-							GiudizioNew.class);
+					List<Giudizio> list = Utils.convertJSONToObjects(body,
+							Giudizio.class);
 					return list;
 				} else {
 					return null;
@@ -651,13 +653,13 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 
 		@Override
-		protected void onPostExecute(List<GiudizioNew> result) {
+		protected void onPostExecute(List<Giudizio> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
 				progressDialog.dismiss();
 				ConnectionUtils
-						.showToastConnectionError(Recensioni_Activity.this);
+						.showToastErrorToConnectToWebService(Recensioni_Activity.this);
 			} else {
 				createGiudiziList(result);
 				progressDialog.dismiss();
@@ -681,7 +683,7 @@ public class Recensioni_Activity extends SherlockActivity {
 	 */
 
 	private class PostGiudizioConnector extends
-			AsyncTask<Long, Void, List<GiudizioNew>> {
+			AsyncTask<Long, Void, List<Giudizio>> {
 		private ProtocolCarrier mProtocolCarrier;
 		private Context context;
 		private String appToken = "test smartcampus";
@@ -705,7 +707,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 
 		@Override
-		protected List<GiudizioNew> doInBackground(Long... params) {
+		protected List<Giudizio> doInBackground(Long... params) {
 			// TODO Auto-generated method stu
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
@@ -729,8 +731,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
-					List<GiudizioNew> list = Utils.convertJSONToObjects(body,
-							GiudizioNew.class);
+					List<Giudizio> list = Utils.convertJSONToObjects(body,
+							Giudizio.class);
 					return list;
 				} else {
 					return null;
@@ -750,12 +752,12 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 
 		@Override
-		protected void onPostExecute(List<GiudizioNew> result) {
+		protected void onPostExecute(List<Giudizio> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils
-						.showToastConnectionError(Recensioni_Activity.this);
+						.showToastErrorToConnectToWebService(Recensioni_Activity.this);
 			} else {
 				createGiudiziList(result);
 				progressDialog.dismiss();
@@ -769,12 +771,12 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 * METHOD CALLED AFTER POST OR GET GIUDIZI FROM THE EWB
 	 */
-	private void createGiudiziList(List<GiudizioNew> reviews) {
+	private void createGiudiziList(List<Giudizio> reviews) {
 
 		int review_size = reviews.size();
 		float avg = 0;
 		if (review_size > 0) {
-			for (GiudizioNew g : reviews) {
+			for (Giudizio g : reviews) {
 				// calcolo la media
 				avg += g.getVoto();
 				if (g.getUser_id() == Long.parseLong(user_id)) {
@@ -785,7 +787,7 @@ public class Recensioni_Activity extends SherlockActivity {
 			avg = avg / (float) review_size;
 
 			// non mostro i commenti vuoti
-			Iterator<GiudizioNew> i = reviews.iterator();
+			Iterator<Giudizio> i = reviews.iterator();
 			while (i.hasNext()) {
 				if (i.next().getCommento().equals("")) {
 					i.remove();
@@ -807,7 +809,8 @@ public class Recensioni_Activity extends SherlockActivity {
 			// se ho solo recensioni senza commenti
 			if (adapter.getCount() == 0) {
 				giudiziListview.setVisibility(View.GONE);
-				no_data_to_display.setText("Nessun utente lasciato un commento!");
+				no_data_to_display
+						.setText("Nessun utente lasciato un commento!");
 				no_data_to_display.setVisibility(View.VISIBLE);
 			} else {
 				giudiziListview.setVisibility(View.VISIBLE);
