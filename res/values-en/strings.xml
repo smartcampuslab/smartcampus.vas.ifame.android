@@ -49,70 +49,73 @@
     <string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
     <string name="iDeciso_tipologie_menu_credito_sufficiente">You don\'t have enough credit: €</string>
     <string name="iDeciso_tipologie_menu_credito_insufficiente">Not enought credit to buy this menu</string>
-    <string name="iDeciso_compose_menu_checkbox_first">Primo Piatto</string>
-    <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno A</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno B</string>
+    <string name="iDeciso_compose_menu_checkbox_first">First course</string>
+    <string name="iDeciso_compose_menu_checkbox_second">Second course</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Side dish A</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Side dish B</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenù o Trancio di pizza</string>
+    <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenù or Pizza (Slice)</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calculate</string>
-    <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
+    <string name="iDeciso_compose_menu_checkbox_insalatona">Mixed salad</string>
     <string name="iDeciso_alternative_btn">Alternatives</string>
-    <string name="iDeciso_menu_del_giorno_primi">Primi</string>
-    <string name="iDeciso_menu_del_giorno_secondi">Secondi</string>
-    <string name="iDeciso_menu_del_giorno_contorni">Contorni</string>
-    <string name="iDeciso_menu_del_giorno_piatti_freddi">Piatti Freddi</string>
-    <string name="iDeciso_alternative_primi">PRIMI PIATTI</string>
-    <string name="iDeciso_alternative_secondi">SECONDI PIATTI</string>
-    <string name="iDeciso_alternative_contorni">CONTORNI CALDI</string>
+    <string name="iDeciso_menu_del_giorno_primi">First dishes</string>
+    <string name="iDeciso_menu_del_giorno_secondi">Second dishes</string>
+    <string name="iDeciso_menu_del_giorno_contorni">Side dishes</string>
+    <string name="iDeciso_menu_del_giorno_piatti_freddi">Cold dishes</string>
+    <string name="iDeciso_alternative_primi">FIRST DISHES</string>
+    <string name="iDeciso_alternative_secondi">SECOND DISHES</string>
+    <string name="iDeciso_alternative_contorni">WARM SIDE DISHES</string>
     <string name="iDeciso_alternative_menu">Alternatives to the daily menù</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenù</string>
-    <string name="iDeciso_2contorni">2 Contorni</string>
+    <string name="iDeciso_2contorni">2 Side dishes</string>
     <string name="iDeciso_pane">Bread</string>
+    <string name="iDeciso_acqua">Water</string>
+    <string name="iDeciso_caffe_o_2_salse">Coffee or 2 sauces</string>
+    <string name="iDeciso_contorno_o_dessert">Side dish o Dessert</string>
     <string name="iDeciso_pizza_trancio">Pizza (slice)</string>
     <string name="iDeciso_acqua_o_caffe">Water or Coffee</string>
-    <string name="iDeciso_panino">Panino</string>
-    <string name="iDeciso_2a_scelta_tra">2 a scelta tra</string>
-    <string name="iDeciso_contorni">Contorni</string>
+    <string name="iDeciso_panino">Bread</string>
+    <string name="iDeciso_2a_scelta_tra">2 choices between</string>
+    <string name="iDeciso_contorni">Side dishes</string>
     <string name="iDeciso_pizza">Pizza</string>
-    <string name="iDeciso_menu_types_intero">Intero</string>
-    <string name="iDeciso_menu_types_ridotto">Ridotto</string>
+    <string name="iDeciso_menu_types_intero">Complete Menù</string>
+    <string name="iDeciso_menu_types_ridotto">Reduced Menù</string>
     <string name="iDeciso_menu_types_snack">Snack</string>
-    <string name="iDeciso_o">o</string>
-    <string name="iDeciso_e">e</string>
+    <string name="iDeciso_o">or</string>
+    <string name="iDeciso_e">and</string>
     <string name="iDeciso_menu_intero_price"><u>€4,70</u></string>
     <string name="iDeciso_menu_ridotto_price"><u>€4,20</u></string>
     <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
-    <string name="iDeciso_menu_mese_settimana">Settimana</string>
-    <string name="iDeciso_GoogleSearchAlertText">Mostrare risultati per: </string>
-    <string name="iDeciso_GoogleSearchAlertAccept">Avvia ricerca</string>
-    <string name="iDeciso_alternatives_title_activity">Alternative</string>
-    <string name="iDeciso_compose_menu_no_items_selected">Seleziona almeno un piatto!</string>
-    <string name="iDeciso_monthly_menu_january">Gennaio</string>
-    <string name="iDeciso_monthly_menu_february">Febbraio</string>
-    <string name="iDeciso_monthly_menu_march">Marzo</string>
-    <string name="iDeciso_monthly_menu_april">Aprile</string>
-    <string name="iDeciso_monthly_menu_may">Maggio</string>
-    <string name="iDeciso_monthly_menu_june">Giugno</string>
-    <string name="iDeciso_monthly_menu_july">Luglio</string>
-    <string name="iDeciso_monthly_menu_august">Agosto</string>
-    <string name="iDeciso_monthly_menu_september">Settembre</string>
-    <string name="iDeciso_monthly_menu_october">Ottobre</string>
-    <string name="iDeciso_monthly_menu_november">Novembre</string>
-    <string name="iDeciso_monthly_menu_december">Dicembre</string>
-    <string name="iDeciso_monthly_menu_of">Menù di</string>
-    <string name="iDeciso_monthly_menu_from">Dal</string>
-    <string name="iDeciso_monthly_menu_to">al</string>
+    <string name="iDeciso_menu_mese_settimana">Week</string>
+    <string name="iDeciso_GoogleSearchAlertText">Show results by: </string>
+    <string name="iDeciso_GoogleSearchAlertAccept">Search</string>
+    <string name="iDeciso_alternatives_title_activity">Alternatives</string>
+    <string name="iDeciso_compose_menu_no_items_selected">Please select at least one dish!</string>
+    <string name="iDeciso_monthly_menu_january">January</string>
+    <string name="iDeciso_monthly_menu_february">February</string>
+    <string name="iDeciso_monthly_menu_march">March</string>
+    <string name="iDeciso_monthly_menu_april">April</string>
+    <string name="iDeciso_monthly_menu_may">May</string>
+    <string name="iDeciso_monthly_menu_june">June</string>
+    <string name="iDeciso_monthly_menu_july">July</string>
+    <string name="iDeciso_monthly_menu_august">August</string>
+    <string name="iDeciso_monthly_menu_september">September</string>
+    <string name="iDeciso_monthly_menu_october">October</string>
+    <string name="iDeciso_monthly_menu_november">November</string>
+    <string name="iDeciso_monthly_menu_december">December</string>
+    <string name="iDeciso_monthly_menu_of">Menù of</string>
+    <string name="iDeciso_monthly_menu_from">From</string>
+    <string name="iDeciso_monthly_menu_to">To</string>
 
     <!-- /iDeciso -->
 
 
     <!-- iGradito -->
-    <string name="iGradito_recensioni_order_by_date">Ordina per data</string>
-    <string name="iGradito_recensioni_order_by_likes">Ordina per likes</string>
-    <string name="iGradito_spinner">Scegli una categoria</string>
-    <string name="iGradito_search">Ricerca un piatto</string>
-    <string name="iGradito_add_comment">Aggiungi una recensione</string>
+    <string name="iGradito_recensioni_order_by_date">Order by date</string>
+    <string name="iGradito_recensioni_order_by_likes">Order by likes</string>
+    <string name="iGradito_spinner">Select a category</string>
+    <string name="iGradito_search">Search for a dish</string>
+    <string name="iGradito_add_comment">Add a review</string>
     <string name="iGradito_title_activity">iGradito</string>
     <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
     <string name="iGradito_Activity">iGradito</string>
@@ -122,11 +125,11 @@
 
 
     <!-- iSoldi -->
-    <string name="iSoldi_puoi_acquistare">Puoi acquistare:</string>
-    <string name="iSoldi_devi_ricaricare">Devi ricaricare</string>
-    <string name="iSoldi_credito_residuo">Il tuo credito residuo:</string>
+    <string name="iSoldi_puoi_acquistare">You can buy:</string>
+    <string name="iSoldi_devi_ricaricare">A recharge is required</string>
+    <string name="iSoldi_credito_residuo">Your remaining credit is:</string>
     <string name="iSoldi_title_activity">iSoldi</string>
-    <string name="iSoldi_statistic_button_text">Le tue statistiche </string>
+    <string name="iSoldi_statistic_button_text">Your statistics </string>
     <!-- /iSoldi -->
 
 
