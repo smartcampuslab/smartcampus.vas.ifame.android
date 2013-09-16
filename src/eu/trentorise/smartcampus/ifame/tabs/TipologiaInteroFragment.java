@@ -1,4 +1,5 @@
 package eu.trentorise.smartcampus.ifame.tabs;
+
 /*
  * 
  * fragment per il menu intero
@@ -95,10 +96,15 @@ public class TipologiaInteroFragment extends SherlockFragment {
 
 		TextView contornoA = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_contorno_a);
-		TextView contornoB = (TextView) theContainer.findViewById(R.id.tipologia_intero_contorno_b);
-		
-		contornoA.setText("+ " + getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
-		contornoB.setText("+ " + getString(R.string.iDeciso_compose_menu_checkbox_contorno_freddo));
+		TextView contornoB = (TextView) theContainer
+				.findViewById(R.id.tipologia_intero_contorno_b);
+
+		contornoA
+				.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
+		contornoB
+				.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_freddo));
 
 		TextView dessert = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_dessert);
@@ -137,13 +143,13 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		boolean isPizzaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PIZZA,
 				false);
 
-		
 		/*
 		 * 
-		 * mi assicuro di non trovarmi nei tre casi dove non è possibile acquistare l'intero
+		 * mi assicuro di non trovarmi nei tre casi dove non ï¿½ possibile
+		 * acquistare l'intero
 		 */
-		if (isCalled && !isPaninoSelected
-				&& !isInsalatonaSelected && !isPizzaSelected) {
+		if (isCalled && !isPaninoSelected && !isInsalatonaSelected
+				&& !isPizzaSelected) {
 
 			pane.setTextColor(Color.parseColor("#08D126"));
 
@@ -163,13 +169,13 @@ public class TipologiaInteroFragment extends SherlockFragment {
 
 		/*
 		 * 
-		 * qui significa che arriviamo da un'altra tab e avamo selezionato uno dei tre piatti che non sono matchabili con il menu intero
+		 * qui significa che arriviamo da un'altra tab e avamo selezionato uno
+		 * dei tre piatti che non sono matchabili con il menu intero
 		 */
 		if (isCalled
 				&& (isPaninoSelected || isInsalatonaSelected || isPizzaSelected)) {
-			
-			
-			//coloro di grigio
+
+			// coloro di grigio
 			primo.setTextColor(Color.parseColor("#C4C4C4"));
 			contornoA.setTextColor(Color.parseColor("#C4C4C4"));
 			contornoB.setTextColor(Color.parseColor("#C4C4C4"));
@@ -192,5 +198,4 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		super.onDestroyView();
 	}
 
-	
 }

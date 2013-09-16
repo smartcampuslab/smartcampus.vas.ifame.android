@@ -302,7 +302,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		dessert1.setText(" "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane1.setText("+ " + getString(R.string.iDeciso_pane));
-		caffe_salse1.setText("+ "+getString(R.string.iDeciso_caffe_o_2_salse));
+		caffe_salse1
+				.setText("+ " + getString(R.string.iDeciso_caffe_o_2_salse));
 		// menu snack 2
 		secondo2 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_secondo2);
@@ -326,7 +327,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		pane2.setText("+ " + getString(R.string.iDeciso_pane));
 		o2 = (TextView) theContainer.findViewById(R.id.tipologia_snack_o2);
-		caffe_salse2.setText("+ "+getString(R.string.iDeciso_caffe_o_2_salse));
+		caffe_salse2
+				.setText("+ " + getString(R.string.iDeciso_caffe_o_2_salse));
 		// menu snack 3
 		panino_o_pizza3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_panino_o_pizza3);
@@ -342,7 +344,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		dessert3.setText("+ "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 		acqua3.setText("+ " + getString(R.string.iDeciso_acqua));
-		caffe_salse3.setText("+ "+getString(R.string.iDeciso_caffe_o_2_salse));
+		caffe_salse3
+				.setText("+ " + getString(R.string.iDeciso_caffe_o_2_salse));
 		// menu snack 4
 		insalatona4 = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_insalatona4);

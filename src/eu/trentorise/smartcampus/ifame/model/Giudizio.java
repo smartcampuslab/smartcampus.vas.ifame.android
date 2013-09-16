@@ -18,8 +18,8 @@ public class Giudizio {
 	private Long mensa_id;
 
 	private Long piatto_id;
-	
-	private List<Likes> likes; 
+
+	private List<Likes> likes;
 
 	/**
 	 * @return the likes
@@ -29,7 +29,8 @@ public class Giudizio {
 	}
 
 	/**
-	 * @param likes the likes to set
+	 * @param likes
+	 *            the likes to set
 	 */
 	public void setLikes(List<Likes> likes) {
 		this.likes = likes;

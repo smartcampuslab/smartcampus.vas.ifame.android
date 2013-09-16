@@ -45,8 +45,8 @@ public class Likes {
 	public Boolean getIs_like() {
 		return is_like;
 	}
-	
-	public Long getUser_id(){
+
+	public Long getUser_id() {
 		return user_id;
 	}
 

@@ -12,7 +12,6 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
@@ -25,44 +24,41 @@ public class IDeciso extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		// per ora da qui ottengo i soldi presenti nella card e salvo in
-		// preferences, salveremo nel bundle spero e quindi prenderemo semplicemente il valore da li
+		// preferences, salveremo nel bundle spero e quindi prenderemo
+		// semplicemente il valore da li
 		float cash;
 		Saldo saldoReturn;
-		/*try {
-			saldoReturn = (Saldo) new ISoldiConnector(getApplicationContext())
-					.execute().get();
-
-			if (saldoReturn == null) {
-				//Toast.makeText(getApplicationContext(), "Saldo in denaro mancante", Toast.LENGTH_LONG).show();
-			} else {
-
-				cash = Float.parseFloat(saldoReturn.getCredit());
-
-				SharedPreferences pref = getSharedPreferences(
-						getString(R.string.iFretta_preference_file),
-						Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = pref.edit();
-
-			//	Toast.makeText(getApplicationContext(), "Cash: "+cash, Toast.LENGTH_LONG).show();
-				editor.remove(ISoldi.GET_AMOUNT_MONEY);
-				editor.putFloat(ISoldi.GET_AMOUNT_MONEY, cash);
-				editor.commit();
-			}
-
-		} catch (InterruptedException e) {
-			Toast.makeText(getApplicationContext(), "InterruptedException", Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			Toast.makeText(getApplicationContext(), "ExecutionException", Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		}
-*/
+		/*
+		 * try { saldoReturn = (Saldo) new
+		 * ISoldiConnector(getApplicationContext()) .execute().get();
+		 * 
+		 * if (saldoReturn == null) { //Toast.makeText(getApplicationContext(),
+		 * "Saldo in denaro mancante", Toast.LENGTH_LONG).show(); } else {
+		 * 
+		 * cash = Float.parseFloat(saldoReturn.getCredit());
+		 * 
+		 * SharedPreferences pref = getSharedPreferences(
+		 * getString(R.string.iFretta_preference_file), Context.MODE_PRIVATE);
+		 * SharedPreferences.Editor editor = pref.edit();
+		 * 
+		 * // Toast.makeText(getApplicationContext(), "Cash: "+cash,
+		 * Toast.LENGTH_LONG).show(); editor.remove(ISoldi.GET_AMOUNT_MONEY);
+		 * editor.putFloat(ISoldi.GET_AMOUNT_MONEY, cash); editor.commit(); }
+		 * 
+		 * } catch (InterruptedException e) {
+		 * Toast.makeText(getApplicationContext(), "InterruptedException",
+		 * Toast.LENGTH_LONG).show(); e.printStackTrace(); } catch
+		 * (ExecutionException e) { Toast.makeText(getApplicationContext(),
+		 * "ExecutionException", Toast.LENGTH_LONG).show(); e.printStackTrace();
+		 * }
+		 */
 		setContentView(R.layout.layout_ideciso);
 
-		
-		//popoliamo la listview
-		String[] features = { getString(R.string.iDeciso_home_daily_menu), getString(R.string.iDeciso_home_menu_types),
-				getString(R.string.iDeciso_home_compose_menu), getString(R.string.iDeciso_home_monthly_menu) };
+		// popoliamo la listview
+		String[] features = { getString(R.string.iDeciso_home_daily_menu),
+				getString(R.string.iDeciso_home_menu_types),
+				getString(R.string.iDeciso_home_compose_menu),
+				getString(R.string.iDeciso_home_monthly_menu) };
 		ArrayList<String> features_list = new ArrayList<String>();
 
 		for (int i = 0; i < features.length; i++) {
@@ -106,7 +102,7 @@ public class IDeciso extends SherlockActivity {
 		});
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;

@@ -24,12 +24,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -39,7 +37,6 @@ import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment.StartWebSearchAlertDialog;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -203,7 +200,8 @@ public class Menu_mese extends SherlockFragmentActivity {
 			super.onPostExecute(mdm);
 
 			if (mdm == null) {
-				ConnectionUtils.showToastErrorToConnectToWebService(Menu_mese.this);
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(Menu_mese.this);
 				finish();
 			} else {
 
@@ -319,8 +317,11 @@ public class Menu_mese extends SherlockFragmentActivity {
 					int position, long arg3) {
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto_nome();
-				
-				if(!selectedDish.matches("[0-9]+")){ //assure that the date number values are not included in the search
+
+				if (!selectedDish.matches("[0-9]+")) { // assure that the date
+														// number values are not
+														// included in the
+														// search
 					StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 					dialog.show(getSupportFragmentManager(), null);
 				}

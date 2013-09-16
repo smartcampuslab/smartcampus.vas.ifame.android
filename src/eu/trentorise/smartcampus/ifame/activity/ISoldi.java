@@ -2,15 +2,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
 
-
-/*
- * 
- * per ora è tutto basato sul recupero dell'importo nella tessera FASULLO (cambia di volta in volta)
- * in base all'importo vengono mostrati i tipi di menu che sono acquistabili, o nessuno altrimenti
- * 
- * le statistiche non sono ancora disponibili per mancanza di dati forniteci da OU
- */
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,20 +10,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -46,6 +29,14 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
+
+/*
+ * 
+ * per ora ï¿½ tutto basato sul recupero dell'importo nella tessera FASULLO (cambia di volta in volta)
+ * in base all'importo vengono mostrati i tipi di menu che sono acquistabili, o nessuno altrimenti
+ * 
+ * le statistiche non sono ancora disponibili per mancanza di dati forniteci da OU
+ */
 
 public class ISoldi extends SherlockActivity {
 
@@ -82,7 +73,7 @@ public class ISoldi extends SherlockActivity {
 		ridottoText = (TextView) findViewById(R.id.isoldi_ridotto_text);
 		interoText = (TextView) findViewById(R.id.isoldi_intero_text);
 		snackText = (TextView) findViewById(R.id.isoldi_snack_text);
-		statsButton = (TextView)findViewById(R.id.isoldi_statistics_button);
+		statsButton = (TextView) findViewById(R.id.isoldi_statistics_button);
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
@@ -179,35 +170,29 @@ public class ISoldi extends SherlockActivity {
 
 		}
 	}
-/*
-	public void showUserStats() {
 
-		final View userStatsLayout = (View) findViewById(R.id.user_stats);
-
-		ToggleButton showUserStats_button = (ToggleButton) findViewById(R.id.isoldi_statistics_button);
-
-		if (showUserStats_button.isChecked()) {
-			userStatsLayout.setVisibility(View.VISIBLE);
-
-		} else {
-			userStatsLayout.setVisibility(View.GONE);
-		}
-
-		showUserStats_button
-				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						if (isChecked) {
-							userStatsLayout.setVisibility(View.VISIBLE);
-
-						} else {
-							userStatsLayout.setVisibility(View.GONE);
-						}
-					}
-				});
-	}
-*/
+	/*
+	 * public void showUserStats() {
+	 * 
+	 * final View userStatsLayout = (View) findViewById(R.id.user_stats);
+	 * 
+	 * ToggleButton showUserStats_button = (ToggleButton)
+	 * findViewById(R.id.isoldi_statistics_button);
+	 * 
+	 * if (showUserStats_button.isChecked()) {
+	 * userStatsLayout.setVisibility(View.VISIBLE);
+	 * 
+	 * } else { userStatsLayout.setVisibility(View.GONE); }
+	 * 
+	 * showUserStats_button .setOnCheckedChangeListener(new
+	 * CompoundButton.OnCheckedChangeListener() {
+	 * 
+	 * @Override public void onCheckedChanged(CompoundButton buttonView, boolean
+	 * isChecked) { if (isChecked) {
+	 * userStatsLayout.setVisibility(View.VISIBLE);
+	 * 
+	 * } else { userStatsLayout.setVisibility(View.GONE); } } }); }
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
@@ -299,7 +284,8 @@ public class ISoldi extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
-				ConnectionUtils.showToastErrorToConnectToWebService(ISoldi.this);
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(ISoldi.this);
 				finish();
 			} else {
 				getAmount(Float.parseFloat(result.getCredit()));

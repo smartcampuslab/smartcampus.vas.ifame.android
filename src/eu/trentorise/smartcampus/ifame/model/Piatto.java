@@ -2,14 +2,12 @@ package eu.trentorise.smartcampus.ifame.model;
 
 import java.io.Serializable;
 
-
 public class Piatto implements Serializable {
 
 	private Long piatto_id;
-	
+
 	private String piatto_nome;
 
-	
 	private String piatto_kcal;
 
 	public Piatto() {

@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import com.actionbarsherlock.app.SherlockDialogFragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -17,17 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
+import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
@@ -203,7 +201,8 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		protected void onPostExecute(List<Piatto> result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				ConnectionUtils.showToastErrorToConnectToWebService(getActivity());
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuAlternative(result);

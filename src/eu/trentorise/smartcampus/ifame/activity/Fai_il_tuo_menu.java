@@ -1,12 +1,5 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,14 +7,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.ifame.R;
 
 public class Fai_il_tuo_menu extends SherlockActivity {
 
-	//queste variabili salvano, alla pressione del bottone, lo stato delle checkboxes
+	// queste variabili salvano, alla pressione del bottone, lo stato delle
+	// checkboxes
 	private boolean isPrimoPiatto;
 	private boolean isSecondoPiatto;
 	private boolean isContorno1;
@@ -31,7 +30,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 	private boolean isPanino;
 	private boolean isPizza;
 
-	//stringhe statiche da usare come keys per gli intent extras
+	// stringhe statiche da usare come keys per gli intent extras
 	public static final String SELECTED_MENU = "selected_menu";
 	public static final String HAS_CALLED_TIPOLOGIE = "has_called_tipologie";
 	public static final String PRIMO_AVAILABLE = "primoAvailable";
@@ -79,7 +78,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_fai_il_tuo_menu);
 
-		//istanzia gli elementi dell'UI e assegna i vari listeners alle checkboxes
+		// istanzia gli elementi dell'UI e assegna i vari listeners alle
+		// checkboxes
 		componiMenu();
 
 		Button confirm = (Button) findViewById(R.id.confirm_menu_btn);
@@ -88,7 +88,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 
-				//alla pressione del pulsante, controllo quali checkboxes sono selezionate
+				// alla pressione del pulsante, controllo quali checkboxes sono
+				// selezionate
 				isPrimoPiatto = primo.isChecked();
 				isSecondoPiatto = secondo.isChecked();
 				isContorno1 = contorno1.isChecked();
@@ -98,7 +99,9 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 				isPizza = pizza.isChecked();
 				isPanino = panino.isChecked();
 
-				//queste variabili servono a salvare se un piatto può essere ancora acquistato rimanendo comunque nel menu scelto, senza dunque aumentare il prezzo
+				// queste variabili servono a salvare se un piatto puï¿½ essere
+				// ancora acquistato rimanendo comunque nel menu scelto, senza
+				// dunque aumentare il prezzo
 				boolean primoAvail = false;
 				boolean secondoAvail = false;
 				boolean c1Avail = false;
@@ -117,7 +120,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					return;
 				}
 
-				// intero (ssse abbiamo il primo e il secondo (condizione necessaria e sufficiente)
+				// intero (ssse abbiamo il primo e il secondo (condizione
+				// necessaria e sufficiente)
 				else if (primo.isChecked() && secondo.isChecked()) {
 					Fai_il_tuo_menu.menu = chosenMenu.Intero;
 					if (!isContorno1)
@@ -207,7 +211,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					}
 
 					// se oltre all'insalata ha preso 2 tra contorni e dessert
-					// non fare niente, non puoi più prendere altro a parte il
+					// non fare niente, non puoi piï¿½ prendere altro a parte il
 					// pane
 
 					/*
@@ -236,19 +240,21 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 				// se ha preso il secondo + almeno 2 tra contorni e dessert
 				else if (isSecondoPiatto
 						&& ((isContorno1 && !isContorno2 && isDessert)
-								|| (!isContorno1 && isContorno2 && isDessert) || (isContorno2 && isDessert && !isContorno1))) {
+								|| (!isContorno1 && isContorno2 && isDessert) || (isContorno2
+								&& isDessert && !isContorno1))) {
 
 					menu = chosenMenu.Ridotto2;
 
 				}
-				
-				else if ((isSecondoPiatto && isContorno1 && isContorno2)||(isSecondoPiatto && isContorno1 && isContorno2 && isDessert))
+
+				else if ((isSecondoPiatto && isContorno1 && isContorno2)
+						|| (isSecondoPiatto && isContorno1 && isContorno2 && isDessert))
 					menu = chosenMenu.Intero;
 
 				else if (isPizza)
 					menu = chosenMenu.Ridotto4;
 
-				// se ha preso 2 contorni e 1 dessert a questo può scegliere da
+				// se ha preso 2 contorni e 1 dessert a questo puï¿½ scegliere da
 				// R1 e R2 e quindi tra primo o secondo
 
 				else if (isContorno1 && isContorno2 && isDessert) {
@@ -354,6 +360,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -403,154 +410,121 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 		// setto gli OnclickListener per le ImageView per espandere il menu in
 		// modo dinamico; inverte il senso della freccia per il menu espandibile
 
-	/*	primo_button.setOnClickListener(new OnClickListener() {
+		/*
+		 * primo_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (primo_view.getVisibility() == View.GONE) {
+		 * primo_button.setImageResource(R.drawable.arrow_up);
+		 * primo_view.setVisibility(View.VISIBLE); } else {
+		 * primo_view.setVisibility(View.GONE);
+		 * primo_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * secondo_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (secondo_view.getVisibility() == View.GONE) {
+		 * secondo_button.setImageResource(R.drawable.arrow_up);
+		 * secondo_view.setVisibility(View.VISIBLE); } else {
+		 * secondo_view.setVisibility(View.GONE);
+		 * secondo_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * contorno1_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (contorno_caldo_view.getVisibility() == View.GONE) {
+		 * contorno1_button.setImageResource(R.drawable.arrow_up);
+		 * contorno_caldo_view.setVisibility(View.VISIBLE); } else {
+		 * contorno_caldo_view.setVisibility(View.GONE);
+		 * contorno1_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * contorno2_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (contorno_freddo_view.getVisibility() == View.GONE) {
+		 * //contorno2_button.setImageResource(R.drawable.arrow_up);
+		 * contorno_freddo_view.setVisibility(View.VISIBLE); } else {
+		 * contorno_freddo_view.setVisibility(View.GONE);
+		 * contorno2_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * insalatona_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (insalatona_view.getVisibility() == View.GONE) {
+		 * insalatona_button.setImageResource(R.drawable.arrow_up);
+		 * insalatona_view.setVisibility(View.VISIBLE); } else {
+		 * insalatona_view.setVisibility(View.GONE);
+		 * insalatona_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * dessert_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (dessert_view.getVisibility() == View.GONE) {
+		 * dessert_button.setImageResource(R.drawable.arrow_up);
+		 * dessert_view.setVisibility(View.VISIBLE); } else {
+		 * dessert_view.setVisibility(View.GONE);
+		 * dessert_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * pane_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if (pane_view.getVisibility()
+		 * == View.GONE) { pane_button.setImageResource(R.drawable.arrow_up);
+		 * pane_view.setVisibility(View.VISIBLE); } else {
+		 * pane_view.setVisibility(View.GONE);
+		 * pane_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 * 
+		 * pizza_button.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { if
+		 * (pizza_view.getVisibility() == View.GONE) {
+		 * pizza_button.setImageResource(R.drawable.arrow_up);
+		 * pizza_view.setVisibility(View.VISIBLE); } else {
+		 * pizza_view.setVisibility(View.GONE);
+		 * pizza_button.setImageResource(R.drawable.arrow_down); } }
+		 * 
+		 * });
+		 */
 
-			@Override
-			public void onClick(View v) {
-				if (primo_view.getVisibility() == View.GONE) {
-					primo_button.setImageResource(R.drawable.arrow_up);
-					primo_view.setVisibility(View.VISIBLE);
-				} else {
-					primo_view.setVisibility(View.GONE);
-					primo_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		secondo_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (secondo_view.getVisibility() == View.GONE) {
-					secondo_button.setImageResource(R.drawable.arrow_up);
-					secondo_view.setVisibility(View.VISIBLE);
-				} else {
-					secondo_view.setVisibility(View.GONE);
-					secondo_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		contorno1_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (contorno_caldo_view.getVisibility() == View.GONE) {
-					contorno1_button.setImageResource(R.drawable.arrow_up);
-					contorno_caldo_view.setVisibility(View.VISIBLE);
-				} else {
-					contorno_caldo_view.setVisibility(View.GONE);
-					contorno1_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		contorno2_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (contorno_freddo_view.getVisibility() == View.GONE) {
-					//contorno2_button.setImageResource(R.drawable.arrow_up);
-					contorno_freddo_view.setVisibility(View.VISIBLE);
-				} else {
-					contorno_freddo_view.setVisibility(View.GONE);
-					contorno2_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		insalatona_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (insalatona_view.getVisibility() == View.GONE) {
-					insalatona_button.setImageResource(R.drawable.arrow_up);
-					insalatona_view.setVisibility(View.VISIBLE);
-				} else {
-					insalatona_view.setVisibility(View.GONE);
-					insalatona_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		dessert_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (dessert_view.getVisibility() == View.GONE) {
-					dessert_button.setImageResource(R.drawable.arrow_up);
-					dessert_view.setVisibility(View.VISIBLE);
-				} else {
-					dessert_view.setVisibility(View.GONE);
-					dessert_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		pane_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (pane_view.getVisibility() == View.GONE) {
-					pane_button.setImageResource(R.drawable.arrow_up);
-					pane_view.setVisibility(View.VISIBLE);
-				} else {
-					pane_view.setVisibility(View.GONE);
-					pane_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});
-
-		pizza_button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (pizza_view.getVisibility() == View.GONE) {
-					pizza_button.setImageResource(R.drawable.arrow_up);
-					pizza_view.setVisibility(View.VISIBLE);
-				} else {
-					pizza_view.setVisibility(View.GONE);
-					pizza_button.setImageResource(R.drawable.arrow_down);
-				}
-			}
-
-		});*/
-
-		 
 		/*
 		 * 
-		 * logica delle checkboxes, controlla cosa è selezionato ed esclude i piatti non consoni con la scelta
+		 * logica delle checkboxes, controlla cosa ï¿½ selezionato ed esclude i
+		 * piatti non consoni con la scelta
 		 */
-		
-		
-		
+
 		primo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-				//	primo_button.setVisibility(View.VISIBLE);
-					
+					// primo_button.setVisibility(View.VISIBLE);
+
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
 					pizza.setEnabled(false);
 					pizza.setChecked(false);
 					panino.setEnabled(false);
 					// panino.setChecked(false);
-					
+
 				} else {
 					primo_button.setVisibility(View.GONE);
 					primo_view.setVisibility(View.GONE);
 					primo_button.setImageResource(R.drawable.arrow_down);
-					
+
 					if (!secondo.isChecked()
 							&& !panino.isChecked()
 							&& !pizza.isChecked()
@@ -583,20 +557,20 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-				//	secondo_button.setVisibility(View.VISIBLE);
-					
+					// secondo_button.setVisibility(View.VISIBLE);
+
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
 					pizza.setEnabled(false);
 					pizza.setChecked(false);
 					panino.setEnabled(false);
 					// panino.setChecked(false);
-					
+
 				} else {
 					secondo_button.setVisibility(View.GONE);
 					secondo_view.setVisibility(View.GONE);
 					secondo_button.setImageResource(R.drawable.arrow_down);
-					
+
 					if (!primo.isChecked()
 							&& !panino.isChecked()
 							&& !pizza.isChecked()
@@ -627,8 +601,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-			//		pane_button.setVisibility(View.V33ISIBLE);
-					
+					// pane_button.setVisibility(View.V33ISIBLE);
+
 					insalatona.setEnabled(false);
 					insalatona.setChecked(false);
 					pizza.setEnabled(false);
@@ -643,7 +617,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					contorno2.setChecked(false);
 					dessert.setEnabled(false);
 					dessert.setChecked(false);
-					
+
 				} else {
 					pane_button.setVisibility(View.GONE);
 					pane_view.setVisibility(View.GONE);
@@ -656,7 +630,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					contorno1.setEnabled(true);
 					contorno2.setEnabled(true);
 					dessert.setEnabled(true);
-					
+
 				}
 			}
 		});
@@ -670,8 +644,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-			//		insalatona_button.setVisibility(View.VISIBLE);
-					
+					// insalatona_button.setVisibility(View.VISIBLE);
+
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					pizza.setEnabled(false);
@@ -680,20 +654,18 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					primo.setChecked(false);
 					secondo.setEnabled(false);
 					secondo.setChecked(false);
-					
+
 					if (!contorno1.isChecked() && !contorno2.isChecked())
 						contorno2.setEnabled(false);
-					
+
 					if (contorno1.isChecked())
 						contorno2.setEnabled(false);
-					
+
 					if (contorno2.isChecked())
 						contorno1.setEnabled(false);
-					
-					
 
 				} else {
-			//		insalatona_button.setVisibility(View.GONE);
+					// insalatona_button.setVisibility(View.GONE);
 					insalatona_view.setVisibility(View.GONE);
 					insalatona_button.setImageResource(R.drawable.arrow_down);
 
@@ -719,8 +691,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-		//			pizza_button.setVisibility(View.VISIBLE);
-					
+					// pizza_button.setVisibility(View.VISIBLE);
+
 					panino.setEnabled(false);
 					// panino.setChecked(false);
 					insalatona.setEnabled(false);
@@ -740,7 +712,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					pizza_button.setVisibility(View.GONE);
 					pizza_view.setVisibility(View.GONE);
 					pizza_button.setImageResource(R.drawable.arrow_down);
-					
+
 					panino.setEnabled(true);
 					insalatona.setEnabled(true);
 					primo.setEnabled(true);
@@ -759,11 +731,11 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-		//			contorno1_button.setVisibility(View.VISIBLE);
+					// contorno1_button.setVisibility(View.VISIBLE);
 
 					if (contorno2.isChecked())
 						insalatona.setEnabled(false);
-					
+
 					if (insalatona.isChecked())
 						contorno2.setEnabled(false);
 					panino.setEnabled(false);
@@ -775,9 +747,10 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					contorno_caldo_view.setVisibility(View.GONE);
 					contorno1_button.setImageResource(R.drawable.arrow_down);
 
-					if (!primo.isChecked() && !secondo.isChecked() && !panino.isChecked() && !pizza.isChecked())
+					if (!primo.isChecked() && !secondo.isChecked()
+							&& !panino.isChecked() && !pizza.isChecked())
 						insalatona.setEnabled(true);
-					
+
 					if (insalatona.isChecked())
 						contorno2.setEnabled(true);
 					dessert.setEnabled(true);
@@ -803,11 +776,11 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-		//			contorno2_button.setVisibility(View.VISIBLE);
+					// contorno2_button.setVisibility(View.VISIBLE);
 
 					if (contorno1.isChecked())
 						insalatona.setEnabled(false);
-					
+
 					if (insalatona.isChecked())
 						contorno1.setEnabled(false);
 					panino.setEnabled(false);
@@ -818,13 +791,14 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					contorno2_button.setVisibility(View.GONE);
 					contorno_freddo_view.setVisibility(View.GONE);
 					contorno2_button.setImageResource(R.drawable.arrow_down);
-					
+
 					if (insalatona.isChecked())
 						contorno1.setEnabled(true);
-					
-					if (!primo.isChecked() && !secondo.isChecked() && !panino.isChecked() && !pizza.isChecked())
+
+					if (!primo.isChecked() && !secondo.isChecked()
+							&& !panino.isChecked() && !pizza.isChecked())
 						insalatona.setEnabled(true);
-					
+
 					dessert.setEnabled(true);
 					if (!primo.isChecked() && !secondo.isChecked()
 							&& !contorno1.isChecked() && !dessert.isChecked()
@@ -846,8 +820,8 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					boolean isChecked) {
 
 				if (isChecked) {
-		//			dessert_button.setVisibility(View.VISIBLE);
-					
+					// dessert_button.setVisibility(View.VISIBLE);
+
 					if (contorno2.isChecked() && contorno1.isChecked()) {
 						insalatona.setEnabled(false);
 						insalatona.setChecked(false);
@@ -866,9 +840,9 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 					dessert_button.setVisibility(View.GONE);
 					dessert_view.setVisibility(View.GONE);
 					dessert_button.setImageResource(R.drawable.arrow_down);
-					
-					
-					if (!primo.isChecked() && !secondo.isChecked() && !panino.isChecked() && !pizza.isChecked()) {
+
+					if (!primo.isChecked() && !secondo.isChecked()
+							&& !panino.isChecked() && !pizza.isChecked()) {
 						insalatona.setEnabled(true);
 					}
 					if (!primo.isChecked() && !secondo.isChecked()

@@ -1,14 +1,13 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
 import android.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 
 public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 
@@ -51,7 +50,7 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 			mFragment = Fragment.instantiate(mActivity, mClass.getName());
 			ft.add(android.R.id.content, mFragment, mTag);
 
-			} else {
+		} else {
 			// If it exists, simply attach it in order to show it
 			ft.attach(mFragment);
 		}
@@ -59,7 +58,8 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	}
 
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		mActivity.getSupportFragmentManager().popBackStack(mTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		mActivity.getSupportFragmentManager().popBackStack(mTag,
+				FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		if (mFragment != null) {
 			// Detach the fragment, because another one is being attached
 			ft.detach(mFragment);

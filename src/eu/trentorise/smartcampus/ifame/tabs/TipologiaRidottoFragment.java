@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -31,7 +30,7 @@ import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 public class TipologiaRidottoFragment extends SherlockFragment {
 
 	ViewGroup theContainer;
-	
+
 	Intent i;
 	TextView primo1;
 	TextView contornoA1;
@@ -49,7 +48,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 	TextView pizza4;
 	TextView contorno_o_dessert4;
 	TextView caffe_o_acqua4;
-	
+
 	boolean isPrimoAvail;
 	boolean isSecondoAvail;
 	boolean isC1Avail;
@@ -97,7 +96,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 		/*
 		 * 
-		 * se è stata chiamata da "componi menu" allora prendiamo l'importo dei
+		 * se ï¿½ stata chiamata da "componi menu" allora prendiamo l'importo dei
 		 * soldi presenti nella tessera, e modifichiamo la textview di
 		 * conseguenza
 		 */
@@ -185,8 +184,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 			/*
 			 * se sono stato reindirizzato allo snack e poi seleziono il
-			 * ridotto, allora i controlli sulla disponibilità non vanno
-			 * affrontati, perchè arrivando dallo snack sono sicuro che non
+			 * ridotto, allora i controlli sulla disponibilitï¿½ non vanno
+			 * affrontati, perchï¿½ arrivando dallo snack sono sicuro che non
 			 * siano stati selezionati
 			 */
 			else if ((selected_menu.equals("Snack1")
@@ -259,7 +258,6 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 					insalatona3.setTextColor(Color.parseColor("#08D126"));
 					contornoA3.setTextColor(Color.parseColor("#08D126"));
 					pane3.setTextColor(Color.parseColor("#08D126"));
-
 
 				}
 			}
@@ -431,7 +429,7 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		pane2.setText("+ " + getString(R.string.iDeciso_pane));
 
 		// menu ridotto3 pasta station cambia dal primo??????????? sul sito
-		// sembra di si....per ora non ne tengo conto perchè credo sia sbagliato
+		// sembra di si....per ora non ne tengo conto perchï¿½ credo sia sbagliato
 		insalatona3 = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_insalatona3);
 		pane3 = (TextView) theContainer
@@ -446,7 +444,9 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				+ ", ");
 		insalatona3.setTypeface(null, Typeface.BOLD);
 		pane3.setText("+ " + getString(R.string.iDeciso_pane));
-		contornoA3.setText("+ "+getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
+		contornoA3
+				.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
 		dessert3.setText("+ "
 				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
 
@@ -462,7 +462,8 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 		pizza4.setTypeface(null, Typeface.BOLD);
 		contorno_o_dessert4.setText("+ "
 				+ getString(R.string.iDeciso_contorno_o_dessert));
-		caffe_o_acqua4.setText("+ " + getString(R.string.iDeciso_acqua_o_caffe));
+		caffe_o_acqua4
+				.setText("+ " + getString(R.string.iDeciso_acqua_o_caffe));
 	}
 
 	@Override

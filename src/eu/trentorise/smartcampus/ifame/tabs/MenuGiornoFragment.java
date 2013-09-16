@@ -20,16 +20,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.activity.ISoldi;
-import eu.trentorise.smartcampus.ifame.activity.Menu_mese;
-import eu.trentorise.smartcampus.ifame.activity.Menu_mese.MenuDelMeseConnector;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
@@ -127,7 +123,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 		for (int i = 0; i < piattiList.size(); i++) {
 			lista_piatti.add(piattiList.get(i));
 			if (i == 2) {
-			//	lista_piatti.add(new Piatto("2", ""));
+				// lista_piatti.add(new Piatto("2", ""));
 			}
 			if (i == 4)
 				lista_piatti.add(new Piatto("3", ""));
@@ -144,9 +140,14 @@ public class MenuGiornoFragment extends SherlockFragment {
 					int position, long arg3) {
 				selectedDish = ((Piatto) parent.getItemAtPosition(position))
 						.getPiatto_nome();
-				//Toast.makeText(getActivity(), selectedDish, Toast.LENGTH_LONG).show(); 
-				
-				if(!selectedDish.matches("[0-9]+")){ // assure that search is not valid for numbers, since we use numbers(1, 2, 3) as sentinels
+				// Toast.makeText(getActivity(), selectedDish,
+				// Toast.LENGTH_LONG).show();
+
+				if (!selectedDish.matches("[0-9]+")) { // assure that search is
+														// not valid for
+														// numbers, since we use
+														// numbers(1, 2, 3) as
+														// sentinels
 					StartWebSearchAlertDialog dialog = new StartWebSearchAlertDialog();
 					dialog.show(getFragmentManager(), null);
 				}
@@ -219,7 +220,8 @@ public class MenuGiornoFragment extends SherlockFragment {
 		protected void onPostExecute(MenuDelGiorno result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				ConnectionUtils.showToastErrorToConnectToWebService(getActivity());
+				ConnectionUtils
+						.showToastErrorToConnectToWebService(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuDelGiorno(result);

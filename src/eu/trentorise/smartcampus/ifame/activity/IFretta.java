@@ -5,13 +5,10 @@ import java.util.List;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -115,7 +111,7 @@ public class IFretta extends SherlockActivity {
 			String favourite_mensa_name = SharedPreferencesUtils
 					.getDefaultMensa(IFretta.this);
 
-			// se la mensa preferita salvata, è quella che stiamo esaminando,
+			// se la mensa preferita salvata, ï¿½ quella che stiamo esaminando,
 			// allora la sottolineamo e ci aggiungiamo l'icona star
 			if (favourite_mensa_name != null
 					&& m.getMensa_nome().equals(favourite_mensa_name)) {
