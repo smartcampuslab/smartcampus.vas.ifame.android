@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -82,7 +81,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 		/*
 		 * 
-		 * se è stata chiamata da "componi menu" allora prendiamo l'importo dei
+		 * se ï¿½ stata chiamata da "componi menu" allora prendiamo l'importo dei
 		 * soldi presenti nella tessera, e modifichiamo la textview di
 		 * conseguenza
 		 */
@@ -260,7 +259,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 	/*
 	 * 
-	 * instanzio tutte le textviews (il numero è relativo al menu
+	 * instanzio tutte le textviews (il numero ï¿½ relativo al menu
 	 * corrispondente)
 	 */
 	public void setEverythingUp() {
