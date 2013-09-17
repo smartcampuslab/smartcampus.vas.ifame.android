@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
@@ -51,6 +55,8 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
  */
 
 public class IGradito extends SherlockActivity {
+	/** Logging tag */
+	private static final String TAG = "iGradito";
 
 	View view;
 	String user_id;
@@ -259,8 +265,12 @@ public class IGradito extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		private ProgressDialog progressDialog;
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public MensaConnector(Context applicationContext) {
 			context = applicationContext;
@@ -268,10 +278,21 @@ public class IGradito extends SherlockActivity {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iGradito",
 					"Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(IGradito.this, CLIENT_ID,
+						CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -286,8 +307,8 @@ public class IGradito extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 
@@ -300,15 +321,11 @@ public class IGradito extends SherlockActivity {
 				} else {
 					return null;
 				}
-
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -316,11 +333,11 @@ public class IGradito extends SherlockActivity {
 
 		@Override
 		protected void onPostExecute(List<Mensa> result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils
 						.showToastErrorToConnectToWebService(IGradito.this);
+
 				finish();
 			} else {
 				createMenseSpinner(result);
@@ -348,6 +365,10 @@ public class IGradito extends SherlockActivity {
 		PiattiListAdapter adapter;
 		private ProgressDialog progressDialog;
 
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
+
 		public PiattiConnector(Context applicationContext,
 				PiattiListAdapter adapter) {
 			context = applicationContext;
@@ -356,10 +377,21 @@ public class IGradito extends SherlockActivity {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iGradito",
 					"Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(IGradito.this, CLIENT_ID,
+						CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -419,13 +451,10 @@ public class IGradito extends SherlockActivity {
 				}
 
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

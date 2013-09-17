@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
@@ -47,6 +51,8 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class Menu_mese extends SherlockFragmentActivity {
+	/** Logging tag */
+	private static final String TAG = "Menu_mese";
 
 	private Spinner weekSpinner;
 	private ListView listacibi_view;
@@ -134,14 +140,6 @@ public class Menu_mese extends SherlockFragmentActivity {
 	 * 
 	 * 
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * CONNECTOR MENU DEL MESE
 	 */
 	public class MenuDelMeseConnector extends
@@ -150,7 +148,11 @@ public class Menu_mese extends SherlockFragmentActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public MenuDelMeseConnector(Context applicationContext) {
 			context = applicationContext;
@@ -162,6 +164,18 @@ public class Menu_mese extends SherlockFragmentActivity {
 			super.onPreExecute();
 			progressDialog = ProgressDialog
 					.show(context, "iFame", "Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(Menu_mese.this, CLIENT_ID,
+						CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -173,8 +187,9 @@ public class Menu_mese extends SherlockFragmentActivity {
 			request.setMethod(Method.GET);
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
+
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
 					MenuDelMese mdm = Utils.convertJSONToObject(body,
@@ -182,13 +197,10 @@ public class Menu_mese extends SherlockFragmentActivity {
 					return mdm;
 				}
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -196,7 +208,6 @@ public class Menu_mese extends SherlockFragmentActivity {
 
 		@Override
 		protected void onPostExecute(MenuDelMese mdm) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(mdm);
 
 			if (mdm == null) {

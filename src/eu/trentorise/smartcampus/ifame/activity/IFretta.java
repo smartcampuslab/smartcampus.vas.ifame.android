@@ -1,6 +1,9 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -224,7 +227,6 @@ public class IFretta extends SherlockActivity {
 
 		@Override
 		protected void onPostExecute(List<Mensa> result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils

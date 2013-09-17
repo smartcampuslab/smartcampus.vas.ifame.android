@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,12 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragment;
 
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IGradito;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
@@ -38,6 +43,8 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class MenuGiornoFragment extends SherlockFragment {
+	/** Logging tag */
+	private static final String TAG = "MenuGiornoFragment";
 
 	private ViewGroup theContainer;
 	private String selectedDish;
@@ -45,10 +52,6 @@ public class MenuGiornoFragment extends SherlockFragment {
 	private View view;
 
 	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-		super.onSaveInstanceState(savedInstanceState);
-	}
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
@@ -162,7 +165,11 @@ public class MenuGiornoFragment extends SherlockFragment {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public MenuDelGiornoConnector(Context applicationContext) {
 			context = applicationContext;
@@ -170,11 +177,22 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
 			super.onPreExecute();
 			new ProgressDialog(getActivity());
 			// Dont show anything until the data is loaded
 			pd = ProgressDialog.show(getActivity(), "iFame", "Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(getActivity(), CLIENT_ID,
+						CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -188,8 +206,8 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 

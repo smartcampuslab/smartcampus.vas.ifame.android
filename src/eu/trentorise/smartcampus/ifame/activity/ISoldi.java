@@ -1,6 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -240,7 +242,7 @@ public class ISoldi extends SherlockActivity {
 
 		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
 		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-
+		private final String AUTHORIZATION_TOKEN = "Authorization";
 		private String token;
 
 		public ISoldiConnector(Context applicationContext) {
@@ -277,7 +279,6 @@ public class ISoldi extends SherlockActivity {
 				MessageRequest request = new MessageRequest(
 						"http://smartcampuswebifame.app.smartcampuslab.it",
 						"isoldi/getsoldi");
-
 				request.setMethod(Method.GET);
 
 				MessageResponse response;
