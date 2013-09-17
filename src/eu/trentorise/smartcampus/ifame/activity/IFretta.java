@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
@@ -35,6 +39,8 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IFretta extends SherlockActivity {
+	/** Logging tag */
+	private static final String TAG = "iFretta";
 
 	ProgressDialog progressDialog;
 	ListView ifretta_listView;
@@ -147,7 +153,11 @@ public class IFretta extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public IFrettaConnector(Context applicationContext) {
 			context = applicationContext;
@@ -159,43 +169,55 @@ public class IFretta extends SherlockActivity {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iFretta",
 					"Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(IFretta.this, CLIENT_ID,
+						CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
 		protected List<Mensa> doInBackground(Void... params) {
-			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
-			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"getmense");
-			request.setMethod(Method.GET);
+			if (token != null) {
+				mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
-			MessageResponse response;
-			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				MessageRequest request = new MessageRequest(
+						"http://smartcampuswebifame.app.smartcampuslab.it",
+						"getmense");
+				request.setMethod(Method.GET);
 
-				if (response.getHttpStatus() == 200) {
+				MessageResponse response;
+				try {
+					response = mProtocolCarrier.invokeSync(request, appToken,
+							token);
 
-					String body = response.getBody();
+					if (response.getHttpStatus() == 200) {
 
-					List<Mensa> list_mense = Utils.convertJSONToObjects(body,
-							Mensa.class);
+						String body = response.getBody();
 
-					return list_mense;
-				} else {
-					return null;
+						List<Mensa> list_mense = Utils.convertJSONToObjects(
+								body, Mensa.class);
+
+						return list_mense;
+					} else {
+						return null;
+					}
+
+				} catch (ConnectionException e) {
+					e.printStackTrace();
+				} catch (ProtocolException e) {
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
 				}
-
-			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			return null;
 		}

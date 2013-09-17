@@ -8,16 +8,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
@@ -39,6 +44,8 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
  */
 
 public class ISoldi extends SherlockActivity {
+	/** Logging tag */
+	private static final String TAG = "iSoldi";
 
 	public final static String GET_AMOUNT_MONEY = "get_money";
 	Saldo saldoReturn;
@@ -60,7 +67,6 @@ public class ISoldi extends SherlockActivity {
 	LinearLayout isoldi_layout_view;
 
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_isoldi);
 		// setContentView(R.layout.layout_isoldi);
@@ -185,7 +191,7 @@ public class ISoldi extends SherlockActivity {
 	 * } else { userStatsLayout.setVisibility(View.GONE); }
 	 * 
 	 * showUserStats_button .setOnCheckedChangeListener(new
-	 * CompoundButton.OnCheckedChangeListener() {
+	 * CompoundButton.OnCheckedChangeListener() { private String token;
 	 * 
 	 * @Override public void onCheckedChanged(CompoundButton buttonView, boolean
 	 * isChecked) { if (isChecked) {
@@ -229,8 +235,13 @@ public class ISoldi extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		ProgressDialog progressDialog;
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+
+		private String token;
 
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;
@@ -242,43 +253,55 @@ public class ISoldi extends SherlockActivity {
 			isoldi_layout_view.setVisibility(View.GONE);
 			progressDialog = ProgressDialog.show(context, "iSoldi",
 					"Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(ISoldi.this, CLIENT_ID,
+						CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
 		protected Saldo doInBackground(Saldo... saldo) {
-			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
-			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"isoldi/getsoldi");
-			request.setMethod(Method.GET);
+			if (token != null) {
 
-			MessageResponse response;
-			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
-				if (response.getHttpStatus() == 200) {
+				MessageRequest request = new MessageRequest(
+						"http://smartcampuswebifame.app.smartcampuslab.it",
+						"isoldi/getsoldi");
 
-					String body = response.getBody();
+				request.setMethod(Method.GET);
 
-					return Utils.convertJSONToObject(body, Saldo.class);
+				MessageResponse response;
+				try {
+					response = mProtocolCarrier.invokeSync(request, appToken,
+							token);
 
-				} else {
+					if (response.getHttpStatus() == 200) {
 
+						String body = response.getBody();
+
+						return Utils.convertJSONToObject(body, Saldo.class);
+
+					}
+				} catch (ConnectionException e) {
+					e.printStackTrace();
+				} catch (ProtocolException e) {
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
 				}
-			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			return null;
 
+			return null;
 		}
 
 		@Override

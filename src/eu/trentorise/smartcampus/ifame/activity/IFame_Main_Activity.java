@@ -23,7 +23,6 @@ import eu.trentorise.smartcampus.profileservice.BasicProfileService;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 
 public class IFame_Main_Activity extends SherlockActivity {
-
 	/** Logging tag */
 	private static final String TAG = "Main";
 
@@ -57,6 +56,8 @@ public class IFame_Main_Activity extends SherlockActivity {
 			if (!accessProvider.login(this, CLIENT_ID, CLIENT_SECRET, null)) {
 				// user is already registered. Proceed requesting the token
 				// and the related steps if needed
+				mToken = accessProvider.readToken(getApplicationContext(),
+						CLIENT_ID, CLIENT_SECRET);
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
