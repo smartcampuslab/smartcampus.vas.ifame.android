@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +35,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
@@ -51,36 +55,25 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class Recensioni_Activity extends SherlockActivity {
+	/** Logging tag */
+	private static final String TAG = "Recensioni_Activity";
 
 	List<Mensa> listaMense = null;
-
 	MenuItem menuItem = null;
-
 	ReviewAdapter adapter = null;
-
 	Piatto piatto;
-
 	String user_id;
-
 	String mioCommento = null;
-
 	Integer mioVoto = null;
-
 	Mensa mensa;
-
 	TextView giudizio_espresso_da;
-
 	TextView giudizio_medio_txt;
-
 	TextView no_data_to_display;
-
 	GiudizioDataToPost giudizioDataToPost = null;
-
 	ListView giudiziListview;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_pagina_recensioni);
 		Bundle extras = getIntent().getExtras();
@@ -600,7 +593,10 @@ public class Recensioni_Activity extends SherlockActivity {
 		private ProgressDialog progressDialog;
 		private Context context;
 		private String appToken = "test smartcampus";
-		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public GetGiudizioConnector(Context applicationContext) {
 			context = applicationContext;
@@ -612,6 +608,18 @@ public class Recensioni_Activity extends SherlockActivity {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iGradito",
 					"Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(Recensioni_Activity.this,
+						CLIENT_ID, CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -627,8 +635,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
@@ -638,15 +646,11 @@ public class Recensioni_Activity extends SherlockActivity {
 				} else {
 					return null;
 				}
-
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -687,10 +691,14 @@ public class Recensioni_Activity extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		private Context context;
 		private String appToken = "test smartcampus";
-		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 
 		private ProgressDialog progressDialog;
-		private GiudizioDataToPost data = null;
+		private GiudizioDataToPost data;
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public PostGiudizioConnector(Context applicationContext,
 				GiudizioDataToPost data) {
@@ -704,11 +712,22 @@ public class Recensioni_Activity extends SherlockActivity {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iGradito",
 					"Loading...");
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(Recensioni_Activity.this,
+						CLIENT_ID, CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
 		protected List<Giudizio> doInBackground(Long... params) {
-			// TODO Auto-generated method stu
 
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
@@ -726,8 +745,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
@@ -739,13 +758,10 @@ public class Recensioni_Activity extends SherlockActivity {
 				}
 
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -753,7 +769,6 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		@Override
 		protected void onPostExecute(List<Giudizio> result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils
@@ -836,14 +851,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	 * 
 	 * 
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * LIKE CONNECTORS
 	 * 
 	 */
@@ -853,10 +860,30 @@ public class Recensioni_Activity extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		private Context context;
 		private String appToken = "test smartcampus";
-		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public PostLikeConnector(Context applicationContext) {
 			context = applicationContext;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(Recensioni_Activity.this,
+						CLIENT_ID, CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -874,8 +901,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 					return true;
@@ -884,13 +911,10 @@ public class Recensioni_Activity extends SherlockActivity {
 				}
 
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return false;
@@ -898,9 +922,7 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-
 			if (result) {
 			} else {
 				Toast.makeText(context, "Oooops! Not Liked", Toast.LENGTH_SHORT)
@@ -915,10 +937,30 @@ public class Recensioni_Activity extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		private Context context;
 		private String appToken = "test smartcampus";
-		private String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+
+		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
+		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
+		private String token;
 
 		public DeleteLikeConnector(Context applicationContext) {
 			context = applicationContext;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			/*
+			 * get the token
+			 */
+			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+			try {
+				token = accessProvider.readToken(Recensioni_Activity.this,
+						CLIENT_ID, CLIENT_SECRET);
+
+			} catch (AACException e) {
+				Log.e(TAG, "Failed to get token: " + e.getMessage());
+			}
 		}
 
 		@Override
@@ -936,8 +978,8 @@ public class Recensioni_Activity extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 					return true;
@@ -946,13 +988,10 @@ public class Recensioni_Activity extends SherlockActivity {
 				}
 
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return false;
@@ -960,7 +999,6 @@ public class Recensioni_Activity extends SherlockActivity {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 
 			if (result) {

@@ -361,7 +361,7 @@ public class IGradito extends SherlockActivity {
 		private ProtocolCarrier mProtocolCarrier;
 		public Context context;
 		public String appToken = "test smartcampus";
-		public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
+		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		PiattiListAdapter adapter;
 		private ProgressDialog progressDialog;
 
@@ -406,8 +406,8 @@ public class IGradito extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						authToken);
+				response = mProtocolCarrier
+						.invokeSync(request, appToken, token);
 
 				if (response.getHttpStatus() == 200) {
 
@@ -415,6 +415,7 @@ public class IGradito extends SherlockActivity {
 
 					List<Piatto> lista_piatti_temp = Utils
 							.convertJSONToObjects(body, Piatto.class);
+
 					Collections.sort(lista_piatti_temp, new Comparatore());
 
 					// creo una nuova lista che oltre a contenere i piatti
@@ -536,7 +537,6 @@ public class IGradito extends SherlockActivity {
 
 		public PiattiListAdapter(Context context, int textViewResourceId) {
 			super(IGradito.this, textViewResourceId);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override

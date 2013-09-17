@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -58,11 +59,15 @@ public class IFame_Main_Activity extends SherlockActivity {
 				// and the related steps if needed
 				mToken = accessProvider.readToken(getApplicationContext(),
 						CLIENT_ID, CLIENT_SECRET);
+
+				new LoadUserDataFromACServiceTask().execute(mToken);
+
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
 			// handle the failure, e.g., notify the user and close the app.
 		}
+
 		// @Override
 		// protected void onCreate(Bundle savedInstanceState) {
 		// super.onCreate(savedInstanceState);
@@ -116,10 +121,6 @@ public class IFame_Main_Activity extends SherlockActivity {
 		setContentView(R.layout.layout_ifame_main);
 
 		if (mToken != null) {
-			// access the user data from the AC service remotely
-			new LoadUserDataFromACServiceTask();
-			// access the basic user profile data remotely
-			// new LoadUserDataFromProfileServiceTask().execute(mToken);
 
 			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 			iFretta_btn.setOnClickListener(new OnClickListener() {
@@ -232,17 +233,17 @@ public class IFame_Main_Activity extends SherlockActivity {
 	// }
 
 	public class LoadUserDataFromACServiceTask extends
-			AsyncTask<Void, Void, BasicProfile> {
+			AsyncTask<String, Void, BasicProfile> {
 
 		@Override
-		protected BasicProfile doInBackground(Void... params) {
+		protected BasicProfile doInBackground(String... params) {
 			try {
-				String token = accessProvider.readToken(
-						IFame_Main_Activity.this, CLIENT_ID, CLIENT_SECRET);
 				BasicProfileService service = new BasicProfileService(
 						"https://vas-dev.smartcampuslab.it/aac");
-				BasicProfile bp = service.getBasicProfile(token);
+
+				BasicProfile bp = service.getBasicProfile(params[0]);
 				return bp;
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -252,6 +253,15 @@ public class IFame_Main_Activity extends SherlockActivity {
 		@Override
 		protected void onPostExecute(BasicProfile result) {
 			super.onPostExecute(result);
+			if (result != null) {
+
+				userID = result.getUserId();
+				Toast.makeText(getApplicationContext(),
+						"Data loaded correctly!", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"Error loading user data!", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
