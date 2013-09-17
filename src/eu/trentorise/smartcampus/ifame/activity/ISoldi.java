@@ -71,12 +71,11 @@ public class ISoldi extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_isoldi);
-		// setContentView(R.layout.layout_isoldi);
-
-		Bundle extras = getIntent().getExtras();
-		if (extras == null) {
-			return;
-		}
+		// // setContentView(R.layout.layout_isoldi);
+		// Bundle extras = getIntent().getExtras();
+		// if (extras == null) {
+		// return;
+		// }
 
 		ridottoText = (TextView) findViewById(R.id.isoldi_ridotto_text);
 		interoText = (TextView) findViewById(R.id.isoldi_intero_text);

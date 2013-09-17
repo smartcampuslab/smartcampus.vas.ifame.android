@@ -1,9 +1,5 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.util.Random;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +10,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
@@ -27,91 +22,37 @@ public class IFame_Main_Activity extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "Main";
 
-	// private static final String AUTH_URL =
-	// "https://vas-dev.smartcampuslab.it/accesstoken-provider/ac";
-	private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
-	private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-
-	private static final String AC_SERVICE_ADDR = "https://vas-dev.smartcampuslab.it/acService";
-	private static final String PROFILE_SERVICE_ADDR = "https://vas-dev.smartcampuslab.it";
-
-	private SCAccessProvider accessProvider = null;
-	public static String userAuthToken;
-	public static ProgressDialog pd;
-	public static BasicProfile bp;
-
-	// added for getting userid for recensioni activity (igradito)
+	/** added for getting userid for recensioni activity (igradito) */
 	private String userID;
 
 	/** Access token for the application user */
-	private String mToken = null;
+	private String mToken;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// your code here
 		setContentView(R.layout.layout_ifame_main);
 
 		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+
+		String CLIENT_ID = getString(R.string.CLIENT_ID);
+		String CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
+
 		try {
+
 			if (!accessProvider.login(this, CLIENT_ID, CLIENT_SECRET, null)) {
 				// user is already registered. Proceed requesting the token
 				// and the related steps if needed
-				mToken = accessProvider.readToken(getApplicationContext(),
-						CLIENT_ID, CLIENT_SECRET);
+				String mToken = accessProvider.readToken(this, CLIENT_ID,
+						CLIENT_SECRET);
 
 				new LoadUserDataFromACServiceTask().execute(mToken);
-
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
+			mToken = null;
 			// handle the failure, e.g., notify the user and close the app.
 		}
-
-		// @Override
-		// protected void onCreate(Bundle savedInstanceState) {
-		// super.onCreate(savedInstanceState);
-		//
-		// try {
-		// Constants.setAuthUrl(getApplicationContext(), AUTH_URL);
-		// } catch (NameNotFoundException e1) {
-		// Log.e(TAG, "problems with configuration.");
-		// finish();
-		// }
-		//
-		// // Initialize the access provider
-		// mAccessProvider = new AMSCAccessProvider();
-		// // if the authentication is necessary, use the provided operations to
-		// // retrieve the token: no restriction on the preferred account type
-		// try {
-		// mToken = mAccessProvider.getAuthToken(this, null);
-		// // added for getting userid for recensioni activity (igradito)
-		// if (mToken != null) {
-		// // read user Data
-		// UserData data = mAccessProvider.readUserData(this, null);
-		// userID = data.getUserId();
-		//
-		// }
-		// // added for getting userid for recensioni activity (igradito)
-		//
-		// }
-		//
-		// catch (OperationCanceledException e) {
-		// Log.e(TAG, "Login cancelled.");
-		// finish();
-		// } catch (AuthenticatorException e) {
-		// Log.e(TAG, "Login failed: " + e.getMessage());
-		// finish();
-		// } catch (IOException e) {
-		// Log.e(TAG, "Login ended with error: " + e.getMessage());
-		// finish();
-		// }
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
 	}
 
 	@Override
@@ -169,18 +110,18 @@ public class IFame_Main_Activity extends SherlockActivity {
 			Button iSoldi_btn = (Button) findViewById(R.id.iSoldi_button);
 			iSoldi_btn.setOnClickListener(new OnClickListener() {
 
-				float card_val;
-
 				@Override
 				public void onClick(View v) {
-					float[] values = new float[] { 4.10f, 4.30F, 2.7f, 1.8f,
-							13.0f, 5.10f, 7.15f, 3.77f, 3.50f, 2.60f, 2.90f };
-					for (int i = 0; i < values.length; i++) {
-						card_val = values[new Random().nextInt(values.length) % 60];
-					}
+					// float card_val;
+					// float[] values = new float[] { 4.10f, 4.30F, 2.7f, 1.8f,
+					// 13.0f, 5.10f, 7.15f, 3.77f, 3.50f, 2.60f, 2.90f };
+					// for (int i = 0; i < values.length; i++) {
+					// card_val = values[new Random().nextInt(values.length) %
+					// 60];
+					// }
 					Intent i = new Intent(IFame_Main_Activity.this,
 							ISoldi.class);
-					i.putExtra("iSoldi", card_val);
+					// i.putExtra("iSoldi", card_val);
 					startActivity(i);
 
 				}
@@ -189,21 +130,49 @@ public class IFame_Main_Activity extends SherlockActivity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
-			if (resultCode == Activity.RESULT_OK) {
-				// A&A successful. Proceed requesting the token
-				// and the related steps if needed
-			} else if (resultCode == Activity.RESULT_CANCELED) {
-				// Cancelled by user
-			} else {
-				// Operation failed for some reason
+	private class LoadUserDataFromACServiceTask extends
+			AsyncTask<String, Void, BasicProfile> {
+
+		@Override
+		protected BasicProfile doInBackground(String... params) {
+			try {
+				BasicProfileService service = new BasicProfileService(
+						"https://vas-dev.smartcampuslab.it/aac");
+				BasicProfile bp = service.getBasicProfile(params[0]);
+				return bp;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		}
-		// other code here
-		super.onActivityResult(requestCode, resultCode, data);
+
+		@Override
+		protected void onPostExecute(BasicProfile result) {
+			super.onPostExecute(result);
+			if (result != null) {
+				userID = result.getUserId();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"Error loading user data!", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
+	// @Override
+	// protected void onActivityResult(int requestCode, int resultCode, Intent
+	// data) {
+	// if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
+	// if (resultCode == Activity.RESULT_OK) {
+	// // A&A successful. Proceed requesting the token
+	// // and the related steps if needed
+	// } else if (resultCode == Activity.RESULT_CANCELED) {
+	// // Cancelled by user
+	// } else {
+	// // Operation failed for some reason
+	// }
+	// }
+	// // other code here
+	// super.onActivityResult(requestCode, resultCode, data);
+	// }
 
 	// @Override
 	// protected void onActivityResult(int requestCode, int resultCode, Intent
@@ -231,39 +200,6 @@ public class IFame_Main_Activity extends SherlockActivity {
 	// }
 	// super.onActivityResult(requestCode, resultCode, data);
 	// }
-
-	public class LoadUserDataFromACServiceTask extends
-			AsyncTask<String, Void, BasicProfile> {
-
-		@Override
-		protected BasicProfile doInBackground(String... params) {
-			try {
-				BasicProfileService service = new BasicProfileService(
-						"https://vas-dev.smartcampuslab.it/aac");
-
-				BasicProfile bp = service.getBasicProfile(params[0]);
-				return bp;
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(BasicProfile result) {
-			super.onPostExecute(result);
-			if (result != null) {
-
-				userID = result.getUserId();
-				Toast.makeText(getApplicationContext(),
-						"Data loaded correctly!", Toast.LENGTH_SHORT).show();
-			} else {
-				Toast.makeText(getApplicationContext(),
-						"Error loading user data!", Toast.LENGTH_SHORT).show();
-			}
-		}
-	}
 
 	// public class LoadUserDataFromProfileServiceTask extends
 	// AsyncTask<String, Void, BasicProfile> {
