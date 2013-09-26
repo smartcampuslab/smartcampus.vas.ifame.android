@@ -33,25 +33,48 @@ public class IFame_Main_Activity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
 
-		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-
-		String CLIENT_ID = getString(R.string.CLIENT_ID);
-		String CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
+		final SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+		final String CLIENT_ID = getString(R.string.CLIENT_ID);
+		final String CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
 
 		try {
-
 			if (!accessProvider.login(this, CLIENT_ID, CLIENT_SECRET, null)) {
 				// user is already registered. Proceed requesting the token
 				// and the related steps if needed
-				String mToken = accessProvider.readToken(this, CLIENT_ID,
-						CLIENT_SECRET);
 
-				new LoadUserDataFromACServiceTask().execute(mToken);
+				// new thread is needed because will throw the
+				// Networkonmainthreadexception running the read token
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						String mToken;
+
+						try {
+							mToken = accessProvider.readToken(
+									getApplicationContext(), CLIENT_ID,
+									CLIENT_SECRET);
+
+							new LoadUserDataFromACServiceTask().execute(mToken);
+
+						} catch (AACException e) {
+							Log.e(TAG,
+									"Failed to read token: " + e.getMessage());
+							mToken = null;
+							// handle the failure, e.g., notify the user and
+							// close
+							// the app.
+						}
+
+					}
+				}).start();
+
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
 			mToken = null;
-			// handle the failure, e.g., notify the user and close the app.
+			// handle the failure, e.g., notify the user and close
+			// the app.
 		}
 	}
 
@@ -61,73 +84,67 @@ public class IFame_Main_Activity extends SherlockActivity {
 		super.onResume();
 		setContentView(R.layout.layout_ifame_main);
 
-		if (mToken != null) {
+		Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
+		iFretta_btn.setOnClickListener(new OnClickListener() {
 
-			Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
-			iFretta_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-				@Override
-				public void onClick(View v) {
+				Intent i = new Intent(IFame_Main_Activity.this, IFretta.class);
+				startActivity(i);
 
-					Intent i = new Intent(IFame_Main_Activity.this,
-							IFretta.class);
-					startActivity(i);
+			}
 
-				}
+		});
 
-			});
+		Button iDeciso_btn = (Button) findViewById(R.id.iDeciso_button);
+		iDeciso_btn.setOnClickListener(new OnClickListener() {
 
-			Button iDeciso_btn = (Button) findViewById(R.id.iDeciso_button);
-			iDeciso_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-				@Override
-				public void onClick(View v) {
+				Intent i = new Intent(IFame_Main_Activity.this, IDeciso.class);
+				startActivity(i);
 
-					Intent i = new Intent(IFame_Main_Activity.this,
-							IDeciso.class);
-					startActivity(i);
+			}
 
-				}
+		});
 
-			});
+		Button iGradito_btn = (Button) findViewById(R.id.iGradito_button);
+		iGradito_btn.setOnClickListener(new OnClickListener() {
 
-			Button iGradito_btn = (Button) findViewById(R.id.iGradito_button);
-			iGradito_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-				@Override
-				public void onClick(View v) {
+				Intent i = new Intent(IFame_Main_Activity.this, IGradito.class);
+				// added for getting userid for recensioni activity
+				// (igradito)
+				i.putExtra("user_id", userID);
+				startActivity(i);
+			}
 
-					Intent i = new Intent(IFame_Main_Activity.this,
-							IGradito.class);
-					// added for getting userid for recensioni activity
-					// (igradito)
-					i.putExtra("user_id", userID);
-					startActivity(i);
-				}
+		});
 
-			});
+		Button iSoldi_btn = (Button) findViewById(R.id.iSoldi_button);
+		iSoldi_btn.setOnClickListener(new OnClickListener() {
 
-			Button iSoldi_btn = (Button) findViewById(R.id.iSoldi_button);
-			iSoldi_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// float card_val;
+				// float[] values = new float[] { 4.10f, 4.30F, 2.7f, 1.8f,
+				// 13.0f, 5.10f, 7.15f, 3.77f, 3.50f, 2.60f, 2.90f };
+				// for (int i = 0; i < values.length; i++) {
+				// card_val = values[new Random().nextInt(values.length) %
+				// 60];
+				// }
+				Intent i = new Intent(IFame_Main_Activity.this, ISoldi.class);
+				// i.putExtra("iSoldi", card_val);
+				startActivity(i);
 
-				@Override
-				public void onClick(View v) {
-					// float card_val;
-					// float[] values = new float[] { 4.10f, 4.30F, 2.7f, 1.8f,
-					// 13.0f, 5.10f, 7.15f, 3.77f, 3.50f, 2.60f, 2.90f };
-					// for (int i = 0; i < values.length; i++) {
-					// card_val = values[new Random().nextInt(values.length) %
-					// 60];
-					// }
-					Intent i = new Intent(IFame_Main_Activity.this,
-							ISoldi.class);
-					// i.putExtra("iSoldi", card_val);
-					startActivity(i);
+			}
 
-				}
+		});
 
-			});
-		}
 	}
 
 	private class LoadUserDataFromACServiceTask extends
@@ -139,23 +156,17 @@ public class IFame_Main_Activity extends SherlockActivity {
 				BasicProfileService service = new BasicProfileService(
 						"https://vas-dev.smartcampuslab.it/aac");
 				BasicProfile bp = service.getBasicProfile(params[0]);
-				return bp;
+				if (bp != null) {
+					userID = bp.getUserId();
+				} else {
+					Log.d(TAG, "Error loading user data!");
+				}
 			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
+				Log.d(TAG, e.getMessage());
 			}
+			return null;
 		}
 
-		@Override
-		protected void onPostExecute(BasicProfile result) {
-			super.onPostExecute(result);
-			if (result != null) {
-				userID = result.getUserId();
-			} else {
-				Toast.makeText(getApplicationContext(),
-						"Error loading user data!", Toast.LENGTH_SHORT).show();
-			}
-		}
 	}
 	// @Override
 	// protected void onActivityResult(int requestCode, int resultCode, Intent
