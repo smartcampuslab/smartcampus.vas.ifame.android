@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="CLIENT_ID">9c7ccf0a-0937-4cc8-ae51-30d6646a4445</string>
-    <string name="CLIENT_SECRET">f6078203-1690-4a12-bf05-0aa1d1428875</string>
+    <string name="CLIENT_ID">1428b6fc-6e9c-4fb5-989e-4c4016b8c738</string>
+    <string name="CLIENT_SECRET">a1fb244d-0da3-43b7-af2e-4b0830294f8e</string>
+    <string name="URL_WEB_IFAME">http://smartcampuswebifame.app.smartcampuslab.it</string>
 
 </resources>

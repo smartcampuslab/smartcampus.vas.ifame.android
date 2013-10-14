@@ -40,12 +40,16 @@ import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.connector.DeleteLikeConnector;
+import eu.trentorise.smartcampus.ifame.connector.PostLikeConnector;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Likes;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.profileservice.BasicProfileService;
+import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -82,7 +86,6 @@ public class Recensioni_Activity extends SherlockActivity {
 		giudizio_medio_txt = (TextView) findViewById(R.id.giudizio);
 		no_data_to_display = (TextView) findViewById(R.id.giudizio_no_data_to_display);
 
-		// whattttt????
 		if (extras == null) {
 			return;
 		}
@@ -112,7 +115,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	private void showCustomizedDialog() {
 		// hide the title bar
 		// dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		FragmentManager fm = getFragmentManager();
 		CustomDialog cd = new CustomDialog();
 		cd.show(fm, "fragment");
@@ -565,19 +567,13 @@ public class Recensioni_Activity extends SherlockActivity {
 		Boolean is_like;
 
 		public DataHandler() {
-			Integer like_count = 0;
-			Integer dislike_count = 0;
+			like_count = 0;
+			dislike_count = 0;
 			non_ha_ancora_fatto_like_o_dislike = true;
 		}
 	}
 
 	/**
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * 
 	 * 
 	 * 
@@ -616,7 +612,6 @@ public class Recensioni_Activity extends SherlockActivity {
 			try {
 				token = accessProvider.readToken(Recensioni_Activity.this,
 						CLIENT_ID, CLIENT_SECRET);
-
 			} catch (AACException e) {
 				Log.e(TAG, "Failed to get token: " + e.getMessage());
 			}
@@ -672,11 +667,6 @@ public class Recensioni_Activity extends SherlockActivity {
 	}
 
 	/**
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * 
 	 * 
 	 * 
@@ -844,168 +834,4 @@ public class Recensioni_Activity extends SherlockActivity {
 		}
 	}
 
-	/**
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * LIKE CONNECTORS
-	 * 
-	 */
-
-	private class PostLikeConnector extends AsyncTask<Likes, Void, Boolean> {
-
-		private ProtocolCarrier mProtocolCarrier;
-		private Context context;
-		private String appToken = "test smartcampus";
-
-		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
-		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-		private String token;
-
-		public PostLikeConnector(Context applicationContext) {
-			context = applicationContext;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-
-			/*
-			 * get the token
-			 */
-			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-			try {
-				token = accessProvider.readToken(Recensioni_Activity.this,
-						CLIENT_ID, CLIENT_SECRET);
-
-			} catch (AACException e) {
-				Log.e(TAG, "Failed to get token: " + e.getMessage());
-			}
-		}
-
-		@Override
-		protected Boolean doInBackground(Likes... like) {
-
-			mProtocolCarrier = new ProtocolCarrier(context, appToken);
-
-			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"giudizio/" + like[0].getGiudizio_id() + "/like");
-
-			request.setMethod(Method.POST);
-
-			request.setBody(Utils.convertToJSON(like[0]));
-
-			MessageResponse response;
-			try {
-				response = mProtocolCarrier
-						.invokeSync(request, appToken, token);
-
-				if (response.getHttpStatus() == 200) {
-					return true;
-				} else {
-					return false;
-				}
-
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-			if (result) {
-			} else {
-				Toast.makeText(context, "Oooops! Not Liked", Toast.LENGTH_SHORT)
-						.show();
-			}
-
-		}
-	}
-
-	private class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
-
-		private ProtocolCarrier mProtocolCarrier;
-		private Context context;
-		private String appToken = "test smartcampus";
-
-		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
-		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-		private String token;
-
-		public DeleteLikeConnector(Context applicationContext) {
-			context = applicationContext;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-
-			/*
-			 * get the token
-			 */
-			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-			try {
-				token = accessProvider.readToken(Recensioni_Activity.this,
-						CLIENT_ID, CLIENT_SECRET);
-
-			} catch (AACException e) {
-				Log.e(TAG, "Failed to get token: " + e.getMessage());
-			}
-		}
-
-		@Override
-		protected Boolean doInBackground(Likes... like) {
-
-			mProtocolCarrier = new ProtocolCarrier(context, appToken);
-			// giudizio/43/user/67/like/delete
-			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it",
-					"giudizio/" + like[0].getGiudizio_id() + "/like/delete");
-
-			request.setMethod(Method.POST);
-
-			request.setBody(Utils.convertToJSON(like[0]));
-
-			MessageResponse response;
-			try {
-				response = mProtocolCarrier
-						.invokeSync(request, appToken, token);
-
-				if (response.getHttpStatus() == 200) {
-					return true;
-				} else {
-					return false;
-				}
-
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-
-			if (result) {
-			} else {
-				Toast.makeText(context, "Oooops! Like not deleted",
-						Toast.LENGTH_SHORT).show();
-			}
-		}
-	}
 }

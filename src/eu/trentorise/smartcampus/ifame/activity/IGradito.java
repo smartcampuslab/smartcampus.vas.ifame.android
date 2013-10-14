@@ -42,6 +42,8 @@ import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
+import eu.trentorise.smartcampus.profileservice.BasicProfileService;
+import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -80,8 +82,7 @@ public class IGradito extends SherlockActivity {
 		if (extras == null) {
 			return;
 		}
-
-		user_id = (String) extras.get("user_id");
+		user_id = extras.getString("user_id");
 
 		// don't show anything until the data is retrieved
 		view = findViewById(R.id.igradito_piatti_mensa_view); // change to
@@ -186,19 +187,6 @@ public class IGradito extends SherlockActivity {
 		case android.R.id.home:
 			onBackPressed();
 			break;
-		// case R.id.iGradito_set_favourite_canteen:
-		//
-		// SharedPreferences pref = getSharedPreferences(
-		// getString(R.string.iGradito_preference_file),
-		// Context.MODE_PRIVATE);
-		// SharedPreferences.Editor editor = pref.edit();
-		// editor.putString(GET_FAVOURITE_CANTEEN, actual_mensa);
-		// editor.commit();
-		//
-		// Toast.makeText(getApplicationContext(),
-		// "Hai settato come preferita: " + actual_mensa,
-		// Toast.LENGTH_SHORT).show();
-		// break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -281,15 +269,10 @@ public class IGradito extends SherlockActivity {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iGradito",
 					"Loading...");
-
-			/*
-			 * get the token
-			 */
 			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 			try {
 				token = accessProvider.readToken(IGradito.this, CLIENT_ID,
 						CLIENT_SECRET);
-
 			} catch (AACException e) {
 				Log.e(TAG, "Failed to get token: " + e.getMessage());
 			}

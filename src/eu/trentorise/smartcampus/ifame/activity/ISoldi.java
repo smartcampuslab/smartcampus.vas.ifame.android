@@ -239,13 +239,17 @@ public class ISoldi extends SherlockActivity {
 		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
 		ProgressDialog progressDialog;
 
-		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
-		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-		private final String AUTHORIZATION_TOKEN = "Authorization";
+		private final String CLIENT_ID;
+		private final String CLIENT_SECRET;
+		private final String URL_WEB_IFAME;
+		// private final String AUTHORIZATION_TOKEN = "Authorization";
 		private String token;
 
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;
+			CLIENT_ID = getString(R.string.CLIENT_ID);
+			CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
+			URL_WEB_IFAME = getString(R.string.URL_WEB_IFAME);
 		}
 
 		@Override
@@ -275,9 +279,9 @@ public class ISoldi extends SherlockActivity {
 
 				mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
-				MessageRequest request = new MessageRequest(
-						"http://smartcampuswebifame.app.smartcampuslab.it",
+				MessageRequest request = new MessageRequest(URL_WEB_IFAME,
 						"isoldi/getsoldi");
+
 				request.setMethod(Method.GET);
 
 				MessageResponse response;
@@ -287,10 +291,8 @@ public class ISoldi extends SherlockActivity {
 
 					if (response.getHttpStatus() == 200) {
 
-						String body = response.getBody();
-
-						return Utils.convertJSONToObject(body, Saldo.class);
-
+						return Utils.convertJSONToObject(response.getBody(),
+								Saldo.class);
 					}
 				} catch (ConnectionException e) {
 					e.printStackTrace();
@@ -300,7 +302,6 @@ public class ISoldi extends SherlockActivity {
 					e.printStackTrace();
 				}
 			}
-
 			return null;
 		}
 
