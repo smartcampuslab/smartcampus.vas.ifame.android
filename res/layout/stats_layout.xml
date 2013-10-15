@@ -5,26 +5,34 @@
     android:padding="10dp" >
     
     <TextView 
-        android:id="@+id/val_textview"
+        android:id="@+id/val_textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/isoldi_statistics_button"
         android:text="DATA CURRENTLY NOT AVAILABLE!"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        android:visibility="invisible"
         />
-<!--  
-    <TextView
-        android:id="@+id/time_textview"
+     <TextView 
+        android:id="@+id/val_textview2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/isoldi_statistics_button"
-        android:layout_alignBaseline="@+id/val_textview"
-        android:layout_alignBottom="@+id/val_textview"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="19dp"
-        android:text="Matricola"
-        android:textSize="20sp" />
-        
-    -->
+        android:layout_below="@id/val_textview1"
+        android:text="DATA CURRENTLY NOT AVAILABLE!"
+        android:textSize="16sp"
+         android:visibility="invisible"
+        />
+      <TextView 
+        android:id="@+id/val_textview3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/val_textview2"
+        android:text="DATA CURRENTLY NOT AVAILABLE!"
+        android:textSize="16sp"
+         android:visibility="invisible"
+        />
+  
+   
+    
 
 </RelativeLayout>

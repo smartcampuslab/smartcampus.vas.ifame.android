@@ -43,13 +43,13 @@
                 android:textSize="40sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/isoldi_demo_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="(only for demonstration purpose)"
-            android:textSize="10sp" />
+<!--         <TextView -->
+<!--             android:id="@+id/isoldi_demo_text" -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:gravity="center" -->
+<!--             android:text="(only for demonstration purpose)" -->
+<!--             android:textSize="10sp" /> -->
 
         <TextView
             android:id="@+id/isoldi_bottom_text"
@@ -89,22 +89,23 @@
             android:textSize="16sp"
             android:visibility="gone" />
 
-        <TextView
+        <ToggleButton
             android:id="@+id/isoldi_statistics_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="#2BA63B"
-            android:padding="12dp"
-            android:gravity="center"
             android:textColor="#FFFFFF"
-            android:text="@string/iSoldi_statistic_button_text"/>
+            android:textOff="@string/iSoldi_statistic_button_text"
+            android:textOn="@string/iSoldi_statistic_button_text" />
 
-        <TextView
+        <include
             android:id="@+id/user_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/stats_layout" />
+            android:layout_below="@id/isoldi_statistics_button"
+            layout="@layout/stats_layout"
+            android:visibility="gone" />
     </LinearLayout>
 
 </ScrollView>

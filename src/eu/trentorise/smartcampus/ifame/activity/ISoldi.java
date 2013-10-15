@@ -1,8 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,9 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -67,6 +66,12 @@ public class ISoldi extends SherlockActivity {
 	TextView isoldi_euro_txt;
 
 	LinearLayout isoldi_layout_view;
+
+	private TextView val_textview2;
+
+	private TextView val_textview1;
+
+	private TextView val_textview3;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -122,10 +127,44 @@ public class ISoldi extends SherlockActivity {
 
 			}
 		});
+		statsButton.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				showUserStats();
+			}
+		});
 	}
 
-	public void getAmount(float amount) {
+	public void getAmount(Saldo result) {
+
+		float amount = 0;
+		if (result != null) {
+			amount = Float.parseFloat(result.getCredit());
+			val_textview1 = (TextView) findViewById(R.id.val_textview1);
+			val_textview2 = (TextView) findViewById(R.id.val_textview2);
+			val_textview3 = (TextView) findViewById(R.id.val_textview3);
+			if (result.getPayments() != null) {
+				if (result.getPayments().size() >=1 && result.getPayments().get(0) != null) {
+					String text=result.getPayments().get(0).getPaymentDate()+" "+result.getPayments().get(0).getProductDescription()+ "  €"+result.getPayments().get(0)
+							.getProductPrice();
+					val_textview1.setText(text);
+					val_textview1.setVisibility(1);
+				}
+				if (result.getPayments().size() >=2 && result.getPayments().get(1) != null) {
+					String text=result.getPayments().get(1).getPaymentDate()+" "+result.getPayments().get(1).getProductDescription()+ "  €"+result.getPayments().get(1)
+							.getProductPrice();
+					val_textview2.setText(text);
+					val_textview2.setVisibility(1);
+				}
+				if (result.getPayments().size() >= 3 && result.getPayments().get(2) != null) {
+					String text=result.getPayments().get(2).getPaymentDate()+" "+result.getPayments().get(2).getProductDescription()+ "  €"+result.getPayments().get(2)
+							.getProductPrice();
+					val_textview3.setText(text);
+					val_textview3.setVisibility(1);
+				}
+			}
+		}
 
 		if (amount >= 4.70) {
 
@@ -178,28 +217,36 @@ public class ISoldi extends SherlockActivity {
 		}
 	}
 
-	/*
-	 * public void showUserStats() {
-	 * 
-	 * final View userStatsLayout = (View) findViewById(R.id.user_stats);
-	 * 
-	 * ToggleButton showUserStats_button = (ToggleButton)
-	 * findViewById(R.id.isoldi_statistics_button);
-	 * 
-	 * if (showUserStats_button.isChecked()) {
-	 * userStatsLayout.setVisibility(View.VISIBLE);
-	 * 
-	 * } else { userStatsLayout.setVisibility(View.GONE); }
-	 * 
-	 * showUserStats_button .setOnCheckedChangeListener(new
-	 * CompoundButton.OnCheckedChangeListener() { private String token;
-	 * 
-	 * @Override public void onCheckedChanged(CompoundButton buttonView, boolean
-	 * isChecked) { if (isChecked) {
-	 * userStatsLayout.setVisibility(View.VISIBLE);
-	 * 
-	 * } else { userStatsLayout.setVisibility(View.GONE); } } }); }
-	 */
+	public void showUserStats() {
+
+		final View userStatsLayout = (View) findViewById(R.id.user_stats);
+
+		ToggleButton showUserStats_button = (ToggleButton) findViewById(R.id.isoldi_statistics_button);
+
+		if (showUserStats_button.isChecked()) {
+			userStatsLayout.setVisibility(View.VISIBLE);
+
+		} else {
+			userStatsLayout.setVisibility(View.GONE);
+		}
+
+		showUserStats_button
+				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+					private String token;
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked) {
+							userStatsLayout.setVisibility(View.VISIBLE);
+
+						} else {
+							userStatsLayout.setVisibility(View.GONE);
+						}
+					}
+				});
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
@@ -244,6 +291,7 @@ public class ISoldi extends SherlockActivity {
 		private final String URL_WEB_IFAME;
 		// private final String AUTHORIZATION_TOKEN = "Authorization";
 		private String token;
+		private Saldo saldo;
 
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;
@@ -312,7 +360,11 @@ public class ISoldi extends SherlockActivity {
 						.showToastErrorToConnectToWebService(ISoldi.this);
 				finish();
 			} else {
-				getAmount(Float.parseFloat(result.getCredit()));
+				this.saldo = result;
+				if (result.getCredit().compareTo("") != 0)
+					getAmount(result);
+				else
+					getAmount(null);
 				progressDialog.dismiss();
 				isoldi_layout_view.setVisibility(View.VISIBLE);
 			}
