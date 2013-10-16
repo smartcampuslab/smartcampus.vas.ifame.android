@@ -17,72 +17,45 @@ import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.profileservice.BasicProfileService;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 
-public class IFame_Main_Activity extends SherlockActivity {
+public class IFameMainActivity extends SherlockActivity {
 	/** Logging tag */
-	private static final String TAG = "Main";
+	private static final String TAG = "iFameMainActivity";
 
 	/** added for getting userid for recensioni activity (igradito) */
 	private String userID;
 
-	/** Access token for the application user */
-	private String mToken;
+	private SCAccessProvider accessProvider;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
 
-		final SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-		final String CLIENT_ID = getString(R.string.CLIENT_ID);
-		final String CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
-
+		accessProvider = new EmbeddedSCAccessProvider();
 		try {
-			if (!accessProvider.login(this, CLIENT_ID, CLIENT_SECRET, null)) {
-				// user is already registered. Proceed requesting the token
-				// and the related steps if needed
-				// new thread is needed because will throw the
-				// Networkonmainthreadexception running the read token
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							mToken = accessProvider.readToken(
-									getApplicationContext(), CLIENT_ID,
-									CLIENT_SECRET);
-							System.out.println("TOKEN ->" + mToken);
-							new LoadUserDataFromACServiceTask().execute(mToken);
-						} catch (AACException e) {
-							Log.e(TAG,
-									"Failed to read token: " + e.getMessage());
-							// handle the failure, e.g., notify the user and
-							// close the app.
-						}
-					}
-				}).start();
+			if (!accessProvider.login(this, getString(R.string.CLIENT_ID),
+					getString(R.string.CLIENT_SECRET), null)) {
+
+				new LoadUserDataFromACServiceTask().execute();
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
-			// mToken = null;
-			// handle the failure, e.g., notify the user and close
-			// the app.
+			// handle the failure, e.g., notify the user and close the app
+		} catch (Exception e) {
+			Log.e(TAG, "Failed to get the user id: " + e.getMessage());
 		}
-	}
 
-	@Override
-	protected void onResume() {
-
-		super.onResume();
+		/**
+		 * Add the listeners to the buttons in the home of iFame
+		 */
 		Button iFretta_btn = (Button) findViewById(R.id.iFretta_button);
 		iFretta_btn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-
-				Intent i = new Intent(IFame_Main_Activity.this, IFretta.class);
+				Intent i = new Intent(IFameMainActivity.this, IFretta.class);
 				startActivity(i);
-
 			}
-
 		});
 
 		Button iDeciso_btn = (Button) findViewById(R.id.iDeciso_button);
@@ -90,27 +63,20 @@ public class IFame_Main_Activity extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-
-				Intent i = new Intent(IFame_Main_Activity.this, IDeciso.class);
+				Intent i = new Intent(IFameMainActivity.this, IDeciso.class);
 				startActivity(i);
-
 			}
-
 		});
-
 		Button iGradito_btn = (Button) findViewById(R.id.iGradito_button);
 		iGradito_btn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-
-				Intent i = new Intent(IFame_Main_Activity.this, IGradito.class);
-				// added for getting userid for recensioni activity
-				// (igradito)
+				Intent i = new Intent(IFameMainActivity.this, IGradito.class);
+				// is for getting userid for recensioni activity (igradito)
 				i.putExtra("user_id", userID);
 				startActivity(i);
 			}
-
 		});
 
 		Button iSoldi_btn = (Button) findViewById(R.id.iSoldi_button);
@@ -118,31 +84,42 @@ public class IFame_Main_Activity extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(IFame_Main_Activity.this, ISoldi.class);
+				Intent i = new Intent(IFameMainActivity.this, ISoldi.class);
 				startActivity(i);
 			}
 		});
 
 	}
 
+	/** Initialize userID variable */
 	private class LoadUserDataFromACServiceTask extends
-			AsyncTask<String, Void, BasicProfile> {
+			AsyncTask<Void, Void, BasicProfile> {
+
 		@Override
-		protected BasicProfile doInBackground(String... params) {
+		protected BasicProfile doInBackground(Void... params) {
 			try {
+
+				String mToken = accessProvider.readToken(
+						getApplicationContext(), getString(R.string.CLIENT_ID),
+						getString(R.string.CLIENT_SECRET));
+
+				Log.i(TAG, "TOKEN: " + mToken);
+
 				BasicProfileService service = new BasicProfileService(
-						"https://vas-dev.smartcampuslab.it/aac");
-				BasicProfile bp = service.getBasicProfile(params[0]);
+						getString(R.string.URL_BASIC_PROFILE_SERVICE));
+
+				BasicProfile bp = service.getBasicProfile(mToken);
+
 				if (bp != null) {
 					userID = bp.getUserId();
-				} else {
-					Log.d(TAG, "Error loading user data!");
+					Log.i(TAG, "UserId: " + userID);
 				}
 			} catch (Exception e) {
-				Log.d(TAG, e.getMessage());
+				Log.e(TAG, "Error loading user data!" + e.getMessage());
 			}
 			return null;
 		}
+
 	}
 
 }

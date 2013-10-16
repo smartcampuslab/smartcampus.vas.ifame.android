@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -125,11 +125,12 @@
 
 
     <!-- iSoldi -->
+    <string name="iSoldi_title_sctivity">iSoldi</string>
     <string name="iSoldi_puoi_acquistare">Puoi acquistare:</string>
     <string name="iSoldi_devi_ricaricare">Devi ricaricare</string>
     <string name="iSoldi_credito_residuo">Il tuo credito residuo:</string>
     <string name="iSoldi_title_activity">iSoldi</string>
-    <string name="iSoldi_statistic_button_text">Ultimi movimenti </string>
+    <string name="iSoldi_statistic_button_text">Le tue statistiche </string>
     <!-- /iSoldi -->
 
 

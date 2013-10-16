@@ -40,16 +40,14 @@ import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.connector.DeleteLikeConnector;
-import eu.trentorise.smartcampus.ifame.connector.PostLikeConnector;
+import eu.trentorise.smartcampus.ifame.asynctask.DeleteLikeConnector;
+import eu.trentorise.smartcampus.ifame.asynctask.PostLikeConnector;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Likes;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
-import eu.trentorise.smartcampus.profileservice.BasicProfileService;
-import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -101,6 +99,7 @@ public class Recensioni_Activity extends SherlockActivity {
 		if (ConnectionUtils.isOnline(this)) {
 			new GetGiudizioConnector(Recensioni_Activity.this).execute(
 					mensa.getMensa_id(), piatto.getPiatto_id());
+
 		} else {
 			ConnectionUtils.showToastNotConnected(this);
 			finish();

@@ -1,4 +1,4 @@
-package eu.trentorise.smartcampus.ifame.connector;
+package eu.trentorise.smartcampus.ifame.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,7 +17,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
+public class PostLikeConnector extends AsyncTask<Likes, Void, Boolean> {
 
 	private ProtocolCarrier mProtocolCarrier;
 	private Context context;
@@ -27,7 +27,7 @@ public class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
 	private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
 	private String token;
 
-	public DeleteLikeConnector(Context applicationContext) {
+	public PostLikeConnector(Context applicationContext) {
 		context = applicationContext;
 	}
 
@@ -38,7 +38,7 @@ public class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
 		try {
 			token = accessProvider.readToken(context, CLIENT_ID, CLIENT_SECRET);
 		} catch (AACException e) {
-			Log.e("DELETE_LIKE", "Failed to get token: " + e.getMessage());
+			Log.e("POST_LIKE", "Failed to get token: " + e.getMessage());
 		}
 	}
 
@@ -46,10 +46,10 @@ public class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
 	protected Boolean doInBackground(Likes... like) {
 
 		mProtocolCarrier = new ProtocolCarrier(context, appToken);
-		// giudizio/43/user/67/like/delete
+
 		MessageRequest request = new MessageRequest(
 				"http://smartcampuswebifame.app.smartcampuslab.it", "giudizio/"
-						+ like[0].getGiudizio_id() + "/like/delete");
+						+ like[0].getGiudizio_id() + "/like");
 
 		request.setMethod(Method.POST);
 
@@ -78,11 +78,11 @@ public class DeleteLikeConnector extends AsyncTask<Likes, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
-
 		if (result) {
 		} else {
-			Toast.makeText(context, "Oooops! Like not deleted",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Oooops! Not Liked", Toast.LENGTH_SHORT)
+					.show();
 		}
+
 	}
 }

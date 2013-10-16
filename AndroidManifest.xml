@@ -50,7 +50,7 @@
             android:value="SmartCampus Android Template" />
 
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.IFame_Main_Activity"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFameMainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity" >
             <intent-filter>
@@ -140,7 +140,7 @@
             android:label="@string/iDeciso_home_monthly_menu" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.IFretta_Details"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFrettaDetails"
             android:configChanges="orientation|screenSize"
             android:label="@string/iFretta_details_title_activity" >
         </activity>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="APP_TOKEN">test smartcampu</string>
     <string name="CLIENT_ID">1428b6fc-6e9c-4fb5-989e-4c4016b8c738</string>
     <string name="CLIENT_SECRET">a1fb244d-0da3-43b7-af2e-4b0830294f8e</string>
     <string name="URL_WEB_IFAME">http://smartcampuswebifame.app.smartcampuslab.it</string>
+    <string name="URL_BASIC_PROFILE_SERVICE">"https://vas-dev.smartcampuslab.it/aac"</string>
+    <string name="PATH_ISOLDI_GETSOLDI">/isoldi/getsoldi</string>
+    <string name="PATH_IFRETTA_GETMENSE">/getmense</string>
 
 </resources>

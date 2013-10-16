@@ -1,7 +1,5 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.util.ArrayList;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
@@ -36,51 +32,29 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-/*
- * 
- * per ora � tutto basato sul recupero dell'importo nella tessera FASULLO (cambia di volta in volta)
- * in base all'importo vengono mostrati i tipi di menu che sono acquistabili, o nessuno altrimenti
- * 
- * le statistiche non sono ancora disponibili per mancanza di dati forniteci da OU
- */
-
 public class ISoldi extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "iSoldi";
 
 	public final static String GET_AMOUNT_MONEY = "get_money";
-	Saldo saldoReturn;
-	TextView centerText;
-	TextView bottomText;
-	TextView statsButton;
-	TextView interoText;
-	TextView ridottoText;
-	TextView snackText;
 
-	ArrayList<String> acquisti_possibili;
-	Long transaction_time;
-	String transaction_value;
-	ArrayList<Long> t_list;
-	ArrayList<String> v_list;
-	ArrayAdapter<String> adapter;
-	TextView isoldi_euro_txt;
-
-	LinearLayout isoldi_layout_view;
-
+	private TextView centerText;
+	private TextView bottomText;
+	private TextView statsButton;
+	private TextView interoText;
+	private TextView ridottoText;
+	private TextView snackText;
+	private TextView isoldi_euro_txt;
 	private TextView val_textview2;
-
 	private TextView val_textview1;
-
 	private TextView val_textview3;
 
+	private LinearLayout isoldi_layout_view;
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_isoldi);
-		// // setContentView(R.layout.layout_isoldi);
-		// Bundle extras = getIntent().getExtras();
-		// if (extras == null) {
-		// return;
-		// }
 
 		ridottoText = (TextView) findViewById(R.id.isoldi_ridotto_text);
 		interoText = (TextView) findViewById(R.id.isoldi_intero_text);
@@ -92,11 +66,11 @@ public class ISoldi extends SherlockActivity {
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 
 		if (ConnectionUtils.isOnline(this)) {
-			new ProgressDialog(ISoldi.this);
 			new ISoldiConnector(this).execute();
 		} else {
 			ConnectionUtils.showToastNotConnected(this);
 			finish();
+			return;
 		}
 
 		interoText.setOnClickListener(new OnClickListener() {
@@ -134,9 +108,21 @@ public class ISoldi extends SherlockActivity {
 				showUserStats();
 			}
 		});
+
+		// actionBarSherlock is initialized in super.onCreate()
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-	public void getAmount(Saldo result) {
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void getAmount(Saldo result) {
 
 		float amount = 0;
 		if (result != null) {
@@ -145,21 +131,33 @@ public class ISoldi extends SherlockActivity {
 			val_textview2 = (TextView) findViewById(R.id.val_textview2);
 			val_textview3 = (TextView) findViewById(R.id.val_textview3);
 			if (result.getPayments() != null) {
-				if (result.getPayments().size() >=1 && result.getPayments().get(0) != null) {
-					String text=result.getPayments().get(0).getPaymentDate()+" "+result.getPayments().get(0).getProductDescription()+ "  €"+result.getPayments().get(0)
-							.getProductPrice();
+				if (result.getPayments().size() >= 1
+						&& result.getPayments().get(0) != null) {
+					String text = result.getPayments().get(0).getPaymentDate()
+							+ " "
+							+ result.getPayments().get(0)
+									.getProductDescription() + "  €"
+							+ result.getPayments().get(0).getProductPrice();
 					val_textview1.setText(text);
 					val_textview1.setVisibility(1);
 				}
-				if (result.getPayments().size() >=2 && result.getPayments().get(1) != null) {
-					String text=result.getPayments().get(1).getPaymentDate()+" "+result.getPayments().get(1).getProductDescription()+ "  €"+result.getPayments().get(1)
-							.getProductPrice();
+				if (result.getPayments().size() >= 2
+						&& result.getPayments().get(1) != null) {
+					String text = result.getPayments().get(1).getPaymentDate()
+							+ " "
+							+ result.getPayments().get(1)
+									.getProductDescription() + "  €"
+							+ result.getPayments().get(1).getProductPrice();
 					val_textview2.setText(text);
 					val_textview2.setVisibility(1);
 				}
-				if (result.getPayments().size() >= 3 && result.getPayments().get(2) != null) {
-					String text=result.getPayments().get(2).getPaymentDate()+" "+result.getPayments().get(2).getProductDescription()+ "  €"+result.getPayments().get(2)
-							.getProductPrice();
+				if (result.getPayments().size() >= 3
+						&& result.getPayments().get(2) != null) {
+					String text = result.getPayments().get(2).getPaymentDate()
+							+ " "
+							+ result.getPayments().get(2)
+									.getProductDescription() + "  €"
+							+ result.getPayments().get(2).getProductPrice();
 					val_textview3.setText(text);
 					val_textview3.setVisibility(1);
 				}
@@ -217,7 +215,7 @@ public class ISoldi extends SherlockActivity {
 		}
 	}
 
-	public void showUserStats() {
+	private void showUserStats() {
 
 		final View userStatsLayout = (View) findViewById(R.id.user_stats);
 
@@ -225,14 +223,13 @@ public class ISoldi extends SherlockActivity {
 
 		if (showUserStats_button.isChecked()) {
 			userStatsLayout.setVisibility(View.VISIBLE);
-
 		} else {
 			userStatsLayout.setVisibility(View.GONE);
 		}
 
 		showUserStats_button
 				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					private String token;
+					// private String token;
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView,
@@ -247,98 +244,62 @@ public class ISoldi extends SherlockActivity {
 				});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			onBackPressed();
-		}
-		return super.onOptionsItemSelected(item);
-
-	}
-
 	/*
-	 * 
-	 * 
-	 * 
-	 * 
 	 * 
 	 * CONNECTOR TO TO GET DATA
 	 */
+	private class ISoldiConnector extends AsyncTask<Void, Void, Saldo> {
 
-	public class ISoldiConnector extends AsyncTask<Saldo, Void, Saldo> {
-
-		private ProtocolCarrier mProtocolCarrier;
-		public Context context;
-		public String appToken = "test smartcampus";
-		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-		ProgressDialog progressDialog;
+		private Context context;
+		private ProgressDialog progressDialog;
+		private String token;
 
 		private final String CLIENT_ID;
 		private final String CLIENT_SECRET;
-		private final String URL_WEB_IFAME;
-		// private final String AUTHORIZATION_TOKEN = "Authorization";
-		private String token;
-		private Saldo saldo;
+		private final String URL_BASE_WEB_IFAME;
+		private final String URL_ISOLDI_GETSOLDI;
+		private final String APP_TOKEN;
 
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;
+
 			CLIENT_ID = getString(R.string.CLIENT_ID);
 			CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
-			URL_WEB_IFAME = getString(R.string.URL_WEB_IFAME);
+			URL_BASE_WEB_IFAME = getString(R.string.URL_WEB_IFAME);
+			APP_TOKEN = getString(R.string.APP_TOKEN);
+			URL_ISOLDI_GETSOLDI = getString(R.string.PATH_ISOLDI_GETSOLDI);
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
 			isoldi_layout_view.setVisibility(View.GONE);
-			progressDialog = ProgressDialog.show(context, "iSoldi",
-					"Loading...");
-
-			/*
-			 * get the token
-			 */
+			progressDialog = ProgressDialog.show(context,
+					getString(R.string.iSoldi_title_activity), "Loading...");
 			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 			try {
-				token = accessProvider.readToken(ISoldi.this, CLIENT_ID,
+				token = accessProvider.readToken(context, CLIENT_ID,
 						CLIENT_SECRET);
-
 			} catch (AACException e) {
 				Log.e(TAG, "Failed to get token: " + e.getMessage());
 			}
 		}
 
 		@Override
-		protected Saldo doInBackground(Saldo... saldo) {
-
+		protected Saldo doInBackground(Void... saldo) {
 			if (token != null) {
-
-				mProtocolCarrier = new ProtocolCarrier(context, appToken);
-
-				MessageRequest request = new MessageRequest(URL_WEB_IFAME,
-						"isoldi/getsoldi");
-
+				ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
+						APP_TOKEN);
+				MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+						URL_ISOLDI_GETSOLDI);
 				request.setMethod(Method.GET);
 
-				MessageResponse response;
 				try {
-					response = mProtocolCarrier.invokeSync(request, appToken,
-							token);
+					MessageResponse response = mProtocolCarrier.invokeSync(
+							request, APP_TOKEN, token);
 
 					if (response.getHttpStatus() == 200) {
-
 						return Utils.convertJSONToObject(response.getBody(),
 								Saldo.class);
 					}
@@ -360,7 +321,6 @@ public class ISoldi extends SherlockActivity {
 						.showToastErrorToConnectToWebService(ISoldi.this);
 				finish();
 			} else {
-				this.saldo = result;
 				if (result.getCredit().compareTo("") != 0)
 					getAmount(result);
 				else
