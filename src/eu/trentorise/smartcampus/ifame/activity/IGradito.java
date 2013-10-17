@@ -18,10 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -38,12 +35,10 @@ import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.adapter.IGraditoPiattoListAdapter;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
-import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
-import eu.trentorise.smartcampus.profileservice.BasicProfileService;
-import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -60,15 +55,14 @@ public class IGradito extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "iGradito";
 
-	View view;
-	String user_id;
-	Spinner mense_spinner;
-	String actual_mensa;
+	private View view;
+	private Spinner menseSpinner;
+	private String actual_mensa;
 
 	public final static String GET_FAVOURITE_CANTEEN = "GET_CANTEEN";
 
 	List<Piatto> lista_piatti;
-	PiattiListAdapter adapter;
+	IGraditoPiattoListAdapter adapter;
 	SearchView searchView;
 	ListView piattilist_view;
 
@@ -76,13 +70,6 @@ public class IGradito extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_piattimensa);
-
-		// Get user_id intent
-		Bundle extras = getIntent().getExtras();
-		if (extras == null) {
-			return;
-		}
-		user_id = extras.getString("user_id");
 
 		// don't show anything until the data is retrieved
 		view = findViewById(R.id.igradito_piatti_mensa_view); // change to
@@ -93,8 +80,7 @@ public class IGradito extends SherlockActivity {
 
 		piattilist_view = (ListView) findViewById(R.id.list_view_igradito);
 
-		adapter = new PiattiListAdapter(IGradito.this,
-				android.R.layout.simple_list_item_1);
+		adapter = new IGraditoPiattoListAdapter(IGradito.this);
 
 		piattilist_view.setFastScrollEnabled(true);
 		piattilist_view.setAdapter(adapter);
@@ -105,19 +91,18 @@ public class IGradito extends SherlockActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view,
 					int position, long id) {
+
 				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
-
-				Mensa spinner_mensa_value = (Mensa) mense_spinner
-						.getSelectedItem();
-
-				// Pass values to next activity through an intent
+				// this check piatto name is because there are headers item in
+				// the list that have one character piatto name so we don't have
+				// to start an activity by clicking on them
 				if ((piatto.getPiatto_nome().length()) != 1) {
 					Intent intent = new Intent(IGradito.this,
-							Recensioni_Activity.class);
-					intent.putExtra("nome_piatto", piatto);
-					intent.putExtra("user_id", user_id);
-					intent.putExtra("igradito_spinner_mense",
-							spinner_mensa_value);
+							IGraditoVisualizzaRecensioni.class);
+					// Pass values to next activity through an intent
+					intent.putExtra(IGraditoVisualizzaRecensioni.PIATTO, piatto);
+					intent.putExtra(IGraditoVisualizzaRecensioni.MENSA,
+							(Mensa) menseSpinner.getSelectedItem());
 					startActivity(intent);
 				} else {
 				}
@@ -125,12 +110,16 @@ public class IGradito extends SherlockActivity {
 
 		});
 
-		if (ConnectionUtils.isOnline(getApplicationContext())) {
+		// supportActionBar (Sherlock) is initialized in super.onCreate()
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		if (ConnectionUtils.isConnectedToInternet(getApplicationContext())) {
 			new ProgressDialog(this);
 			new MensaConnector(this).execute();
 			new PiattiConnector(this, adapter).execute();
 		} else {
-			ConnectionUtils.showToastNotConnected(this);
+			ConnectionUtils.showToastNotConnectedToInternet(this);
 			finish();
 		}
 	}
@@ -168,14 +157,6 @@ public class IGradito extends SherlockActivity {
 		searchView.setOnQueryTextListener(queryTextListener);
 
 		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -319,7 +300,7 @@ public class IGradito extends SherlockActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils
-						.showToastErrorToConnectToWebService(IGradito.this);
+						.showToastErrorConnectingToWebService(IGradito.this);
 
 				finish();
 			} else {
@@ -342,19 +323,18 @@ public class IGradito extends SherlockActivity {
 	private class PiattiConnector extends AsyncTask<Void, Void, List<Piatto>> {
 
 		private ProtocolCarrier mProtocolCarrier;
-		public Context context;
-		public String appToken = "test smartcampus";
-		// public String authToken = "aee58a92-d42d-42e8-b55e-12e4289586fc";
-		PiattiListAdapter adapter;
+		private Context context;
+		private String appToken = "test smartcampus";
+		private IGraditoPiattoListAdapter adapter;
 		private ProgressDialog progressDialog;
 
 		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
 		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
 		private String token;
 
-		public PiattiConnector(Context applicationContext,
-				PiattiListAdapter adapter) {
-			context = applicationContext;
+		public PiattiConnector(Context context,
+				IGraditoPiattoListAdapter adapter) {
+			this.context = context;
 			this.adapter = adapter;
 		}
 
@@ -449,7 +429,7 @@ public class IGradito extends SherlockActivity {
 			// TODO Auto-generated method stub
 			if (result == null) {
 				ConnectionUtils
-						.showToastErrorToConnectToWebService(IGradito.this);
+						.showToastErrorConnectingToWebService(IGradito.this);
 				finish();
 			} else {
 
@@ -459,6 +439,7 @@ public class IGradito extends SherlockActivity {
 				for (Piatto p : result) {
 					adapter.add(p);
 				}
+
 				lista_piatti = result;
 
 				view.setVisibility(View.VISIBLE);
@@ -473,31 +454,28 @@ public class IGradito extends SherlockActivity {
 	 */
 	private void createMenseSpinner(List<Mensa> listamense) {
 
-		mense_spinner = (Spinner) findViewById(R.id.spinner_portata);
-
+		menseSpinner = (Spinner) findViewById(R.id.spinner_portata);
 		MyCursorAdapter adapter = new MyCursorAdapter(IGradito.this, listamense);
+		menseSpinner.setAdapter(adapter);
 
-		mense_spinner.setAdapter(adapter);
-
-		String mensa = SharedPreferencesUtils.getDefaultMensa(IGradito.this);
-
-		if (mensa != null) {
-			// ok avevo settato mensa preferita
-			int pos = 0;
-			for (Mensa m : listamense) {
-				if (mensa.equalsIgnoreCase(m.getMensa_nome())) {
-					mense_spinner.setSelection(pos);
-				}
-				pos++;
-			}
-		}
+		// NOT YET IMPLEMENTED FAVOURITE MENSA FUNCTIONALITY
+		// String mensa = SharedPreferencesUtils.getDefaultMensa(IGradito.this);
+		// if (mensa != null) {
+		// // ok avevo settato mensa preferita
+		// int pos = 0;
+		// for (Mensa m : listamense) {
+		// if (mensa.equalsIgnoreCase(m.getMensa_nome())) {
+		// mense_spinner.setSelection(pos);
+		// }
+		// pos++;
+		// }
+		// }
 	}
 
 	/*
 	 * 
 	 * CUSTOM ADAPTER FOR THE LIST OF CANTEENS
 	 */
-
 	private class Comparatore implements Comparator<Piatto> {
 
 		public Comparatore() {
@@ -511,122 +489,4 @@ public class IGradito extends SherlockActivity {
 		}
 
 	}
-
-	// adapter for dishes
-	private class PiattiListAdapter extends ArrayAdapter<Piatto> implements
-			Filterable {
-
-		List<Piatto> complete_list = new ArrayList<Piatto>();
-
-		public PiattiListAdapter(Context context, int textViewResourceId) {
-			super(IGradito.this, textViewResourceId);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			Piatto piattoDelGiorno = getItem(position);
-
-			TextView nome_piatto_del_giorno;
-			TextView kcal_piatto_del_giorno;
-
-			if ((piattoDelGiorno.getPiatto_nome().length()) == 1) {
-				convertView = inflater.inflate(
-						R.layout.layout_row_header_menu_adapter, null);
-
-				nome_piatto_del_giorno = (TextView) convertView
-						.findViewById(R.id.menu_day_header_adapter);
-				kcal_piatto_del_giorno = (TextView) convertView
-						.findViewById(R.id.menu__kcal_header_adapter);
-			} else {
-				convertView = inflater.inflate(
-						R.layout.layout_row_menu_adapter, null);
-
-				nome_piatto_del_giorno = (TextView) convertView
-						.findViewById(R.id.menu_name_adapter);
-
-				kcal_piatto_del_giorno = (TextView) convertView
-						.findViewById(R.id.menu_kcal_adapter);
-
-			}
-
-			nome_piatto_del_giorno.setText(piattoDelGiorno.getPiatto_nome());
-			kcal_piatto_del_giorno.setText("");
-			return convertView;
-		}
-
-		@Override
-		public Filter getFilter() {
-			Filter filter = new Filter() {
-
-				@SuppressWarnings("unchecked")
-				@Override
-				protected FilterResults performFiltering(CharSequence constraint) {
-					FilterResults results = new FilterResults();
-
-					// We implement here the filter logic
-
-					if (constraint == null || constraint.length() == 0) {
-						// No filter implemented we return all the list
-						results.values = complete_list;
-						results.count = complete_list.size();
-					} else {
-						// We perform filtering operation
-
-						List<Piatto> piatti = new ArrayList<Piatto>();
-
-						for (Piatto p : complete_list) {
-
-							if (p.getPiatto_nome()
-									.toUpperCase()
-									.contains(
-											constraint.toString().toUpperCase())) {
-								piatti.add(p);
-								// System.out.println("Il piatto è: "+
-								// p.getPiatto().getPiatto_nome());
-
-							}
-						}
-
-						results.values = piatti;
-						// System.out.println("I piatti sono: " +
-						// results.values);
-						results.count = piatti.size();
-						// System.out.println("Numero: " + results.count);
-
-					}
-					return results;
-				}
-
-				@Override
-				protected void publishResults(CharSequence constraint,
-						FilterResults results) {
-
-					// Now we have to inform the adapter about the new list
-					// filtered
-
-					adapter.clear();
-
-					if (results.count > 0) {
-
-						for (Piatto p : (List<Piatto>) results.values) {
-
-							adapter.add(p);
-
-						}
-
-						notifyDataSetChanged();
-					} else {
-						notifyDataSetInvalidated();
-					}
-				}
-			};
-			return filter;
-
-		}
-
-	}
-
 }

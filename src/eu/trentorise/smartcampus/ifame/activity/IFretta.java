@@ -12,7 +12,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaListAdapter;
-import eu.trentorise.smartcampus.ifame.asynctask.IFrettaConnector;
+import eu.trentorise.smartcampus.ifame.asynctask.GetMenseTask;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 
@@ -51,10 +51,10 @@ public class IFretta extends SherlockActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// check for internet connection and get the mense
-		if (ConnectionUtils.isOnline(getApplicationContext())) {
-			new IFrettaConnector(IFretta.this, mAdapterMensaList).execute();
+		if (ConnectionUtils.isConnectedToInternet(getApplicationContext())) {
+			new GetMenseTask(IFretta.this, mAdapterMensaList).execute();
 		} else {
-			ConnectionUtils.showToastNotConnected(this);
+			ConnectionUtils.showToastNotConnectedToInternet(this);
 			finish();
 		}
 	}

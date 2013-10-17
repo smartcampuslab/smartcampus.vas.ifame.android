@@ -16,7 +16,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.asynctask.RetrieveImage;
+import eu.trentorise.smartcampus.ifame.asynctask.RetrieveWebcamImageTask;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 
 public class IFrettaDetails extends SherlockActivity {
@@ -71,7 +71,7 @@ public class IFrettaDetails extends SherlockActivity {
 
 			webcamImage.getLayoutParams().width = rect.width() - 3;
 
-			new RetrieveImage(webcamImage)
+			new RetrieveWebcamImageTask(webcamImage)
 					.execute(mensa.getMensa_link_online());
 
 		} else {
@@ -87,7 +87,7 @@ public class IFrettaDetails extends SherlockActivity {
 			webcamImage.getLayoutParams().height = (y);
 			webcamImage.getLayoutParams().width = rect.width() - 3;
 
-			new RetrieveImage(webcamImage).execute(mensa
+			new RetrieveWebcamImageTask(webcamImage).execute(mensa
 					.getMensa_link_offline());
 		}
 

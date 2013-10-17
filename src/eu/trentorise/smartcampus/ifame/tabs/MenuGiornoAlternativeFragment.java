@@ -76,10 +76,10 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 		// set the visibility of gthe layout to gone so that nothing will be
 		// visible
 		view.setVisibility(View.GONE);
-		if (ConnectionUtils.isOnline(getActivity())) {
+		if (ConnectionUtils.isConnectedToInternet(getActivity())) {
 			new AlternativeConnector(getActivity()).execute();
 		} else {
-			ConnectionUtils.showToastNotConnected(getActivity());
+			ConnectionUtils.showToastNotConnectedToInternet(getActivity());
 			getActivity().finish();
 		}
 
@@ -222,7 +222,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils
-						.showToastErrorToConnectToWebService(getActivity());
+						.showToastErrorConnectingToWebService(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuAlternative(result);

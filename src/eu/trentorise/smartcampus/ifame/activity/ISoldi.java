@@ -65,10 +65,10 @@ public class ISoldi extends SherlockActivity {
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 
-		if (ConnectionUtils.isOnline(this)) {
+		if (ConnectionUtils.isConnectedToInternet(this)) {
 			new ISoldiConnector(this).execute();
 		} else {
-			ConnectionUtils.showToastNotConnected(this);
+			ConnectionUtils.showToastNotConnectedToInternet(this);
 			finish();
 			return;
 		}
@@ -265,7 +265,7 @@ public class ISoldi extends SherlockActivity {
 
 			CLIENT_ID = getString(R.string.CLIENT_ID);
 			CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
-			URL_BASE_WEB_IFAME = getString(R.string.URL_WEB_IFAME);
+			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
 			APP_TOKEN = getString(R.string.APP_TOKEN);
 			URL_ISOLDI_GETSOLDI = getString(R.string.PATH_ISOLDI_GETSOLDI);
 		}
@@ -318,7 +318,7 @@ public class ISoldi extends SherlockActivity {
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
 				ConnectionUtils
-						.showToastErrorToConnectToWebService(ISoldi.this);
+						.showToastErrorConnectingToWebService(ISoldi.this);
 				finish();
 			} else {
 				if (result.getCredit().compareTo("") != 0)

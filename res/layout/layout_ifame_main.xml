@@ -3,7 +3,7 @@
     android:id="@+id/home_relative_layout_ifame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IFameMainActivity" >
+    tools:context=".IFameMain" >
 
     <ScrollView
         android:layout_width="match_parent"

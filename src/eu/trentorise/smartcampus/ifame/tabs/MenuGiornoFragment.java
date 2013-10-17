@@ -69,10 +69,10 @@ public class MenuGiornoFragment extends SherlockFragment {
 
 		view = theContainer.findViewById(R.id.menu_del_giorno_view);
 		view.setVisibility(View.GONE);
-		if (ConnectionUtils.isOnline(getActivity())) {
+		if (ConnectionUtils.isConnectedToInternet(getActivity())) {
 			new MenuDelGiornoConnector(getActivity()).execute();
 		} else {
-			ConnectionUtils.showToastNotConnected(getActivity());
+			ConnectionUtils.showToastNotConnectedToInternet(getActivity());
 			getActivity().finish();
 		}
 		super.onResume();
@@ -239,7 +239,7 @@ public class MenuGiornoFragment extends SherlockFragment {
 			super.onPostExecute(result);
 			if (result == null) {
 				ConnectionUtils
-						.showToastErrorToConnectToWebService(getActivity());
+						.showToastErrorConnectingToWebService(getActivity());
 				getActivity().finish();
 			} else {
 				createMenuDelGiorno(result);

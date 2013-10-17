@@ -12,12 +12,12 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eu.trentorise.smartcampus.ifame"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -50,7 +50,7 @@
             android:value="SmartCampus Android Template" />
 
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.IFameMainActivity"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IFameMain"
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity" >
             <intent-filter>
@@ -135,7 +135,7 @@
             android:label="@string/iDeciso_home_compose_menu" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_mese"
+            android:name="eu.trentorise.smartcampus.ifame.activity.MenuDelMeseActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/iDeciso_home_monthly_menu" >
         </activity>
@@ -150,7 +150,7 @@
             android:label="@string/iDeciso_home_daily_menu" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Recensioni_Activity"
+            android:name="eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni"
             android:configChanges="orientation|screenSize"
             android:label="@string/iGradito_recensioni_title_activity" >
         </activity>

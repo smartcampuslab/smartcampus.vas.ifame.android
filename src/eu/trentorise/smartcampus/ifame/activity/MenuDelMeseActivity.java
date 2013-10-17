@@ -37,6 +37,7 @@ import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.R.layout;
+import eu.trentorise.smartcampus.ifame.adapter.PiattoKcalListAdapter;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
@@ -50,7 +51,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class Menu_mese extends SherlockFragmentActivity {
+public class MenuDelMeseActivity extends SherlockFragmentActivity {
 	/** Logging tag */
 	private static final String TAG = "Menu_mese";
 
@@ -86,8 +87,8 @@ public class Menu_mese extends SherlockFragmentActivity {
 						String end_day = arr[0];
 
 						List<Piatto> p = new ArrayList<Piatto>();
-						ArrayAdapter<Piatto> adpter = new ListHeaderAdapter(
-								Menu_mese.this, p);
+						ArrayAdapter<Piatto> adpter = new PiattoKcalListAdapter(
+								MenuDelMeseActivity.this, p);
 
 						setPiattiList(Integer.parseInt(start_day));
 					}
@@ -102,10 +103,10 @@ public class Menu_mese extends SherlockFragmentActivity {
 		String title = getString(R.string.iDeciso_title_activity);
 
 		new ProgressDialog(this);
-		if (ConnectionUtils.isOnline(this)) {
-			new MenuDelMeseConnector(Menu_mese.this).execute();
+		if (ConnectionUtils.isConnectedToInternet(this)) {
+			new MenuDelMeseConnector(MenuDelMeseActivity.this).execute();
 		} else {
-			ConnectionUtils.showToastNotConnected(this);
+			ConnectionUtils.showToastNotConnectedToInternet(this);
 			finish();
 		}
 	}
@@ -170,8 +171,8 @@ public class Menu_mese extends SherlockFragmentActivity {
 			 */
 			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 			try {
-				token = accessProvider.readToken(Menu_mese.this, CLIENT_ID,
-						CLIENT_SECRET);
+				token = accessProvider.readToken(MenuDelMeseActivity.this,
+						CLIENT_ID, CLIENT_SECRET);
 
 			} catch (AACException e) {
 				Log.e(TAG, "Failed to get token: " + e.getMessage());
@@ -212,7 +213,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 
 			if (mdm == null) {
 				ConnectionUtils
-						.showToastErrorToConnectToWebService(Menu_mese.this);
+						.showToastErrorConnectingToWebService(MenuDelMeseActivity.this);
 				finish();
 			} else {
 
@@ -230,7 +231,7 @@ public class Menu_mese extends SherlockFragmentActivity {
 				// creo la lista per lo spinner
 				ArrayList<String> spinner_date_list = new ArrayList<String>();
 				ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(
-						Menu_mese.this,
+						MenuDelMeseActivity.this,
 						android.R.layout.simple_spinner_dropdown_item,
 						spinner_date_list);
 
@@ -297,8 +298,8 @@ public class Menu_mese extends SherlockFragmentActivity {
 		ArrayList<Piatto> currentWeek = new ArrayList<Piatto>();
 		// creo l'adapter per la lista di piatti
 
-		ArrayAdapter<Piatto> adapter = new ListHeaderAdapter(Menu_mese.this,
-				currentWeek);
+		ArrayAdapter<Piatto> adapter = new PiattoKcalListAdapter(
+				MenuDelMeseActivity.this, currentWeek);
 
 		for (MenuDellaSettimana m : mds) {
 			if (start_day == m.getStart_day()) {
@@ -338,77 +339,6 @@ public class Menu_mese extends SherlockFragmentActivity {
 				}
 			}
 		});
-	}
-
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * LISTADAPTER FOR THE LIST OF PIATTOKCAL
-	 */
-	private class ListHeaderAdapter extends ArrayAdapter<Piatto> {
-
-		public ListHeaderAdapter(Context context, List<Piatto> list) {
-			super(Menu_mese.this, android.R.layout.simple_list_item_1, list);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			Piatto p = getItem(position);
-
-			if (p.getPiatto_nome().matches("[0-9]+")) {
-				// ho un piatto sentinella setto il testo come data
-				convertView = inflater.inflate(
-						layout.layout_row_header_menu_adapter, null);
-
-				TextView dayHeader = (TextView) convertView
-						.findViewById(R.id.menu_day_header_adapter);
-				TextView kcalHeader = (TextView) convertView
-						.findViewById(R.id.menu__kcal_header_adapter);
-
-				int day = Integer.parseInt(p.getPiatto_nome());
-
-				Calendar c = Calendar.getInstance();
-				c.set(Calendar.DATE, day);
-				SimpleDateFormat s = new SimpleDateFormat("EEEEE dd MMMM yyyy");
-				String date_formatted = s.format(c.getTime());
-
-				dayHeader.setText(date_formatted);
-				// dayHeader.setTextSize((float) 18);
-				// name.setBackgroundColor(Color.RED);
-				dayHeader.setTextColor(Color.WHITE);
-				// perche nel layout c'è che esce 'kcal'
-				kcalHeader.setTextColor(Color.WHITE);
-				// kcalHeader.setText("KCal");
-
-			} else {
-				// ho un piatto vero setto i campi coi valori corrispondenti
-				convertView = inflater.inflate(layout.layout_row_menu_adapter,
-						null);
-
-				TextView name = (TextView) convertView
-						.findViewById(R.id.menu_name_adapter);
-				TextView kcal = (TextView) convertView
-						.findViewById(R.id.menu_kcal_adapter);
-
-				name.setText(p.getPiatto_nome());
-				kcal.setText(p.getPiatto_kcal());
-			}
-			return convertView;
-		}
 	}
 
 	private class StartWebSearchAlertDialog extends SherlockDialogFragment {

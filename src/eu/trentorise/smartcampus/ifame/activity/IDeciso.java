@@ -91,7 +91,7 @@ public class IDeciso extends SherlockActivity {
 					startActivity(i);
 					break;
 				case 3:
-					i = new Intent(IDeciso.this, Menu_mese.class);
+					i = new Intent(IDeciso.this, MenuDelMeseActivity.class);
 					startActivity(i);
 					break;
 

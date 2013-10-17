@@ -8,11 +8,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class RetrieveImage extends AsyncTask<String, Void, Bitmap> {
+public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 
 	private ImageView img_view;
 
-	public RetrieveImage(ImageView img_view) {
+	public RetrieveWebcamImageTask(ImageView img_view) {
 		this.img_view = img_view;
 	}
 

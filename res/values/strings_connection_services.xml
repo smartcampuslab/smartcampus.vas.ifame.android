@@ -4,9 +4,12 @@
     <string name="APP_TOKEN">test smartcampu</string>
     <string name="CLIENT_ID">1428b6fc-6e9c-4fb5-989e-4c4016b8c738</string>
     <string name="CLIENT_SECRET">a1fb244d-0da3-43b7-af2e-4b0830294f8e</string>
-    <string name="URL_WEB_IFAME">http://smartcampuswebifame.app.smartcampuslab.it</string>
-    <string name="URL_BASIC_PROFILE_SERVICE">"https://vas-dev.smartcampuslab.it/aac"</string>
+    <string name="URL_BASE_WEB_IFAME">https://smartcampuswebifame.app.smartcampuslab.it</string>
+    <string name="URL_BASIC_PROFILE_SERVICE">https://vas-dev.smartcampuslab.it/aac</string>
     <string name="PATH_ISOLDI_GETSOLDI">/isoldi/getsoldi</string>
     <string name="PATH_IFRETTA_GETMENSE">/getmense</string>
+    <string name="CHECK_YOUR_INTERNET_CONNECTION">Controlla la tua connessione ad internet!</string>
+    <string name="ERROR_CONNECTING_WEB_SERVICE">Ooops! Qualcosa e\' andato storto!</string>
+    <string name="likeNotDeleted">Oooops! Like non eliminato. Riprova</string>
 
 </resources>

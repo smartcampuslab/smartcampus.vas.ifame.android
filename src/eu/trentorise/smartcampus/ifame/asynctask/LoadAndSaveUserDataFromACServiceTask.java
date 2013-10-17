@@ -1,0 +1,70 @@
+package eu.trentorise.smartcampus.ifame.asynctask;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import eu.trentorise.smartcampus.ac.AACException;
+import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
+import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
+import eu.trentorise.smartcampus.profileservice.BasicProfileService;
+import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
+import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
+
+/**
+ * Get the userId from basic profile service and save it under the
+ * SharedPreferences. The userId after is needed when user post a review.
+ */
+public class LoadAndSaveUserDataFromACServiceTask extends
+		AsyncTask<Void, Void, Void> {
+	/** Logging tag */
+	private static final String TAG = "LoadAndSaveUserDataFromACServiceTask";
+
+	private Context context;
+
+	public LoadAndSaveUserDataFromACServiceTask(Context context) {
+		this.context = context;
+	}
+
+	@Override
+	protected Void doInBackground(Void... params) {
+
+		// retrieve the token and get the basic profile
+		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+		String userToken = null;
+		try {
+			userToken = accessProvider.readToken(context,
+					context.getString(R.string.CLIENT_ID),
+					context.getString(R.string.CLIENT_SECRET));
+		} catch (AACException e) {
+			Log.e(TAG, "Failed to get token: " + e.getMessage());
+			// TODO handle the exception
+		}
+
+		BasicProfileService service = new BasicProfileService(
+				context.getString(R.string.URL_BASIC_PROFILE_SERVICE));
+		BasicProfile bp;
+		try {
+			bp = service.getBasicProfile(userToken);
+
+			if (bp != null) {
+				// save the userId in sharedpreferences. Will be used to post
+				// or edit reviews
+				SharedPreferencesUtils.setUserID(context, bp.getUserId());
+			} else {
+				// set userId = ""
+				SharedPreferencesUtils.setUserID(context, "");
+			}
+
+		} catch (SecurityException se) {
+			Log.e(TAG, "Failed to get basic profile: " + se.getMessage());
+			// TODO handle the exception
+		} catch (ProfileServiceException pse) {
+			Log.e(TAG, "Failed to get basic profile: " + pse.getMessage());
+			// TODO handle the exception
+		}
+		return null;
+	}
+}
