@@ -8,6 +8,7 @@ import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
+import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Likes;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -18,17 +19,24 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class PostLikeTask extends AsyncTask<Likes, Void, Boolean> {
+	/** Logging tag */
+	private static final String TAG = "PostLikeTask";
 
-	private ProtocolCarrier mProtocolCarrier;
 	private Context context;
-	private String appToken = "test smartcampus";
+	private String userToken;
 
-	private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
-	private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-	private String token;
+	private final String CLIENT_ID;
+	private final String CLIENT_SECRET;
+	private final String URL_BASE_WEB_IFAME;
+	private final String APP_TOKEN;
 
-	public PostLikeTask(Context applicationContext) {
-		context = applicationContext;
+	public PostLikeTask(Context context) {
+		this.context = context;
+
+		CLIENT_ID = context.getString(R.string.CLIENT_ID);
+		CLIENT_SECRET = context.getString(R.string.CLIENT_SECRET);
+		URL_BASE_WEB_IFAME = context.getString(R.string.URL_BASE_WEB_IFAME);
+		APP_TOKEN = context.getString(R.string.APP_TOKEN);
 	}
 
 	@Override
@@ -36,53 +44,50 @@ public class PostLikeTask extends AsyncTask<Likes, Void, Boolean> {
 		super.onPreExecute();
 		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 		try {
-			token = accessProvider.readToken(context, CLIENT_ID, CLIENT_SECRET);
+			userToken = accessProvider.readToken(context, CLIENT_ID,
+					CLIENT_SECRET);
 		} catch (AACException e) {
-			Log.e("POST_LIKE", "Failed to get token: " + e.getMessage());
+			Log.e(TAG, "Failed to get token: " + e.getMessage());
+			// TODO handle the exception
+			userToken = null;
 		}
 	}
 
 	@Override
 	protected Boolean doInBackground(Likes... like) {
+		if (userToken != null) {
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
+					APP_TOKEN);
+			// esempio path /giudizio/43/like
+			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+					"giudizio/" + like[0].getGiudizio_id() + "/like");
 
-		mProtocolCarrier = new ProtocolCarrier(context, appToken);
+			request.setMethod(Method.POST);
+			request.setBody(Utils.convertToJSON(like[0]));
 
-		MessageRequest request = new MessageRequest(
-				"http://smartcampuswebifame.app.smartcampuslab.it", "giudizio/"
-						+ like[0].getGiudizio_id() + "/like");
-
-		request.setMethod(Method.POST);
-
-		request.setBody(Utils.convertToJSON(like[0]));
-
-		MessageResponse response;
-		try {
-			response = mProtocolCarrier.invokeSync(request, appToken, token);
-
-			if (response.getHttpStatus() == 200) {
-				return true;
-			} else {
-				return false;
+			try {
+				MessageResponse response = mProtocolCarrier.invokeSync(request,
+						APP_TOKEN, userToken);
+				if (response.getHttpStatus() == 200) {
+					return true;
+				}
+			} catch (ConnectionException e) {
+				Log.e(TAG, "ConnectionException: " + e.getMessage());
+			} catch (ProtocolException e) {
+				Log.e(TAG, "ProtocolException: " + e.getMessage());
+			} catch (SecurityException e) {
+				Log.e(TAG, "SecurityException: " + e.getMessage());
 			}
-
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
 
 	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
-		if (result) {
-		} else {
-			Toast.makeText(context, "Oooops! Not Liked", Toast.LENGTH_SHORT)
-					.show();
+	protected void onPostExecute(Boolean resultOk) {
+		super.onPostExecute(resultOk);
+		if (!resultOk) {
+			Toast.makeText(context, context.getString(R.string.errorNotLiked),
+					Toast.LENGTH_SHORT).show();
 		}
-
 	}
 }

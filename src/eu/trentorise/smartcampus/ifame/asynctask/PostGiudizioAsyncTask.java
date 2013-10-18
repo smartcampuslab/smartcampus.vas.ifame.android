@@ -29,7 +29,7 @@ public class PostGiudizioAsyncTask extends
 	/** Logging tag */
 	private static final String TAG = "PostGiudizioAsyncTask";
 
-	private IGraditoVisualizzaRecensioni context;
+	private IGraditoVisualizzaRecensioni visualizzaRecensioniActivity;
 	private ProgressDialog progressDialog;
 	private GiudizioDataToPost data;
 	private String token;
@@ -39,27 +39,32 @@ public class PostGiudizioAsyncTask extends
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
-	public PostGiudizioAsyncTask(IGraditoVisualizzaRecensioni context,
+	public PostGiudizioAsyncTask(
+			IGraditoVisualizzaRecensioni visualizzaRecensioniActivity,
 			GiudizioDataToPost data) {
-		this.context = context;
+		this.visualizzaRecensioniActivity = visualizzaRecensioniActivity;
 		this.data = data;
 
-		CLIENT_ID = context.getString(R.string.CLIENT_ID);
-		CLIENT_SECRET = context.getString(R.string.CLIENT_SECRET);
-		URL_BASE_WEB_IFAME = context.getString(R.string.URL_BASE_WEB_IFAME);
-		APP_TOKEN = context.getString(R.string.APP_TOKEN);
+		CLIENT_ID = visualizzaRecensioniActivity.getString(R.string.CLIENT_ID);
+		CLIENT_SECRET = visualizzaRecensioniActivity
+				.getString(R.string.CLIENT_SECRET);
+		URL_BASE_WEB_IFAME = visualizzaRecensioniActivity
+				.getString(R.string.URL_BASE_WEB_IFAME);
+		APP_TOKEN = visualizzaRecensioniActivity.getString(R.string.APP_TOKEN);
 	}
 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progressDialog = ProgressDialog.show(context,
-				context.getString(R.string.iGradito_title_activity),
+		progressDialog = ProgressDialog.show(visualizzaRecensioniActivity,
+				visualizzaRecensioniActivity
+						.getString(R.string.iGradito_title_activity),
 				"Loading...");
+		// retrieve the token
 		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 		try {
-			token = accessProvider.readToken(context, CLIENT_ID, CLIENT_SECRET);
-
+			token = accessProvider.readToken(visualizzaRecensioniActivity,
+					CLIENT_ID, CLIENT_SECRET);
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to get token: " + e.getMessage());
 		}
@@ -68,8 +73,8 @@ public class PostGiudizioAsyncTask extends
 	@Override
 	protected List<Giudizio> doInBackground(Long... params) {
 
-		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
-				APP_TOKEN);
+		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
+				visualizzaRecensioniActivity, APP_TOKEN);
 
 		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
 				"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio/add");
@@ -99,12 +104,14 @@ public class PostGiudizioAsyncTask extends
 	protected void onPostExecute(List<Giudizio> result) {
 		super.onPostExecute(result);
 		if (result == null) {
-			ConnectionUtils.showToastErrorConnectingToWebService(context);
+			ConnectionUtils
+					.showToastErrorConnectingToWebService(visualizzaRecensioniActivity);
 		} else {
-			context.createGiudiziList(result);
+			visualizzaRecensioniActivity.createGiudiziList(result);
 			progressDialog.dismiss();
-			Toast.makeText(context, "Recensione aggiunta correttamente",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(visualizzaRecensioniActivity,
+					"Recensione aggiunta correttamente", Toast.LENGTH_LONG)
+					.show();
 		}
 	}
 }

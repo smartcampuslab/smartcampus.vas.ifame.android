@@ -15,7 +15,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.Saldo;
 
 public class IDeciso extends SherlockActivity {
 
@@ -26,8 +25,8 @@ public class IDeciso extends SherlockActivity {
 		// per ora da qui ottengo i soldi presenti nella card e salvo in
 		// preferences, salveremo nel bundle spero e quindi prenderemo
 		// semplicemente il valore da li
-		float cash;
-		Saldo saldoReturn;
+		// float cash;
+		// Saldo saldoReturn;
 		/*
 		 * try { saldoReturn = (Saldo) new
 		 * ISoldiConnector(getApplicationContext()) .execute().get();

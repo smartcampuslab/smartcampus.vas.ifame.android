@@ -2,8 +2,8 @@ package eu.trentorise.smartcampus.ifame.asynctask;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import eu.trentorise.smartcampus.ac.AACException;
@@ -26,12 +26,11 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 	/** Logging tag */
 	private static final String TAG = "GetMenseTask";
 
-	private Context context;
+	private Activity activity;
 	private ProgressDialog progressDialog;
 	private MensaListAdapter mensaListAdapter;
 
 	private String userToken;
-	private String titleProgressDialog;
 
 	private final String CLIENT_ID;
 	private final String CLIENT_SECRET;
@@ -43,30 +42,28 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 	 * Get the list of the canteens from the web service and put it in the given
 	 * adapter
 	 */
-	public GetMenseTask(Context context, MensaListAdapter adapter) {
-		this.context = context;
+	public GetMenseTask(Activity activity, MensaListAdapter adapter) {
+		this.activity = activity;
 		this.mensaListAdapter = adapter;
 
-		CLIENT_ID = context.getString(R.string.CLIENT_ID);
-		CLIENT_SECRET = context.getString(R.string.CLIENT_SECRET);
-		URL_BASE_WEB_IFAME = context.getString(R.string.URL_BASE_WEB_IFAME);
-		APP_TOKEN = context.getString(R.string.APP_TOKEN);
-		PATH_IFRETTA_GET_MENSE = context
+		CLIENT_ID = activity.getString(R.string.CLIENT_ID);
+		CLIENT_SECRET = activity.getString(R.string.CLIENT_SECRET);
+		URL_BASE_WEB_IFAME = activity.getString(R.string.URL_BASE_WEB_IFAME);
+		APP_TOKEN = activity.getString(R.string.APP_TOKEN);
+		PATH_IFRETTA_GET_MENSE = activity
 				.getString(R.string.PATH_IFRETTA_GETMENSE);
-		titleProgressDialog = context
-				.getString(R.string.iFretta_title_activity);
 	}
 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
 		// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-		new ProgressDialog(context);
-		progressDialog = ProgressDialog.show(context, titleProgressDialog,
-				"Loading...");
+		progressDialog = ProgressDialog.show(activity,
+				activity.getString(R.string.iFretta_title_activity),
+				activity.getString(R.string.loading));
 		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 		try {
-			userToken = accessProvider.readToken(context, CLIENT_ID,
+			userToken = accessProvider.readToken(activity, CLIENT_ID,
 					CLIENT_SECRET);
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to get token: " + e.getMessage());
@@ -77,15 +74,12 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 
 	@Override
 	protected List<Mensa> doInBackground(Void... params) {
-
 		if (userToken != null) {
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
 					APP_TOKEN);
-
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
 					PATH_IFRETTA_GET_MENSE);
 			request.setMethod(Method.GET);
-
 			try {
 				MessageResponse response = mProtocolCarrier.invokeSync(request,
 						APP_TOKEN, userToken);
@@ -103,15 +97,14 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 	@Override
 	protected void onPostExecute(List<Mensa> result) {
 		super.onPostExecute(result);
+		progressDialog.dismiss();
+
 		if (result == null) {
-			ConnectionUtils.showToastErrorConnectingToWebService(context);
-			// TODO finish activity or notify an error
-			// finish();
+			ConnectionUtils.showToastErrorConnectingToWebService(activity);
+			activity.finish();
 		} else {
 			mensaListAdapter.addAll(result);
 			mensaListAdapter.notifyDataSetChanged();
 		}
-		progressDialog.dismiss();
 	}
-
 }

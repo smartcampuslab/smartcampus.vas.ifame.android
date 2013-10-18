@@ -29,34 +29,35 @@ public class IFretta extends SherlockActivity {
 
 		ListView mListViewMensa = (ListView) findViewById(R.id.ifretta_page_list);
 
-		MensaListAdapter mAdapterMensaList = new MensaListAdapter(this);
-
-		mListViewMensa.setAdapter(mAdapterMensaList);
+		// initialize and setup the adapter with the listener
+		MensaListAdapter adapterMensaList = new MensaListAdapter(this);
+		mListViewMensa.setAdapter(adapterMensaList);
 		mListViewMensa.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View v,
 					int position, long id) {
-
-				Intent iFrettaDetailsIntent = new Intent(
-						getApplicationContext(), IFrettaDetails.class);
-				iFrettaDetailsIntent.putExtra(IFrettaDetails.MENSA_EXTRA,
+				Intent iFrettaDetails = new Intent(getApplicationContext(),
+						IFrettaDetails.class);
+				iFrettaDetails.putExtra(IFrettaDetails.MENSA,
 						(Mensa) adapter.getItemAtPosition(position));
-				startActivity(iFrettaDetailsIntent);
+				startActivity(iFrettaDetails);
 			}
 		});
 
-		// supportActionBar (Sherlock) is initialized in super.onCreate()
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// check for internet connection and get the mense
+		// check for internet connection and than get the mense
 		if (ConnectionUtils.isConnectedToInternet(getApplicationContext())) {
-			new GetMenseTask(IFretta.this, mAdapterMensaList).execute();
+			// if this task has an error call finish() if this activity
+			new GetMenseTask(this, adapterMensaList).execute();
 		} else {
 			ConnectionUtils.showToastNotConnectedToInternet(this);
 			finish();
+			return;
 		}
+
+		// setup actionbar (supportActionBar is initialized in super.onCreate())
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -74,8 +75,14 @@ public class IFretta extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
 			onBackPressed();
+			// Mensa mensa = new Mensa(
+			// "sasasaaaas",
+			// "http://www.operauni.tn.it/upload/cms/456_x/mesiano-web-2.jpg",
+			// "http://www.operauni.tn.it/upload/cms/456_x/mesiano-web-2.jpg");
+			// Intent i = new Intent(this, IFrettaDetails.class);
+			// i.putExtra(IFrettaDetails.MENSA, mensa);
+			// startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }

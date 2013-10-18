@@ -19,13 +19,13 @@ public class ConnectionUtils {
 
 	public static void showToastNotConnectedToInternet(Context context) {
 		Toast.makeText(context,
-				context.getString(R.string.CHECK_YOUR_INTERNET_CONNECTION),
+				context.getString(R.string.checkYourInternetConnection),
 				Toast.LENGTH_SHORT).show();
 	}
 
 	public static void showToastErrorConnectingToWebService(Context context) {
 		Toast.makeText(context,
-				context.getString(R.string.ERROR_CONNECTING_WEB_SERVICE),
+				context.getString(R.string.errorSomethingWentWrong),
 				Toast.LENGTH_SHORT).show();
 	}
 }

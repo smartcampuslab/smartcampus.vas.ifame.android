@@ -58,27 +58,25 @@ public class DeleteLikeTask extends AsyncTask<Likes, Void, Boolean> {
 		if (userToken != null) {
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
 					APP_TOKEN);
-			// esempio <urlbase>/giudizio/43/user/67/like/delete
+			// esempio path /giudizio/43/user/67/like/delete
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
 					"/giudizio/" + like[0].getGiudizio_id() + "/like/delete");
 
 			request.setMethod(Method.POST);
-
 			request.setBody(Utils.convertToJSON(like[0]));
 
-			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, APP_TOKEN,
-						userToken);
+				MessageResponse response = mProtocolCarrier.invokeSync(request,
+						APP_TOKEN, userToken);
 				if (response.getHttpStatus() == 200) {
 					return true;
 				}
 			} catch (ConnectionException e) {
-				e.printStackTrace();
+				Log.e(TAG, "ConnectionException: " + e.getMessage());
 			} catch (ProtocolException e) {
-				e.printStackTrace();
+				Log.e(TAG, "ProtocolException: " + e.getMessage());
 			} catch (SecurityException e) {
-				e.printStackTrace();
+				Log.e(TAG, "SecurityException: " + e.getMessage());
 			}
 		}
 		return false;
@@ -88,7 +86,8 @@ public class DeleteLikeTask extends AsyncTask<Likes, Void, Boolean> {
 	protected void onPostExecute(Boolean resultOk) {
 		super.onPostExecute(resultOk);
 		if (!resultOk) {
-			Toast.makeText(context, context.getString(R.string.likeNotDeleted),
+			Toast.makeText(context,
+					context.getString(R.string.errorLikeNotDeleted),
 					Toast.LENGTH_SHORT).show();
 		}
 	}

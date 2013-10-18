@@ -2,13 +2,11 @@ package eu.trentorise.smartcampus.ifame.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
-import eu.trentorise.smartcampus.ifame.R;
 
 public class SharedPreferencesUtils {
 
 	public final static String GET_FAVOURITE_CANTEEN = "get_favourite_canteen";
-	private final static String NOT_FOUND = "not_found";
+	// private final static String NOT_FOUND = "not_found";
 
 	private final static String IFAME_PREFERENCES = "ifame_preferences";
 	private final static String USER_ID = "user_id";

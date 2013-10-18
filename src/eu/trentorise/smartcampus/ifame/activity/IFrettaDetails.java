@@ -1,15 +1,9 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.WindowManager;
-import android.widget.ImageView;
+import android.view.View;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -17,6 +11,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.asynctask.RetrieveWebcamImageTask;
+import eu.trentorise.smartcampus.ifame.model.AspectRatioImageView;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 
 public class IFrettaDetails extends SherlockActivity {
@@ -25,73 +20,49 @@ public class IFrettaDetails extends SherlockActivity {
 	@SuppressWarnings("unused")
 	private static final String TAG = "iFrettaDetails";
 
-	/** Is the key of the mensa object passed as extra */
-	public static final String MENSA_EXTRA = "mensa";
+	/** Is the key of the mensa object needed to be passed as extra */
+	public static final String MENSA = "mensa_extra";
+
+	private static final int START_HOUR = 12;
+	private static final int END_HOUR = 14;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta_details);
-		ImageView webcamImage = (ImageView) findViewById(R.id.imageViewID);
+		AspectRatioImageView webcamImage = (AspectRatioImageView) findViewById(R.id.imageViewId);
 
 		// GET THE MENSA OBJECT FROM IFRETTA
 		Bundle extras = getIntent().getExtras();
-		Mensa mensa = (Mensa) extras.get(MENSA_EXTRA);
+		Mensa mensa = (Mensa) extras.get(MENSA);
 
 		setTitle(mensa.getMensa_nome());
 
-		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-		String date_s = s.format(new Date());
+		// get current time
+		Calendar calendar = Calendar.getInstance();
+		int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-		// GET CURRENT TIME
-		Calendar c = Calendar.getInstance();
-		int current_hour = c.get(Calendar.HOUR_OF_DAY);
-		int start_hour = 12;
-		int end_hour = 14;
+		// if there is no link for a specified mensa do nothing because the
+		// default is shown no avaiable or loading image
+		if (mensa.getMensa_link_online() == null
+				|| mensa.getMensa_link_offline() == null
+				|| mensa.getMensa_link_online().equals("")
+				|| mensa.getMensa_link_offline().equals("")) {
 
-		// if there is no webcam available for the given mensa, assign an image
-		// that says "not available"
-		if ((mensa.getMensa_link_online().equals(""))
-				|| (mensa.getMensa_link_offline().equals(""))) {
-			findViewById(R.id.imageViewID).setBackgroundResource(
-					R.drawable.image_not_available);
+			// show that image is not avaiable
+			webcamImage.setVisibility(View.VISIBLE);
 
-		} else if (start_hour <= current_hour && current_hour < end_hour) {
-			// retrieve the image from unitn website
-
-			Rect rect = new Rect();
-
-			Display screen = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
-					.getDefaultDisplay();
-			screen.getRectSize(rect);
-
-			int y = rect.height();
-			y = (int) ((int) y * 0.77);
-			webcamImage.getLayoutParams().height = (y);
-
-			webcamImage.getLayoutParams().width = rect.width() - 3;
-
-			new RetrieveWebcamImageTask(webcamImage)
-					.execute(mensa.getMensa_link_online());
-
+		} else if (START_HOUR <= currentHour && currentHour < END_HOUR) {
+			// retrieve the online image website: only between 12 and 14
+			new RetrieveWebcamImageTask(this, webcamImage).execute(mensa
+					.getMensa_link_online());
 		} else {
-
-			Rect rect = new Rect();
-			Display screen = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
-					.getDefaultDisplay();
-
-			screen.getRectSize(rect);
-
-			int y = rect.height();
-			y = (int) ((int) y * 0.77);
-			webcamImage.getLayoutParams().height = (y);
-			webcamImage.getLayoutParams().width = rect.width() - 3;
-
-			new RetrieveWebcamImageTask(webcamImage).execute(mensa
+			// otherwise retrieve the offline image
+			new RetrieveWebcamImageTask(this, webcamImage).execute(mensa
 					.getMensa_link_offline());
 		}
 
-		// actionBarSherlock is initialized in super.onCreate()
+		// setup actionbar (supportActionBar is initialized in super.onCreate())
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
@@ -106,17 +77,9 @@ public class IFrettaDetails extends SherlockActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
+		if (item.getItemId() == android.R.id.home) {
 			onBackPressed();
-			return true;
-			// NOT YET IMPLEMENTED FAVOURITE MENSA FUNCTIONALITY
-			// case R.id.iFretta_set_as_favourite_webcam:
-			// SharedPreferencesUtils.setDefaultMensa(this, mensa_name);
-			// break;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
+		return super.onOptionsItemSelected(item);
 	}
-
 }

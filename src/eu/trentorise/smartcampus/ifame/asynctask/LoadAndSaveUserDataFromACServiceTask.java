@@ -30,7 +30,6 @@ public class LoadAndSaveUserDataFromACServiceTask extends
 
 	@Override
 	protected Void doInBackground(Void... params) {
-
 		// retrieve the token and get the basic profile
 		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
 		String userToken = null;
@@ -43,27 +42,33 @@ public class LoadAndSaveUserDataFromACServiceTask extends
 			// TODO handle the exception
 		}
 
-		BasicProfileService service = new BasicProfileService(
-				context.getString(R.string.URL_BASIC_PROFILE_SERVICE));
-		BasicProfile bp;
-		try {
-			bp = service.getBasicProfile(userToken);
+		// Log.i(TAG, "Token: " + userToken);
 
-			if (bp != null) {
-				// save the userId in sharedpreferences. Will be used to post
-				// or edit reviews
-				SharedPreferencesUtils.setUserID(context, bp.getUserId());
-			} else {
-				// set userId = ""
-				SharedPreferencesUtils.setUserID(context, "");
+		// check if correctly get the token
+		if (userToken != null) {
+			BasicProfileService service = new BasicProfileService(
+					context.getString(R.string.URL_BASIC_PROFILE_SERVICE));
+			BasicProfile bp;
+			try {
+				bp = service.getBasicProfile(userToken);
+
+				if (bp != null) {
+					// save the userId in sharedpreferences. Will be used to
+					// or edit reviews
+					SharedPreferencesUtils.setUserID(context, bp.getUserId());
+
+					// Log.i(TAG, "UserId: " + bp.getUserId());
+				}
+				// else {
+				// SharedPreferencesUtils.setUserID(context, "");
+				// }
+			} catch (SecurityException se) {
+				Log.e(TAG, "Failed to get basic profile: " + se.getMessage());
+				// TODO handle the exception
+			} catch (ProfileServiceException pse) {
+				Log.e(TAG, "Failed to get basic profile: " + pse.getMessage());
+				// TODO handle the exception
 			}
-
-		} catch (SecurityException se) {
-			Log.e(TAG, "Failed to get basic profile: " + se.getMessage());
-			// TODO handle the exception
-		} catch (ProfileServiceException pse) {
-			Log.e(TAG, "Failed to get basic profile: " + pse.getMessage());
-			// TODO handle the exception
 		}
 		return null;
 	}

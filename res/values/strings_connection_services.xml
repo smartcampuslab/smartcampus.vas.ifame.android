@@ -8,8 +8,11 @@
     <string name="URL_BASIC_PROFILE_SERVICE">https://vas-dev.smartcampuslab.it/aac</string>
     <string name="PATH_ISOLDI_GETSOLDI">/isoldi/getsoldi</string>
     <string name="PATH_IFRETTA_GETMENSE">/getmense</string>
-    <string name="CHECK_YOUR_INTERNET_CONNECTION">Controlla la tua connessione ad internet!</string>
-    <string name="ERROR_CONNECTING_WEB_SERVICE">Ooops! Qualcosa e\' andato storto!</string>
-    <string name="likeNotDeleted">Oooops! Like non eliminato. Riprova</string>
+    <string name="checkYourInternetConnection">L\'applicazione richiede la connessione ad internet per funzionare</string>
+    <string name="errorSomethingWentWrong">Ooops! Qualcosa e\' andato storto!</string>
+    <string name="errorLikeNotDeleted">Oooops! Like non eliminato. Riprova</string>
+    <string name="errorNotLiked">Oooops! Like non riuscito. Riprova</string>
+    <string name="errorLoginIsMandatoryToUseTheApp">Il login e\' necessario per utilizzare l\'app</string>
+    <string name="loading">Loading...</string>
 
 </resources>

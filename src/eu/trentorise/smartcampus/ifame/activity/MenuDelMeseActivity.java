@@ -12,19 +12,15 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -36,7 +32,6 @@ import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.R.layout;
 import eu.trentorise.smartcampus.ifame.adapter.PiattoKcalListAdapter;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
@@ -84,11 +79,13 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 						String start_day = arr[0];
 
 						arr = numbers[3].split("/", 2);
-						String end_day = arr[0];
 
-						List<Piatto> p = new ArrayList<Piatto>();
-						ArrayAdapter<Piatto> adpter = new PiattoKcalListAdapter(
-								MenuDelMeseActivity.this, p);
+						// String end_day = arr[0];
+
+						// List<Piatto> p = new ArrayList<Piatto>();
+						// ArrayAdapter<Piatto> adpter = new
+						// PiattoKcalListAdapter(
+						// MenuDelMeseActivity.this, p);
 
 						setPiattiList(Integer.parseInt(start_day));
 					}
@@ -100,9 +97,8 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 
 				});
 
-		String title = getString(R.string.iDeciso_title_activity);
+		// String title = getString(R.string.iDeciso_title_activity);
 
-		new ProgressDialog(this);
 		if (ConnectionUtils.isConnectedToInternet(this)) {
 			new MenuDelMeseConnector(MenuDelMeseActivity.this).execute();
 		} else {
