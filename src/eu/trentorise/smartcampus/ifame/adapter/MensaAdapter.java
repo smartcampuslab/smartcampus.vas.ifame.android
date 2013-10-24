@@ -9,17 +9,19 @@ import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 
-public class MensaListAdapter extends ArrayAdapter<Mensa> {
+public class MensaAdapter extends ArrayAdapter<Mensa> {
 
-	public MensaListAdapter(Context context) {
-		super(context, R.layout.layout_list_view_ifretta);
+	private LayoutInflater inflater;
+
+	public MensaAdapter(Context context) {
+		super(context, android.R.layout.simple_list_item_1);
+
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
-		LayoutInflater inflater = (LayoutInflater) getContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		convertView = inflater.inflate(R.layout.layout_list_view_ifretta, null);
 
@@ -47,4 +49,18 @@ public class MensaListAdapter extends ArrayAdapter<Mensa> {
 		return convertView;
 	}
 
+	@Override
+	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+		View spinView;
+
+		spinView = inflater.inflate(
+				R.layout.layout_igradito_spinner_mensa_dropdown, null);
+
+		Mensa mensa = (Mensa) getItem(position);
+		TextView nome_mensa = (TextView) spinView
+				.findViewById(R.id.textview_nome_mensa);
+		nome_mensa.setText(mensa.getMensa_nome());
+
+		return spinView;
+	}
 }

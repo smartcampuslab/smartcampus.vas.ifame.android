@@ -1,11 +1,13 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
@@ -13,17 +15,30 @@ import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserDataFromACServiceTask;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 
 public class IFameMain extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "IFameMain";
 
+	private SCAccessProvider accessProvider;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
+
+		accessProvider = new EmbeddedSCAccessProvider();
+		// check if the user is logged otherwise open login window
+		try {
+			if (!accessProvider.login(IFameMain.this,
+					getString(R.string.CLIENT_ID),
+					getString(R.string.CLIENT_SECRET), null)) {
+			}
+		} catch (AACException e) {
+			Log.e(TAG, "Failed to login: " + e.getMessage());
+			// TODO handle the failure, e.g., notify the user close the app
+		}
 
 		// Add the listeners to the 4 buttons in the home of iFame
 		Button iFrettaButton = (Button) findViewById(R.id.iFretta_button);
@@ -31,6 +46,7 @@ public class IFameMain extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
+
 				Intent i = new Intent(IFameMain.this, IFretta.class);
 				startActivity(i);
 			}
@@ -65,36 +81,31 @@ public class IFameMain extends SherlockActivity {
 				startActivity(i);
 			}
 		});
-	}
 
-	// TODO add a smarter check if someone doesn't want to log in and
-	// close the login view the app will close by itself
+	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		try {
-			// check if the user is logged in otherwise open login view
-			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-			if (!accessProvider.login(this, getString(R.string.CLIENT_ID),
-					getString(R.string.CLIENT_SECRET), null)) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		// check the result of the authentication
+		if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == Activity.RESULT_OK) {
 				// user is logged
-				// OK a user is logged check internet connection
-				if (ConnectionUtils.isConnectedToInternet(this)) {
-					// needed because after some feature (in iGradito) need the
-					// userId saved by this asynktask
-					new LoadAndSaveUserDataFromACServiceTask(this).execute();
-				} else {
-					ConnectionUtils.showToastNotConnectedToInternet(this);
-				}
+				// OK a user is logged check internet connection and get userid
+				// if(ConnectionUtils.isUserConnectedToInternet(IFameMain.this))
+				// {
+				// needed because after some feature (in iGradito) need the
+				// userId saved by this asynktask
+				SharedPreferencesUtils.retrieveAndSaveUserId(IFameMain.this);
+				// }
+			} else {
+				// if cancelled by user (resultCode == Activity.RESULT_CANCELED)
+				// or any other case close the app
+				Toast.makeText(IFameMain.this,
+						getString(R.string.errorLoginRequired),
+						Toast.LENGTH_SHORT).show();
+				IFameMain.this.finish();
 			}
-		} catch (AACException e) {
-			Log.e(TAG, "Failed to login: " + e.getMessage());
-			// TODO handle the failure, e.g., notify the user close the app
-		} catch (Exception e) {
-			Log.e(TAG, "Failed to get the user id: " + e.getMessage());
-			// TODO handle the failure, e.g., notify the user close the app
 		}
 	}
-
 }

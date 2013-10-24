@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.adapter.MensaListAdapter;
+import eu.trentorise.smartcampus.ifame.adapter.MensaAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetMenseTask;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
@@ -29,8 +30,12 @@ public class IFretta extends SherlockActivity {
 
 		ListView mListViewMensa = (ListView) findViewById(R.id.ifretta_page_list);
 
+		// setup actionbar (supportActionBar is initialized in super.onCreate())
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// initialize and setup the adapter with the listener
-		MensaListAdapter adapterMensaList = new MensaListAdapter(this);
+		MensaAdapter adapterMensaList = new MensaAdapter(this);
 		mListViewMensa.setAdapter(adapterMensaList);
 		mListViewMensa.setOnItemClickListener(new OnItemClickListener() {
 
@@ -46,18 +51,16 @@ public class IFretta extends SherlockActivity {
 		});
 
 		// check for internet connection and than get the mense
-		if (ConnectionUtils.isConnectedToInternet(getApplicationContext())) {
+		if (ConnectionUtils.isUserConnectedToInternet(getApplicationContext())) {
 			// if this task has an error call finish() if this activity
 			new GetMenseTask(this, adapterMensaList).execute();
 		} else {
-			ConnectionUtils.showToastNotConnectedToInternet(this);
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
 			finish();
 			return;
 		}
-
-		// setup actionbar (supportActionBar is initialized in super.onCreate())
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

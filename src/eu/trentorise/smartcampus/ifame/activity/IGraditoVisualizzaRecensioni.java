@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -82,14 +83,43 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		// get list of comments
-		if (ConnectionUtils.isConnectedToInternet(this)) {
+		if (ConnectionUtils.isUserConnectedToInternet(this)) {
 			new GetGiudizioConnector(IGraditoVisualizzaRecensioni.this)
 					.execute(mensa.getMensa_id(), piatto.getPiatto_id());
-
+			// just to be sure that userId is saved in sharedpreferences
+			SharedPreferencesUtils
+					.retrieveAndSaveUserId(IGraditoVisualizzaRecensioni.this);
 		} else {
-			ConnectionUtils.showToastNotConnectedToInternet(this);
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
 			finish();
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.igradito_recensioni_menu_item, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			onClickActionRefresh(item);
+			break;
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		case R.id.action_add_comments:
+			showInsertReviewDialog();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 
 	/**
@@ -115,44 +145,28 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 		insertReviewDialog.show(fragmentManager, "insertReviewDialog");
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.igradito_recensioni_menu_item, menu);
-		return true;
-	}
+	private void onClickActionRefresh(MenuItem item) {
+		menuItem = item;
+		menuItem.setActionView(R.layout.actionbar_progressbar_circle);
+		menuItem.expandActionView();
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_refresh:
-			menuItem = item;
-			menuItem.setActionView(R.layout.actionbar_progressbar_circle);
-			menuItem.expandActionView();
+		// check for connection and get the reviews
+		if (ConnectionUtils.isUserConnectedToInternet(this)) {
+			// clear the adapter
 			if (adapter != null) {
 				adapter.clear();
 				adapter.notifyDataSetChanged();
 			}
-			if (ConnectionUtils.isConnectedToInternet(this)) {
-				new GetGiudizioConnector(IGraditoVisualizzaRecensioni.this)
-						.execute(mensa.getMensa_id(), piatto.getPiatto_id());
-			} else {
-				ConnectionUtils.showToastNotConnectedToInternet(this);
-				finish();
-			}
-			break;
-		case android.R.id.home:
-			onBackPressed();
-			break;
-		case R.id.action_add_comments:
-
-			showInsertReviewDialog();
-
-			break;
-		default:
-			return super.onOptionsItemSelected(item);
+			// get the reviews
+			new GetGiudizioConnector(IGraditoVisualizzaRecensioni.this)
+					.execute(mensa.getMensa_id(), piatto.getPiatto_id());
+		} else {
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
+			menuItem.collapseActionView();
+			menuItem.setActionView(null);
 		}
-		return true;
 	}
 
 	/**
@@ -228,8 +242,9 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				progressDialog.dismiss();
-				ConnectionUtils
-						.showToastErrorConnectingToWebService(IGraditoVisualizzaRecensioni.this);
+				Toast.makeText(context,
+						getString(R.string.errorSomethingWentWrong),
+						Toast.LENGTH_SHORT).show();
 			} else {
 				createGiudiziList(result);
 				progressDialog.dismiss();

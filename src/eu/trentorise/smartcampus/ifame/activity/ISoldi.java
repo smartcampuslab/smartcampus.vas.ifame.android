@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -65,10 +66,12 @@ public class ISoldi extends SherlockActivity {
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 
-		if (ConnectionUtils.isConnectedToInternet(this)) {
+		if (ConnectionUtils.isUserConnectedToInternet(this)) {
 			new ISoldiConnector(this).execute();
 		} else {
-			ConnectionUtils.showToastNotConnectedToInternet(this);
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
 			finish();
 			return;
 		}
@@ -317,8 +320,9 @@ public class ISoldi extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
-				ConnectionUtils
-						.showToastErrorConnectingToWebService(ISoldi.this);
+				Toast.makeText(context,
+						getString(R.string.errorSomethingWentWrong),
+						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
 				if (result.getCredit().compareTo("") != 0)

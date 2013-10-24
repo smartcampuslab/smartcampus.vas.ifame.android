@@ -27,6 +27,13 @@ public class PiattoKcalListAdapter extends ArrayAdapter<Piatto> {
 		simpleDateFormat = new SimpleDateFormat("EEEEE dd MMMM yyyy");
 	}
 
+	public PiattoKcalListAdapter(Context context) {
+		super(context, android.R.layout.simple_list_item_1);
+
+		calendar = Calendar.getInstance();
+		simpleDateFormat = new SimpleDateFormat("EEEEE dd MMMM yyyy");
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 

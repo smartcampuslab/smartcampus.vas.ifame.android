@@ -78,7 +78,7 @@ public class IDeciso extends SherlockActivity {
 				Intent i;
 				switch (position) {
 				case 0:
-					i = new Intent(IDeciso.this, Menu_giorno_tab.class);
+					i = new Intent(IDeciso.this, MenuDelGiorno.class);
 					startActivity(i);
 					break;
 				case 1:

@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.utils;
 
+import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -31,6 +32,10 @@ public class SharedPreferencesUtils {
 		editor.putString(USER_ID, userId);
 
 		return editor.commit();
+	}
+
+	public static void retrieveAndSaveUserId(Context context) {
+		new LoadAndSaveUserIdFromACServiceTask(context).execute();
 	}
 
 	// /*

@@ -17,14 +17,14 @@ import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
  * Get the userId from basic profile service and save it under the
  * SharedPreferences. The userId after is needed when user post a review.
  */
-public class LoadAndSaveUserDataFromACServiceTask extends
+public class LoadAndSaveUserIdFromACServiceTask extends
 		AsyncTask<Void, Void, Void> {
 	/** Logging tag */
-	private static final String TAG = "LoadAndSaveUserDataFromACServiceTask";
+	private static final String TAG = "LoadAndSaveUserIdFromACServiceTask";
 
 	private Context context;
 
-	public LoadAndSaveUserDataFromACServiceTask(Context context) {
+	public LoadAndSaveUserIdFromACServiceTask(Context context) {
 		this.context = context;
 	}
 
@@ -41,9 +41,7 @@ public class LoadAndSaveUserDataFromACServiceTask extends
 			Log.e(TAG, "Failed to get token: " + e.getMessage());
 			// TODO handle the exception
 		}
-
-		// Log.i(TAG, "Token: " + userToken);
-
+		Log.i(TAG, "Token: " + userToken);
 		// check if correctly get the token
 		if (userToken != null) {
 			BasicProfileService service = new BasicProfileService(
@@ -56,8 +54,7 @@ public class LoadAndSaveUserDataFromACServiceTask extends
 					// save the userId in sharedpreferences. Will be used to
 					// or edit reviews
 					SharedPreferencesUtils.setUserID(context, bp.getUserId());
-
-					// Log.i(TAG, "UserId: " + bp.getUserId());
+					Log.i(TAG, "UserId: " + bp.getUserId());
 				}
 				// else {
 				// SharedPreferencesUtils.setUserID(context, "");

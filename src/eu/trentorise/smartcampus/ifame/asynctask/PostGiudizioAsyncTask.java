@@ -104,8 +104,11 @@ public class PostGiudizioAsyncTask extends
 	protected void onPostExecute(List<Giudizio> result) {
 		super.onPostExecute(result);
 		if (result == null) {
-			ConnectionUtils
-					.showToastErrorConnectingToWebService(visualizzaRecensioniActivity);
+			Toast.makeText(
+					visualizzaRecensioniActivity,
+					visualizzaRecensioniActivity
+							.getString(R.string.errorSomethingWentWrong),
+					Toast.LENGTH_SHORT).show();
 		} else {
 			visualizzaRecensioniActivity.createGiudiziList(result);
 			progressDialog.dismiss();

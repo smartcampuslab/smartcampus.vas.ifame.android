@@ -145,7 +145,7 @@
             android:label="@string/iFretta_details_title_activity" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Menu_giorno_tab"
+            android:name="eu.trentorise.smartcampus.ifame.activity.MenuDelGiorno"
             android:configChanges="orientation|screenSize"
             android:label="@string/iDeciso_home_daily_menu" >
         </activity>

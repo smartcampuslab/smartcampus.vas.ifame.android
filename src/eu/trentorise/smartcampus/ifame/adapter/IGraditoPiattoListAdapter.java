@@ -111,7 +111,8 @@ public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
 
 				if (results.count > 0) {
 
-					for (Piatto p : (List<Piatto>) results.values) {
+					List<Piatto> values = (List<Piatto>) results.values;
+					for (Piatto p : values) {
 
 						IGraditoPiattoListAdapter.this.add(p);
 
