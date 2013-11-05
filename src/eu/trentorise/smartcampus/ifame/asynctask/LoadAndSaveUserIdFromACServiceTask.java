@@ -31,10 +31,10 @@ public class LoadAndSaveUserIdFromACServiceTask extends
 	@Override
 	protected Void doInBackground(Void... params) {
 		// retrieve the token and get the basic profile
-		SCAccessProvider accessProvider = IFameMain.getAccessProvider();
+		//SCAccessProvider accessProvider = IFameMain.getAccessProvider();
 		String userToken = null;
 		try {
-			userToken = accessProvider.readToken(context);
+			userToken = IFameMain.getAuthToken();
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to get token: " + e.getMessage());
 			// TODO handle the exception

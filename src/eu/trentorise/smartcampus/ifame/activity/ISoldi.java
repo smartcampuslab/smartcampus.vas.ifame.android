@@ -290,7 +290,7 @@ public class ISoldi extends SherlockActivity {
 
 					if (response.getHttpStatus() == 200) {
 						return Utils.convertJSONToObject(response.getBody(),
-								Saldo.class);
+								Saldo.class); 
 					}
 				} catch (ConnectionException e) {
 					e.printStackTrace();
