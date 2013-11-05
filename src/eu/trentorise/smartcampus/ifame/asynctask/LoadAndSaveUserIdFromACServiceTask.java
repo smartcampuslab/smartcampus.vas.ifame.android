@@ -3,11 +3,11 @@ package eu.trentorise.smartcampus.ifame.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 import eu.trentorise.smartcampus.profileservice.BasicProfileService;
 import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
@@ -31,12 +31,10 @@ public class LoadAndSaveUserIdFromACServiceTask extends
 	@Override
 	protected Void doInBackground(Void... params) {
 		// retrieve the token and get the basic profile
-		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
+		SCAccessProvider accessProvider = IFameMain.getAccessProvider();
 		String userToken = null;
 		try {
-			userToken = accessProvider.readToken(context,
-					context.getString(R.string.CLIENT_ID),
-					context.getString(R.string.CLIENT_SECRET));
+			userToken = accessProvider.readToken(context);
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to get token: " + e.getMessage());
 			// TODO handle the exception

@@ -4,17 +4,14 @@ import java.util.List;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -32,10 +29,6 @@ public class PostGiudizioAsyncTask extends
 	private IGraditoVisualizzaRecensioni visualizzaRecensioniActivity;
 	private ProgressDialog progressDialog;
 	private GiudizioDataToPost data;
-	private String token;
-
-	private final String CLIENT_ID;
-	private final String CLIENT_SECRET;
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
@@ -44,10 +37,6 @@ public class PostGiudizioAsyncTask extends
 			GiudizioDataToPost data) {
 		this.visualizzaRecensioniActivity = visualizzaRecensioniActivity;
 		this.data = data;
-
-		CLIENT_ID = visualizzaRecensioniActivity.getString(R.string.CLIENT_ID);
-		CLIENT_SECRET = visualizzaRecensioniActivity
-				.getString(R.string.CLIENT_SECRET);
 		URL_BASE_WEB_IFAME = visualizzaRecensioniActivity
 				.getString(R.string.URL_BASE_WEB_IFAME);
 		APP_TOKEN = visualizzaRecensioniActivity.getString(R.string.APP_TOKEN);
@@ -60,19 +49,10 @@ public class PostGiudizioAsyncTask extends
 				visualizzaRecensioniActivity
 						.getString(R.string.iGradito_title_activity),
 				"Loading...");
-		// retrieve the token
-		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-		try {
-			token = accessProvider.readToken(visualizzaRecensioniActivity,
-					CLIENT_ID, CLIENT_SECRET);
-		} catch (AACException e) {
-			Log.e(TAG, "Failed to get token: " + e.getMessage());
-		}
 	}
 
 	@Override
 	protected List<Giudizio> doInBackground(Long... params) {
-
 		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
 				visualizzaRecensioniActivity, APP_TOKEN);
 
@@ -84,7 +64,7 @@ public class PostGiudizioAsyncTask extends
 
 		try {
 			MessageResponse response = mProtocolCarrier.invokeSync(request,
-					APP_TOKEN, token);
+					APP_TOKEN, IFameMain.getAuthToken());
 
 			if (response.getHttpStatus() == 200) {
 				return Utils.convertJSONToObjects(response.getBody(),
@@ -95,6 +75,9 @@ public class PostGiudizioAsyncTask extends
 		} catch (ProtocolException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (AACException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

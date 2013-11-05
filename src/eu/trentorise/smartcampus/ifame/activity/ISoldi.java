@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
@@ -19,8 +18,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
@@ -255,10 +252,7 @@ public class ISoldi extends SherlockActivity {
 
 		private Context context;
 		private ProgressDialog progressDialog;
-		private String token;
 
-		private final String CLIENT_ID;
-		private final String CLIENT_SECRET;
 		private final String URL_BASE_WEB_IFAME;
 		private final String URL_ISOLDI_GETSOLDI;
 		private final String APP_TOKEN;
@@ -266,8 +260,7 @@ public class ISoldi extends SherlockActivity {
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;
 
-			CLIENT_ID = getString(R.string.CLIENT_ID);
-			CLIENT_SECRET = getString(R.string.CLIENT_SECRET);
+		
 			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
 			APP_TOKEN = getString(R.string.APP_TOKEN);
 			URL_ISOLDI_GETSOLDI = getString(R.string.PATH_ISOLDI_GETSOLDI);
@@ -280,18 +273,11 @@ public class ISoldi extends SherlockActivity {
 			isoldi_layout_view.setVisibility(View.GONE);
 			progressDialog = ProgressDialog.show(context,
 					getString(R.string.iSoldi_title_activity), "Loading...");
-			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-			try {
-				token = accessProvider.readToken(context, CLIENT_ID,
-						CLIENT_SECRET);
-			} catch (AACException e) {
-				Log.e(TAG, "Failed to get token: " + e.getMessage());
-			}
 		}
 
 		@Override
 		protected Saldo doInBackground(Void... saldo) {
-			if (token != null) {
+			
 				ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
 						APP_TOKEN);
 				MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
@@ -300,7 +286,7 @@ public class ISoldi extends SherlockActivity {
 
 				try {
 					MessageResponse response = mProtocolCarrier.invokeSync(
-							request, APP_TOKEN, token);
+							request, APP_TOKEN, IFameMain.getAuthToken());
 
 					if (response.getHttpStatus() == 200) {
 						return Utils.convertJSONToObject(response.getBody(),
@@ -312,8 +298,11 @@ public class ISoldi extends SherlockActivity {
 					e.printStackTrace();
 				} catch (SecurityException e) {
 					e.printStackTrace();
+				} catch (AACException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			}
+			
 			return null;
 		}
 

@@ -1,8 +1,8 @@
 package eu.trentorise.smartcampus.ifame.utils;
 
-import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
 import android.content.Context;
 import android.content.SharedPreferences;
+import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
 
 public class SharedPreferencesUtils {
 

@@ -3,12 +3,12 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.util.Iterator;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,8 +20,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.ReviewListAdapter;
@@ -39,6 +37,11 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
+
+////////////////7
+//per la compatibilità guarda tu!!!!!!!!!!!!!!!!!!
+///////////////
+@SuppressLint("NewApi")
 public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "RecensioniActivity";
@@ -145,6 +148,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 		insertReviewDialog.show(fragmentManager, "insertReviewDialog");
 	}
 
+	@SuppressLint("NewApi")
 	private void onClickActionRefresh(MenuItem item) {
 		menuItem = item;
 		menuItem.setActionView(R.layout.actionbar_progressbar_circle);
@@ -180,9 +184,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 		private Context context;
 		private String appToken = "test smartcampus";
 
-		private static final String CLIENT_ID = "9c7ccf0a-0937-4cc8-ae51-30d6646a4445";
-		private static final String CLIENT_SECRET = "f6078203-1690-4a12-bf05-0aa1d1428875";
-		private String token;
 
 		public GetGiudizioConnector(Context applicationContext) {
 			context = applicationContext;
@@ -193,14 +194,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(context, "iGradito",
 					"Loading...");
-			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-			try {
-				token = accessProvider.readToken(
-						IGraditoVisualizzaRecensioni.this, CLIENT_ID,
-						CLIENT_SECRET);
-			} catch (AACException e) {
-				Log.e(TAG, "Failed to get token: " + e.getMessage());
-			}
 		}
 
 		@Override
@@ -209,7 +202,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 			mProtocolCarrier = new ProtocolCarrier(context, appToken);
 
 			MessageRequest request = new MessageRequest(
-					"http://smartcampuswebifame.app.smartcampuslab.it",
+					"https://smartcampuswebifame.app.smartcampuslab.it/",
 					"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio");
 
 			request.setMethod(Method.GET);
@@ -217,7 +210,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 			MessageResponse response;
 			try {
 				response = mProtocolCarrier
-						.invokeSync(request, appToken, token);
+						.invokeSync(request, appToken, IFameMain.getAuthToken());
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
@@ -233,6 +226,9 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 				e.printStackTrace();
 			} catch (SecurityException e) {
 				e.printStackTrace();
+			} catch (AACException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return null;
 		}
@@ -247,8 +243,8 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 						Toast.LENGTH_SHORT).show();
 			} else {
 				createGiudiziList(result);
-				progressDialog.dismiss();
 			}
+			progressDialog.dismiss();
 		}
 	}
 

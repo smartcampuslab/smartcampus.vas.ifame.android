@@ -7,11 +7,9 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.MensaAdapter;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
@@ -27,11 +25,6 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 	private Activity activity;
 	private ProgressDialog progressDialog;
 	private MensaAdapter mensaAdapter;
-
-	private String userToken;
-
-	private final String CLIENT_ID;
-	private final String CLIENT_SECRET;
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 	private final String PATH_IFRETTA_GETMENSE;
@@ -43,9 +36,6 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 	public GetMenseTask(Activity activity, MensaAdapter adapter) {
 		this.activity = activity;
 		this.mensaAdapter = adapter;
-
-		CLIENT_ID = activity.getString(R.string.CLIENT_ID);
-		CLIENT_SECRET = activity.getString(R.string.CLIENT_SECRET);
 		URL_BASE_WEB_IFAME = activity.getString(R.string.URL_BASE_WEB_IFAME);
 		APP_TOKEN = activity.getString(R.string.APP_TOKEN);
 		PATH_IFRETTA_GETMENSE = activity
@@ -59,21 +49,11 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iFretta_title_activity),
 				activity.getString(R.string.loading));
-		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-		try {
-			userToken = accessProvider.readToken(activity, CLIENT_ID,
-					CLIENT_SECRET);
-		} catch (AACException e) {
-			Log.e(GetMenseTask.class.getName(),
-					"Failed to get token: " + e.getMessage());
-			// TODO handle the exception
-			userToken = null;
-		}
 	}
 
 	@Override
 	protected List<Mensa> doInBackground(Void... params) {
-		if (userToken != null) {
+		
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
 					APP_TOKEN);
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
@@ -81,7 +61,7 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 			request.setMethod(Method.GET);
 			try {
 				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, userToken);
+						APP_TOKEN, IFameMain.getAuthToken());
 				if (response.getHttpStatus() == 200) {
 					return Utils.convertJSONToObjects(response.getBody(),
 							Mensa.class);
@@ -90,7 +70,7 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 				Log.e(GetMenseTask.class.getName(),
 						"Failed to get the canteens: " + e.getMessage());
 			}
-		}
+		
 		return null;
 	}
 

@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,25 +16,29 @@ import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 
 public class IFameMain extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "IFameMain";
+	private static Context ctx;
+	private static SCAccessProvider accessProvider = null;
+//	private SCAccessProvider accessProvider;
 
-	private SCAccessProvider accessProvider;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
-
+		ctx = getApplicationContext();
 		accessProvider = new EmbeddedSCAccessProvider();
 		// check if the user is logged otherwise open login window
 		try {
-			if (!accessProvider.login(IFameMain.this,
-					getString(R.string.CLIENT_ID),
-					getString(R.string.CLIENT_SECRET), null)) {
+			if (!accessProvider.login(IFameMain.this,null)) {
+				//login
+				new LoadAndSaveUserIdFromACServiceTask(ctx).execute();
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
@@ -107,5 +112,17 @@ public class IFameMain extends SherlockActivity {
 				IFameMain.this.finish();
 			}
 		}
+	}
+	
+	public static SCAccessProvider getAccessProvider() {
+		if(accessProvider == null)
+			accessProvider = SCAccessProvider.getInstance(ctx);
+		return accessProvider;
+	}
+	public static String getAuthToken() throws AACException {
+		String mToken;
+		mToken = getAccessProvider().readToken(
+				ctx);
+		return mToken; 
 	}
 }

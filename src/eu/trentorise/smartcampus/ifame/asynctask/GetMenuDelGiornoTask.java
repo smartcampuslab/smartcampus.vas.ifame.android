@@ -6,12 +6,10 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.MenuDelGiornoPiattiAdapter;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
@@ -26,12 +24,11 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 
-	private final String CLIENT_ID;
-	private final String CLIENT_SECRET;
+
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
-	private String userToken;
+
 	private ProgressDialog progressDialog;
 	private Activity activity;
 	private MenuDelGiornoPiattiAdapter mPiattiAdapter;
@@ -40,9 +37,6 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 			MenuDelGiornoPiattiAdapter piattiAdapter) {
 		this.activity = activity;
 		this.mPiattiAdapter = piattiAdapter;
-
-		CLIENT_ID = activity.getString(R.string.CLIENT_ID);
-		CLIENT_SECRET = activity.getString(R.string.CLIENT_SECRET);
 		URL_BASE_WEB_IFAME = activity.getString(R.string.URL_BASE_WEB_IFAME);
 		APP_TOKEN = activity.getString(R.string.APP_TOKEN);
 	}
@@ -54,21 +48,10 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iDeciso_home_daily_menu),
 				activity.getString(R.string.loading));
-		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-		try {
-			userToken = accessProvider.readToken(activity, CLIENT_ID,
-					CLIENT_SECRET);
-		} catch (AACException e) {
-			Log.e(GetMenuDelGiornoTask.class.getName(), "Failed to get token: "
-					+ e.getMessage());
-			// TODO handle the exception
-			userToken = null;
-		}
 	}
 
 	@Override
 	protected MenuDelGiorno doInBackground(Void... params) {
-		if (userToken != null) {
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
 					APP_TOKEN);
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
@@ -76,7 +59,7 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 			request.setMethod(Method.GET);
 			try {
 				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, userToken);
+						APP_TOKEN, IFameMain.getAuthToken());
 				if (response.getHttpStatus() == 200) {
 					return Utils.convertJSONToObject(response.getBody(),
 							MenuDelGiorno.class);
@@ -87,8 +70,12 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 				e.printStackTrace();
 			} catch (SecurityException e) {
 				e.printStackTrace();
+			} catch (AACException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
+		
+			
 		return null;
 	}
 

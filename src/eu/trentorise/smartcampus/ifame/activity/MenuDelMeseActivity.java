@@ -20,9 +20,6 @@ import android.widget.Spinner;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.PiattoKcalListAdapter;
@@ -154,18 +151,13 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 
 		private Activity activity;
 		private ProgressDialog progressDialog;
-		private String userToken;
 
-		private final String CLIENT_ID;
-		private final String CLIENT_SECRET;
 		private final String URL_BASE_WEB_IFAME;
 		private final String APP_TOKEN;
 
 		public MenuDelMeseConnector(Activity activity) {
 			this.activity = activity;
 
-			CLIENT_ID = activity.getString(R.string.CLIENT_ID);
-			CLIENT_SECRET = activity.getString(R.string.CLIENT_SECRET);
 			URL_BASE_WEB_IFAME = activity
 					.getString(R.string.URL_BASE_WEB_IFAME);
 			APP_TOKEN = activity.getString(R.string.APP_TOKEN);
@@ -178,21 +170,10 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 			progressDialog = ProgressDialog.show(activity,
 					activity.getString(R.string.iDeciso_home_monthly_menu),
 					activity.getString(R.string.loading));
-			SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-			try {
-				userToken = accessProvider.readToken(activity, CLIENT_ID,
-						CLIENT_SECRET);
-			} catch (AACException e) {
-				Log.e(MenuDelMeseConnector.class.getName(),
-						"Failed to get token: " + e.getMessage());
-				// TODO handle the exception
-				userToken = null;
-			}
 		}
 
 		@Override
 		protected MenuDelMese doInBackground(Void... params) {
-			if (userToken != null) {
 				ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
 						activity, APP_TOKEN);
 				MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
@@ -200,7 +181,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				request.setMethod(Method.GET);
 				try {
 					MessageResponse response = mProtocolCarrier.invokeSync(
-							request, APP_TOKEN, userToken);
+							request, APP_TOKEN, IFameMain.getAuthToken());
 					if (response.getHttpStatus() == 200) {
 						return Utils.convertJSONToObject(response.getBody(),
 								MenuDelMese.class);
@@ -209,7 +190,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 					Log.e(MenuDelMeseConnector.class.getName(),
 							"Failed to get the monthly menu: " + e.getMessage());
 				}
-			}
+			
 			return null;
 		}
 

@@ -7,13 +7,11 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.IGraditoPiattoListAdapter;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.PiattoComparator;
@@ -35,10 +33,6 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 	private Activity activity;
 	private IGraditoPiattoListAdapter adapter;
 	private ProgressDialog progressDialog;
-	private String userToken;
-
-	private final String CLIENT_ID;
-	private final String CLIENT_SECRET;
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 	private final String PATH_IGRADITO_GETPIATTI;
@@ -47,9 +41,6 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 			IGraditoPiattoListAdapter adapter) {
 		this.activity = context;
 		this.adapter = adapter;
-
-		CLIENT_ID = context.getString(R.string.CLIENT_ID);
-		CLIENT_SECRET = context.getString(R.string.CLIENT_SECRET);
 		URL_BASE_WEB_IFAME = context.getString(R.string.URL_BASE_WEB_IFAME);
 		APP_TOKEN = context.getString(R.string.APP_TOKEN);
 		PATH_IGRADITO_GETPIATTI = context
@@ -63,20 +54,12 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iGradito_title_activity),
 				activity.getString(R.string.loading));
-		SCAccessProvider accessProvider = new EmbeddedSCAccessProvider();
-		try {
-			userToken = accessProvider.readToken(activity, CLIENT_ID,
-					CLIENT_SECRET);
-		} catch (AACException e) {
-			Log.e(TAG, "Failed to get token: " + e.getMessage());
-			// TODO handle the exception
-			userToken = null;
-		}
+		
 	}
 
 	@Override
 	protected List<Piatto> doInBackground(Void... params) {
-		if (userToken != null) {
+
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
 					APP_TOKEN);
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
@@ -85,7 +68,7 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 
 			try {
 				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, userToken);
+						APP_TOKEN, IFameMain.getAuthToken());
 
 				if (response.getHttpStatus() == 200) {
 
@@ -133,8 +116,11 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 				e.printStackTrace();
 			} catch (SecurityException e) {
 				e.printStackTrace();
+			} catch (AACException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
+		
 		return null;
 	}
 
