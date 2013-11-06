@@ -200,18 +200,30 @@ public class ISoldi extends SherlockActivity {
 
 			snackText.setVisibility(View.VISIBLE);
 
-		} else {
+		} else if (amount >= 0 && amount < 2.90) {
 			centerText.setText(String.valueOf(amount));
+			centerText.setTextColor(Color.parseColor("#FF8800"));
+
+			bottomText
+					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
+			statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
+
+			snackText.setVisibility(View.VISIBLE);
+
+		} else {
+			centerText.setText("Non disponibile");
+			centerText.setTextSize(27);
 			centerText.setTextColor(Color.parseColor("#CC0000"));
 
 			bottomText
-					.setText(" " + getString(R.string.iSoldi_devi_ricaricare));
+					.setText("Per visualizzare il tuo credito devi essere loggato tramite Unitn");
 			bottomText.setTextSize(25);
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
-			statsButton.setBackgroundColor(Color.parseColor("#CC0000"));
-			isoldi_euro_txt.setTextColor(Color.parseColor("#CC0000"));
-
+			statsButton.setVisibility(View.GONE);
+			isoldi_euro_txt.setVisibility(View.INVISIBLE);
+			isoldi_euro_txt.setText("");
 		}
 	}
 
@@ -295,6 +307,11 @@ public class ISoldi extends SherlockActivity {
 				e.printStackTrace();
 			} catch (ProtocolException e) {
 				e.printStackTrace();
+				// gestine del login con google e mostrare errore
+				Saldo saldoError = new Saldo();
+				saldoError.setCredit("-1");
+				return saldoError;
+
 			} catch (SecurityException e) {
 				e.printStackTrace();
 			} catch (AACException e) {
@@ -324,3 +341,4 @@ public class ISoldi extends SherlockActivity {
 	}
 
 }
+
