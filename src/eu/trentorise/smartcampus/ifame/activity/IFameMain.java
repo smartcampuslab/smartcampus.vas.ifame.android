@@ -14,6 +14,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
@@ -21,7 +22,7 @@ import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 public class IFameMain extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "IFameMain";
-	private static SCAccessProvider accessProvider = null;
+	private static EmbeddedSCAccessProvider accessProvider = null;
 	public static Context ctx;
 
 	// private SCAccessProvider accessProvider;
@@ -112,9 +113,9 @@ public class IFameMain extends SherlockActivity {
 		}
 	}
 
-	public static SCAccessProvider getAccessProvider() {
+	public static EmbeddedSCAccessProvider getAccessProvider() {
 		if (accessProvider == null)
-			accessProvider = SCAccessProvider.getInstance(ctx);
+			accessProvider = new EmbeddedSCAccessProvider();//.getInstance(ctx);
 		return accessProvider;
 	}
 
