@@ -59,10 +59,10 @@
             android:value="true" />
 <meta-data
             android:name="eu.trentorise.smartcampus.account.CLIENT_ID"
-            android:value="" />
+            android:value="1428b6fc-6e9c-4fb5-989e-4c4016b8c738" />
         <meta-data
             android:name="eu.trentorise.smartcampus.account.CLIENT_SECRET"
-            android:value="" />
+            android:value="a1fb244d-0da3-43b7-af2e-4b0830294f8e" />
         
         <meta-data
             android:name="SHARED_PACKAGE"
