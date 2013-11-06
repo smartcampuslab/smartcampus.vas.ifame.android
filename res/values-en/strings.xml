@@ -151,5 +151,7 @@
     <string name="remote_file_storage_demo_label">Remote_File_Storfage</string>
     <!-- /others -->
     <string name="isoldi_euro_string">€</string>
+    <string name="credit_status">Not available</string>
+    <string name="unitn_log">To display your credit you must be logged with Unitn</string>
 
 </resources>

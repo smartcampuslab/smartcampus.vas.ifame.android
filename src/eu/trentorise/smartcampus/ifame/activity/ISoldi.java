@@ -213,14 +213,14 @@ public class ISoldi extends SherlockActivity {
 			snackText.setVisibility(View.VISIBLE);
 
 		} else {
-			centerText.setText("Non disponibile");
+			centerText.setText(R.string.credit_status);
 			centerText.setTextSize(27);
 			centerText.setTextColor(Color.parseColor("#CC0000"));
 
 			bottomText.setPadding(0, 10, 0, 0);
 			bottomText.setGravity(Gravity.CENTER | Gravity.BOTTOM);
 			bottomText
-					.setText("Per visualizzare il tuo credito devi essere loggato tramite Unitn");
+					.setText(R.string.unitn_log);
 			bottomText.setTextSize(25);
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
