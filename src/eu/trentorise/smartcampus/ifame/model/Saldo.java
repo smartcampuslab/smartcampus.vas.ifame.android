@@ -2,20 +2,16 @@ package eu.trentorise.smartcampus.ifame.model;
 
 import java.util.List;
 
-
-
 public class Saldo {
 
 	private Long user_id;
 	private Long card_id;
-	
 
 	private String credit;
 	private List<OperaPayment> payments;
 
 	public Saldo() {
 	}
-	
 
 	public Long getUser_id() {
 		return user_id;
@@ -41,11 +37,9 @@ public class Saldo {
 		this.credit = credit;
 	}
 
-
 	public List<OperaPayment> getPayments() {
 		return payments;
 	}
-
 
 	public void setPayments(List<OperaPayment> payments) {
 		this.payments = payments;

@@ -260,7 +260,6 @@ public class ISoldi extends SherlockActivity {
 		public ISoldiConnector(Context applicationContext) {
 			context = applicationContext;
 
-		
 			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
 			APP_TOKEN = getString(R.string.APP_TOKEN);
 			URL_ISOLDI_GETSOLDI = getString(R.string.PATH_ISOLDI_GETSOLDI);
@@ -277,32 +276,32 @@ public class ISoldi extends SherlockActivity {
 
 		@Override
 		protected Saldo doInBackground(Void... saldo) {
-			
-				ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
-						APP_TOKEN);
-				MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-						URL_ISOLDI_GETSOLDI);
-				request.setMethod(Method.GET);
 
-				try {
-					MessageResponse response = mProtocolCarrier.invokeSync(
-							request, APP_TOKEN, IFameMain.getAuthToken());
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
+					APP_TOKEN);
+			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+					URL_ISOLDI_GETSOLDI);
+			request.setMethod(Method.GET);
 
-					if (response.getHttpStatus() == 200) {
-						return Utils.convertJSONToObject(response.getBody(),
-								Saldo.class); 
-					}
-				} catch (ConnectionException e) {
-					e.printStackTrace();
-				} catch (ProtocolException e) {
-					e.printStackTrace();
-				} catch (SecurityException e) {
-					e.printStackTrace();
-				} catch (AACException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			try {
+				MessageResponse response = mProtocolCarrier.invokeSync(request,
+						APP_TOKEN, IFameMain.getAuthToken());
+
+				if (response.getHttpStatus() == 200) {
+					return Utils.convertJSONToObject(response.getBody(),
+							Saldo.class);
 				}
-			
+			} catch (ConnectionException e) {
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (AACException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			return null;
 		}
 

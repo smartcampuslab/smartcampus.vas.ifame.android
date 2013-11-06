@@ -53,24 +53,24 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 
 	@Override
 	protected List<Mensa> doInBackground(Void... params) {
-		
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
-					APP_TOKEN);
-			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					PATH_IFRETTA_GETMENSE);
-			request.setMethod(Method.GET);
-			try {
-				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, IFameMain.getAuthToken());
-				if (response.getHttpStatus() == 200) {
-					return Utils.convertJSONToObjects(response.getBody(),
-							Mensa.class);
-				}
-			} catch (Exception e) {
-				Log.e(GetMenseTask.class.getName(),
-						"Failed to get the canteens: " + e.getMessage());
+
+		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
+				APP_TOKEN);
+		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+				PATH_IFRETTA_GETMENSE);
+		request.setMethod(Method.GET);
+		try {
+			MessageResponse response = mProtocolCarrier.invokeSync(request,
+					APP_TOKEN, IFameMain.getAuthToken());
+			if (response.getHttpStatus() == 200) {
+				return Utils.convertJSONToObjects(response.getBody(),
+						Mensa.class);
 			}
-		
+		} catch (Exception e) {
+			Log.e(GetMenseTask.class.getName(), "Failed to get the canteens: "
+					+ e.getMessage());
+		}
+
 		return null;
 	}
 
@@ -85,7 +85,10 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 					Toast.LENGTH_SHORT).show();
 			activity.finish();
 		} else {
-			mensaAdapter.addAll(result);
+			for (Mensa mensa : result) {
+				mensaAdapter.add(mensa);
+				
+			}
 			mensaAdapter.notifyDataSetChanged();
 		}
 	}

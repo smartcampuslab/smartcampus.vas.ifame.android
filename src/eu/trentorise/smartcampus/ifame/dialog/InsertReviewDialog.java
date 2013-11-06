@@ -2,7 +2,6 @@ package eu.trentorise.smartcampus.ifame.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,6 +13,9 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockDialogFragment;
+
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
 import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
@@ -24,7 +26,7 @@ import eu.trentorise.smartcampus.ifame.model.Piatto;
 /**
  * Custom dialog interface to add or edit own review
  */
-public class InsertReviewDialog extends DialogFragment {
+public class InsertReviewDialog extends SherlockDialogFragment {
 
 	/** These are the key of the bundle objects to pass when calling the dialog */
 	public static final String MENSA = "mensa_extra";

@@ -14,7 +14,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
@@ -24,10 +23,9 @@ public class IFameMain extends SherlockActivity {
 	private static final String TAG = "IFameMain";
 	private static SCAccessProvider accessProvider = null;
 	public static Context ctx;
-//	private SCAccessProvider accessProvider;
 
+	// private SCAccessProvider accessProvider;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,8 +33,8 @@ public class IFameMain extends SherlockActivity {
 		ctx = getApplicationContext();
 		// check if the user is logged otherwise open login window
 		try {
-			if (!getAccessProvider().login(IFameMain.this,null)) {
-				//login
+			if (!getAccessProvider().login(IFameMain.this, null)) {
+				// login
 				new LoadAndSaveUserIdFromACServiceTask(ctx).execute();
 			}
 		} catch (AACException e) {
@@ -100,7 +98,7 @@ public class IFameMain extends SherlockActivity {
 				// {
 				// needed because after some feature (in iGradito) need the
 				// userId saved by this asynktask
-				
+
 				SharedPreferencesUtils.retrieveAndSaveUserId(IFameMain.this);
 				// }
 			} else {
@@ -113,15 +111,16 @@ public class IFameMain extends SherlockActivity {
 			}
 		}
 	}
-	
+
 	public static SCAccessProvider getAccessProvider() {
-		if(accessProvider == null)
+		if (accessProvider == null)
 			accessProvider = SCAccessProvider.getInstance(ctx);
 		return accessProvider;
 	}
+
 	public static String getAuthToken() throws AACException {
 		String mToken;
 		mToken = getAccessProvider().readToken(ctx);
-		return mToken; 
+		return mToken;
 	}
 }

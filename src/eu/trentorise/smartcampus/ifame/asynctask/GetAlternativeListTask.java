@@ -53,29 +53,29 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 
 	@Override
 	protected List<Piatto> doInBackground(Void... params) {
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
-					APP_TOKEN);
-			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					"getalternative");
-			request.setMethod(Method.GET);
-			try {
-				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, IFameMain.getAuthToken());
-				if (response.getHttpStatus() == 200) {
-					return Utils.convertJSONToObjects(response.getBody(),
-							Piatto.class);
-				}
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (AACException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
+				APP_TOKEN);
+		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+				"getalternative");
+		request.setMethod(Method.GET);
+		try {
+			MessageResponse response = mProtocolCarrier.invokeSync(request,
+					APP_TOKEN, IFameMain.getAuthToken());
+			if (response.getHttpStatus() == 200) {
+				return Utils.convertJSONToObjects(response.getBody(),
+						Piatto.class);
 			}
-		
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (AACException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
@@ -89,33 +89,28 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 			activity.finish();
 		} else {
 			piattiAdapter.clear();
-			piattiAdapter.addAll(addHeadersAlternative(resultList));
+			int i = 0;
+			for (Piatto piatto : resultList) {
+				i++;
+				if (i == 1) {
+					// sentinel for seconds
+					piattiAdapter.add(new Piatto("1", ""));
+				}
+				if (i == 4) {
+					// sentinel for piatti freddi
+					piattiAdapter.add(new Piatto("2", ""));
+				}
+				if (i == 7) {
+					// sentinel for contorni
+					piattiAdapter.add(new Piatto("3", ""));
+				}
+				if (i == 10) {
+					piattiAdapter.add(new Piatto("4", ""));
+				}
+				piattiAdapter.add(piatto);
+			}
+			//piattiAdapter.addAll(addHeadersAlternative(resultList));
 			piattiAdapter.notifyDataSetChanged();
 		}
-	}
-
-	/** add some fake piatti as headers */
-	private List<Piatto> addHeadersAlternative(List<Piatto> listaPiatti) {
-		// Create a list in which the alternative menu will be saved
-		List<Piatto> listaConSentinelle = new ArrayList<Piatto>();
-		// add an item into the list, this item will be used as a sentinel that
-		// will determine the type of dish(primo, secondo, etc..)
-		listaConSentinelle.add(new Piatto("1", ""));
-		for (int i = 0; i < listaPiatti.size(); i++) {
-			listaConSentinelle.add(listaPiatti.get(i));
-			if (i == 2) {
-				// sentinel for seconds
-				listaConSentinelle.add(new Piatto("2", ""));
-			}
-			if (i == 5) {
-				// sentinel for piatti freddi
-				listaConSentinelle.add(new Piatto("3", ""));
-			}
-			if (i == 8) {
-				// sentinel for contorni
-				listaConSentinelle.add(new Piatto("4", ""));
-			}
-		}
-		return listaConSentinelle;
 	}
 }

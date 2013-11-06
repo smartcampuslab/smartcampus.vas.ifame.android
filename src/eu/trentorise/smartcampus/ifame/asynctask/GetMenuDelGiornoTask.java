@@ -24,10 +24,8 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 
-
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
-
 
 	private ProgressDialog progressDialog;
 	private Activity activity;
@@ -52,30 +50,29 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 
 	@Override
 	protected MenuDelGiorno doInBackground(Void... params) {
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
-					APP_TOKEN);
-			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					"getmenudelgiorno");
-			request.setMethod(Method.GET);
-			try {
-				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, IFameMain.getAuthToken());
-				if (response.getHttpStatus() == 200) {
-					return Utils.convertJSONToObject(response.getBody(),
-							MenuDelGiorno.class);
-				}
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (AACException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
+				APP_TOKEN);
+		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+				"getmenudelgiorno");
+		request.setMethod(Method.GET);
+		try {
+			MessageResponse response = mProtocolCarrier.invokeSync(request,
+					APP_TOKEN, IFameMain.getAuthToken());
+			if (response.getHttpStatus() == 200) {
+				return Utils.convertJSONToObject(response.getBody(),
+						MenuDelGiorno.class);
 			}
-		
-			
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (AACException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
@@ -88,25 +85,22 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 					.getApplicationContext());
 			activity.finish();
 		} else {
+			int i = 0;
 			mPiattiAdapter.clear();
-			mPiattiAdapter.addAll(addHeadersToPiattiList(result
-					.getPiattiDelGiorno()));
+			for (Piatto p : result.getPiattiDelGiorno()) {
+				i++;
+				if (i==1){
+					mPiattiAdapter.add(new Piatto("1", ""));
+				}
+				if (i == 4) {
+					mPiattiAdapter.add(new Piatto("2", ""));
+				}
+				if (i == 6){
+					mPiattiAdapter.add(new Piatto("3", ""));
+				}
+				mPiattiAdapter.add(p);
+			}
 			mPiattiAdapter.notifyDataSetChanged();
 		}
-	}
-
-	/** add some fake piatti as headers */
-	private List<Piatto> addHeadersToPiattiList(List<Piatto> outputList) {
-		List<Piatto> listaPiattiConSentinelle = new ArrayList<Piatto>();
-		listaPiattiConSentinelle.add(new Piatto("1", ""));
-		for (int i = 0; i < outputList.size(); i++) {
-			listaPiattiConSentinelle.add(outputList.get(i));
-			if (i == 2) {
-				listaPiattiConSentinelle.add(new Piatto("2", ""));
-			}
-			if (i == 4)
-				listaPiattiConSentinelle.add(new Piatto("3", ""));
-		}
-		return listaPiattiConSentinelle;
 	}
 }

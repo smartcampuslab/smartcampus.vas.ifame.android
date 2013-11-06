@@ -54,73 +54,72 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iGradito_title_activity),
 				activity.getString(R.string.loading));
-		
+
 	}
 
 	@Override
 	protected List<Piatto> doInBackground(Void... params) {
 
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
-					APP_TOKEN);
-			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					PATH_IGRADITO_GETPIATTI);
-			request.setMethod(Method.GET);
+		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
+				APP_TOKEN);
+		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+				PATH_IGRADITO_GETPIATTI);
+		request.setMethod(Method.GET);
 
-			try {
-				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, IFameMain.getAuthToken());
+		try {
+			MessageResponse response = mProtocolCarrier.invokeSync(request,
+					APP_TOKEN, IFameMain.getAuthToken());
 
-				if (response.getHttpStatus() == 200) {
+			if (response.getHttpStatus() == 200) {
 
-					String body = response.getBody();
+				String body = response.getBody();
 
-					List<Piatto> lista_piatti_temp = Utils
-							.convertJSONToObjects(body, Piatto.class);
+				List<Piatto> lista_piatti_temp = Utils.convertJSONToObjects(
+						body, Piatto.class);
 
-					Collections.sort(lista_piatti_temp, new PiattoComparator());
+				Collections.sort(lista_piatti_temp, new PiattoComparator());
 
-					// creo una nuova lista che oltre a contenere i piatti
-					// contiene le lettere con cui essi iniziano : ("A",
-					// "Anatre", "Ananas", "B", "Banane", "D", "Datteri"
-					// ...)
-					List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
+				// creo una nuova lista che oltre a contenere i piatti
+				// contiene le lettere con cui essi iniziano : ("A",
+				// "Anatre", "Ananas", "B", "Banane", "D", "Datteri"
+				// ...)
+				List<Piatto> lista_piatti_with_headers = new ArrayList<Piatto>();
 
-					String letter = "A";
+				String letter = "A";
 
-					lista_piatti_with_headers.add(new Piatto(letter, ""));
+				lista_piatti_with_headers.add(new Piatto(letter, ""));
 
-					for (int i = 0; i < lista_piatti_temp.size(); i++) {
+				for (int i = 0; i < lista_piatti_temp.size(); i++) {
 
-						String nome_piatto = lista_piatti_temp.get(i)
-								.getPiatto_nome();
+					String nome_piatto = lista_piatti_temp.get(i)
+							.getPiatto_nome();
 
-						if (!nome_piatto.startsWith(letter)) {
+					if (!nome_piatto.startsWith(letter)) {
 
-							letter = Character.toString(nome_piatto.charAt(0));
+						letter = Character.toString(nome_piatto.charAt(0));
 
-							lista_piatti_with_headers
-									.add(new Piatto(letter, ""));
-						}
-
-						lista_piatti_with_headers.add(lista_piatti_temp.get(i));
+						lista_piatti_with_headers.add(new Piatto(letter, ""));
 					}
 
-					return lista_piatti_with_headers;
-				} else {
-					return null;
+					lista_piatti_with_headers.add(lista_piatti_temp.get(i));
 				}
 
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (AACException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return lista_piatti_with_headers;
+			} else {
+				return null;
 			}
-		
+
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (AACException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 

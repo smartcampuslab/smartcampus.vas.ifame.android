@@ -174,23 +174,23 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 
 		@Override
 		protected MenuDelMese doInBackground(Void... params) {
-				ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
-						activity, APP_TOKEN);
-				MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-						"getmenudelmese");
-				request.setMethod(Method.GET);
-				try {
-					MessageResponse response = mProtocolCarrier.invokeSync(
-							request, APP_TOKEN, IFameMain.getAuthToken());
-					if (response.getHttpStatus() == 200) {
-						return Utils.convertJSONToObject(response.getBody(),
-								MenuDelMese.class);
-					}
-				} catch (Exception e) {
-					Log.e(MenuDelMeseConnector.class.getName(),
-							"Failed to get the monthly menu: " + e.getMessage());
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
+					APP_TOKEN);
+			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
+					"getmenudelmese");
+			request.setMethod(Method.GET);
+			try {
+				MessageResponse response = mProtocolCarrier.invokeSync(request,
+						APP_TOKEN, IFameMain.getAuthToken());
+				if (response.getHttpStatus() == 200) {
+					return Utils.convertJSONToObject(response.getBody(),
+							MenuDelMese.class);
 				}
-			
+			} catch (Exception e) {
+				Log.e(MenuDelMeseConnector.class.getName(),
+						"Failed to get the monthly menu: " + e.getMessage());
+			}
+
 			return null;
 		}
 
@@ -279,7 +279,11 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 					// come sentinella nell'adapter
 					mPiattiListAdapter.add(piattoSentinella);
 					// aggiungo tutti gli altri piatti
-					mPiattiListAdapter.addAll(mdg.getPiattiDelGiorno());
+					//occhio alla compatibilità
+					for (Piatto p : mdg.getPiattiDelGiorno()) {
+						
+						mPiattiListAdapter.add(p);
+					}
 				}
 				// esco dal ciclo
 				break;

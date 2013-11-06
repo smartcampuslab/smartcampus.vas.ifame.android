@@ -34,7 +34,8 @@ public class ReviewListAdapter extends ArrayAdapter<Giudizio> {
 		dateformat = new SimpleDateFormat("HH:mm  dd/MM/yy");
 	}
 
-	public ReviewListAdapter(Context context, String user_id, List<Giudizio> reviews) {
+	public ReviewListAdapter(Context context, String user_id,
+			List<Giudizio> reviews) {
 		super(context, android.R.layout.simple_list_item_1, reviews);
 		this.context = context;
 		this.user_id = user_id;

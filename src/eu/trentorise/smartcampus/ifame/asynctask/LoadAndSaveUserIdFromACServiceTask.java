@@ -4,11 +4,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.ac.embedded.EmbeddedSCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
+import eu.trentorise.smartcampus.network.RemoteConnector;
+import eu.trentorise.smartcampus.network.RemoteConnector.CLIENT_TYPE;
 import eu.trentorise.smartcampus.profileservice.BasicProfileService;
 import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
@@ -30,8 +30,9 @@ public class LoadAndSaveUserIdFromACServiceTask extends
 
 	@Override
 	protected Void doInBackground(Void... params) {
+		RemoteConnector.setClientType(CLIENT_TYPE.CLIENT_ACCEPTALL);
 		// retrieve the token and get the basic profile
-		//SCAccessProvider accessProvider = IFameMain.getAccessProvider();
+		// SCAccessProvider accessProvider = IFameMain.getAccessProvider();
 		String userToken = null;
 		try {
 			userToken = IFameMain.getAuthToken();

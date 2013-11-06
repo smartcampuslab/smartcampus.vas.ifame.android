@@ -3,18 +3,17 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.util.Iterator;
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -37,12 +36,7 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-
-////////////////7
-//per la compatibilità guarda tu!!!!!!!!!!!!!!!!!!
-///////////////
-@SuppressLint("NewApi")
-public class IGraditoVisualizzaRecensioni extends SherlockActivity {
+public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 	/** Logging tag */
 	private static final String TAG = "RecensioniActivity";
 
@@ -130,7 +124,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 	 */
 	private void showInsertReviewDialog() {
 
-		FragmentManager fragmentManager = getFragmentManager();
+		FragmentManager fragmentManager = getSupportFragmentManager();
 		InsertReviewDialog insertReviewDialog = new InsertReviewDialog();
 
 		// put the data needed for showing the dialog in a bundle
@@ -148,7 +142,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 		insertReviewDialog.show(fragmentManager, "insertReviewDialog");
 	}
 
-	@SuppressLint("NewApi")
 	private void onClickActionRefresh(MenuItem item) {
 		menuItem = item;
 		menuItem.setActionView(R.layout.actionbar_progressbar_circle);
@@ -184,7 +177,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 		private Context context;
 		private String appToken = "test smartcampus";
 
-
 		public GetGiudizioConnector(Context applicationContext) {
 			context = applicationContext;
 		}
@@ -209,8 +201,8 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 
 			MessageResponse response;
 			try {
-				response = mProtocolCarrier
-						.invokeSync(request, appToken, IFameMain.getAuthToken());
+				response = mProtocolCarrier.invokeSync(request, appToken,
+						IFameMain.getAuthToken());
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
@@ -287,7 +279,9 @@ public class IGraditoVisualizzaRecensioni extends SherlockActivity {
 				giudiziListview.setAdapter(adapter);
 			} else {
 				adapter.clear();
-				adapter.addAll(reviews);
+				for (Giudizio giudizio : reviews) {
+					adapter.add(giudizio);
+				}
 			}
 			giudizio_espresso_da.setText(review_size + " utent"
 					+ (review_size == 1 ? "e" : "i"));

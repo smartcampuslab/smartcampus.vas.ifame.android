@@ -1,6 +1,5 @@
 package eu.trentorise.smartcampus.ifame.model;
 
-
 public class OperaPayment {
 
 	private String paymentDate;
@@ -10,7 +9,7 @@ public class OperaPayment {
 	private String productType;
 	private String totalPayment;
 	private String productPrice;
-	
+
 	public OperaPayment() {
 	}
 
@@ -70,7 +69,4 @@ public class OperaPayment {
 		this.productPrice = productPrice;
 	}
 
-		
-	
-	
 }
