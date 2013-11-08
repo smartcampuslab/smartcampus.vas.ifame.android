@@ -9,11 +9,14 @@
     <string name="PATH_ISOLDI_GETSOLDI">/isoldi/getsoldi</string>
     <string name="PATH_IFRETTA_GETMENSE">/getmense</string>
     <string name="PATH_IGRADITO_GETPIATTI">/getpiatti</string>
+
+    <!-- Toast connection -->
     <string name="errorInternetConnectionRequired">L\'applicazione richiede la connessione ad internet per funzionare</string>
     <string name="errorSomethingWentWrong">Ooops! Qualcosa e\' andato storto!</string>
     <string name="errorLikeNotDeleted">Oooops! Like non eliminato. Riprova</string>
     <string name="errorNotLiked">Oooops! Like non riuscito. Riprova</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Caricamento...</string>
     <string name="errorLoginRequired">Il login e\' obbligatorio per utilizzare iFame</string>
+    <!-- Toast connection -->
 
 </resources>

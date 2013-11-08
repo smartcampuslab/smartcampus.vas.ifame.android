@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Toast connection -->
+    <string name="errorInternetConnectionRequired">An internet connection is required to use iFame</string>
+    <string name="errorSomethingWentWrong">Ooops! Something went wrong!</string>
+    <string name="errorLikeNotDeleted">Oooops! Like not deleted. Try again</string>
+    <string name="errorNotLiked">Oooops! Not liked. Try again</string>
+    <string name="loading">Loading...</string>
+    <string name="errorLoginRequired">Login is required to use iFame</string>
+    <!-- Toast connection -->
+
+</resources>
