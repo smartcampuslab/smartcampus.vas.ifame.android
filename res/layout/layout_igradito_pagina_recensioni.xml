@@ -13,51 +13,55 @@
     -->
 
     <TextView
-        android:id="@+id/giudizio_text"
+        android:id="@+id/giudizio_voto_medio_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingTop="4dp"
-        android:text="Giudizio medio: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/iGradito_average_vote"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/giudizio"
+        android:id="@+id/giudizio_voto_medio_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/giudizio_text"
-        android:layout_toRightOf="@+id/giudizio_text"
+        android:layout_alignBaseline="@+id/giudizio_voto_medio_label"
+        android:layout_toRightOf="@+id/giudizio_voto_medio_label"
         android:padding="5dp"
         android:paddingLeft="2dp"
         android:paddingTop="4dp"
-        android:text="Non disponibile"
+        android:text="@string/iGradito_not_available"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#CC0000" />
+        android:textColor="#CC0000"
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/espresso_da_text"
+        android:id="@+id/giudizio_espresso_da_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/espresso_da"
-        android:layout_alignBottom="@+id/espresso_da"
+        android:layout_alignBaseline="@+id/giudizio_espresso_da_value"
+        android:layout_alignBottom="@+id/giudizio_espresso_da_value"
         android:layout_alignParentLeft="true"
         android:padding="5dp"
         android:paddingBottom="4dp"
         android:paddingLeft="5dp"
-        android:text="Espresso da: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/iGradito_expressed_by"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/espresso_da"
+        android:id="@+id/giudizio_espresso_da_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/giudizio_text"
-        android:layout_toRightOf="@+id/espresso_da_text"
+        android:layout_below="@+id/giudizio_voto_medio_label"
+        android:layout_toRightOf="@+id/giudizio_espresso_da_label"
         android:paddingBottom="4dp"
         android:paddingLeft="2dp"
-        android:text="Non disponibile"
+        android:text="@string/iGradito_not_available"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#CC0000" />
+        android:textColor="#CC0000"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/recensioni_list"
@@ -71,10 +75,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/espresso_da"
+        android:layout_below="@+id/giudizio_espresso_da_value"
         android:background="#CC0000"
         android:padding="5dp"
-        android:text="Recensioni"
+        android:text="@string/iGradito_review_header"
         android:textColor="#FFFFFF" />
 
     <TextView
@@ -82,11 +86,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/recensioni_label"
+        android:gravity="center|bottom"
         android:padding="5dp"
-        android:paddingLeft="2dp"
-        android:paddingTop="4dp"
-        android:text="Nessuna recensione e&apos; stata ancora aggiunta"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone" />
+        android:paddingTop="10dp"
+        android:text="@string/iGradito_no_reviews_available"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp"
+        android:visibility="visible" />
 
 </RelativeLayout>

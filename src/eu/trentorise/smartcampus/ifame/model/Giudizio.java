@@ -15,23 +15,18 @@ public class Giudizio {
 
 	private Long user_id;
 
+	private String user_name;
+
 	private Long mensa_id;
 
 	private Long piatto_id;
 
 	private List<Likes> likes;
 
-	/**
-	 * @return the likes
-	 */
 	public List<Likes> getLikes() {
 		return likes;
 	}
 
-	/**
-	 * @param likes
-	 *            the likes to set
-	 */
 	public void setLikes(List<Likes> likes) {
 		this.likes = likes;
 	}
@@ -78,6 +73,14 @@ public class Giudizio {
 
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public Long getMensa_id() {

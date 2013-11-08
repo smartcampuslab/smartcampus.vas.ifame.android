@@ -23,9 +23,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class PostGiudizioAsyncTask extends
 		AsyncTask<Long, Void, List<Giudizio>> {
 
-	/** Logging tag */
-	private static final String TAG = "PostGiudizioAsyncTask";
-
 	private IGraditoVisualizzaRecensioni visualizzaRecensioniActivity;
 	private ProgressDialog progressDialog;
 	private GiudizioDataToPost data;
@@ -49,6 +46,8 @@ public class PostGiudizioAsyncTask extends
 				visualizzaRecensioniActivity
 						.getString(R.string.iGradito_title_activity),
 				"Loading...");
+		// progressDialog.setCancelable(true);
+		// progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override

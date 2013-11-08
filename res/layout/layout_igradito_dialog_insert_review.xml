@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:text="Pessimo" />
+            android:text="@string/iGradito_spinner_label_bad" />
 
         <TextView
             android:id="@+id/ottimo_text"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:text="Ottimo" />
+            android:text="@string/iGradito_spinner_label_excelent" />
     </LinearLayout>
 
     <EditText
@@ -53,7 +53,8 @@
         android:layout_marginTop="22dp"
         android:ems="10"
         android:focusable="true"
-        android:hint="Scrivi qui il tuo commento"
+        android:hint="@string/iGradito_insert_comment_here"
+        android:inputType="textCapSentences|textMultiLine"
         android:selectAllOnFocus="true" >
     </EditText>
 

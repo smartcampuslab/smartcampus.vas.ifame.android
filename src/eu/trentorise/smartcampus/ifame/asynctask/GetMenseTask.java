@@ -49,6 +49,8 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iFretta_title_activity),
 				activity.getString(R.string.loading));
+		// progressDialog.setCancelable(true);
+		//	progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 		} else {
 			for (Mensa mensa : result) {
 				mensaAdapter.add(mensa);
-				
+
 			}
 			mensaAdapter.notifyDataSetChanged();
 		}

@@ -39,7 +39,6 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 	private TextView piattoNameTextView;
 	private SeekBar barUserValutation;
 	private int voto = 0;
-	private GiudizioDataToPost giudizioDataToPost;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -48,8 +47,8 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 		// Inflate and set the layout for the dialog, pass null as the parent
 		// view because its going in the dialog layout
 		LayoutInflater inflator = getActivity().getLayoutInflater();
-		View dialogView = inflator.inflate(R.layout.igradito_custom_dialogbox,
-				null);
+		View dialogView = inflator.inflate(
+				R.layout.layout_igradito_dialog_insert_review, null);
 
 		// get the arguments passed invoking the dialog
 		Bundle argsBundle = getArguments();
@@ -99,6 +98,22 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				});
 		userReviewEditText.requestFocus();
 
+		// userReviewEditText.setOnKeyListener(new OnKeyListener() {
+		// public boolean onKey(View v, int keyCode, KeyEvent event) {
+		// if (event.getAction() == KeyEvent.ACTION_DOWN) {
+		// switch (keyCode) {
+		// case KeyEvent.KEYCODE_DPAD_CENTER:
+		// case KeyEvent.KEYCODE_ENTER:
+		//
+		// return true;
+		// default:
+		// break;
+		// }
+		// }
+		// return false;
+		// }
+		// });
+			
 		// Add Listener to valutation bar
 		barUserValutation
 				.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -120,28 +135,27 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 
 		builder.setView(dialogView);
 		// Add action buttons
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				giudizioDataToPost = new GiudizioDataToPost();
-				giudizioDataToPost.commento = userReviewEditText.getText()
-						.toString();
-				giudizioDataToPost.userId = Long.parseLong(userId);
-				giudizioDataToPost.voto = (float) voto;
+		builder.setPositiveButton(
+				getString(R.string.iGradito_dialog_button_add_text),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						GiudizioDataToPost giudizioDataToPost = new GiudizioDataToPost();
+						giudizioDataToPost.commento = userReviewEditText
+								.getText().toString();
+						giudizioDataToPost.userId = Long.parseLong(userId);
+						giudizioDataToPost.voto = (float) voto;
 
-				// if (adapter != null) {
-				// adapter.clear();
-				// adapter.notifyDataSetChanged();
-				// }
-				new PostGiudizioAsyncTask(
-						(IGraditoVisualizzaRecensioni) getActivity(),
-						giudizioDataToPost).execute(mensa.getMensa_id(),
-						piatto.getPiatto_id());
+						new PostGiudizioAsyncTask(
+								(IGraditoVisualizzaRecensioni) getActivity(),
+								giudizioDataToPost).execute(
+								mensa.getMensa_id(), piatto.getPiatto_id());
 
-				getDialog().cancel();
-			}
-		});
-		builder.setNegativeButton("Annulla",
+						getDialog().cancel();
+					}
+				});
+		builder.setNegativeButton(
+				getString(R.string.iGradito_dialog_button_cancel_text),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						getDialog().cancel();
@@ -149,4 +163,5 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				});
 		return builder.create();
 	}
+
 }

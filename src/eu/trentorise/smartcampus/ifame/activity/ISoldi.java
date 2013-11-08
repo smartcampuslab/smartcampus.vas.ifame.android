@@ -32,8 +32,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class ISoldi extends SherlockActivity {
-	/** Logging tag */
-	private static final String TAG = "iSoldi";
 
 	public final static String GET_AMOUNT_MONEY = "get_money";
 
@@ -128,10 +126,13 @@ public class ISoldi extends SherlockActivity {
 		float amount = 0;
 		if (result != null) {
 			amount = Float.parseFloat(result.getCredit());
+
 			val_textview1 = (TextView) findViewById(R.id.val_textview1);
 			val_textview2 = (TextView) findViewById(R.id.val_textview2);
 			val_textview3 = (TextView) findViewById(R.id.val_textview3);
+
 			if (result.getPayments() != null) {
+				// user has some payments
 				if (result.getPayments().size() >= 1
 						&& result.getPayments().get(0) != null) {
 					String text = result.getPayments().get(0).getPaymentDate()
@@ -162,6 +163,9 @@ public class ISoldi extends SherlockActivity {
 					val_textview3.setText(text);
 					val_textview3.setVisibility(1);
 				}
+			} else {
+				// there are no payments
+				statsButton.setVisibility(View.GONE);
 			}
 		}
 
@@ -219,8 +223,7 @@ public class ISoldi extends SherlockActivity {
 
 			bottomText.setPadding(0, 10, 0, 0);
 			bottomText.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-			bottomText
-					.setText(R.string.unitn_log);
+			bottomText.setText(R.string.unitn_log);
 			bottomText.setTextSize(25);
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
@@ -344,4 +347,3 @@ public class ISoldi extends SherlockActivity {
 	}
 
 }
-

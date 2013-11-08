@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -42,7 +42,17 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 	private WebSearchDialog webSearchDialog;
 	private ArrayAdapter<String> mSpinnerAdapter;
 	private Calendar mCalendar;
-	SimpleDateFormat dateFormat;
+	private SimpleDateFormat dateFormat;
+
+	//private MenuItem refresh;
+
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// MenuInflater inflater = getSupportMenuInflater();
+	// inflater.inflate(R.menu.menu_only_loading, menu);
+	// refresh = menu.findItem(R.id.action_refresh);
+	// return true;
+	// }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		dateFormat = new SimpleDateFormat("dd/MM/yy");
 
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-			new MenuDelMeseConnector(MenuDelMeseActivity.this).execute();
+			new MenuDelMeseConnector().execute();
 		} else {
 			ConnectionUtils
 					.errorToastTnternetConnectionNeeded(getApplicationContext());
@@ -114,15 +124,6 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				String customFormatDateString = (String) adapter
 						.getItemAtPosition(position);
 				refreshPiattiList(spinnerStringToStartDayOfTheWeek(customFormatDateString));
-				// String[] numbers = string_date.split("\\s");
-				// String[] arr = numbers[1].split("/", 2);
-				// int start_day = Integer.parseInt(arr[0]);
-				// arr = numbers[3].split("/", 2);
-				// String end_day = arr[0];
-				// List<Piatto> p = new ArrayList<Piatto>();
-				// ArrayAdapter<Piatto> adpter = new
-				// PiattoKcalListAdapter(
-				// MenuDelMeseActivity.this, p);
 			}
 
 			@Override
@@ -146,36 +147,44 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 	 * 
 	 * CONNECTOR MENU DEL MESE
 	 */
-	public class MenuDelMeseConnector extends
+	private class MenuDelMeseConnector extends
 			AsyncTask<Void, Void, MenuDelMese> {
 
-		private Activity activity;
 		private ProgressDialog progressDialog;
 
 		private final String URL_BASE_WEB_IFAME;
 		private final String APP_TOKEN;
 
-		public MenuDelMeseConnector(Activity activity) {
-			this.activity = activity;
-
-			URL_BASE_WEB_IFAME = activity
-					.getString(R.string.URL_BASE_WEB_IFAME);
-			APP_TOKEN = activity.getString(R.string.APP_TOKEN);
+		public MenuDelMeseConnector() {
+			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
+			APP_TOKEN = getString(R.string.APP_TOKEN);
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-			progressDialog = ProgressDialog.show(activity,
-					activity.getString(R.string.iDeciso_home_monthly_menu),
-					activity.getString(R.string.loading));
+			// DISPLAY A PROGRESSDIALOG
+			progressDialog = ProgressDialog.show(MenuDelMeseActivity.this,
+					getString(R.string.iDeciso_home_monthly_menu),
+					getString(R.string.loading));
+			// progressDialog.setCancelable(true);
+			// progressDialog.setCanceledOnTouchOutside(false);
+			// progressDialog.setOnCancelListener(new OnCancelListener() {
+			// @Override
+			// public void onCancel(DialogInterface dialog) {
+			// onBackPressed();
+			// }
+			// });
+			// if (refresh != null) {
+			// refresh.setActionView(R.layout.actionbar_progressbar_circle);
+			// refresh.expandActionView();
+			// }
 		}
 
 		@Override
 		protected MenuDelMese doInBackground(Void... params) {
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
-					APP_TOKEN);
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
+					getApplicationContext(), APP_TOKEN);
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
 					"getmenudelmese");
 			request.setMethod(Method.GET);
@@ -197,10 +206,15 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		@Override
 		protected void onPostExecute(MenuDelMese mdm) {
 			super.onPostExecute(mdm);
-			progressDialog.dismiss();
+			// if (refresh != null) {
+			// refresh.setActionView(null);
+			// refresh.collapseActionView();
+			// }
 			if (mdm == null) {
-				ConnectionUtils.errorToastRetrievingDataFromWeb(activity
-						.getApplicationContext());
+				progressDialog.dismiss();
+				Toast.makeText(getApplicationContext(),
+						getString(R.string.errorSomethingWentWrong),
+						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
 				// setto il menu del mese ricevuto come variabile di classe
@@ -226,6 +240,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				}
 				mSpinner.setSelection(spinnerPosition);
 				mSpinner.setVisibility(View.VISIBLE);
+				progressDialog.dismiss();
 			}
 		}
 	}
@@ -257,6 +272,10 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				+ end_day_string;
 	}
 
+	/**
+	 * Update the list of dishes shown when a user select another week on the
+	 * spinner
+	 */
 	private void refreshPiattiList(int weekStartDay) {
 		mPiattiListAdapter.clear();
 		// mPiattiListAdapter.notifyDataSetChanged();
@@ -279,9 +298,8 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 					// come sentinella nell'adapter
 					mPiattiListAdapter.add(piattoSentinella);
 					// aggiungo tutti gli altri piatti
-					//occhio alla compatibilità
+					// occhio alla compatibilità
 					for (Piatto p : mdg.getPiattiDelGiorno()) {
-						
 						mPiattiListAdapter.add(p);
 					}
 				}
@@ -292,6 +310,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		mPiattiListAdapter.notifyDataSetChanged();
 	}
 
+	/** display dialog search on Google the selected dish name */
 	private void showWebSearchDialog(String piatto_name) {
 		Bundle args = new Bundle();
 		args.putString(WebSearchDialog.PIATTO_NAME, piatto_name);

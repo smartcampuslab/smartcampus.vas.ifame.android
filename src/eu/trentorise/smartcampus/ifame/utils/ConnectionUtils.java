@@ -23,10 +23,4 @@ public class ConnectionUtils {
 				context.getString(R.string.errorInternetConnectionRequired),
 				Toast.LENGTH_SHORT).show();
 	}
-
-	public static void errorToastRetrievingDataFromWeb(Context context) {
-		Toast.makeText(context,
-				context.getString(R.string.errorSomethingWentWrong),
-				Toast.LENGTH_SHORT).show();
-	}
 }

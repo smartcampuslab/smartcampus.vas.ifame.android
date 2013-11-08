@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -121,6 +121,20 @@
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
     <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
+    <string name="iGradito_no_one_left_comment">Nobody has already left a comment. Add a comment to this dish by clicking the plus button.</string>
+    <string name="iGradito_no_reviews_available">Nobody has already left a review. Add a review to this dish by clicking the plus button.</string>
+    <string name="iGradito_review_header">Reviews</string>
+    <string name="iGradito_not_available">Not available</string>
+    <string name="iGradito_average_vote">Average ratings: </string>
+    <string name="iGradito_expressed_by">Rated by: </string>
+    <string name="iGradito_user_voto_label">Vote: </string>
+    <string name="iGradito_insert_comment_here">Write here your review</string>
+    <string name="iGradito_spinner_label_excelent">Excellent</string>
+    <string name="iGradito_spinner_label_bad">Terrible</string>
+    <string name="iGradito_dialog_button_add_text">Add</string>
+    <string name="iGradito_dialog_button_cancel_text">Cancel</string>
+    <string name="iGradito_user">User</string>
+    <string name="iGradito_users">Users</string>
     <!-- /iGradito -->
 
 
@@ -129,7 +143,7 @@
     <string name="iSoldi_devi_ricaricare">A recharge is required</string>
     <string name="iSoldi_credito_residuo">Your remaining credit is:</string>
     <string name="iSoldi_title_activity">iSoldi</string>
-    <string name="iSoldi_statistic_button_text">Your statistics </string>
+    <string name="iSoldi_statistic_button_text">Your statistics</string>
     <!-- /iSoldi -->
 
 

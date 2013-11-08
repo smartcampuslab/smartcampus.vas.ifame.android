@@ -1,11 +1,9 @@
 package eu.trentorise.smartcampus.ifame.asynctask;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
@@ -13,7 +11,6 @@ import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.MenuDelGiornoPiattiAdapter;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -46,6 +43,8 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iDeciso_home_daily_menu),
 				activity.getString(R.string.loading));
+		// progressDialog.setCancelable(true);
+		//	progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override
@@ -81,21 +80,22 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 		super.onPostExecute(result);
 		progressDialog.dismiss();
 		if (result == null) {
-			ConnectionUtils.errorToastRetrievingDataFromWeb(activity
-					.getApplicationContext());
+			Toast.makeText(activity,
+					activity.getString(R.string.errorSomethingWentWrong),
+					Toast.LENGTH_SHORT).show();
 			activity.finish();
 		} else {
 			int i = 0;
 			mPiattiAdapter.clear();
 			for (Piatto p : result.getPiattiDelGiorno()) {
 				i++;
-				if (i==1){
+				if (i == 1) {
 					mPiattiAdapter.add(new Piatto("1", ""));
 				}
 				if (i == 4) {
 					mPiattiAdapter.add(new Piatto("2", ""));
 				}
-				if (i == 6){
+				if (i == 6) {
 					mPiattiAdapter.add(new Piatto("3", ""));
 				}
 				mPiattiAdapter.add(p);

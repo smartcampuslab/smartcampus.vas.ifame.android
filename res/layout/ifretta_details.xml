@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:padding="15dp" >
 
-        <eu.trentorise.smartcampus.ifame.model.AspectRatioImageView
+        <eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView
             android:id="@+id/imageViewId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

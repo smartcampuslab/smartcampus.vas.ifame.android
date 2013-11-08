@@ -11,7 +11,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.asynctask.RetrieveWebcamImageTask;
-import eu.trentorise.smartcampus.ifame.model.AspectRatioImageView;
+import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 
 public class IFrettaDetails extends SherlockActivity {
@@ -30,7 +30,7 @@ public class IFrettaDetails extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta_details);
-		AspectRatioImageView webcamImage = (AspectRatioImageView) findViewById(R.id.imageViewId);
+		WebcamAspectRatioImageView webcamImage = (WebcamAspectRatioImageView) findViewById(R.id.imageViewId);
 
 		// GET THE MENSA OBJECT FROM IFRETTA
 		Bundle extras = getIntent().getExtras();

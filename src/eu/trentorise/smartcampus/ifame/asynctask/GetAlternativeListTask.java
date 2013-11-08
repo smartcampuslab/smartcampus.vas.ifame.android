@@ -1,18 +1,17 @@
 package eu.trentorise.smartcampus.ifame.asynctask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.AlternativePiattiAdapter;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -22,9 +21,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> {
-
-	/** Logging tag */
-	private static final String TAG = "GetAlternativeListTask";
 
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
@@ -49,6 +45,8 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iDeciso_home_daily_menu),
 				activity.getString(R.string.loading));
+		// progressDialog.setCancelable(true);
+		//	progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override
@@ -72,7 +70,6 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (AACException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -82,10 +79,12 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 	@Override
 	protected void onPostExecute(List<Piatto> resultList) {
 		super.onPostExecute(resultList);
-		progressDialog.dismiss();
 		if (resultList == null) {
-			ConnectionUtils.errorToastRetrievingDataFromWeb(activity
-					.getApplicationContext());
+			progressDialog.dismiss();
+
+			Toast.makeText(activity,
+					activity.getString(R.string.errorSomethingWentWrong),
+					Toast.LENGTH_SHORT).show();
 			activity.finish();
 		} else {
 			piattiAdapter.clear();
@@ -109,8 +108,10 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 				}
 				piattiAdapter.add(piatto);
 			}
-			//piattiAdapter.addAll(addHeadersAlternative(resultList));
+			// piattiAdapter.addAll(addHeadersAlternative(resultList));
 			piattiAdapter.notifyDataSetChanged();
+
+			progressDialog.dismiss();
 		}
 	}
 }

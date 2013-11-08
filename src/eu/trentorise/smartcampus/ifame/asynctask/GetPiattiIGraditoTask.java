@@ -27,8 +27,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
  * THIS CONNECTOR GETS ALL THE DISHES DATA
  */
 public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
-	/** Logging tag */
-	private static final String TAG = "GetPiattiIGraditoTask";
 
 	private Activity activity;
 	private IGraditoPiattoListAdapter adapter;
@@ -54,7 +52,8 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iGradito_title_activity),
 				activity.getString(R.string.loading));
-
+		// progressDialog.setCancelable(true);
+		// progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override

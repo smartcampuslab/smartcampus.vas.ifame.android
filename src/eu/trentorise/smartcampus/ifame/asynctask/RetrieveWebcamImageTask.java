@@ -10,16 +10,16 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.model.AspectRatioImageView;
+import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 
 public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 
 	private Context context;
-	private AspectRatioImageView img_view;
-	private ProgressDialog pd;
+	private WebcamAspectRatioImageView img_view;
+	private ProgressDialog progressDialog;
 
 	public RetrieveWebcamImageTask(Context context,
-			AspectRatioImageView img_view) {
+			WebcamAspectRatioImageView img_view) {
 		this.context = context;
 		this.img_view = img_view;
 	}
@@ -27,9 +27,11 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		pd = ProgressDialog.show(context,
+		progressDialog = ProgressDialog.show(context,
 				context.getString(R.string.iFretta_title_activity),
 				context.getString(R.string.loading));
+		// progressDialog.setCancelable(true);
+		// progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 	protected void onPostExecute(Bitmap result) {
 		img_view.setImageBitmap(result);
 		img_view.setVisibility(View.VISIBLE);
-		pd.dismiss();
+		progressDialog.dismiss();
 	}
 
 }

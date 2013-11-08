@@ -1,10 +1,10 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +27,7 @@ import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.GiudizioComparator;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -37,8 +38,6 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
-	/** Logging tag */
-	private static final String TAG = "RecensioniActivity";
 
 	public static final String MENSA = "mensa_extra";
 	public static final String PIATTO = "piatto_extra";
@@ -47,9 +46,9 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 	private ReviewListAdapter adapter;
 	private Piatto piatto;
 	private Mensa mensa;
-	private TextView giudizio_espresso_da;
-	private TextView giudizio_medio_txt;
-	private TextView no_data_to_display;
+	private TextView giudizio_espresso_da_textview;
+	private TextView giudizio_medio_textview;
+	private TextView no_data_to_display_textview;
 	private ListView giudiziListview;
 
 	private Integer mioVoto;
@@ -61,9 +60,10 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 		setContentView(R.layout.layout_igradito_pagina_recensioni);
 
 		giudiziListview = (ListView) findViewById(R.id.recensioni_list);
-		giudizio_espresso_da = (TextView) findViewById(R.id.espresso_da);
-		giudizio_medio_txt = (TextView) findViewById(R.id.giudizio);
-		no_data_to_display = (TextView) findViewById(R.id.giudizio_no_data_to_display);
+
+		giudizio_espresso_da_textview = (TextView) findViewById(R.id.giudizio_espresso_da_value);
+		giudizio_medio_textview = (TextView) findViewById(R.id.giudizio_voto_medio_value);
+		no_data_to_display_textview = (TextView) findViewById(R.id.giudizio_no_data_to_display);
 
 		// Get extras parameters from the igradito activity
 		Bundle extras = getIntent().getExtras();
@@ -81,13 +81,13 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		// get list of comments
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-			new GetGiudizioConnector(IGraditoVisualizzaRecensioni.this)
-					.execute(mensa.getMensa_id(), piatto.getPiatto_id());
+			new GetGiudizioConnector().execute(mensa.getMensa_id(),
+					piatto.getPiatto_id());
 			// just to be sure that userId is saved in sharedpreferences
 			SharedPreferencesUtils
 					.retrieveAndSaveUserId(IGraditoVisualizzaRecensioni.this);
 		} else {
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(IGraditoVisualizzaRecensioni.this,
 					getString(R.string.errorInternetConnectionRequired),
 					Toast.LENGTH_SHORT).show();
 			finish();
@@ -155,10 +155,10 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 				adapter.notifyDataSetChanged();
 			}
 			// get the reviews
-			new GetGiudizioConnector(IGraditoVisualizzaRecensioni.this)
-					.execute(mensa.getMensa_id(), piatto.getPiatto_id());
+			new GetGiudizioConnector().execute(mensa.getMensa_id(),
+					piatto.getPiatto_id());
 		} else {
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(IGraditoVisualizzaRecensioni.this,
 					getString(R.string.errorInternetConnectionRequired),
 					Toast.LENGTH_SHORT).show();
 			menuItem.collapseActionView();
@@ -172,45 +172,41 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 
 	private class GetGiudizioConnector extends
 			AsyncTask<Long, Void, List<Giudizio>> {
-		private ProtocolCarrier mProtocolCarrier;
-		private ProgressDialog progressDialog;
-		private Context context;
-		private String appToken = "test smartcampus";
 
-		public GetGiudizioConnector(Context applicationContext) {
-			context = applicationContext;
-		}
+		private ProgressDialog progressDialog;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(context, "iGradito",
-					"Loading...");
+			progressDialog = ProgressDialog
+					.show(IGraditoVisualizzaRecensioni.this, "iGradito",
+							"Loading...");
+			// progressDialog.setCancelable(true);
+			// progressDialog.setCanceledOnTouchOutside(false);
 		}
 
 		@Override
 		protected List<Giudizio> doInBackground(Long... params) {
 
-			mProtocolCarrier = new ProtocolCarrier(context, appToken);
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
+					IGraditoVisualizzaRecensioni.this,
+					getString(R.string.APP_TOKEN));
 
 			MessageRequest request = new MessageRequest(
-					"https://smartcampuswebifame.app.smartcampuslab.it/",
-					"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio");
-
+					getString(R.string.URL_BASE_WEB_IFAME), "/mensa/"
+							+ params[0] + "/piatto/" + params[1] + "/giudizio");
 			request.setMethod(Method.GET);
 
-			MessageResponse response;
 			try {
-				response = mProtocolCarrier.invokeSync(request, appToken,
-						IFameMain.getAuthToken());
+				MessageResponse response = mProtocolCarrier
+						.invokeSync(request, getString(R.string.APP_TOKEN),
+								IFameMain.getAuthToken());
 
 				if (response.getHttpStatus() == 200) {
 					String body = response.getBody();
 					List<Giudizio> list = Utils.convertJSONToObjects(body,
 							Giudizio.class);
 					return list;
-				} else {
-					return null;
 				}
 			} catch (ConnectionException e) {
 				e.printStackTrace();
@@ -219,7 +215,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 			} catch (SecurityException e) {
 				e.printStackTrace();
 			} catch (AACException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -230,13 +225,14 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				progressDialog.dismiss();
-				Toast.makeText(context,
+				Toast.makeText(IGraditoVisualizzaRecensioni.this,
 						getString(R.string.errorSomethingWentWrong),
 						Toast.LENGTH_SHORT).show();
+				finish();
 			} else {
 				createGiudiziList(result);
+				progressDialog.dismiss();
 			}
-			progressDialog.dismiss();
 		}
 	}
 
@@ -246,12 +242,16 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 	 */
 	public void createGiudiziList(List<Giudizio> reviews) {
 
+		// sort the reviews by date
+		Collections.sort(reviews, new GiudizioComparator());
+
 		int review_size = reviews.size();
 		float avg = 0;
 		Long user_id = Long.parseLong(SharedPreferencesUtils
 				.getUserID(IGraditoVisualizzaRecensioni.this));
 
 		if (review_size > 0) {
+			// count the average of this dish voto reviews
 			for (Giudizio g : reviews) {
 				// calcolo la media
 				avg += g.getVoto();
@@ -261,8 +261,19 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 				}
 			}
 			avg = avg / (float) review_size;
+			giudizio_medio_textview.setText(ReviewListAdapter
+					.formatUserVoto(avg));
 
-			// non mostro i commenti vuoti
+			// check per scrivere 4 users or 4 utenti
+			// se è inglese (en, en_US, en_UK, en_CA) allora inglese altrimenti
+			// italiano
+
+			giudizio_espresso_da_textview.setText(review_size
+					+ " "
+					+ (review_size == 1 ? getString(R.string.iGradito_user)
+							: getString(R.string.iGradito_users)));
+
+			// clean results list -> don't show reviews without the comment
 			Iterator<Giudizio> i = reviews.iterator();
 			while (i.hasNext()) {
 				if (i.next().getCommento().equals("")) {
@@ -270,39 +281,42 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 				}
 			}
 
+			// init or update the adapter
 			if (adapter == null) {
-				adapter = new ReviewListAdapter(
-						IGraditoVisualizzaRecensioni.this,
-						SharedPreferencesUtils
-								.getUserID(IGraditoVisualizzaRecensioni.this),
-						reviews);
+				// intialize the adapter
+				adapter = new ReviewListAdapter(this,
+						SharedPreferencesUtils.getUserID(this), reviews);
 				giudiziListview.setAdapter(adapter);
 			} else {
+				// clear and add the reviews at the adapter
 				adapter.clear();
 				for (Giudizio giudizio : reviews) {
 					adapter.add(giudizio);
 				}
+				adapter.notifyDataSetChanged();
 			}
-			giudizio_espresso_da.setText(review_size + " utent"
-					+ (review_size == 1 ? "e" : "i"));
-			giudizio_medio_txt.setText(avg + "");
-			adapter.notifyDataSetChanged();
-			// se ho solo recensioni senza commenti
+
+			// if there are only reviews without comments show message
 			if (adapter.getCount() == 0) {
 				giudiziListview.setVisibility(View.GONE);
-				no_data_to_display
-						.setText("Nessun utente lasciato un commento!");
-				no_data_to_display.setVisibility(View.VISIBLE);
+				no_data_to_display_textview
+						.setText(getString(R.string.iGradito_no_one_left_comment));
+				no_data_to_display_textview.setVisibility(View.VISIBLE);
 			} else {
 				giudiziListview.setVisibility(View.VISIBLE);
-				no_data_to_display.setVisibility(View.GONE);
+				no_data_to_display_textview.setVisibility(View.GONE);
 			}
+
 		} else {
+			// no review are avaiable
 			mioCommento = "";
 			mioVoto = 5;
 			giudiziListview.setVisibility(View.GONE);
-			no_data_to_display.setVisibility(View.VISIBLE);
+			no_data_to_display_textview
+					.setText(getString(R.string.iGradito_no_reviews_available));
+			no_data_to_display_textview.setVisibility(View.VISIBLE);
 		}
+
 		// PER IL CARICAMENTO NELL ACTION BAR
 		if (menuItem != null) {
 			menuItem.collapseActionView();

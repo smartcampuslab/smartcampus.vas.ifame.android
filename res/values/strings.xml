@@ -12,8 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
--->
+     limitations under the License.-->
 <resources>
 
     <!-- iFameMain -->
@@ -121,6 +120,20 @@
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
     <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
+    <string name="iGradito_no_one_left_comment">Nessun utente ha lasciato un commento. Aggiungi un commento a questo piatto cliccando il bottone in alto.</string>
+    <string name="iGradito_no_reviews_available">Non e\' presente ancora alcuna recensione. Aggiungi una recensione a questo piatto cliccando il bottone in alto.</string>
+    <string name="iGradito_review_header">Recensioni</string>
+    <string name="iGradito_not_available">Non disponibile</string>
+    <string name="iGradito_average_vote">Giudizio medio: </string>
+    <string name="iGradito_expressed_by">Espresso da: </string>
+    <string name="iGradito_user_voto_label">Voto: </string>
+    <string name="iGradito_insert_comment_here">Inserisci qui il tuo commento</string>
+    <string name="iGradito_spinner_label_excelent">Ottimo</string>
+    <string name="iGradito_spinner_label_bad">Pessimo</string>
+    <string name="iGradito_dialog_button_add_text">Aggiungi</string>
+    <string name="iGradito_dialog_button_cancel_text">Annulla</string>
+    <string name="iGradito_user">Utente</string>
+    <string name="iGradito_users">Utenti</string>
     <!-- /iGradito -->
 
 
