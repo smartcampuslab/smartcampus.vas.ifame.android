@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/iSoldi_credito_residuo"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="right|center"
-                android:text="@string/isoldi_euro_string"
+                android:text="@string/iSoldi_euro_char"
                 android:textSize="40sp" />
 
             <TextView
@@ -56,8 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text=""
-            android:textSize="18sp" />
+            android:text="ricarica"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/isoldi_intero_text"
@@ -66,7 +66,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
             android:text="@string/iDeciso_menu_types_intero"
-            android:textSize="16sp"
+            android:textSize="21sp"
             android:visibility="gone" />
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
             android:text="@string/iDeciso_menu_types_ridotto"
-            android:textSize="16sp"
+            android:textSize="21sp"
             android:visibility="gone" />
 
         <TextView
@@ -86,10 +86,11 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
             android:text="@string/iDeciso_menu_types_snack"
-            android:textSize="16sp"
+            android:textSize="21sp"
             android:visibility="gone" />
 
         <ToggleButton
+            android:visibility="gone"
             android:id="@+id/isoldi_statistics_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

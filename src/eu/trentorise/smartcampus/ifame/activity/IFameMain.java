@@ -115,7 +115,7 @@ public class IFameMain extends SherlockActivity {
 
 	public static EmbeddedSCAccessProvider getAccessProvider() {
 		if (accessProvider == null)
-			accessProvider = new EmbeddedSCAccessProvider();//.getInstance(ctx);
+			accessProvider = new EmbeddedSCAccessProvider();// .getInstance(ctx);
 		return accessProvider;
 	}
 

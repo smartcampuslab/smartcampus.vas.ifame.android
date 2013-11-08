@@ -45,12 +45,12 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
+		// DISPLAY A PROGRESSDIALOG
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iFretta_title_activity),
 				activity.getString(R.string.loading));
 		// progressDialog.setCancelable(true);
-		//	progressDialog.setCanceledOnTouchOutside(false);
+		// progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override
@@ -89,7 +89,6 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 		} else {
 			for (Mensa mensa : result) {
 				mensaAdapter.add(mensa);
-
 			}
 			mensaAdapter.notifyDataSetChanged();
 		}

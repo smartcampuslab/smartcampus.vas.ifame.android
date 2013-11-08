@@ -9,11 +9,9 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -37,14 +35,14 @@ public class ISoldi extends SherlockActivity {
 
 	private TextView centerText;
 	private TextView bottomText;
-	private TextView statsButton;
+	// private TextView statsButton;
 	private TextView interoText;
 	private TextView ridottoText;
 	private TextView snackText;
 	private TextView isoldi_euro_txt;
-	private TextView val_textview2;
-	private TextView val_textview1;
-	private TextView val_textview3;
+	// private TextView val_textview2;
+	// private TextView val_textview1;
+	// private TextView val_textview3;
 
 	private LinearLayout isoldi_layout_view;
 
@@ -56,7 +54,7 @@ public class ISoldi extends SherlockActivity {
 		ridottoText = (TextView) findViewById(R.id.isoldi_ridotto_text);
 		interoText = (TextView) findViewById(R.id.isoldi_intero_text);
 		snackText = (TextView) findViewById(R.id.isoldi_snack_text);
-		statsButton = (TextView) findViewById(R.id.isoldi_statistics_button);
+		// statsButton = (TextView) findViewById(R.id.isoldi_statistics_button);
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
@@ -100,13 +98,13 @@ public class ISoldi extends SherlockActivity {
 
 			}
 		});
-		statsButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				showUserStats();
-			}
-		});
+		// statsButton.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// showUserStats();
+		// }
+		// });
 
 		// actionBarSherlock is initialized in super.onCreate()
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -124,143 +122,163 @@ public class ISoldi extends SherlockActivity {
 	private void getAmount(Saldo result) {
 
 		float amount = 0;
+		// if (result != null) {
+		// amount = Float.parseFloat(result.getCredit());
+		//
+		// val_textview1 = (TextView) findViewById(R.id.val_textview1);
+		// val_textview2 = (TextView) findViewById(R.id.val_textview2);
+		// val_textview3 = (TextView) findViewById(R.id.val_textview3);
+		//
+		// if (result.getPayments() != null) {
+		// // user has some payments
+		// if (result.getPayments().size() >= 1
+		// && result.getPayments().get(0) != null) {
+		// String text = result.getPayments().get(0).getPaymentDate()
+		// + " "
+		// + result.getPayments().get(0)
+		// .getProductDescription() + "  €"
+		// + result.getPayments().get(0).getProductPrice();
+		// val_textview1.setText(text);
+		// val_textview1.setVisibility(1);
+		// }
+		// if (result.getPayments().size() >= 2
+		// && result.getPayments().get(1) != null) {
+		// String text = result.getPayments().get(1).getPaymentDate()
+		// + " "
+		// + result.getPayments().get(1)
+		// .getProductDescription() + "  €"
+		// + result.getPayments().get(1).getProductPrice();
+		// val_textview2.setText(text);
+		// val_textview2.setVisibility(1);
+		// }
+		// if (result.getPayments().size() >= 3
+		// && result.getPayments().get(2) != null) {
+		// String text = result.getPayments().get(2).getPaymentDate()
+		// + " "
+		// + result.getPayments().get(2)
+		// .getProductDescription() + "  €"
+		// + result.getPayments().get(2).getProductPrice();
+		// val_textview3.setText(text);
+		// val_textview3.setVisibility(1);
+		// }
+		// } else {
+		// // there are no payments
+		// statsButton.setVisibility(View.GONE);
+		// }
+		// }
+
 		if (result != null) {
 			amount = Float.parseFloat(result.getCredit());
-
-			val_textview1 = (TextView) findViewById(R.id.val_textview1);
-			val_textview2 = (TextView) findViewById(R.id.val_textview2);
-			val_textview3 = (TextView) findViewById(R.id.val_textview3);
-
-			if (result.getPayments() != null) {
-				// user has some payments
-				if (result.getPayments().size() >= 1
-						&& result.getPayments().get(0) != null) {
-					String text = result.getPayments().get(0).getPaymentDate()
-							+ " "
-							+ result.getPayments().get(0)
-									.getProductDescription() + "  €"
-							+ result.getPayments().get(0).getProductPrice();
-					val_textview1.setText(text);
-					val_textview1.setVisibility(1);
-				}
-				if (result.getPayments().size() >= 2
-						&& result.getPayments().get(1) != null) {
-					String text = result.getPayments().get(1).getPaymentDate()
-							+ " "
-							+ result.getPayments().get(1)
-									.getProductDescription() + "  €"
-							+ result.getPayments().get(1).getProductPrice();
-					val_textview2.setText(text);
-					val_textview2.setVisibility(1);
-				}
-				if (result.getPayments().size() >= 3
-						&& result.getPayments().get(2) != null) {
-					String text = result.getPayments().get(2).getPaymentDate()
-							+ " "
-							+ result.getPayments().get(2)
-									.getProductDescription() + "  €"
-							+ result.getPayments().get(2).getProductPrice();
-					val_textview3.setText(text);
-					val_textview3.setVisibility(1);
-				}
-			} else {
-				// there are no payments
-				statsButton.setVisibility(View.GONE);
-			}
 		}
-
-		if (amount >= 4.70) {
+		if (amount >= 4.90) {
 
 			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#228B22"));
 
 			bottomText
 					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
-			statsButton.setBackgroundColor(Color.parseColor("#228B22"));
+
+			// statsButton.setBackgroundColor(Color.parseColor("#228B22"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#228B22"));
 
 			interoText.setVisibility(View.VISIBLE);
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 4.20 && amount < 4.70) {
+		} else if (amount >= 4.40 && amount < 4.90) {
 			centerText.setText(" " + String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#FFD700"));
-			isoldi_euro_txt.setTextColor(Color.parseColor("#FFD700"));
+			centerText.setTextColor(Color.parseColor("#FFCD00"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#FFCD00"));
 
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
-			statsButton.setTextColor(Color.parseColor("#FFFFFF"));
 
+			// statsButton.setTextColor(Color.parseColor("#FFFFFF"));
+
+			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 2.90 && amount < 4.20) {
+		} else if (amount >= 3.10 && amount < 4.40) {
 			centerText.setText(String.valueOf(amount));
 			centerText.setTextColor(Color.parseColor("#FF8800"));
 
 			bottomText
 					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
-			statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
+
+			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
 
+			interoText.setVisibility(View.GONE);
+			ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 0 && amount < 2.90) {
+		} else if (amount >= 0 && amount < 3.10) {
 			centerText.setText(String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#FF8800"));
-
-			bottomText
-					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
-			statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
-			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
-
-			snackText.setVisibility(View.VISIBLE);
-
-		} else {
-			centerText.setText(R.string.credit_status);
-			centerText.setTextSize(27);
 			centerText.setTextColor(Color.parseColor("#CC0000"));
 
-			bottomText.setPadding(0, 10, 0, 0);
-			bottomText.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-			bottomText.setText(R.string.unitn_log);
-			bottomText.setTextSize(25);
+			bottomText
+					.setText(" " + getString(R.string.iSoldi_devi_ricaricare));
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
-			statsButton.setVisibility(View.GONE);
-			isoldi_euro_txt.setVisibility(View.INVISIBLE);
-			isoldi_euro_txt.setText("");
-		}
-	}
+			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#CC0000"));
 
-	private void showUserStats() {
+			interoText.setVisibility(View.GONE);
+			ridottoText.setVisibility(View.GONE);
+			snackText.setVisibility(View.GONE);
 
-		final View userStatsLayout = (View) findViewById(R.id.user_stats);
-
-		ToggleButton showUserStats_button = (ToggleButton) findViewById(R.id.isoldi_statistics_button);
-
-		if (showUserStats_button.isChecked()) {
-			userStatsLayout.setVisibility(View.VISIBLE);
 		} else {
-			userStatsLayout.setVisibility(View.GONE);
+			interoText.setVisibility(View.GONE);
+			ridottoText.setVisibility(View.GONE);
+			snackText.setVisibility(View.GONE);
+
+			centerText.setText(R.string.iSoldi_credit_status_not_available);
+			centerText.setTextSize(27);
+			centerText.setGravity(Gravity.CENTER);
+			centerText.setTextColor(Color.parseColor("#CC0000"));
+
+			bottomText.setText(R.string.iSoldi_unitn_login_required);
+			bottomText.setPadding(0, 18, 0, 0);
+			bottomText.setGravity(Gravity.CENTER | Gravity.BOTTOM);
+
+			bottomText.setTextColor(Color.parseColor("#CC0000"));
+
+			// statsButton.setVisibility(View.GONE);
+			isoldi_euro_txt.setVisibility(View.GONE);
+			// isoldi_euro_txt.setText("");
 		}
-
-		showUserStats_button
-				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					// private String token;
-
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						if (isChecked) {
-							userStatsLayout.setVisibility(View.VISIBLE);
-
-						} else {
-							userStatsLayout.setVisibility(View.GONE);
-						}
-					}
-				});
 	}
+
+	// private void showUserStats() {
+	//
+	// final View userStatsLayout = (View) findViewById(R.id.user_stats);
+	//
+	// ToggleButton showUserStats_button = (ToggleButton)
+	// findViewById(R.id.isoldi_statistics_button);
+	//
+	// if (showUserStats_button.isChecked()) {
+	// userStatsLayout.setVisibility(View.VISIBLE);
+	// } else {
+	// userStatsLayout.setVisibility(View.GONE);
+	// }
+	//
+	// showUserStats_button
+	// .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+	// {
+	// // private String token;
+	//
+	// @Override
+	// public void onCheckedChanged(CompoundButton buttonView,
+	// boolean isChecked) {
+	// if (isChecked) {
+	// userStatsLayout.setVisibility(View.VISIBLE);
+	//
+	// } else {
+	// userStatsLayout.setVisibility(View.GONE);
+	// }
+	// }
+	// });
+	// }
 
 	/*
 	 * 
@@ -313,6 +331,7 @@ public class ISoldi extends SherlockActivity {
 				e.printStackTrace();
 			} catch (ProtocolException e) {
 				e.printStackTrace();
+
 				// gestine del login con google e mostrare errore
 				Saldo saldoError = new Saldo();
 				saldoError.setCredit("-1");
@@ -321,7 +340,6 @@ public class ISoldi extends SherlockActivity {
 			} catch (SecurityException e) {
 				e.printStackTrace();
 			} catch (AACException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -340,8 +358,8 @@ public class ISoldi extends SherlockActivity {
 					getAmount(result);
 				else
 					getAmount(null);
-				progressDialog.dismiss();
 				isoldi_layout_view.setVisibility(View.VISIBLE);
+				progressDialog.dismiss();
 			}
 		}
 	}

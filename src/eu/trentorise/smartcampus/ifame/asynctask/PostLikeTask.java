@@ -22,13 +22,10 @@ public class PostLikeTask extends AsyncTask<Likes, Void, Boolean> {
 	private static final String TAG = "PostLikeTask";
 
 	private Context context;
-	private final String URL_BASE_WEB_IFAME;
-	private final String APP_TOKEN;
 
 	public PostLikeTask(Context context) {
 		this.context = context;
-		URL_BASE_WEB_IFAME = context.getString(R.string.URL_BASE_WEB_IFAME);
-		APP_TOKEN = context.getString(R.string.APP_TOKEN);
+
 	}
 
 	@Override
@@ -39,17 +36,19 @@ public class PostLikeTask extends AsyncTask<Likes, Void, Boolean> {
 	@Override
 	protected Boolean doInBackground(Likes... like) {
 		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
-				APP_TOKEN);
+				context.getString(R.string.APP_TOKEN));
 		// esempio path /giudizio/43/like
-		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-				"giudizio/" + like[0].getGiudizio_id() + "/like");
+		MessageRequest request = new MessageRequest(
+				context.getString(R.string.URL_BASE_WEB_IFAME), "/giudizio/"
+						+ like[0].getGiudizio_id() + "/like");
 
 		request.setMethod(Method.POST);
 		request.setBody(Utils.convertToJSON(like[0]));
 
 		try {
 			MessageResponse response = mProtocolCarrier.invokeSync(request,
-					APP_TOKEN, IFameMain.getAuthToken());
+					context.getString(R.string.APP_TOKEN),
+					IFameMain.getAuthToken());
 			if (response.getHttpStatus() == 200) {
 				return true;
 			}
@@ -60,10 +59,8 @@ public class PostLikeTask extends AsyncTask<Likes, Void, Boolean> {
 		} catch (SecurityException e) {
 			Log.e(TAG, "SecurityException: " + e.getMessage());
 		} catch (AACException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, "AACException: " + e.getMessage());
 		}
-
 		return false;
 	}
 

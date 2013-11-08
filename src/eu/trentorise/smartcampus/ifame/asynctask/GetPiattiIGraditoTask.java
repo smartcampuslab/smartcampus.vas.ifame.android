@@ -31,6 +31,7 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 	private Activity activity;
 	private IGraditoPiattoListAdapter adapter;
 	private ProgressDialog progressDialog;
+
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 	private final String PATH_IGRADITO_GETPIATTI;
@@ -115,7 +116,6 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (AACException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
