@@ -15,6 +15,7 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	private final SherlockFragmentActivity mActivity;
 	private final String mTag;
 	private final Class<T> mClass;
+
 	private int mViewGroup = android.R.id.content;
 
 	/**

@@ -1,4 +1,4 @@
-package eu.trentorise.smartcampus.ifame.utils;
+package eu.trentorise.smartcampus.ifame.comparator;
 
 import java.util.Comparator;
 

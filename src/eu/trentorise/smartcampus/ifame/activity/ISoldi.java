@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
@@ -58,7 +59,9 @@ public class ISoldi extends SherlockActivity {
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
+
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
+		isoldi_layout_view.setVisibility(View.GONE);
 
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
 			new ISoldiConnector(this).execute();
@@ -112,11 +115,24 @@ public class ISoldi extends SherlockActivity {
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.menu_only_loading, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
 			onBackPressed();
+			return true;
+		case R.id.action_refresh:
+			new ISoldiConnector(ISoldi.this).execute();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+
 	}
 
 	private void getAmount(Saldo result) {
@@ -305,7 +321,6 @@ public class ISoldi extends SherlockActivity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-			isoldi_layout_view.setVisibility(View.GONE);
 			progressDialog = ProgressDialog.show(context,
 					getString(R.string.iSoldi_title_activity), "Loading...");
 		}
@@ -349,6 +364,7 @@ public class ISoldi extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
+				progressDialog.dismiss();
 				Toast.makeText(context,
 						getString(R.string.errorSomethingWentWrong),
 						Toast.LENGTH_SHORT).show();
@@ -358,6 +374,7 @@ public class ISoldi extends SherlockActivity {
 					getAmount(result);
 				else
 					getAmount(null);
+
 				isoldi_layout_view.setVisibility(View.VISIBLE);
 				progressDialog.dismiss();
 			}

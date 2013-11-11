@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.asynctask;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -11,6 +12,7 @@ import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.MensaAdapter;
+import eu.trentorise.smartcampus.ifame.comparator.MensaComparator;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -87,6 +89,9 @@ public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 					Toast.LENGTH_SHORT).show();
 			activity.finish();
 		} else {
+
+			Collections.sort(result, new MensaComparator());
+
 			for (Mensa mensa : result) {
 				mensaAdapter.add(mensa);
 			}
