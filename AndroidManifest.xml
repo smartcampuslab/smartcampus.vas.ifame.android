@@ -57,12 +57,12 @@
         <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_BASED_ACCESS"
             android:value="true" />
-<meta-data
+		<meta-data
             android:name="eu.trentorise.smartcampus.account.CLIENT_ID"
             android:value="1428b6fc-6e9c-4fb5-989e-4c4016b8c738" />
         <meta-data
             android:name="eu.trentorise.smartcampus.account.CLIENT_SECRET"
-            android:value="a1fb244d-0da3-43b7-af2e-4b0830294f8e" />
+            android:value="a1fb244d-0da3-43b7-af2e-4b0830294f8e" />  
         
         <meta-data
             android:name="SHARED_PACKAGE"
@@ -79,11 +79,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity" 
             android:launchMode="singleTask">
-            <intent-filter>
+<!--             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>  -->
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.START" />
 
@@ -103,7 +103,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="eu.trentorise.smartcampus.ac.embedded.EmbeddedAuthActivity" />
+        <activity android:name="eu.trentorise.smartcampus.ac.embedded.EmbeddedAuthActivity" />   
 
         <service
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticationService"
