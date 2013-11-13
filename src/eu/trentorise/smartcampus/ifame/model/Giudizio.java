@@ -5,11 +5,13 @@ import java.util.List;
 
 public class Giudizio {
 
-	private Long giudizio_id;
+	private Long id;
 
 	private Float voto;
 
-	private String commento;
+	private String testo;
+
+	private boolean approved;
 
 	private Date ultimo_aggiornamento;
 
@@ -35,14 +37,6 @@ public class Giudizio {
 		super();
 	}
 
-	public Long getGiudizio_id() {
-		return giudizio_id;
-	}
-
-	public void setGiudizio_id(Long giudizio_id) {
-		this.giudizio_id = giudizio_id;
-	}
-
 	public Float getVoto() {
 		return voto;
 	}
@@ -51,16 +45,32 @@ public class Giudizio {
 		this.voto = voto;
 	}
 
-	public String getCommento() {
-		return commento;
-	}
-
-	public void setCommento(String commento) {
-		this.commento = commento;
-	}
-
 	public Date getUltimo_aggiornamento() {
 		return ultimo_aggiornamento;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTesto() {
+		return testo;
+	}
+
+	public void setTesto(String testo) {
+		this.testo = testo;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	public void setUltimo_aggiornamento(Date ultimo_aggiornamento) {

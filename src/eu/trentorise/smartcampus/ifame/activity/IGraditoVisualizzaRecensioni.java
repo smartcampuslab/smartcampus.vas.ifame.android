@@ -256,7 +256,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 				// calcolo la media
 				avg += g.getVoto();
 				if (g.getUser_id() == user_id) {
-					mioCommento = g.getCommento();
+					mioCommento = g.getTesto();
 					mioVoto = Math.round(g.getVoto());
 				}
 			}
@@ -276,7 +276,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 			// clean results list -> don't show reviews without the comment
 			Iterator<Giudizio> i = reviews.iterator();
 			while (i.hasNext()) {
-				if (i.next().getCommento().equals("")) {
+				if (i.next().getTesto().equals("")) {
 					i.remove();
 				}
 			}
