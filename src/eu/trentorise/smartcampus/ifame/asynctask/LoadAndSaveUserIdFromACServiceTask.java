@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.android.common.GlobalConfig;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
 import eu.trentorise.smartcampus.network.RemoteConnector;
@@ -12,6 +12,7 @@ import eu.trentorise.smartcampus.network.RemoteConnector.CLIENT_TYPE;
 import eu.trentorise.smartcampus.profileservice.BasicProfileService;
 import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
+import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 
 /**
  * Get the userId from basic profile service and save it under the
@@ -26,6 +27,18 @@ public class LoadAndSaveUserIdFromACServiceTask extends
 
 	public LoadAndSaveUserIdFromACServiceTask(Context context) {
 		this.context = context;
+	}
+
+	private String getAppUrl() {
+		String returnAppUrl = "";
+		try {
+			returnAppUrl = GlobalConfig.getAppUrl(context);
+			if (!returnAppUrl.endsWith("/"))
+				returnAppUrl = returnAppUrl.concat("/");
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		}
+		return returnAppUrl;
 	}
 
 	@Override
@@ -43,8 +56,7 @@ public class LoadAndSaveUserIdFromACServiceTask extends
 		Log.i(TAG, "Token: " + userToken);
 		// check if correctly get the token
 		if (userToken != null) {
-			BasicProfileService service = new BasicProfileService(
-					context.getString(R.string.URL_BASIC_PROFILE_SERVICE));
+			BasicProfileService service = new BasicProfileService(getAppUrl()+"aac");
 			BasicProfile bp;
 			try {
 				bp = service.getBasicProfile(userToken);

@@ -41,10 +41,6 @@
         
         android:logo="@drawable/ifame_logo"
         android:theme="@style/Theme.Ifamestyle" >
-         <meta-data
-            android:name="SERVER_URL"
-            android:value="https://vas-dev.smartcampuslab.it/core.communicator" />
-         
         <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_TYPE"
             android:value="eu.trentorise.smartcampus.account" />
@@ -57,23 +53,7 @@
         <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_BASED_ACCESS"
             android:value="true" />
-		<meta-data
-            android:name="eu.trentorise.smartcampus.account.CLIENT_ID"
-            android:value="1428b6fc-6e9c-4fb5-989e-4c4016b8c738" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.CLIENT_SECRET"
-            android:value="a1fb244d-0da3-43b7-af2e-4b0830294f8e" />  
         
-        <meta-data
-            android:name="SHARED_PACKAGE"
-            android:value="eu.trentorise.smartcampus.ifame" />
-<!--         <meta-data
-            android:name="ACCOUNT_TYPE"
-            android:value="eu.trentorise.smartcampus.ifame" />
-        <meta-data
-            android:name="ACCOUNT_NAME"
-            android:value="SmartCampus Android Template" /> -->
-
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFameMain"
             android:configChanges="orientation|screenSize"
