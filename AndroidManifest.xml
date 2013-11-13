@@ -42,6 +42,9 @@
         android:logo="@drawable/ifame_logo"
         android:theme="@style/Theme.Ifamestyle" >
         <meta-data
+            android:name="eu.trentorise.smartcampus.account.AUTH_URL"
+            android:value="https://ac.smartcampuslab.it/aac" />
+        <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_TYPE"
             android:value="eu.trentorise.smartcampus.account" />
         <meta-data
