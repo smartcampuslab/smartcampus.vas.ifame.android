@@ -18,10 +18,10 @@
 
     <!-- iFameMain -->
     <string name="iFame_set_favourite_canteen_title">Choose your usual canteen</string>
-    <string name="iFame_set_favourite_canteen_explanation">Welcome to iFame! Choose the canteen in which you go more often</string>
-    <string name="iFame_set_favourite_canteen_details">Then will be possible to modify your choice from iFretta\'s page</string>
+    <string name="iFame_set_favourite_canteen_explanation">Welcome to iFame! Choose the canteen in which you usually go</string>
+    <string name="iFame_set_favourite_canteen_details">Then it will be possible to modify your choice from iFretta\'s page</string>
     <string name="iFame_set_favourite_canteen_confirm_button">Confirm</string>
-    <string name="iFame_set_favourite_canteen_menu_item">Set favourite canteen</string>
+    <string name="iFame_set_favourite_canteen_menu_item">Set your favourite canteen</string>
     <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iFame_main_title_activity">iFame</string>
     <!-- /iFameMain -->
@@ -32,65 +32,65 @@
     <string name="iFretta_details_title_activity">Canteen webcam</string>
     <string name="iFretta_search_in_ViviTrento">Search in ViviTrento</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
-    <string name="iFretta_details_set_favourite_canteen">You set as favourite canteen: </string>
+    <string name="iFretta_details_set_favourite_canteen">You favourite canteen is: </string>
     <!-- /iFretta -->
 
 
     <!-- iDeciso -->
     <string name="iDeciso_title_activity">iFame</string>
-    <string name="iDeciso_home_daily_menu">Daily menù</string>
-    <string name="iDeciso_home_menu_types">Menù types</string>
-    <string name="iDeciso_home_compose_menu">Compose your own menù</string>
-    <string name="iDeciso_home_monthly_menu">Monthly menù</string>
+    <string name="iDeciso_home_daily_menu">Daily menu</string>
+    <string name="iDeciso_home_menu_types">Menu types</string>
+    <string name="iDeciso_home_compose_menu">Compose your meal</string>
+    <string name="iDeciso_home_monthly_menu">Monthly menu</string>
     <string name="iDeciso_tipologie_menu_fragment_intero">tipologiaInteroFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_ridotto">tipologiaRidottoFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_snack">tipologiaSnackFragment</string>
     <string name="iDeciso_daily_menu_daily_fragment">menuGiornoFragment</string>
     <string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
     <string name="iDeciso_tipologie_menu_credito_sufficiente">You don\'t have enough credit: €</string>
-    <string name="iDeciso_tipologie_menu_credito_insufficiente">Not enought credit to buy this menu</string>
+    <string name="iDeciso_tipologie_menu_credito_insufficiente">Not enough credit to buy this meal</string>
     <string name="iDeciso_compose_menu_checkbox_first">First course</string>
     <string name="iDeciso_compose_menu_checkbox_second">Second course</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Side dish A</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Side dish B</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenù or Pizza (Slice)</string>
+    <string name="iDeciso_compose_menu_checkbox_bread">Sandwich menu or pizza slice</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calculate</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Mixed salad</string>
     <string name="iDeciso_alternative_btn">Alternatives</string>
-    <string name="iDeciso_menu_del_giorno_primi">First dishes</string>
-    <string name="iDeciso_menu_del_giorno_secondi">Second dishes</string>
+    <string name="iDeciso_menu_del_giorno_primi">First course</string>
+    <string name="iDeciso_menu_del_giorno_secondi">Second course</string>
     <string name="iDeciso_menu_del_giorno_contorni">Side dishes</string>
     <string name="iDeciso_menu_del_giorno_piatti_freddi">Cold dishes</string>
-    <string name="iDeciso_alternative_primi">FIRST DISHES</string>
-    <string name="iDeciso_alternative_secondi">SECOND DISHES</string>
+    <string name="iDeciso_alternative_primi">FIRST COURSE</string>
+    <string name="iDeciso_alternative_secondi">SECOND COURSE</string>
     <string name="iDeciso_alternative_contorni">WARM SIDE DISHES</string>
-    <string name="iDeciso_alternative_menu">Alternatives to the daily menù</string>
-    <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenù</string>
+    <string name="iDeciso_alternative_menu">Alternatives to the daily menu</string>
+    <string name="iDeciso_compose_menu_checkbox_pizza">Pizza menu</string>
     <string name="iDeciso_2contorni">2 Side dishes</string>
     <string name="iDeciso_pane">Bread</string>
     <string name="iDeciso_acqua">Water</string>
     <string name="iDeciso_caffe_o_2_salse">Coffee or 2 sauces</string>
-    <string name="iDeciso_contorno_o_dessert">Side dish o Dessert</string>
-    <string name="iDeciso_pizza_trancio">Pizza (slice)</string>
-    <string name="iDeciso_acqua_o_caffe">Water or Coffee</string>
+    <string name="iDeciso_contorno_o_dessert">Side dish or dessert</string>
+    <string name="iDeciso_pizza_trancio">Pizza slice</string>
+    <string name="iDeciso_acqua_o_caffe">Water or coffee</string>
     <string name="iDeciso_panino">Bread</string>
     <string name="iDeciso_2a_scelta_tra">2 choices between</string>
     <string name="iDeciso_contorni">Side dishes</string>
     <string name="iDeciso_pizza">Pizza</string>
-    <string name="iDeciso_menu_types_intero">Complete Menù</string>
-    <string name="iDeciso_menu_types_ridotto">Reduced Menù</string>
-    <string name="iDeciso_menu_types_snack">Snack</string>
+    <string name="iDeciso_menu_types_intero">FULL</string>
+    <string name="iDeciso_menu_types_ridotto">REDUCED</string>
+    <string name="iDeciso_menu_types_snack">SNACK</string>
     <string name="iDeciso_o">or</string>
     <string name="iDeciso_e">and</string>
     <string name="iDeciso_menu_intero_price"><u>€4,90</u></string>
     <string name="iDeciso_menu_ridotto_price"><u>€4,40</u></string>
     <string name="iDeciso_menu_snack_price"><u>€3,10</u></string>
     <string name="iDeciso_menu_mese_settimana">Week</string>
-    <string name="iDeciso_GoogleSearchAlertText">Show results by: </string>
+    <string name="iDeciso_GoogleSearchAlertText">Show online results for: </string>
     <string name="iDeciso_GoogleSearchAlertAccept">Search</string>
     <string name="iDeciso_alternatives_title_activity">Alternatives</string>
-    <string name="iDeciso_compose_menu_no_items_selected">Please select at least one dish!</string>
+    <string name="iDeciso_compose_menu_no_items_selected">Please select at least one course!</string>
     <string name="iDeciso_monthly_menu_january">January</string>
     <string name="iDeciso_monthly_menu_february">February</string>
     <string name="iDeciso_monthly_menu_march">March</string>
@@ -103,7 +103,7 @@
     <string name="iDeciso_monthly_menu_october">October</string>
     <string name="iDeciso_monthly_menu_november">November</string>
     <string name="iDeciso_monthly_menu_december">December</string>
-    <string name="iDeciso_monthly_menu_of">Menù of</string>
+    <string name="iDeciso_monthly_menu_of">Menu of</string>
     <string name="iDeciso_monthly_menu_from">From</string>
     <string name="iDeciso_monthly_menu_to">To</string>
 
@@ -121,8 +121,8 @@
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
     <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
-    <string name="iGradito_no_one_left_comment">Nobody has already left a comment. Add a comment to this dish by clicking the plus button.</string>
-    <string name="iGradito_no_reviews_available">Nobody has already left a review. Add a review to this dish by clicking the plus button.</string>
+    <string name="iGradito_no_one_left_comment">Nobody left a comment yet. Add a comment to this dish by clicking the plus button.</string>
+    <string name="iGradito_no_reviews_available">Nobody left a review yet. Add a review to this dish by clicking the plus button.</string>
     <string name="iGradito_review_header">Reviews</string>
     <string name="iGradito_not_available">Not available</string>
     <string name="iGradito_average_vote">Average ratings: </string>
