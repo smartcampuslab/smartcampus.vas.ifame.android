@@ -83,9 +83,9 @@
     <string name="iDeciso_menu_types_snack">Snack</string>
     <string name="iDeciso_o">or</string>
     <string name="iDeciso_e">and</string>
-    <string name="iDeciso_menu_intero_price"><u>€4,70</u></string>
-    <string name="iDeciso_menu_ridotto_price"><u>€4,20</u></string>
-    <string name="iDeciso_menu_snack_price"><u>€2,90</u></string>
+    <string name="iDeciso_menu_intero_price"><u>€4,90</u></string>
+    <string name="iDeciso_menu_ridotto_price"><u>€4,40</u></string>
+    <string name="iDeciso_menu_snack_price"><u>€3,10</u></string>
     <string name="iDeciso_menu_mese_settimana">Week</string>
     <string name="iDeciso_GoogleSearchAlertText">Show results by: </string>
     <string name="iDeciso_GoogleSearchAlertAccept">Search</string>
