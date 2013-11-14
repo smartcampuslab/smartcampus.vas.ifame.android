@@ -1,7 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.Random;
+
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -64,7 +65,9 @@ public class ISoldi extends SherlockActivity {
 		isoldi_layout_view.setVisibility(View.GONE);
 
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-			new ISoldiConnector(this).execute();
+
+			new ISoldiConnector().execute();
+
 		} else {
 			Toast.makeText(getApplicationContext(),
 					getString(R.string.errorInternetConnectionRequired),
@@ -126,9 +129,11 @@ public class ISoldi extends SherlockActivity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
+
 		case R.id.action_refresh:
-			new ISoldiConnector(ISoldi.this).execute();
+			new ISoldiConnector().execute();
 			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -186,26 +191,30 @@ public class ISoldi extends SherlockActivity {
 		if (result != null) {
 			amount = Float.parseFloat(result.getCredit());
 		}
-		if (amount >= 4.90) {
 
-			centerText.setText(String.valueOf(amount));
+		if (amount >= 4.90f) {
+
+			centerText.setText(result.getCredit());
 			centerText.setTextColor(Color.parseColor("#228B22"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#228B22"));
 
+			bottomText.setTextColor(Color.BLACK);
 			bottomText
 					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
 
 			// statsButton.setBackgroundColor(Color.parseColor("#228B22"));
-			isoldi_euro_txt.setTextColor(Color.parseColor("#228B22"));
 
 			interoText.setVisibility(View.VISIBLE);
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 4.40 && amount < 4.90) {
-			centerText.setText(" " + String.valueOf(amount));
+		} else if (amount >= 4.40f && amount < 4.90f) {
+
+			centerText.setText(result.getCredit());
 			centerText.setTextColor(Color.parseColor("#FFCD00"));
 			isoldi_euro_txt.setTextColor(Color.parseColor("#FFCD00"));
 
+			bottomText.setTextColor(Color.BLACK);
 			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 
 			// statsButton.setTextColor(Color.parseColor("#FFFFFF"));
@@ -214,36 +223,38 @@ public class ISoldi extends SherlockActivity {
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 3.10 && amount < 4.40) {
-			centerText.setText(String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#FF8800"));
+		} else if (amount >= 3.10f && amount < 4.40f) {
 
-			bottomText
-					.setText(" " + getString(R.string.iSoldi_puoi_acquistare));
+			centerText.setText(result.getCredit());
+			centerText.setTextColor(Color.parseColor("#FF8800"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
+
+			bottomText.setTextColor(Color.BLACK);
+			bottomText.setText(getString(R.string.iSoldi_puoi_acquistare));
 
 			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
-			isoldi_euro_txt.setTextColor(Color.parseColor("#FF8800"));
 
 			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.VISIBLE);
 
-		} else if (amount >= 0 && amount < 3.10) {
-			centerText.setText(String.valueOf(amount));
-			centerText.setTextColor(Color.parseColor("#CC0000"));
+		} else if (amount >= 0f && amount < 3.10f) {
 
-			bottomText
-					.setText(" " + getString(R.string.iSoldi_devi_ricaricare));
+			centerText.setText(result.getCredit());
+			centerText.setTextColor(Color.parseColor("#CC0000"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#CC0000"));
+
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
+			bottomText.setText(getString(R.string.iSoldi_devi_ricaricare));
 
 			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
-			isoldi_euro_txt.setTextColor(Color.parseColor("#CC0000"));
 
 			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.GONE);
 
 		} else {
+
 			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.GONE);
@@ -302,15 +313,13 @@ public class ISoldi extends SherlockActivity {
 	 */
 	private class ISoldiConnector extends AsyncTask<Void, Void, Saldo> {
 
-		private Context context;
 		private ProgressDialog progressDialog;
 
 		private final String URL_BASE_WEB_IFAME;
 		private final String URL_ISOLDI_GETSOLDI;
 		private final String APP_TOKEN;
 
-		public ISoldiConnector(Context applicationContext) {
-			context = applicationContext;
+		public ISoldiConnector() {
 
 			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
 			APP_TOKEN = getString(R.string.APP_TOKEN);
@@ -321,14 +330,15 @@ public class ISoldi extends SherlockActivity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-			progressDialog = ProgressDialog.show(context,
-					getString(R.string.iSoldi_title_activity), "Loading...");
+			progressDialog = ProgressDialog.show(ISoldi.this,
+					getString(R.string.iSoldi_title_activity),
+					getString(R.string.loading));
 		}
 
 		@Override
 		protected Saldo doInBackground(Void... saldo) {
 
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(context,
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(ISoldi.this,
 					APP_TOKEN);
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
 					URL_ISOLDI_GETSOLDI);
@@ -365,7 +375,7 @@ public class ISoldi extends SherlockActivity {
 		protected void onPostExecute(Saldo result) {
 			if (result == null) {
 				progressDialog.dismiss();
-				Toast.makeText(context,
+				Toast.makeText(ISoldi.this,
 						getString(R.string.errorSomethingWentWrong),
 						Toast.LENGTH_SHORT).show();
 				finish();
