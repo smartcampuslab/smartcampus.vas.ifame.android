@@ -125,6 +125,7 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 	@Override
 	protected void onPostExecute(List<Piatto> result) {
 		if (result == null) {
+			progressDialog.dismiss();
 			Toast.makeText(activity,
 					activity.getString(R.string.errorSomethingWentWrong),
 					Toast.LENGTH_SHORT).show();
@@ -137,7 +138,8 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 			for (Piatto p : result) {
 				adapter.add(p);
 			}
+
+			progressDialog.dismiss();
 		}
-		progressDialog.dismiss();
 	}
 }
