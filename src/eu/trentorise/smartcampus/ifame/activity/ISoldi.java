@@ -62,7 +62,6 @@ public class ISoldi extends SherlockActivity {
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
 
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
-		isoldi_layout_view.setVisibility(View.GONE);
 
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
 
@@ -333,6 +332,8 @@ public class ISoldi extends SherlockActivity {
 			progressDialog = ProgressDialog.show(ISoldi.this,
 					getString(R.string.iSoldi_title_activity),
 					getString(R.string.loading));
+
+			isoldi_layout_view.setVisibility(View.GONE);
 		}
 
 		@Override
