@@ -44,6 +44,8 @@ public class ISoldi extends SherlockActivity {
 	// private TextView val_textview1;
 	// private TextView val_textview3;
 
+	// private MenuItem refreshButton;
+
 	private LinearLayout isoldi_layout_view;
 
 	@Override
@@ -117,6 +119,9 @@ public class ISoldi extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.menu_only_loading, menu);
+
+		// refreshButton = menu.findItem(R.id.action_refresh);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -139,7 +144,6 @@ public class ISoldi extends SherlockActivity {
 
 	private void getAmount(Saldo result) {
 
-		float amount = 0;
 		// if (result != null) {
 		// amount = Float.parseFloat(result.getCredit());
 		//
@@ -185,11 +189,34 @@ public class ISoldi extends SherlockActivity {
 		// }
 		// }
 
+		float amount = 0f;
+		boolean creditoInvalido = false;
+
 		if (result != null) {
-			amount = Float.parseFloat(result.getCredit());
+			try {
+				amount = Float.parseFloat(result.getCredit());
+			} catch (NumberFormatException e) {
+				// alcuni studenti che sono disabilitati o vecchi e hanno
+				// l'account unitn ma la tessera dell opera disabilitata hanno
+				// credito -> "" percio da errore qui
+				creditoInvalido = true;
+			}
 		}
 
-		if (amount >= 4.90f) {
+		if (creditoInvalido) {
+
+			centerText.setText("0");
+			centerText.setTextColor(Color.parseColor("#CC0000"));
+			isoldi_euro_txt.setTextColor(Color.parseColor("#CC0000"));
+
+			bottomText.setTextColor(Color.parseColor("#CC0000"));
+			bottomText.setText(getString(R.string.iSoldi_devi_ricaricare));
+
+			interoText.setVisibility(View.GONE);
+			ridottoText.setVisibility(View.GONE);
+			snackText.setVisibility(View.GONE);
+
+		} else if (amount >= 4.90f) {
 
 			centerText.setText(result.getCredit());
 			centerText.setTextColor(Color.parseColor("#228B22"));
@@ -250,7 +277,9 @@ public class ISoldi extends SherlockActivity {
 			ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.GONE);
 
-		} else {
+		}
+		// amount < 0 errore mostro -> login con google non va bene
+		else {
 
 			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.GONE);
@@ -332,6 +361,12 @@ public class ISoldi extends SherlockActivity {
 					getString(R.string.loading));
 
 			isoldi_layout_view.setVisibility(View.GONE);
+
+			// if (refreshButton != null) {
+			// refreshButton
+			// .setActionView(R.layout.actionbar_progressbar_circle);
+			// refreshButton.expandActionView();
+			// }
 		}
 
 		@Override
@@ -372,6 +407,13 @@ public class ISoldi extends SherlockActivity {
 
 		@Override
 		protected void onPostExecute(Saldo result) {
+			super.onPostExecute(result);
+
+			// if (refreshButton != null) {
+			// refreshButton.collapseActionView();
+			// refreshButton.setActionView(null);
+			// }
+
 			if (result == null) {
 				progressDialog.dismiss();
 				Toast.makeText(ISoldi.this,
@@ -379,10 +421,8 @@ public class ISoldi extends SherlockActivity {
 						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
-				if (result.getCredit().compareTo("") != 0)
-					getAmount(result);
-				else
-					getAmount(null);
+
+				getAmount(result);
 
 				isoldi_layout_view.setVisibility(View.VISIBLE);
 				progressDialog.dismiss();
