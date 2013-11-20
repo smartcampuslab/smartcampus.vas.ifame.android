@@ -21,13 +21,13 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 	private WebcamAspectRatioImageView img_view;
 	private ProgressDialog progressDialog;
 
-	// private MenuItem refreshButton;
+	private MenuItem refreshButton;
 
 	public RetrieveWebcamImageTask(Context context,
 			WebcamAspectRatioImageView img_view, MenuItem refresh) {
 		this.context = context;
 		this.img_view = img_view;
-		// this.refreshButton = refresh;
+		this.refreshButton = refresh;
 	}
 
 	@Override
@@ -39,10 +39,10 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 		// progressDialog.setCancelable(true);
 		// progressDialog.setCanceledOnTouchOutside(false);
 
-		// if (refreshButton != null) {
-		// refreshButton.setActionView(R.layout.actionbar_progressbar_circle);
-		// refreshButton.expandActionView();
-		// }
+		if (refreshButton != null) {
+			refreshButton.setActionView(R.layout.actionbar_progressbar_circle);
+			refreshButton.expandActionView();
+		}
 	}
 
 	@Override
@@ -70,10 +70,10 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 
 		img_view.setVisibility(View.VISIBLE);
 
-		// if (refreshButton != null) {
-		// refreshButton.collapseActionView();
-		// refreshButton.setActionView(null);
-		// }
+		if (refreshButton != null) {
+			refreshButton.collapseActionView();
+			refreshButton.setActionView(null);
+		}
 
 		progressDialog.dismiss();
 	}

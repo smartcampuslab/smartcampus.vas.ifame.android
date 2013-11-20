@@ -107,7 +107,7 @@ public class IFameMain extends SherlockActivity {
 				Toast.makeText(IFameMain.this,
 						getString(R.string.errorLoginRequired),
 						Toast.LENGTH_SHORT).show();
-				IFameMain.this.finish();
+				finish();
 			}
 		}
 	}

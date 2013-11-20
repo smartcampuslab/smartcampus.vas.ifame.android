@@ -44,7 +44,7 @@ public class ISoldi extends SherlockActivity {
 	// private TextView val_textview1;
 	// private TextView val_textview3;
 
-	// private MenuItem refreshButton;
+	private MenuItem refreshButton;
 
 	private LinearLayout isoldi_layout_view;
 
@@ -120,7 +120,7 @@ public class ISoldi extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.menu_only_loading, menu);
 
-		// refreshButton = menu.findItem(R.id.action_refresh);
+		refreshButton = menu.findItem(R.id.action_refresh);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -362,11 +362,11 @@ public class ISoldi extends SherlockActivity {
 
 			isoldi_layout_view.setVisibility(View.GONE);
 
-			// if (refreshButton != null) {
-			// refreshButton
-			// .setActionView(R.layout.actionbar_progressbar_circle);
-			// refreshButton.expandActionView();
-			// }
+			if (refreshButton != null) {
+				refreshButton
+						.setActionView(R.layout.actionbar_progressbar_circle);
+				refreshButton.expandActionView();
+			}
 		}
 
 		@Override
@@ -409,10 +409,10 @@ public class ISoldi extends SherlockActivity {
 		protected void onPostExecute(Saldo result) {
 			super.onPostExecute(result);
 
-			// if (refreshButton != null) {
-			// refreshButton.collapseActionView();
-			// refreshButton.setActionView(null);
-			// }
+			if (refreshButton != null) {
+				refreshButton.collapseActionView();
+				refreshButton.setActionView(null);
+			}
 
 			if (result == null) {
 				progressDialog.dismiss();
