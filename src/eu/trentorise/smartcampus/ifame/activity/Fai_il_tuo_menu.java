@@ -30,7 +30,7 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 	private boolean isPanino;
 	private boolean isPizza;
 
-	// stringhe statiche da usare come keys per gli intent extras
+//	// stringhe statiche da usare come keys per gli intent extras
 	public static final String SELECTED_MENU = "selected_menu";
 	public static final String HAS_CALLED_TIPOLOGIE = "has_called_tipologie";
 	public static final String PRIMO_AVAILABLE = "primoAvailable";
@@ -381,129 +381,32 @@ public class Fai_il_tuo_menu extends SherlockActivity {
 	public void componiMenu() {
 
 		primo = (CheckBox) findViewById(R.id.primo_piatto);
-		secondo = (CheckBox) findViewById(R.id.secondo_piatto);
-		contorno1 = (CheckBox) findViewById(R.id.contorno_caldo);
-		contorno2 = (CheckBox) findViewById(R.id.contorno_freddo);
+		secondo = (CheckBox) findViewById(R.id.secondo);
+		contorno1 = (CheckBox) findViewById(R.id.piattofreddo);
+		contorno2 = (CheckBox) findViewById(R.id.contorno1);
 		dessert = (CheckBox) findViewById(R.id.dessert);
-		panino = (CheckBox) findViewById(R.id.pane);
+		panino = (CheckBox) findViewById(R.id.pane1);
 		insalatona = (CheckBox) findViewById(R.id.insalatona);
 		pizza = (CheckBox) findViewById(R.id.pizza);
 
 		primo_button = (ImageView) findViewById(R.id.primo_button);
 		secondo_button = (ImageView) findViewById(R.id.secondo_button);
-		contorno1_button = (ImageView) findViewById(R.id.contorno_caldo_button);
-		contorno2_button = (ImageView) findViewById(R.id.contorno_freddo_button);
+		contorno1_button = (ImageView) findViewById(R.id.piattofreddo_button);
+		contorno2_button = (ImageView) findViewById(R.id.contorno1_button);
 		dessert_button = (ImageView) findViewById(R.id.dessert_button);
-		pane_button = (ImageView) findViewById(R.id.pane_button);
+		pane_button = (ImageView) findViewById(R.id.pane1_button);
 		insalatona_button = (ImageView) findViewById(R.id.insalatona_button);
 		pizza_button = (ImageView) findViewById(R.id.pizza_button);
 
 		final View primo_view = (View) findViewById(R.id.primo_include);
 		final View secondo_view = (View) findViewById(R.id.secondo_include);
-		final View contorno_caldo_view = (View) findViewById(R.id.contorno_caldo_include);
-		final View contorno_freddo_view = (View) findViewById(R.id.contorno_freddo_include);
+		final View contorno_caldo_view = (View) findViewById(R.id.contorno1_include);
+		final View contorno_freddo_view = (View) findViewById(R.id.contorno2_include);
 		final View insalatona_view = (View) findViewById(R.id.insalatona_include);
 		final View dessert_view = (View) findViewById(R.id.dessert_include);
-		final View pane_view = (View) findViewById(R.id.pane_include);
+		final View pane_view = (View) findViewById(R.id.pane1_include);
 		final View pizza_view = (View) findViewById(R.id.pizza_include);
 
-		// setto gli OnclickListener per le ImageView per espandere il menu in
-		// modo dinamico; inverte il senso della freccia per il menu espandibile
-
-		/*
-		 * primo_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (primo_view.getVisibility() == View.GONE) {
-		 * primo_button.setImageResource(R.drawable.arrow_up);
-		 * primo_view.setVisibility(View.VISIBLE); } else {
-		 * primo_view.setVisibility(View.GONE);
-		 * primo_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * secondo_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (secondo_view.getVisibility() == View.GONE) {
-		 * secondo_button.setImageResource(R.drawable.arrow_up);
-		 * secondo_view.setVisibility(View.VISIBLE); } else {
-		 * secondo_view.setVisibility(View.GONE);
-		 * secondo_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * contorno1_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (contorno_caldo_view.getVisibility() == View.GONE) {
-		 * contorno1_button.setImageResource(R.drawable.arrow_up);
-		 * contorno_caldo_view.setVisibility(View.VISIBLE); } else {
-		 * contorno_caldo_view.setVisibility(View.GONE);
-		 * contorno1_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * contorno2_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (contorno_freddo_view.getVisibility() == View.GONE) {
-		 * //contorno2_button.setImageResource(R.drawable.arrow_up);
-		 * contorno_freddo_view.setVisibility(View.VISIBLE); } else {
-		 * contorno_freddo_view.setVisibility(View.GONE);
-		 * contorno2_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * insalatona_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (insalatona_view.getVisibility() == View.GONE) {
-		 * insalatona_button.setImageResource(R.drawable.arrow_up);
-		 * insalatona_view.setVisibility(View.VISIBLE); } else {
-		 * insalatona_view.setVisibility(View.GONE);
-		 * insalatona_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * dessert_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (dessert_view.getVisibility() == View.GONE) {
-		 * dessert_button.setImageResource(R.drawable.arrow_up);
-		 * dessert_view.setVisibility(View.VISIBLE); } else {
-		 * dessert_view.setVisibility(View.GONE);
-		 * dessert_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * pane_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if (pane_view.getVisibility()
-		 * == View.GONE) { pane_button.setImageResource(R.drawable.arrow_up);
-		 * pane_view.setVisibility(View.VISIBLE); } else {
-		 * pane_view.setVisibility(View.GONE);
-		 * pane_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 * 
-		 * pizza_button.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { if
-		 * (pizza_view.getVisibility() == View.GONE) {
-		 * pizza_button.setImageResource(R.drawable.arrow_up);
-		 * pizza_view.setVisibility(View.VISIBLE); } else {
-		 * pizza_view.setVisibility(View.GONE);
-		 * pizza_button.setImageResource(R.drawable.arrow_down); } }
-		 * 
-		 * });
-		 */
-
-		/*
-		 * 
-		 * logica delle checkboxes, controlla cosa � selezionato ed esclude i
-		 * piatti non consoni con la scelta
-		 */
 
 		primo.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 

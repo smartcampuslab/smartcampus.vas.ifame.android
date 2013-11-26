@@ -1,317 +1,716 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".Fai_il_tuo_menu">
+    
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        tools:context=".Fai_il_tuo_menu" >
-
-        <LinearLayout
-            android:id="@+id/primo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/primo_piatto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_first" />
-
-                <ImageView
-                    android:id="@+id/primo_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/primo_piatto"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_first"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-            <include
-                android:id="@+id/primo_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/secondo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/secondo_piatto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_second" />
-
-                <ImageView
-                    android:id="@+id/secondo_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/secondo_piatto"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_second"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            
-            <include
-                android:id="@+id/secondo_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-            
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contorno_caldo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/contorno_caldo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_contorno_caldo" />
-
-                <ImageView
-                    android:id="@+id/contorno_caldo_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/contorno_caldo"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_contorno_caldo"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            
-            <include
-                android:id="@+id/contorno_caldo_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contorno_freddo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/contorno_freddo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_contorno_freddo" />
-
-                <ImageView
-                    android:id="@+id/contorno_freddo_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/contorno_freddo"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_contorno_freddo"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            
-            <include
-                android:id="@+id/contorno_freddo_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/insalatona_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/insalatona"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_insalatona" />
-
-                <ImageView
-                    android:id="@+id/insalatona_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/insalatona"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_insalatona"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            
-            <include
-                android:id="@+id/insalatona_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dessert_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/dessert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_dessert" />
-
-                <ImageView
-                    android:id="@+id/dessert_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/dessert"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_dessert"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            <include
-                android:id="@+id/dessert_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pane_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/pane"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_bread" />
-
-                <ImageView
-                    android:id="@+id/pane_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/pane"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_bread"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            <include
-                android:id="@+id/pane_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pizza_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <CheckBox
-                    android:id="@+id/pizza"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/iDeciso_compose_menu_checkbox_pizza" />
-
-                <ImageView
-                    android:id="@+id/pizza_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/pizza"
-                    android:clickable="true"
-                    android:contentDescription="@string/iDeciso_compose_menu_checkbox_pizza"
-                    android:src="@drawable/arrow_down"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            <include
-                android:id="@+id/pizza_include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                layout="@layout/layout_isoldi" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/confirm_menu_btn"
+            android:id="@+id/button_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentBottom="true">
+            
+        	<View
+        	    android:layout_width="fill_parent"
+        	    android:layout_marginTop="dip"
+				android:layout_marginBottom="5dip"
+				android:layout_marginLeft="5dip"
+				android:layout_marginRight="5dip"
+        	    android:layout_height="1dip"
+        	    android:background="@color/pressed_ifamestyle" />
+        
+            <Button
+            android:id="@+id/confirm_menu_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:focusable="true"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="@string/iDeciso_compose_menu_calcola_btn" />
+   </LinearLayout>
+   
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_above="@+id/button_layout" >
+
+    <LinearLayout
+        android:id="@+id/layoutComponiMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="0dp" >
+
+        <!-- TITOLO BOX PRIMI PIATTI -->
+
+        <TextView
+            android:id="@+id/title_primi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_title_componimenu"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/iDeciso_compose_menu_title_primi"
+            android:textColor="@android:color/white" />
+
+        <!-- BOX PRIMI PIATTI -->
+
+        <LinearLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_bkg_menu"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <!-- PRIMO -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/primo_piatto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onMenuCheckboxClicked"
+                        android:text="@string/iDeciso_compose_menu_checkbox_first" />
+
+                    <ImageView
+                        android:id="@+id/primo_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/iDeciso_compose_menu_checkbox_first"
+                        android:src="@drawable/arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/primo_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_isoldi"
+                    android:visibility="gone" />
+
+                <!-- FINE PRIMO -->
+
+
+                <!-- PASTA STATION -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/pasta_station"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onMenuCheckboxClicked"
+                        android:text="@string/iDeciso_compose_menu_checkbox_pastastation" />
+
+                    <ImageView
+                        android:id="@+id/pastastation_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/iDeciso_compose_menu_checkbox_pastastation"
+                        android:src="@drawable/arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/pastastation_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_isoldi"
+                    android:visibility="gone" />
+                <!-- FINE PASTA STATION -->
+
+                <LinearLayout
+                    android:id="@+id/tranciopizza_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/tranciopizza"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onMenuCheckboxClicked"
+                        android:text="@string/iDeciso_compose_menu_checkbox_tranciopizza" />
+
+                    <ImageView
+                        android:id="@+id/tranciopizza_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/iDeciso_compose_menu_checkbox_tranciopizza"
+                        android:src="@drawable/arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/tranciopizza_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_isoldi"
+                    android:visibility="gone" />
+                <!-- FINE TRANCIOPIZZA -->
+
+            </LinearLayout>
+
+            <!-- seconda riga primi -->
+
+           <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                
+                <!-- PANINO -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/panino"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onMenuCheckboxClicked"
+                        android:text="@string/iDeciso_compose_menu_checkbox_panino" />
+
+                    <ImageView
+                        android:id="@+id/panino_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/iDeciso_compose_menu_checkbox_panino"
+                        android:src="@drawable/arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/panino_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_isoldi"
+                    android:visibility="gone" />
+                <!-- FINE PANINO -->
+                <!-- fine seconda riga primi -->
+
+
+                <!-- PIZZA -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/pizza"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onMenuCheckboxClicked"
+                        android:text="@string/iDeciso_compose_menu_checkbox_pizza" />
+
+                    <ImageView
+                        android:id="@+id/pizza_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/iDeciso_compose_menu_checkbox_pizza"
+                        android:src="@drawable/arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/pizza_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_isoldi"
+                    android:visibility="gone" />
+            </LinearLayout>
+            <!-- FINE PIZZA -->
+
+        </LinearLayout>
+
+        <!-- terza riga primi -->
+
+
+        <!-- TITOLO BOX SECONDI PIATTI E CONTORNI -->
+
+        <TextView
+            android:id="@+id/title_secondicontorni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_title_componimenu"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/iDeciso_compose_menu_title_secondicontorni"
+            android:textColor="@android:color/white" />
+
+        <!-- BOX SECONDI PIATTI -->
+
+        <LinearLayout
+            android:id="@+id/rl2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_bkg_menu"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <!-- prima riga secondi contorni -->
+
+                <LinearLayout
+                    android:id="@+id/secondo_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+
+                        <CheckBox
+                            android:id="@+id/secondo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_second" />
+
+                        <ImageView
+                            android:id="@+id/secondo_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_second"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/secondo_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/piattofreddo_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+
+                        <CheckBox
+                            android:id="@+id/piattofreddo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_piattofreddo" />
+
+                        <ImageView
+                            android:id="@+id/piattofreddo_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_piattofreddo"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+                    <include
+                        android:id="@+id/piattofreddo_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+                
+                
+                
+               <!-- INSALATONA -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/insalatona"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onMenuCheckboxClicked"
+                        android:text="@string/iDeciso_compose_menu_checkbox_insalatona" />
+
+                    <ImageView
+                        android:id="@+id/insalatona_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/iDeciso_compose_menu_checkbox_insalatona"
+                        android:src="@drawable/arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/insalatona_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_isoldi"
+                    android:visibility="gone" />
+                <!-- FINE INSALATONA -->
+                
+
+                <!-- fine prima riga secondi e contorni -->
+            </LinearLayout>
+
+            <!-- seconda riga secondi e contorni -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/contorno1_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+
+                        <CheckBox
+                            android:id="@+id/contorno1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_contorno1" />
+
+                        <ImageView
+                            android:id="@+id/contorno1_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_contorno1"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/contorno1_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contorno2_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/contorno2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_contorno2" />
+
+                        <ImageView
+                            android:id="@+id/contorno2_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_contorno2"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/contorno2_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+            <!-- fine seconda riga secondi e contorni -->
+
+
+            <!-- fine box secondi e contorni -->
+        </LinearLayout>
+
+        <!-- TITOLO BOX ALTRO -->
+
+        <TextView
+            android:id="@+id/title_altro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_title_componimenu"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/iDeciso_compose_menu_title_altro"
+            android:textColor="@android:color/white" />
+
+        <!-- BOX ALTRO -->
+
+        <LinearLayout
+            android:id="@+id/rl3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_bkg_menu"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/dessert_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/dessert"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_dessert" />
+
+                        <ImageView
+                            android:id="@+id/dessert_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_dessert"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/dessert_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/caffe_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+
+                        <CheckBox
+                            android:id="@+id/caffe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_caffe" />
+
+                        <ImageView
+                            android:id="@+id/caffe_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_caffe"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/caffe_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+            <!-- fine prima riga box altro -->
+
+
+            <!-- Inizio seconda riga box altro -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/pane1_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/pane1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_pane1" />
+
+                        <ImageView
+                            android:id="@+id/pane1_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_pane1"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/pane1_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/pane2_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/pane2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_pane2" />
+
+                        <ImageView
+                            android:id="@+id/pane2_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_pane2"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/pane2_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Inizio terza riga box altro -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/acqua_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/acqua"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_acqua" />
+
+                        <ImageView
+                            android:id="@+id/acqua_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_acqua"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+                    <include
+                        android:id="@+id/acqua_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/salsa2_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/salsa2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onMenuCheckboxClicked"
+                            android:text="@string/iDeciso_compose_menu_checkbox_salsa2" />
+
+                        <ImageView
+                            android:id="@+id/salsa2_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/iDeciso_compose_menu_checkbox_salsa2"
+                            android:src="@drawable/arrow_down"
+                            android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/salsa2_include"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_isoldi"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 </ScrollView>
+
+</RelativeLayout>
