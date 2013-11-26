@@ -108,7 +108,7 @@ public class ReviewListAdapter extends ArrayAdapter<Giudizio> {
 
 				Likes likes = new Likes();
 
-				likes.setGiudizio_id(giudizio.getGiudizio_id());
+				likes.setGiudizio_id(giudizio.getId());
 				likes.setUser_id(Long.parseLong(user_id));
 
 				if (handler.non_ha_ancora_fatto_like_o_dislike) {
@@ -179,7 +179,7 @@ public class ReviewListAdapter extends ArrayAdapter<Giudizio> {
 
 				Likes likes = new Likes();
 
-				likes.setGiudizio_id(giudizio.getGiudizio_id());
+				likes.setGiudizio_id(giudizio.getId());
 				likes.setUser_id(Long.parseLong(user_id));
 
 				if (handler.non_ha_ancora_fatto_like_o_dislike) {
@@ -270,7 +270,7 @@ public class ReviewListAdapter extends ArrayAdapter<Giudizio> {
 
 		handler.review_date.setText(dateformat.format(
 				giudizio.getUltimo_aggiornamento()).toString());
-		handler.review_comment.setText(giudizio.getCommento());
+		handler.review_comment.setText(giudizio.getTesto());
 		handler.like_count_view.setText(handler.like_count + "");
 		handler.dislike_count_view.setText(handler.dislike_count + "");
 

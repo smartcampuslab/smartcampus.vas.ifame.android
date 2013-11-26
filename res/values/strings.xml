@@ -50,14 +50,32 @@
     <string name="iDeciso_daily_menu_alternatives_fragment">menuGiornoAlternativeFragment</string>
     <string name="iDeciso_tipologie_menu_credito_sufficiente">Il tuo credito è sufficiente: €</string>
     <string name="iDeciso_tipologie_menu_credito_insufficiente">Credito insufficiente ad acquistare il menù</string>
-    <string name="iDeciso_compose_menu_checkbox_first">Primo Piatto</string>
+    
+    <string name="error_compose_menu">Errore! Devi prima comporre il tuo menù</string>
+    <string name="iDeciso_compose_menu_checkbox_first">Primo</string>
+    <string name="iDeciso_compose_menu_checkbox_pastastation">Pasta station</string>
+    <string name="iDeciso_compose_menu_checkbox_panino">Panino</string>
+    <string name="iDeciso_compose_menu_checkbox_tranciopizza">Trancio maxi pizza</string>
+    <string name="iDeciso_compose_menu_checkbox_pizza">Pizza</string>
+    <string name="iDeciso_compose_menu_title_primi">Primi piatti</string>
+    <string name="iDeciso_compose_menu_title_secondicontorni">Secondi / contorni</string>
+    <string name="iDeciso_compose_menu_checkbox_piattofreddo">Piatto freddo</string>
+    <string name="iDeciso_compose_menu_checkbox_caffe">Caffè</string>
+    <string name="iDeciso_compose_menu_checkbox_pane2">2 pani</string>
+    <string name="iDeciso_compose_menu_title_altro">Altro</string>
+    
+    
     <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno A</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Contorno B</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno1">1 contorno</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno2">2 contorni</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_bread">PaninoMenù o Trancio di pizza</string>
+    <string name="iDeciso_compose_menu_checkbox_pane1">1 pane</string>
+    <string name="iDeciso_compose_menu_checkbox_acqua">Acqua (50cl)</string>
+    <string name="iDeciso_compose_menu_checkbox_salsa2">2 salse</string>
+    
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
-    <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona o Piatto Freddo</string>
+    <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
     <string name="iDeciso_alternative_btn">Alternative</string>
     <string name="iDeciso_menu_del_giorno_primi">Primi</string>
     <string name="iDeciso_menu_del_giorno_secondi">Secondi</string>
@@ -68,7 +86,6 @@
     <string name="iDeciso_caffe_o_2_salse">Caffè o 2 salse</string>
     <string name="iDeciso_alternative_contorni">CONTORNI CALDI</string>
     <string name="iDeciso_alternative_menu">Alternative al menù odierno</string>
-    <string name="iDeciso_compose_menu_checkbox_pizza">PizzaMenù</string>
     <string name="iDeciso_2contorni">2 Contorni</string>
     <string name="iDeciso_pane">Pane</string>
     <string name="iDeciso_acqua">Acqua</string>

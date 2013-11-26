@@ -17,8 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eu.trentorise.smartcampus.ifame"
      android:sharedUserId="eu.trentorise.smartcampus.shared"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="0.9.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -41,10 +41,9 @@
         
         android:logo="@drawable/ifame_logo"
         android:theme="@style/Theme.Ifamestyle" >
-         <meta-data
-            android:name="SERVER_URL"
-            android:value="https://vas-dev.smartcampuslab.it/core.communicator" />
-         
+        <meta-data
+            android:name="eu.trentorise.smartcampus.account.AUTH_URL"
+            android:value="https://ac.smartcampuslab.it/aac" />
         <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_TYPE"
             android:value="eu.trentorise.smartcampus.account" />
@@ -57,33 +56,17 @@
         <meta-data
             android:name="eu.trentorise.smartcampus.account.ACCOUNT_BASED_ACCESS"
             android:value="true" />
-<meta-data
-            android:name="eu.trentorise.smartcampus.account.CLIENT_ID"
-            android:value="1428b6fc-6e9c-4fb5-989e-4c4016b8c738" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.CLIENT_SECRET"
-            android:value="a1fb244d-0da3-43b7-af2e-4b0830294f8e" />
         
-        <meta-data
-            android:name="SHARED_PACKAGE"
-            android:value="eu.trentorise.smartcampus.ifame" />
-<!--         <meta-data
-            android:name="ACCOUNT_TYPE"
-            android:value="eu.trentorise.smartcampus.ifame" />
-        <meta-data
-            android:name="ACCOUNT_NAME"
-            android:value="SmartCampus Android Template" /> -->
-
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFameMain"
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity" 
             android:launchMode="singleTask">
-            <intent-filter>
+<!--               <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>   -->
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.START" />
 
@@ -103,7 +86,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="eu.trentorise.smartcampus.ac.embedded.EmbeddedAuthActivity" />
+        <activity android:name="eu.trentorise.smartcampus.ac.embedded.EmbeddedAuthActivity" />   
 
         <service
             android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticationService"
@@ -161,7 +144,7 @@
             android:label="@string/iSoldi_title_activity" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu"
+            android:name="eu.trentorise.smartcampus.ifame.activity.ComponiMenu"
             android:configChanges="orientation|screenSize"
             android:label="@string/iDeciso_home_compose_menu" >
         </activity>
