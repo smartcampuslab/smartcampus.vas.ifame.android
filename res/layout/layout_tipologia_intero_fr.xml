@@ -4,10 +4,18 @@
     android:layout_height="match_parent"
     android:id="@+id/iDeciso_tipologia_intero_scrollview" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        tools:context=".TipologiaInero" >
+    
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".TipologiaIntero" >
+        android:padding="5dp" >
 
         <ImageView
             android:id="@+id/tipologia_intero_image"
@@ -36,62 +44,68 @@
             android:gravity="center"
             android:textSize="17sp"/>
         
+        </RelativeLayout>
+                
+		<TextView
+            android:id="@+id/tipologia_intero1_titolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />        
+        
+		<RelativeLayout
+            android:id="@+id/container_intero1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_bkg_menu" >
+		
         <TextView
             android:id="@+id/tipologia_intero_primo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_buyable"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="5dp"
             android:textSize="17sp" />
         
         <TextView
             android:id="@+id/tipologia_intero_secondo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tipologia_intero_buyable"
             android:layout_toRightOf="@+id/tipologia_intero_primo"
-            android:layout_marginTop="5dp"
             android:textSize="17sp" />
         
 
         <TextView
-            android:id="@+id/tipologia_intero_contorno_a"
+            android:id="@+id/tipologia_intero_contorno2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_primo"
+            android:layout_below="@+id/tipologia_intero_secondo"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
         
-        <TextView
-            android:id="@+id/tipologia_intero_contorno_b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_contorno_a"
-            android:layout_marginLeft="20dp"
-            android:textSize="15sp" />
-
 
         <TextView
             android:id="@+id/tipologia_intero_dessert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tipologia_intero_contorno_b"
+            android:layout_below="@+id/tipologia_intero_contorno2"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
         
         <TextView
-            android:id="@+id/tipologia_intero_pane"
+            android:id="@+id/tipologia_intero_pane1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tipologia_intero_dessert"
             android:layout_marginLeft="20dp"
             android:textSize="15sp" />
-    </RelativeLayout>
+        
+        </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

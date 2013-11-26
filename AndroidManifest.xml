@@ -62,11 +62,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity" 
             android:launchMode="singleTask">
-<!--             <intent-filter>
+<!--               <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>  -->
+            </intent-filter>   -->
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.START" />
 
@@ -144,7 +144,7 @@
             android:label="@string/iSoldi_title_activity" >
         </activity>
         <activity
-            android:name="eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu"
+            android:name="eu.trentorise.smartcampus.ifame.activity.ComponiMenu"
             android:configChanges="orientation|screenSize"
             android:label="@string/iDeciso_home_compose_menu" >
         </activity>
