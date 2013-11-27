@@ -4,22 +4,30 @@ package eu.trentorise.smartcampus.ifame.tabs;
  * 
  * fragment per il menu intero
  */
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
 import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
 import eu.trentorise.smartcampus.ifame.activity.ISoldi;
+import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
 public class TipologiaInteroFragment extends SherlockFragment {
 
@@ -27,6 +35,23 @@ public class TipologiaInteroFragment extends SherlockFragment {
 	boolean isC1Avail;
 	boolean isC2Avail;
 	boolean isDessertAvail;
+	
+	public static final String PRIMO_TEXT = "primo";
+	public static final String PASTA_STATION_TEXT = "pasta_station";
+	public static final String INSALATONA_TEXT = "insalatona";
+	public static final String PANINO_TEXT = "panino";
+	public static final String TRANCIO_PIZZA_TEXT = "trancio_pizza";
+	public static final String PIZZA_TEXT = "pizza";
+	public static final String PIATTO_FREDDO_TEXT = "piatto_freddo";
+	public static final String SECONDO_TEXT = "secondo";
+	public static final String CONTORNO1_TEXT = "contorno1";
+	public static final String CONTORNO2_TEXT = "contorno2";
+	public static final String DESSERT_TEXT = "dessert";
+	public static final String CAFFE_TEXT = "caffe";
+	public static final String ACQUA_TEXT = "acqua";
+	public static final String SALSA2_TEXT = "salsa2";
+	public static final String PANE1_TEXT = "pane1";
+	public static final String PANE2_TEXT = "pane2";
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -47,6 +72,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				false);
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public void onResume() {
 
@@ -55,6 +81,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_buyable);
+	
 
 		if (isCalled) {
 
@@ -75,113 +102,159 @@ public class TipologiaInteroFragment extends SherlockFragment {
 					buyable.setTextColor(Color.parseColor("#CF323C"));
 				}
 
-			}
+			}else
+				
+				buyable.setVisibility(View.GONE);
+		} else {
 
-		} else
 			buyable.setVisibility(View.GONE);
-
-		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
-
-		TextView primo = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_primo);
-		primo.setText("- "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_first) + ",");
-		primo.setTypeface(null, Typeface.BOLD);
-
-		TextView secondo = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_secondo);
-		secondo.setText(" "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_second));
-		secondo.setTypeface(null, Typeface.BOLD);
-
-		TextView contornoA = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_contorno_a);
-		TextView contornoB = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_contorno_b);
-
-		contornoA
-				.setText("+ "
-						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo));
-		contornoB
-				.setText("+ "
-						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_freddo));
-
-		TextView dessert = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_dessert);
-		dessert.setText("+ "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
-
-		TextView pane = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_pane);
-		pane.setText("+ " + getString(R.string.iDeciso_pane));
-
-		if (isCalled && selected_menu.equals("Intero")) {
-			isC1Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_1_AVAILABLE,
-					false);
-			isC2Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_2_AVAILABLE,
-					false);
-			isDessertAvail = i.getBooleanExtra(
-					Fai_il_tuo_menu.DESSERT_AVAILABLE, false);
-			pane.setTextColor(Color.parseColor("#08D126"));
-
+			
+			TextView intero1Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero1_titolo);
+			intero1Title.setText(chosenMenu.Intero.toString());
+			intero1Title.setPadding(5, 2, 5, 2);
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				intero1Title.setBackground(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+				else
+					intero1Title.setBackgroundDrawable(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+			
+			
+			TextView primot = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_primo);
+			primot.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_first) + ",");
+			primot.setTypeface(null, Typeface.BOLD);
+			
+			TextView secondot = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_secondo);
+			secondot.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_second) + ",");
+			secondot.setTypeface(null, Typeface.BOLD);
+			
+			TextView contorno2t = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_contorno2);
+			contorno2t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_contorno2) + ",");
+			contorno2t.setTypeface(null, Typeface.BOLD);
+			
+			TextView dessertt = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_dessert);
+			dessertt.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_dessert) + ",");
+			dessertt.setTypeface(null, Typeface.BOLD);
+			
+			TextView pane1t = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_pane1);
+			pane1t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_pane1));
+			pane1t.setTypeface(null, Typeface.BOLD);
+			
+			super.onResume();
+			
+			return;
+		
 		}
 
-		boolean isPrimoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PRIMO,
-				false);
-		boolean isSecondoSelected = i.getBooleanExtra(
-				Fai_il_tuo_menu.IS_SECONDO, false);
-		boolean isC1Selected = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_1,
-				false);
-		boolean isC2Selected = i.getBooleanExtra(Fai_il_tuo_menu.IS_CONTORNO_2,
-				false);
-		boolean isDessertSelected = i.getBooleanExtra(
-				Fai_il_tuo_menu.IS_DESSERT, false);
-		boolean isInsalatonaSelected = i.getBooleanExtra(
-				Fai_il_tuo_menu.IS_INSALATONA, false);
-		boolean isPaninoSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PANINO,
-				false);
-		boolean isPizzaSelected = i.getBooleanExtra(Fai_il_tuo_menu.IS_PIZZA,
-				false);
-
-		/*
-		 * 
-		 * mi assicuro di non trovarmi nei tre casi dove non � possibile
-		 * acquistare l'intero
-		 */
-		if (isCalled && !isPaninoSelected && !isInsalatonaSelected
-				&& !isPizzaSelected) {
-
-			pane.setTextColor(Color.parseColor("#08D126"));
-
-			if (!isPrimoSelected)
+		ArrayList<String> selected_menu = i.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
+		
+		if(selected_menu.contains(chosenMenu.Intero.toString())){
+			
+			HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) i.getSerializableExtra(ComponiMenu.MENU_CHECKED_TRUE);
+			
+			TextView intero1Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero1_titolo);
+			intero1Title.setText(chosenMenu.Intero.toString());
+			intero1Title.setPadding(5, 2, 5, 2);
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				intero1Title.setBackground(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+				else
+					intero1Title.setBackgroundDrawable(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+			
+			/////////////////////////////////////
+			////////////////////////////////////
+			////////////////////////////////////
+			///////////////////////////////////
+			///////////////////////////
+			if(mapCheckedItems.containsKey(PRIMO_TEXT)){
+				TextView primo = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_primo);
+				primo.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_first) + ",");
+				primo.setTypeface(null, Typeface.BOLD);
+			}else{
+				TextView primo = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_primo);
+				primo.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_first) + ",");
+				primo.setTypeface(null, Typeface.BOLD);
 				primo.setTextColor(Color.parseColor("#08D126"));
-			if (!isSecondoSelected)
-				secondo.setTextColor(Color.parseColor("#08D126"));
-			if (!isC1Selected)
-				contornoA.setTextColor(Color.parseColor("#08D126"));
-			if (!isC2Selected)
-				contornoB.setTextColor(Color.parseColor("#08D126"));
-			if (!isDessertSelected) {
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////
+			}
+			
+			
+			if(mapCheckedItems.containsKey(SECONDO_TEXT)){
+				TextView secondo = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_secondo);
+				secondo.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_second) + ",");
+				secondo.setTypeface(null, Typeface.BOLD);
+			}else{
+				TextView primo = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_secondo);
+				primo.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_second) + ",");
+				primo.setTypeface(null, Typeface.BOLD);
+				primo.setTextColor(Color.parseColor("#08D126"));
+			}
+			
+			if(mapCheckedItems.containsKey(CONTORNO2_TEXT)){
+				TextView contorno2 = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_contorno2);
+				contorno2.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno2) + ",");
+				contorno2.setTypeface(null, Typeface.BOLD);
+			}else{
+				TextView contorno2 = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_contorno2);
+				contorno2.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno2) + ",");
+				contorno2.setTypeface(null, Typeface.BOLD);
+				contorno2.setTextColor(Color.parseColor("#08D126"));
+			}
+			
+			if(mapCheckedItems.containsKey(DESSERT_TEXT)){
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_dessert);
+				dessert.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert) + ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+			}else{
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_dessert);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert) + ",");
+				dessert.setTypeface(null, Typeface.BOLD);
 				dessert.setTextColor(Color.parseColor("#08D126"));
 			}
-
-		}
-
-		/*
-		 * 
-		 * qui significa che arriviamo da un'altra tab e avamo selezionato uno
-		 * dei tre piatti che non sono matchabili con il menu intero
-		 */
-		if (isCalled
-				&& (isPaninoSelected || isInsalatonaSelected || isPizzaSelected)) {
-
-			// coloro di grigio
-			primo.setTextColor(Color.parseColor("#C4C4C4"));
-			contornoA.setTextColor(Color.parseColor("#C4C4C4"));
-			contornoB.setTextColor(Color.parseColor("#C4C4C4"));
-			secondo.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert.setTextColor(Color.parseColor("#C4C4C4"));
-			pane.setTextColor(Color.parseColor("#C4C4C4"));
+			
+			if(mapCheckedItems.containsKey(PANE1_TEXT)){
+				TextView pane1 = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_pane1);
+				pane1.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pane1));
+				pane1.setTypeface(null, Typeface.BOLD);
+			}else{
+				TextView pane1 = (TextView) theContainer
+						.findViewById(R.id.tipologia_intero_pane1);
+				pane1.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pane1));
+				pane1.setTypeface(null, Typeface.BOLD);
+				pane1.setTextColor(Color.parseColor("#08D126"));
+			}
+			
+		}else{
+			RelativeLayout containerIntero = (RelativeLayout)theContainer.findViewById(R.id.container_intero1);
+			containerIntero.setVisibility(View.GONE);
 		}
 
 		super.onResume();

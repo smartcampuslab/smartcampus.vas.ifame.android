@@ -1,5 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -15,6 +18,10 @@ import eu.trentorise.smartcampus.ifame.tabs.TipologiaRidottoFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TipologiaSnackFragment;
 
 public class Tipologie_menu_fr extends SherlockFragmentActivity {
+
+	public enum chosenMenu {
+		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Snack1, Snack2, Snack3, Snack4
+	};
 
 	@Override
 	protected void onResume() {
@@ -45,11 +52,17 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		String selected_menu = getIntent().getStringExtra(
 				Fai_il_tuo_menu.SELECTED_MENU);
 
+		ArrayList<String> menu_compatibles = getIntent()
+				.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
+		
+		HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) getIntent().getSerializableExtra(ComponiMenu.MENU_CHECKED_TRUE);
+
 		// getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// getSupportActionBar().setDisplayShowTitleEnabled(true);
 		setContentView(R.layout.empty_layout);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+		// intero tab
 		Tab interoTab = getSupportActionBar().newTab();
 		interoTab.setText(R.string.iDeciso_menu_types_intero);
 		interoTab.setTabListener(new TabListener<TipologiaInteroFragment>(this,
@@ -57,6 +70,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 				TipologiaInteroFragment.class, android.R.id.content));
 		getSupportActionBar().addTab(interoTab);
 
+		// ridotto tab
 		Tab ridottoTab = getSupportActionBar().newTab();
 		ridottoTab.setTabListener(new TabListener<TipologiaRidottoFragment>(
 				this,
@@ -65,6 +79,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		ridottoTab.setText(R.string.iDeciso_menu_types_ridotto);
 		getSupportActionBar().addTab(ridottoTab);
 
+		// snack tab
 		Tab snackTab = getSupportActionBar().newTab();
 		snackTab.setTabListener(new TabListener<TipologiaSnackFragment>(this,
 				getString(R.string.iDeciso_tipologie_menu_fragment_snack),
@@ -72,34 +87,38 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 
 		snackTab.setText(R.string.iDeciso_menu_types_snack);
 		getSupportActionBar().addTab(snackTab);
-
-		if (/* from_componi && */selected_menu != null) {
-
-			if (selected_menu
-					.equals(getString(R.string.iDeciso_menu_types_intero)))
-				interoTab.select();
-
-			else if (selected_menu.equals("Ridotto1")
-					|| selected_menu.equals("Ridotto2")
-					|| selected_menu.equals("Ridotto3")
-					|| selected_menu.equals("Ridotto4")
-					|| selected_menu.equals("Ridotto12")
-					|| selected_menu.equals("Ridotto1234"))
-				ridottoTab.select();
-
-			else if (selected_menu.equals("Snack1")
-					|| selected_menu.equals("Snack2")
-					|| selected_menu.equals("Snack3")
-					|| selected_menu.equals("Snack4")
-					|| selected_menu.equals("Snack12"))
-
-				snackTab.select();
-		}
-
+		
 		if (getSupportActionBar().getNavigationMode() != ActionBar.NAVIGATION_MODE_TABS) {
 			getSupportActionBar().setNavigationMode(
 					ActionBar.NAVIGATION_MODE_TABS);
 		}
+
+		if (menu_compatibles != null) {
+
+			String lastMenuCompatible = menu_compatibles.get(menu_compatibles.size()-1);
+			
+				if (lastMenuCompatible.equals(chosenMenu.Snack1.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Snack2.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Snack3.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Snack4.toString())){
+					
+					snackTab.select();
+					return;
+				}else if (lastMenuCompatible.equals(chosenMenu.Ridotto1.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Ridotto2.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Ridotto3.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Ridotto4.toString())){
+					ridottoTab.select();
+					return;
+				}else if (lastMenuCompatible.equals(chosenMenu.Intero.toString())){
+
+					interoTab.select();
+					return;
+				}
+			
+		}
+
+
 
 	}
 }

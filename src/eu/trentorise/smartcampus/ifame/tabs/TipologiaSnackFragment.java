@@ -1,5 +1,9 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,18 +13,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
 import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
 import eu.trentorise.smartcampus.ifame.activity.ISoldi;
+import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
 /*
  * 
  * fragment che mostra la tipologia snack, si comporta diversamente a seconda che sia chiamato da "fai il tuo menu" rispetto che da "iDeciso"
  */
+@SuppressLint("NewApi")
 public class TipologiaSnackFragment extends SherlockFragment {
 
 	ViewGroup theContainer;
@@ -52,6 +60,23 @@ public class TipologiaSnackFragment extends SherlockFragment {
 	boolean isPizzaAvail;
 	boolean isPaninoAvail;
 
+	public static final String PRIMO_TEXT = "primo";
+	public static final String PASTA_STATION_TEXT = "pasta_station";
+	public static final String INSALATONA_TEXT = "insalatona";
+	public static final String PANINO_TEXT = "panino";
+	public static final String TRANCIO_PIZZA_TEXT = "trancio_pizza";
+	public static final String PIZZA_TEXT = "pizza";
+	public static final String PIATTO_FREDDO_TEXT = "piatto_freddo";
+	public static final String SECONDO_TEXT = "secondo";
+	public static final String CONTORNO1_TEXT = "contorno1";
+	public static final String CONTORNO2_TEXT = "contorno2";
+	public static final String DESSERT_TEXT = "dessert";
+	public static final String CAFFE_TEXT = "caffe";
+	public static final String ACQUA_TEXT = "acqua";
+	public static final String SALSA2_TEXT = "salsa2";
+	public static final String PANE1_TEXT = "pane1";
+	public static final String PANE2_TEXT = "pane2";
+
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
@@ -81,8 +106,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 		/*
 		 * 
-		 * se � stata chiamata da "componi menu" allora prendiamo l'importo dei
-		 * soldi presenti nella tessera, e modifichiamo la textview di
+		 * se � stata chiamata da "componi menu" allora prendiamo l'importo
+		 * dei soldi presenti nella tessera, e modifichiamo la textview di
 		 * conseguenza
 		 */
 		if (isCalled) {
@@ -106,256 +131,632 @@ public class TipologiaSnackFragment extends SherlockFragment {
 					/* +"\nDevi ricaricare almeno: "+difference */
 				}
 
-			}
-		} else
+			} else
+
+				buyable.setVisibility(View.GONE);
+		} else {
 			buyable.setVisibility(View.GONE);
 
-		String selected_menu = i.getStringExtra(Fai_il_tuo_menu.SELECTED_MENU);
+			// snack 1
 
-		setEverythingUp();
+			TextView snack1Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack1_titolo);
+			snack1Title.setText(chosenMenu.Snack1.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack1Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack1Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
 
-		/*
-		 * 
-		 * se arriviamo da componi, allora in base al menu corrispondente alla
-		 * scelta dell'utente, e hai piatti ancora acquistabili che recuperiamo
-		 * dall'intent, coloriamo di conseguenza le scritte (verdi le
-		 * acquistabili, nere le selezionabili, grigio le altre
-		 */
-		if (isCalled) {
+			TextView paninot = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_panino);
+			paninot.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_panino)
+					+ ",");
+			paninot.setTypeface(null, Typeface.BOLD);
 
-			if (selected_menu.equals("Snack12")) {
+			TextView dessert1t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_dessert1);
+			dessert1t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+					+ ",");
+			dessert1t.setTypeface(null, Typeface.BOLD);
 
-				coloraVerde(1);
-				coloraVerde(2);
+			TextView acqua1t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_acqua1);
+			acqua1t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+					+ ",");
+			acqua1t.setTypeface(null, Typeface.BOLD);
 
-				coloraGrigio(3);
-				coloraGrigio(4);
+			TextView main = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_caffe1_salsa21);
+			main.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+					+ ",");
+			main.setTypeface(null, Typeface.BOLD);
 
-			}
+			// snack 2
 
-			else if (selected_menu.equals("Snack1")) {
+			TextView snack2Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack2_titolo);
+			snack2Title.setText(chosenMenu.Snack2.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack2Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack2Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
 
-				coloraVerde(1);
+			TextView maint = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_primo1_pastastation1);
+			maint.setText("+ "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_first)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_pastastation)
+					+ ",");
+			maint.setTypeface(null, Typeface.BOLD);
 
-				coloraGrigio(2);
-				coloraGrigio(3);
-				coloraGrigio(4);
+			TextView maint2 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_contorno11_dessert2);
+			maint2.setText("+ "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+					+ ",");
+			maint2.setTypeface(null, Typeface.BOLD);
 
-			}
+			TextView pane21t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_pane21);
+			pane21t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_pane2)
+					+ ",");
+			pane21t.setTypeface(null, Typeface.BOLD);
 
-			else if (selected_menu.equals("Snack2")) {
+			TextView maint3 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_caffe2_salsa22);
+			maint3.setText("+ "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+					+ ",");
+			maint3.setTypeface(null, Typeface.BOLD);
 
-				coloraVerde(2);
+			// snack 3
 
-				coloraGrigio(1);
-				coloraGrigio(3);
-				coloraGrigio(4);
-			}
+			TextView snack3Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack3_titolo);
+			snack3Title.setText(chosenMenu.Snack3.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack3Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack3Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
 
-			else if (selected_menu.equals("Snack3")) {
+			TextView maint4 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_secondo1_piattofreddo1);
+			maint4.setText("+ "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_second)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_piattofreddo)
+					+ ",");
+			maint4.setTypeface(null, Typeface.BOLD);
 
-				coloraVerde(3);
+			TextView contorno12t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_contorno12);
+			contorno12t
+					.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+							+ ",");
+			contorno12t.setTypeface(null, Typeface.BOLD);
 
-				coloraGrigio(2);
-				coloraGrigio(1);
-				coloraGrigio(4);
+			TextView pane11t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_pane11);
+			pane11t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_pane1)
+					+ ",");
+			pane11t.setTypeface(null, Typeface.BOLD);
 
-			}
+			TextView maint5 = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_caffe3_salsa23);
+			maint5.setText("+ "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+					+ ",");
+			maint5.setTypeface(null, Typeface.BOLD);
 
-			else if (selected_menu.equals("Snack4")) {
-				coloraVerde(4);
+			// snack 4
+			TextView snack4Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack4_titolo);
+			snack4Title.setText(chosenMenu.Snack4.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack4Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack4Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
 
-				coloraGrigio(2);
-				coloraGrigio(3);
-				coloraGrigio(1);
-			} else if ((selected_menu.equals("Intero")
-					|| selected_menu.equals("Ridotto1234")
-					|| selected_menu.equals("Ridotto12")
-					|| selected_menu.equals("Ridotto1")
-					|| selected_menu.equals("Ridotto2")
-					|| selected_menu.equals("Ridotto3") || selected_menu
-						.equals("Ridotto4"))) {
-				coloraGrigio(1);
-				coloraGrigio(2);
-				coloraGrigio(3);
-				coloraGrigio(4);
-			}
+			TextView tranciot = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_tranciopizza1);
+			tranciot.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_tranciopizza)
+					+ ",");
+			tranciot.setTypeface(null, Typeface.BOLD);
+
+			TextView dessertt = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_dessert3);
+			dessertt.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+					+ ",");
+			dessertt.setTypeface(null, Typeface.BOLD);
+
+			TextView acqua2t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_acqua2);
+			acqua2t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+					+ ",");
+			acqua2t.setTypeface(null, Typeface.BOLD);
+
+			TextView main6t = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack_caffe4_salsa24);
+			main6t.setText("+ "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+					+ ",");
+			main6t.setTypeface(null, Typeface.BOLD);
+
+			super.onResume();
+
+			return;
 		}
+
+		ArrayList<String> selected_menu = i
+				.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
+		HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) i
+				.getSerializableExtra(ComponiMenu.MENU_CHECKED_TRUE);
+
+		// SNACK 1
+		if (selected_menu.contains(chosenMenu.Snack1.toString())) {
+
+			TextView snack1Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack1_titolo);
+			snack1Title.setText(chosenMenu.Snack1.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack1Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack1Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+
+			if (mapCheckedItems.containsKey(PANINO_TEXT)) {
+				TextView panino = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_panino);
+				panino.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_panino)
+						+ ",");
+				panino.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView panino = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_panino);
+				panino.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_panino)
+						+ ",");
+				panino.setTypeface(null, Typeface.BOLD);
+				panino.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(DESSERT_TEXT)) {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_dessert1);
+				dessert.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_dessert1);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(ACQUA_TEXT)) {
+				TextView acqua = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_acqua1);
+				acqua.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+						+ ",");
+				acqua.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView acqua = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_acqua1);
+				acqua.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+						+ ",");
+				acqua.setTypeface(null, Typeface.BOLD);
+				acqua.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(CAFFE_TEXT)
+					|| mapCheckedItems.containsKey(SALSA2_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe1_salsa21);
+
+				if ((mapCheckedItems.containsKey(CAFFE_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(SALSA2_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe1_salsa21);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+		} else {
+			RelativeLayout containerSnack1 = (RelativeLayout) theContainer
+					.findViewById(R.id.container_snack1);
+			containerSnack1.setVisibility(View.GONE);
+		}
+
+		// SNACK 2
+		if (selected_menu.contains(chosenMenu.Snack2.toString())) {
+
+			TextView snack2Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack2_titolo);
+			snack2Title.setText(chosenMenu.Snack2.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack2Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack2Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+
+			if (mapCheckedItems.containsKey(PRIMO_TEXT)
+					|| mapCheckedItems.containsKey(PASTA_STATION_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_primo1_pastastation1);
+
+				if ((mapCheckedItems.containsKey(PRIMO_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_first)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(PASTA_STATION_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_pastastation)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_primo1_pastastation1);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_first)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pastastation)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(CONTORNO1_TEXT)
+					|| mapCheckedItems.containsKey(DESSERT_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_contorno11_dessert2);
+
+				if ((mapCheckedItems.containsKey(CONTORNO1_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(DESSERT_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_contorno11_dessert2);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(PANE2_TEXT)) {
+				TextView pane2 = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_pane21);
+				pane2.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pane2)
+						+ ",");
+				pane2.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_pane21);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pane2)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(CAFFE_TEXT)
+					|| mapCheckedItems.containsKey(SALSA2_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe2_salsa22);
+
+				if ((mapCheckedItems.containsKey(CAFFE_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(SALSA2_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe2_salsa22);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+		} else {
+			RelativeLayout containerSnack2 = (RelativeLayout) theContainer
+					.findViewById(R.id.container_snack2);
+			containerSnack2.setVisibility(View.GONE);
+		}
+
+		// SNACK 3
+		if (selected_menu.contains(chosenMenu.Snack3.toString())) {
+
+			TextView snack3Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack3_titolo);
+			snack3Title.setText(chosenMenu.Snack3.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack3Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack3Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+
+			if (mapCheckedItems.containsKey(SECONDO_TEXT)
+					|| mapCheckedItems.containsKey(PIATTO_FREDDO_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_secondo1_piattofreddo1);
+
+				if ((mapCheckedItems.containsKey(SECONDO_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_second)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(PIATTO_FREDDO_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_piattofreddo)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_secondo1_piattofreddo1);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_second)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_piattofreddo)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(CONTORNO1_TEXT)) {
+				TextView pane2 = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_contorno12);
+				pane2.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+						+ ",");
+				pane2.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_contorno12);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(PANE1_TEXT)) {
+				TextView pane2 = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_pane11);
+				pane2.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pane1)
+						+ ",");
+				pane2.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_pane11);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_pane1)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(CAFFE_TEXT)
+					|| mapCheckedItems.containsKey(SALSA2_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe3_salsa23);
+
+				if ((mapCheckedItems.containsKey(CAFFE_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(SALSA2_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe3_salsa23);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+		} else {
+			RelativeLayout containerSnack3 = (RelativeLayout) theContainer
+					.findViewById(R.id.container_snack3);
+			containerSnack3.setVisibility(View.GONE);
+		}
+
+		// SNACK 4
+		if (selected_menu.contains(chosenMenu.Snack3.toString())) {
+
+			TextView snack4Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_snack4_titolo);
+			snack4Title.setText(chosenMenu.Snack4.toString());
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				snack4Title.setBackground(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+			else
+				snack4Title.setBackgroundDrawable(theContainer.getResources()
+						.getDrawable(R.drawable.shape_title_componimenu));
+
+			if (mapCheckedItems.containsKey(TRANCIO_PIZZA_TEXT)) {
+				TextView trancio = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_tranciopizza1);
+				trancio.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_tranciopizza)
+						+ ",");
+				trancio.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView trancio = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_tranciopizza1);
+				trancio.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_tranciopizza)
+						+ ",");
+				trancio.setTypeface(null, Typeface.BOLD);
+				trancio.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(DESSERT_TEXT)) {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_dessert3);
+				dessert.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_dessert3);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(ACQUA_TEXT)) {
+				TextView pane2 = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_acqua2);
+				pane2.setText("- "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+						+ ",");
+				pane2.setTypeface(null, Typeface.BOLD);
+			} else {
+				TextView dessert = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_acqua2);
+				dessert.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+						+ ",");
+				dessert.setTypeface(null, Typeface.BOLD);
+				dessert.setTextColor(Color.parseColor("#08D126"));
+			}
+
+			if (mapCheckedItems.containsKey(CAFFE_TEXT)
+					|| mapCheckedItems.containsKey(SALSA2_TEXT)) {
+
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe4_salsa24);
+
+				if ((mapCheckedItems.containsKey(CAFFE_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				} else if ((mapCheckedItems.containsKey(SALSA2_TEXT))) {
+					main.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+							+ ",");
+					main.setTypeface(null, Typeface.BOLD);
+				}
+
+			} else {
+				TextView main = (TextView) theContainer
+						.findViewById(R.id.tipologia_snack_caffe4_salsa24);
+				main.setText("+ "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+						+ " / "
+						+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
+						+ ",");
+				main.setTypeface(null, Typeface.BOLD);
+				main.setTextColor(Color.parseColor("#08D126"));
+			}
+		} else {
+			RelativeLayout containerSnack4 = (RelativeLayout) theContainer
+					.findViewById(R.id.container_snack4);
+			containerSnack4.setVisibility(View.GONE);
+		}
+
 		super.onResume();
-
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-	}
-
-	private void coloraVerde(int menuNumber) {
-
-		if (menuNumber == 1) {
-			pane1.setTextColor(Color.parseColor("#08D126"));
-
-			if (isPrimoAvail)
-				primo1.setTextColor(Color.parseColor("#08D126"));
-
-			if (isC1Avail || isC2Avail)
-				contorno1.setTextColor(Color.parseColor("#08D126"));
-
-			if (isDessertAvail)
-				dessert1.setTextColor(Color.parseColor("#08D126"));
-
-			caffe_salse1.setTextColor(Color.parseColor("#08D126"));
-
-		} else if (menuNumber == 2) {
-			pane2.setTextColor(Color.parseColor("#08D126"));
-			if (isSecondoAvail)
-				secondo2.setTextColor(Color.parseColor("#08D126"));
-			if (isC1Avail || isC2Avail)
-				contorno2.setTextColor(Color.parseColor("#08D126"));
-			if (isDessertAvail)
-				dessert2.setTextColor(Color.parseColor("#08D126"));
-			caffe_salse2.setTextColor(Color.parseColor("#08D126"));
-		} else if (menuNumber == 3) {
-			dessert3.setTextColor(Color.parseColor("#08D126"));
-			caffe_salse3.setTextColor(Color.parseColor("#08D126"));
-			acqua3.setTextColor(Color.parseColor("#08D126"));
-		} else if (menuNumber == 4) {
-			pane4.setTextColor(Color.parseColor("#08D126"));
-		}
-
-	}
-
-	private void coloraGrigio(int menuNumber) {
-
-		if (menuNumber == 1) {
-			primo1.setTextColor(Color.parseColor("#C4C4C4"));
-			contorno1.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert1.setTextColor(Color.parseColor("#C4C4C4"));
-			pane1.setTextColor(Color.parseColor("#C4C4C4"));
-			o1.setTextColor(Color.parseColor("#C4C4C4"));
-			caffe_salse1.setTextColor(Color.parseColor("#C4C4C4"));
-		} else if (menuNumber == 2) {
-			o2.setTextColor(Color.parseColor("#C4C4C4"));
-			secondo2.setTextColor(Color.parseColor("#C4C4C4"));
-			contorno2.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert2.setTextColor(Color.parseColor("#C4C4C4"));
-			pane2.setTextColor(Color.parseColor("#C4C4C4"));
-			caffe_salse2.setTextColor(Color.parseColor("#C4C4C4"));
-		} else if (menuNumber == 3) {
-			panino_o_pizza3.setTextColor(Color.parseColor("#C4C4C4"));
-			dessert3.setTextColor(Color.parseColor("#C4C4C4"));
-			acqua3.setTextColor(Color.parseColor("#C4C4C4"));
-			caffe_salse3.setTextColor(Color.parseColor("#C4C4C4"));
-		} else if (menuNumber == 4) {
-			insalatona4.setTextColor(Color.parseColor("#C4C4C4"));
-			pane4.setTextColor(Color.parseColor("#C4C4C4"));
-		}
-	}
-
-	/*
-	 * 
-	 * instanzio tutte le textviews (il numero � relativo al menu
-	 * corrispondente)
-	 */
-	public void setEverythingUp() {
-
-		isPrimoAvail = i
-				.getBooleanExtra(Fai_il_tuo_menu.PRIMO_AVAILABLE, false);
-		isSecondoAvail = i.getBooleanExtra(Fai_il_tuo_menu.SECONDO_AVAILABLE,
-				false);
-		isC1Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_1_AVAILABLE,
-				false);
-		isC2Avail = i.getBooleanExtra(Fai_il_tuo_menu.CONTORNO_2_AVAILABLE,
-				false);
-		isDessertAvail = i.getBooleanExtra(Fai_il_tuo_menu.DESSERT_AVAILABLE,
-				false);
-		isInsalatonaAvail = i.getBooleanExtra(
-				Fai_il_tuo_menu.INSALATONA_AVAILABLE, false);
-		isPizzaAvail = i
-				.getBooleanExtra(Fai_il_tuo_menu.PIZZA_AVAILABLE, false);
-
-		// menu snack 1
-		primo1 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_primo1);
-		contorno1 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_contorno1);
-		dessert1 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_dessert1);
-		o1 = (TextView) theContainer.findViewById(R.id.tipologia_snack_o1);
-		pane1 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_pane1);
-		caffe_salse1 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_caffe_o_salse1);
-		primo1.setText("- "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_first)
-				+ ", ");
-		primo1.setTypeface(null, Typeface.BOLD);
-		contorno1
-				.setText("+ "
-						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo)
-						+ " ");
-		dessert1.setText(" "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
-		pane1.setText("+ " + getString(R.string.iDeciso_pane));
-		caffe_salse1
-				.setText("+ " + getString(R.string.iDeciso_caffe_o_2_salse));
-		// menu snack 2
-		secondo2 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_secondo2);
-		caffe_salse2 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_caffe_o_salse2);
-		contorno2 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_contorno2);
-		dessert2 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_dessert2);
-		pane2 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_pane2);
-
-		secondo2.setText("- "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_second));
-		secondo2.setTypeface(null, Typeface.BOLD);
-		contorno2
-				.setText("+ "
-						+ getString(R.string.iDeciso_compose_menu_checkbox_contorno_caldo)
-						+ " ");
-		dessert2.setText(" "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
-		pane2.setText("+ " + getString(R.string.iDeciso_pane));
-		o2 = (TextView) theContainer.findViewById(R.id.tipologia_snack_o2);
-		caffe_salse2
-				.setText("+ " + getString(R.string.iDeciso_caffe_o_2_salse));
-		// menu snack 3
-		panino_o_pizza3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_panino_o_pizza3);
-		dessert3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_dessert3);
-		acqua3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_acqua3);
-		caffe_salse3 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_caffe_o_salse3);
-		panino_o_pizza3.setText("- " + getString(R.string.iDeciso_panino)
-				+ " o " + getString(R.string.iDeciso_pizza_trancio));
-		panino_o_pizza3.setTypeface(null, Typeface.BOLD);
-		dessert3.setText("+ "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_dessert));
-		acqua3.setText("+ " + getString(R.string.iDeciso_acqua));
-		caffe_salse3
-				.setText("+ " + getString(R.string.iDeciso_caffe_o_2_salse));
-		// menu snack 4
-		insalatona4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_insalatona4);
-		pane4 = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_pane4);
-
-		insalatona4.setText("- "
-				+ getString(R.string.iDeciso_compose_menu_checkbox_insalatona));
-		insalatona4.setTypeface(null, Typeface.BOLD);
-		pane4.setText("+ " + getString(R.string.iDeciso_pane));
 
 	}
 }
