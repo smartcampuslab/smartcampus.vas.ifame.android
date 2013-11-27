@@ -95,25 +95,27 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 
 		if (menu_compatibles != null) {
 
-				for (String string : menu_compatibles) {
-				if (string.equals(chosenMenu.Intero.toString())){
-					interoTab.select();
-					return;
-				}else if (string.equals(chosenMenu.Ridotto1.toString())
-						|| string.equals(chosenMenu.Ridotto2.toString())
-						|| string.equals(chosenMenu.Ridotto3.toString())
-						|| string.equals(chosenMenu.Ridotto4.toString())){
-					ridottoTab.select();
-					return;
-				}else if (string.equals(chosenMenu.Snack1.toString())
-						|| string.equals(chosenMenu.Snack2.toString())
-						|| string.equals(chosenMenu.Snack3.toString())
-						|| string.equals(chosenMenu.Snack4.toString())){
-
+			String lastMenuCompatible = menu_compatibles.get(menu_compatibles.size()-1);
+			
+				if (lastMenuCompatible.equals(chosenMenu.Snack1.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Snack2.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Snack3.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Snack4.toString())){
+					
 					snackTab.select();
 					return;
+				}else if (lastMenuCompatible.equals(chosenMenu.Ridotto1.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Ridotto2.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Ridotto3.toString())
+						|| lastMenuCompatible.equals(chosenMenu.Ridotto4.toString())){
+					ridottoTab.select();
+					return;
+				}else if (lastMenuCompatible.equals(chosenMenu.Intero.toString())){
+
+					interoTab.select();
+					return;
 				}
-			}
+			
 		}
 
 

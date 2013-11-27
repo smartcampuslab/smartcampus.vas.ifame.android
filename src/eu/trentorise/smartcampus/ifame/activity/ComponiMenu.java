@@ -78,6 +78,9 @@ public class ComponiMenu extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.layout_fai_il_tuo_menu);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		componiMenu();
 
 		
