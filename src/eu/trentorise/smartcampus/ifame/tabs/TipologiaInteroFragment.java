@@ -102,20 +102,12 @@ public class TipologiaInteroFragment extends SherlockFragment {
 					buyable.setTextColor(Color.parseColor("#CF323C"));
 				}
 
-			}
-
-		} else
+			}else
+				
+				buyable.setVisibility(View.GONE);
+		} else {
 
 			buyable.setVisibility(View.GONE);
-		
-		
-
-		ArrayList<String> selected_menu = i.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
-		
-		if(selected_menu.contains(chosenMenu.Intero.toString())){
-			
-			HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) i.getSerializableExtra(ComponiMenu.MENU_CHECKED_TRUE);
-			
 			
 			TextView intero1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_intero1_titolo);
@@ -125,6 +117,59 @@ public class TipologiaInteroFragment extends SherlockFragment {
 				intero1Title.setBackground(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
 				else
 					intero1Title.setBackgroundDrawable(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+			
+			
+			TextView primot = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_primo);
+			primot.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_first) + ",");
+			primot.setTypeface(null, Typeface.BOLD);
+			
+			TextView secondot = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_secondo);
+			secondot.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_second) + ",");
+			secondot.setTypeface(null, Typeface.BOLD);
+			
+			TextView contorno2t = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_contorno2);
+			contorno2t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_contorno2) + ",");
+			contorno2t.setTypeface(null, Typeface.BOLD);
+			
+			TextView dessertt = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_dessert);
+			dessertt.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_dessert) + ",");
+			dessertt.setTypeface(null, Typeface.BOLD);
+			
+			TextView pane1t = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero_pane1);
+			pane1t.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_pane1));
+			pane1t.setTypeface(null, Typeface.BOLD);
+			
+			super.onResume();
+			
+			return;
+		
+		}
+
+		ArrayList<String> selected_menu = i.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
+		
+		if(selected_menu.contains(chosenMenu.Intero.toString())){
+			
+			HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) i.getSerializableExtra(ComponiMenu.MENU_CHECKED_TRUE);
+			
+			TextView intero1Title = (TextView) theContainer
+					.findViewById(R.id.tipologia_intero1_titolo);
+			intero1Title.setText(chosenMenu.Intero.toString());
+			intero1Title.setPadding(5, 2, 5, 2);
+			if (android.os.Build.VERSION.SDK_INT >= 16)
+				intero1Title.setBackground(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+				else
+					intero1Title.setBackgroundDrawable(theContainer.getResources().getDrawable(R.drawable.shape_title_componimenu));
+			
 			/////////////////////////////////////
 			////////////////////////////////////
 			////////////////////////////////////
