@@ -1,91 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <!--
-        android:id="@+id/linear_layout_recensioni"
+    <TextView
+        android:id="@+id/nome_piatto_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:paddingBottom=""
-        android:orientation="" >
-    -->
-
-    <TextView
-        android:id="@+id/giudizio_voto_medio_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingTop="4dp"
-        android:text="@string/iGradito_average_vote"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/giudizio_voto_medio_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/giudizio_voto_medio_label"
-        android:layout_toRightOf="@+id/giudizio_voto_medio_label"
-        android:padding="5dp"
-        android:paddingLeft="2dp"
-        android:paddingTop="4dp"
-        android:text="@string/iGradito_not_available"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:padding="10dp"
+        android:text="@string/iGradito_review_header"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#CC0000"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/giudizio_espresso_da_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/giudizio_espresso_da_value"
-        android:layout_alignBottom="@+id/giudizio_espresso_da_value"
-        android:layout_alignParentLeft="true"
-        android:padding="5dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="5dp"
-        android:text="@string/iGradito_expressed_by"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/giudizio_espresso_da_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/giudizio_voto_medio_label"
-        android:layout_toRightOf="@+id/giudizio_espresso_da_label"
-        android:paddingBottom="4dp"
-        android:paddingLeft="2dp"
-        android:text="@string/iGradito_not_available"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#CC0000"
-        android:textSize="20sp" />
-
-    <ListView
-        android:id="@+id/recensioni_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/recensioni_label"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/giudizio_voto_medio_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="5dp"
+            android:paddingBottom="0dp"
+            android:text="@string/iGradito_average_vote"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/giudizio_voto_medio_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/giudizio_voto_medio_label"
+            android:padding="5dp"
+            android:paddingBottom="0dp"
+            android:text="@string/iGradito_not_available"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#CC0000"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/giudizio_espresso_da_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="5dp"
+            android:text="@string/iGradito_expressed_by"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/giudizio_espresso_da_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/giudizio_espresso_da_label"
+            android:padding="5dp"
+            android:text="@string/iGradito_not_available"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#CC0000"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/recensioni_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/giudizio_espresso_da_value"
         android:background="#CC0000"
         android:padding="5dp"
         android:text="@string/iGradito_review_header"
         android:textColor="#FFFFFF" />
 
+    <ListView
+        android:id="@+id/recensioni_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/giudizio_no_data_to_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recensioni_label"
         android:gravity="center|bottom"
         android:padding="5dp"
         android:paddingTop="10dp"
@@ -94,4 +95,4 @@
         android:textSize="20sp"
         android:visibility="visible" />
 
-</RelativeLayout>
+</LinearLayout>

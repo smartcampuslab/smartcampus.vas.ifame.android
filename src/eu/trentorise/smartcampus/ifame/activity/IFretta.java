@@ -17,6 +17,7 @@ import eu.trentorise.smartcampus.ifame.asynctask.GetMenseTask;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 
+@Deprecated
 public class IFretta extends SherlockActivity {
 
 	/** Logging tag */

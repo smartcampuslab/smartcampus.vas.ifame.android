@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -21,11 +23,12 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
 import eu.trentorise.smartcampus.ifame.adapter.ReviewListAdapter;
+import eu.trentorise.smartcampus.ifame.asynctask.GetMenseTaskActionBar;
 import eu.trentorise.smartcampus.ifame.comparator.GiudizioComparator;
 import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
-import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
@@ -37,15 +40,16 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
-public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
+public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
+		implements OnNavigationListener {
 
 	public static final String MENSA = "mensa_extra";
 	public static final String PIATTO = "piatto_extra";
 
 	private MenuItem menuItem;
-	private ReviewListAdapter adapter;
+	private ReviewListAdapter reviewListAdapter;
 	private Piatto piatto;
-	private Mensa mensa;
+	// private Mensa mensa;
 	private TextView giudizio_espresso_da_textview;
 	private TextView giudizio_medio_textview;
 	private TextView no_data_to_display_textview;
@@ -53,6 +57,11 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 
 	private Integer mioVoto;
 	private String mioCommento;
+
+	// **********************************************
+	private MensaSpinnerAdapter mensaSpinnerAdapter;
+	private TextView nome_piatto_label;
+	private int currentPosition = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +76,21 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 
 		// Get extras parameters from the igradito activity
 		Bundle extras = getIntent().getExtras();
-		mensa = (Mensa) extras.get(MENSA);
 		piatto = (Piatto) extras.get(PIATTO);
 
 		mioVoto = 5;
 		mioCommento = "";
 
-		// display piatto name as title
-		setTitle(piatto.getPiatto_nome());
+		nome_piatto_label = (TextView) findViewById(R.id.nome_piatto_label);
+		nome_piatto_label.setText(piatto.getPiatto_nome());
 
-		// setup action bar
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		mensaSpinnerAdapter = new MensaSpinnerAdapter(this);
+
 		// get list of comments
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-			new GetGiudizioConnector().execute(mensa.getMensa_id(),
-					piatto.getPiatto_id());
+
+			new GetMenseTaskActionBar(this, mensaSpinnerAdapter).execute();
+
 			// just to be sure that userId is saved in sharedpreferences
 			SharedPreferencesUtils
 					.retrieveAndSaveUserId(IGraditoVisualizzaRecensioni.this);
@@ -91,7 +99,18 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 					getString(R.string.errorInternetConnectionRequired),
 					Toast.LENGTH_SHORT).show();
 			finish();
+			return;
 		}
+
+		// setup actionbar (supportActionBar is initialized in super.onCreate())
+		ActionBar bar = getSupportActionBar();
+		bar.setDisplayShowTitleEnabled(false);
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		bar.setHomeButtonEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(true);
+		// Set up the dropdown list navigation in the action bar.
+		bar.setListNavigationCallbacks(mensaSpinnerAdapter, this);
+
 	}
 
 	@Override
@@ -129,7 +148,8 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 
 		// put the data needed for showing the dialog in a bundle
 		Bundle dataForTheDialog = new Bundle();
-		dataForTheDialog.putSerializable(InsertReviewDialog.MENSA, mensa);
+		dataForTheDialog.putSerializable(InsertReviewDialog.MENSA,
+				mensaSpinnerAdapter.getItem(currentPosition));
 		dataForTheDialog.putSerializable(InsertReviewDialog.PIATTO, piatto);
 		dataForTheDialog.putInt(InsertReviewDialog.VOTO, mioVoto);
 		dataForTheDialog.putString(InsertReviewDialog.COMMENTO, mioCommento);
@@ -150,12 +170,13 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 		// check for connection and get the reviews
 		if (ConnectionUtils.isUserConnectedToInternet(this)) {
 			// clear the adapter
-			if (adapter != null) {
-				adapter.clear();
-				adapter.notifyDataSetChanged();
+			if (reviewListAdapter != null) {
+				reviewListAdapter.clear();
+				reviewListAdapter.notifyDataSetChanged();
 			}
 			// get the reviews
-			new GetGiudizioConnector().execute(mensa.getMensa_id(),
+			new GetGiudizioConnector().execute(
+					mensaSpinnerAdapter.getItem(currentPosition).getMensa_id(),
 					piatto.getPiatto_id());
 		} else {
 			Toast.makeText(IGraditoVisualizzaRecensioni.this,
@@ -282,22 +303,22 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 			}
 
 			// init or update the adapter
-			if (adapter == null) {
+			if (reviewListAdapter == null) {
 				// intialize the adapter
-				adapter = new ReviewListAdapter(this,
+				reviewListAdapter = new ReviewListAdapter(this,
 						SharedPreferencesUtils.getUserID(this), reviews);
-				giudiziListview.setAdapter(adapter);
+				giudiziListview.setAdapter(reviewListAdapter);
 			} else {
 				// clear and add the reviews at the adapter
-				adapter.clear();
+				reviewListAdapter.clear();
 				for (Giudizio giudizio : reviews) {
-					adapter.add(giudizio);
+					reviewListAdapter.add(giudizio);
 				}
-				adapter.notifyDataSetChanged();
+				reviewListAdapter.notifyDataSetChanged();
 			}
 
 			// if there are only reviews without comments show message
-			if (adapter.getCount() == 0) {
+			if (reviewListAdapter.getCount() == 0) {
 				giudiziListview.setVisibility(View.GONE);
 				no_data_to_display_textview
 						.setText(getString(R.string.iGradito_no_one_left_comment));
@@ -322,5 +343,14 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity {
 			menuItem.collapseActionView();
 			menuItem.setActionView(null);
 		}
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		currentPosition = itemPosition;
+		new GetGiudizioConnector().execute(
+				mensaSpinnerAdapter.getItem(itemPosition).getMensa_id(),
+				piatto.getPiatto_id());
+		return false;
 	}
 }

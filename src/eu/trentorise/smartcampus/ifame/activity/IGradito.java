@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Spinner;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -19,10 +19,7 @@ import com.actionbarsherlock.widget.SearchView;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.IGraditoPiattoListAdapter;
-import eu.trentorise.smartcampus.ifame.adapter.MensaAdapter;
-import eu.trentorise.smartcampus.ifame.asynctask.GetMenseTask;
 import eu.trentorise.smartcampus.ifame.asynctask.GetPiattiIGraditoTask;
-import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 
@@ -33,21 +30,22 @@ import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 public class IGradito extends SherlockActivity {
 
 	private IGraditoPiattoListAdapter piattiListAdapter;
-	private MensaAdapter mensaAdapter;
+
+	// private MensaAdapter mensaAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_igradito_piattimensa);
-		
-		
+
 		// create the adapter
-		mensaAdapter = new MensaAdapter(IGradito.this);
+		// mensaAdapter = new MensaAdapter(IGradito.this);
 		piattiListAdapter = new IGraditoPiattoListAdapter(IGradito.this);
 
-		// setup the spinner
-		final Spinner menseSpinner = (Spinner) findViewById(R.id.spinner_portata);
-		menseSpinner.setAdapter(mensaAdapter);
+		// // setup the spinner
+		// final Spinner menseSpinner = (Spinner)
+		// findViewById(R.id.spinner_portata);
+		// menseSpinner.setAdapter(mensaAdapter);
 
 		// setup the listview
 		ListView piattiListView = (ListView) findViewById(R.id.list_view_igradito);
@@ -66,8 +64,6 @@ public class IGradito extends SherlockActivity {
 					Intent intent = new Intent(IGradito.this,
 							IGraditoVisualizzaRecensioni.class);
 					intent.putExtra(IGraditoVisualizzaRecensioni.PIATTO, piatto);
-					intent.putExtra(IGraditoVisualizzaRecensioni.MENSA,
-							(Mensa) menseSpinner.getSelectedItem());
 					startActivity(intent);
 				}
 			}
@@ -78,7 +74,7 @@ public class IGradito extends SherlockActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if (ConnectionUtils.isUserConnectedToInternet(getApplicationContext())) {
-			new GetMenseTask(IGradito.this, mensaAdapter).execute();
+			// new GetMenseTask(IGradito.this, mensaAdapter).execute();
 			new GetPiattiIGraditoTask(IGradito.this, piattiListAdapter)
 					.execute();
 		} else {
@@ -89,54 +85,53 @@ public class IGradito extends SherlockActivity {
 	}
 
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            MenuInflater inflater = getSupportMenuInflater();
-            inflater.inflate(R.menu.igradito, menu);
-    
-            	SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.igradito, menu);
 
-                final SearchView searchViewActionBar = (SearchView) menu.findItem(
-                                R.id.igradito_search).getActionView();
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-                if (null != searchManager) {
-                        searchViewActionBar.setSearchableInfo(searchManager
-                                        .getSearchableInfo(getComponentName()));
-                        searchViewActionBar.setIconifiedByDefault(false);
-                }
+		final SearchView searchViewActionBar = (SearchView) menu.findItem(
+				R.id.igradito_search).getActionView();
 
-                SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+		if (null != searchManager) {
+			searchViewActionBar.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+			searchViewActionBar.setIconifiedByDefault(false);
+		}
 
-                        @Override
-                        public boolean onQueryTextChange(String newText) {
-                                // this is your adapter that will be filtered
-                                piattiListAdapter.getFilter().filter(newText);
-                                return true;
-                        }
+		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 
-                        @SuppressLint("NewApi")
-    					@Override
-                        public boolean onQueryTextSubmit(String query) {
-                                // this is your adapter that will be filtered
-                                piattiListAdapter.getFilter().filter(query);
-                                searchViewActionBar.clearFocus();
-                                return true;
-                        }
-                };
-                searchViewActionBar.setOnQueryTextListener(queryTextListener);
-    		 
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// this is your adapter that will be filtered
+				piattiListAdapter.getFilter().filter(newText);
+				return true;
+			}
 
-            return super.onCreateOptionsMenu(menu);
-    }
+			@SuppressLint("NewApi")
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				// this is your adapter that will be filtered
+				piattiListAdapter.getFilter().filter(query);
+				searchViewActionBar.clearFocus();
+				return true;
+			}
+		};
+		searchViewActionBar.setOnQueryTextListener(queryTextListener);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-            switch (item.getItemId()) {
-            case android.R.id.home:
-                    onBackPressed();
-                    return true;
-            default:
-                    return super.onOptionsItemSelected(item);
-            }
-    }
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

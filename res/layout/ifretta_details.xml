@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="15dp" >
+        android:padding="4dp" >
 
         <eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView
             android:id="@+id/imageViewId"

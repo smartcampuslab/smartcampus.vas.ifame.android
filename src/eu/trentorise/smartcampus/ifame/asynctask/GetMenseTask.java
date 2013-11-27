@@ -22,6 +22,7 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 /**
  * ASYNCTASK PER COLLEGARSI AL WEB SERVICES E PRENDERE LE MENSE DISPONIBILI
  */
+@Deprecated
 public class GetMenseTask extends AsyncTask<Void, Void, List<Mensa>> {
 
 	private Activity activity;

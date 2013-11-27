@@ -49,7 +49,7 @@ public class IFameMain extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent i = new Intent(IFameMain.this, IFretta.class);
+				Intent i = new Intent(IFameMain.this, IFrettaDetails.class);
 				startActivity(i);
 			}
 		});

@@ -2,7 +2,6 @@ package eu.trentorise.smartcampus.ifame.asynctask;
 
 import java.io.InputStream;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,15 +16,15 @@ import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 
 public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 
-	private Context context;
+	// private Context context;
 	private WebcamAspectRatioImageView img_view;
-	private ProgressDialog progressDialog;
+	// private ProgressDialog progressDialog;
 
 	private MenuItem refreshButton;
 
 	public RetrieveWebcamImageTask(Context context,
 			WebcamAspectRatioImageView img_view, MenuItem refresh) {
-		this.context = context;
+		// this.context = context;
 		this.img_view = img_view;
 		this.refreshButton = refresh;
 	}
@@ -33,9 +32,9 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progressDialog = ProgressDialog.show(context,
-				context.getString(R.string.iFretta_title_activity),
-				context.getString(R.string.loading));
+		// progressDialog = ProgressDialog.show(context,
+		// context.getString(R.string.iFretta_title_activity),
+		// context.getString(R.string.loading));
 		// progressDialog.setCancelable(true);
 		// progressDialog.setCanceledOnTouchOutside(false);
 
@@ -75,6 +74,6 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 			refreshButton.setActionView(null);
 		}
 
-		progressDialog.dismiss();
+		// progressDialog.dismiss();
 	}
 }
