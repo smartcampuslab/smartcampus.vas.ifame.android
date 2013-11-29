@@ -11,31 +11,53 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.asynctask.LoadAndSaveUserIdFromACServiceTask;
-import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
+import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
+import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 public class IFameMain extends SherlockActivity {
 	/** Logging tag */
 	private static final String TAG = "IFameMain";
 	private static SCAccessProvider accessProvider = null;
-	public static Context ctx;
+	private static Context context;
 
-	// private SCAccessProvider accessProvider;
+	public static int IFRETTA_REQUEST_CODE = 3;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.ifame_main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.favourite_mensa_ifame_main) {
+			Intent selezionaMensa = new Intent(this, IFretta.class);
+			startActivity(selezionaMensa);
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
-		ctx = getApplicationContext();
+		context = getApplicationContext();
 		// check if the user is logged otherwise open login window
 		try {
 			if (!getAccessProvider().login(IFameMain.this, null)) {
-				// login
-				new LoadAndSaveUserIdFromACServiceTask(ctx).execute();
+
+				// retrieve the mensa list and save it just to have always the
+				// updated link and datas if there is somehow an update
+				MensaUtils.getAndSaveMensaList(IFameMain.this);
+
+				// get user id and save
+				UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
 			}
 		} catch (AACException e) {
 			Log.e(TAG, "Failed to login: " + e.getMessage());
@@ -92,17 +114,14 @@ public class IFameMain extends SherlockActivity {
 		// check the result of the authentication
 		if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
-				// user is logged
-				// OK a user is logged check internet connection and get userid
-				// if(ConnectionUtils.isUserConnectedToInternet(IFameMain.this))
-				// {
-				// needed because after some feature (in iGradito) need the
-				// userId saved by this asynktask
 
-				SharedPreferencesUtils.retrieveAndSaveUserId(IFameMain.this);
-				// }
+				// retrieve the mensa list and save it just to have always the
+				// updated link and datas if there is somehow an update
+				MensaUtils.getAndSaveMensaList(IFameMain.this);
+
+				// get user id and save
+				UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
 			} else {
-				// if cancelled by user (resultCode == Activity.RESULT_CANCELED)
 				// or any other case close the app
 				Toast.makeText(IFameMain.this,
 						getString(R.string.errorLoginRequired),
@@ -114,13 +133,13 @@ public class IFameMain extends SherlockActivity {
 
 	public static SCAccessProvider getAccessProvider() {
 		if (accessProvider == null)
-			accessProvider = SCAccessProvider.getInstance(ctx);// .getInstance(ctx);
+			accessProvider = SCAccessProvider.getInstance(context);
 		return accessProvider;
 	}
 
 	public static String getAuthToken() throws AACException {
 		String mToken;
-		mToken = getAccessProvider().readToken(ctx);
+		mToken = getAccessProvider().readToken(context);
 		return mToken;
 	}
 }

@@ -3,37 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:gravity="center_horizontal"
+        android:orientation="horizontal"
         android:padding="4dp" >
-
-        <eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView
-            android:id="@+id/imageViewId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/image_not_available"
-            android:visibility="visible" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageViewId"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6" >
+
+            <eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView
+                android:id="@+id/imageViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/image_not_available"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:padding="25dp" >
+            android:padding="5dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:text="@string/iFretta_webcam_details"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

@@ -2,9 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/iFameMain_logout"
+        android:id="@+id/favourite_mensa_ifame_main"
+        android:icon="@drawable/ic_action_favourites"
         android:orderInCategory="1"
-        android:showAsAction="never"
-        android:title="@string/iFameMain_logout"/>
+        android:showAsAction="always"
+        android:title="@string/iFameMain_favourite_mensa"/>
 
 </menu>

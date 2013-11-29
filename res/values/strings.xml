@@ -24,7 +24,7 @@
     <string name="iFame_set_favourite_canteen_menu_item">Imposta mensa preferita</string>
     <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iFame_main_title_activity">iFame</string>
-    <string name="iFameMain_logout">Logout</string>
+    <string name="iFameMain_favourite_mensa">Mensa Preferita</string>
     <!-- /iFameMain -->
 
 
@@ -34,6 +34,7 @@
     <string name="iFretta_search_in_ViviTrento">Cerca in ViviTrento</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <string name="iFretta_details_set_favourite_canteen">Hai settato come mensa preferita: </string>
+    <string name="iFretta_webcam_details">Ogni giorno dalle 12 alle 14 puoi controllare, in tempo reale, la fila presso la tua mensa per scegliere il momento migliore per andare a mangiare</string>
     <!-- /iFretta -->
 
 

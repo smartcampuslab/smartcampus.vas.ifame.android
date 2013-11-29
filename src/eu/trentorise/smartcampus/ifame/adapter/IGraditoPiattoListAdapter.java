@@ -111,6 +111,7 @@ public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
 
 				if (results.count > 0) {
 
+					@SuppressWarnings("unchecked")
 					List<Piatto> values = (List<Piatto>) results.values;
 					for (Piatto p : values) {
 

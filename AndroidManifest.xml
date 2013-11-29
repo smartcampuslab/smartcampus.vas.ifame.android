@@ -154,7 +154,7 @@
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFrettaDetails"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:label="@string/iFretta_details_title_activity" >
         </activity>
         <activity

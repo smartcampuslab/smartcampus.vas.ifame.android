@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
-import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
@@ -19,9 +18,6 @@ import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 /**
  * THIS CONNECTOR GETS ALL THE DISHES DATA
@@ -109,27 +105,23 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 				return null;
 			}
 
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (AACException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
 	@Override
 	protected void onPostExecute(List<Piatto> result) {
 		if (result == null) {
+			// something went wrong
 			progressDialog.dismiss();
 			Toast.makeText(activity,
 					activity.getString(R.string.errorSomethingWentWrong),
 					Toast.LENGTH_SHORT).show();
 			activity.finish();
+			return;
+
 		} else {
 
 			adapter.complete_list = result;
@@ -138,6 +130,7 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 			for (Piatto p : result) {
 				adapter.add(p);
 			}
+			adapter.notifyDataSetChanged();
 
 			progressDialog.dismiss();
 		}

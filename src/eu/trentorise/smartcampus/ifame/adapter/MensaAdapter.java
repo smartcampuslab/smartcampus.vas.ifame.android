@@ -1,6 +1,8 @@
 package eu.trentorise.smartcampus.ifame.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +10,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 
 public class MensaAdapter extends ArrayAdapter<Mensa> {
 
 	private LayoutInflater inflater;
+	Drawable icon;
 
 	public MensaAdapter(Context context) {
 		super(context, android.R.layout.simple_list_item_1);
-
+		icon = context.getResources().getDrawable(
+				R.drawable.ic_action_favourite_selected);
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -28,23 +33,20 @@ public class MensaAdapter extends ArrayAdapter<Mensa> {
 		TextView text_view_nome_mensa = (TextView) convertView
 				.findViewById(R.id.list_ifretta);
 
-		Mensa mensa = getItem(position);
+		String mensa_nome = getItem(position).getMensa_nome();
+		text_view_nome_mensa.setText(mensa_nome);
 
-		text_view_nome_mensa.setText(mensa.getMensa_nome());
-
-		// NOT YET IMPLEMENTED FAVOURITE MENSA FUNCTIONALITY
-		// String favourite_mensa_name = SharedPreferencesUtils
-		// .getDefaultMensa(context);
-		// // se la mensa preferita salvata, � quella che stiamo esaminando,
-		// // allora la sottolineamo e ci aggiungiamo l'icona star
-		// if (favourite_mensa_name != null
-		// && m.getMensa_nome().equals(favourite_mensa_name)) {
-		// Drawable icon_to_right = convertView.getResources().getDrawable(
-		// android.R.drawable.star_off);
-		// text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null,
-		// null, icon_to_right, null);
-		// text_view_nome_mensa.setTypeface(null, Typeface.BOLD);
-		// }
+		if (mensa_nome.equalsIgnoreCase(MensaUtils
+				.getFavouriteMensaName(getContext()))) {
+			text_view_nome_mensa.setTextColor(Color.parseColor("#CC0000"));
+			text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null,
+					null, icon, null);
+			// text_view_nome_mensa.setTypeface(null, Typeface.BOLD);
+		} else {
+			text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null,
+					null, null, null);
+			text_view_nome_mensa.setTextColor(Color.BLACK);
+		}
 
 		return convertView;
 	}

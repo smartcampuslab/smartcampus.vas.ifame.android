@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -24,6 +24,7 @@
     <string name="iFame_set_favourite_canteen_menu_item">Set your favourite canteen</string>
     <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iFame_main_title_activity">iFame</string>
+    <string name="iFameMain_favourite_mensa">Favourite Canteen</string>
     <!-- /iFameMain -->
 
 
@@ -33,6 +34,7 @@
     <string name="iFretta_search_in_ViviTrento">Search in ViviTrento</string>
     <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <string name="iFretta_details_set_favourite_canteen">You favourite canteen is: </string>
+    <string name="iFretta_webcam_details">Everyday from 12 to 14 you can check, in real time, the queue at your canteen to choose the best moment to have dinner</string>
     <!-- /iFretta -->
 
 
@@ -59,8 +61,8 @@
     <string name="iDeciso_compose_menu_title_primi">First courses</string>
     <string name="iDeciso_compose_menu_title_secondicontorni">Second courses / contours</string>
     <string name="iDeciso_compose_menu_checkbox_piattofreddo">Cold dish</string>
-        <string name="iDeciso_compose_menu_checkbox_caffe">Coffee</string>
-            <string name="iDeciso_compose_menu_checkbox_pane2">2 breads</string>
+    <string name="iDeciso_compose_menu_checkbox_caffe">Coffee</string>
+    <string name="iDeciso_compose_menu_checkbox_pane2">2 breads</string>
     <string name="iDeciso_compose_menu_checkbox_second">Second course</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Side dish A</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Side dish B</string>
@@ -68,8 +70,8 @@
     <string name="iDeciso_compose_menu_checkbox_pane1">1 bread</string>
     <string name="iDeciso_compose_menu_checkbox_acqua">water (50cl)</string>
     <string name="iDeciso_compose_menu_checkbox_salsa2">2 sauces</string>
-        <string name="iDeciso_compose_menu_checkbox_contorno1">1 contour</string>
-        <string name="iDeciso_compose_menu_checkbox_contorno2">2 contours</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno1">1 contour</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno2">2 contours</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calculate</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Mixed salad</string>
     <string name="iDeciso_alternative_btn">Alternatives</string>
@@ -82,7 +84,7 @@
     <string name="iDeciso_alternative_contorni">WARM SIDE DISHES</string>
     <string name="iDeciso_alternative_menu">Alternatives to the daily menu</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">Pizza menu</string>
-        <string name="iDeciso_compose_menu_title_altro">Other</string>
+    <string name="iDeciso_compose_menu_title_altro">Other</string>
     <string name="iDeciso_2contorni">2 Side dishes</string>
     <string name="iDeciso_pane">Bread</string>
     <string name="iDeciso_acqua">Water</string>

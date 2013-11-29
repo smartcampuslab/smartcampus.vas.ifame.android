@@ -31,7 +31,7 @@ import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
-import eu.trentorise.smartcampus.ifame.utils.SharedPreferencesUtils;
+import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -92,7 +92,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			new GetMenseTaskActionBar(this, mensaSpinnerAdapter).execute();
 
 			// just to be sure that userId is saved in sharedpreferences
-			SharedPreferencesUtils
+			UserIdUtils
 					.retrieveAndSaveUserId(IGraditoVisualizzaRecensioni.this);
 		} else {
 			Toast.makeText(IGraditoVisualizzaRecensioni.this,
@@ -154,8 +154,8 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		dataForTheDialog.putInt(InsertReviewDialog.VOTO, mioVoto);
 		dataForTheDialog.putString(InsertReviewDialog.COMMENTO, mioCommento);
 		dataForTheDialog.putString(InsertReviewDialog.USERID,
-				SharedPreferencesUtils
-						.getUserID(IGraditoVisualizzaRecensioni.this));
+				UserIdUtils
+						.getUserId(IGraditoVisualizzaRecensioni.this));
 
 		// pass the bundle to the dialog and show
 		insertReviewDialog.setArguments(dataForTheDialog);
@@ -268,8 +268,8 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 
 		int review_size = reviews.size();
 		float avg = 0;
-		Long user_id = Long.parseLong(SharedPreferencesUtils
-				.getUserID(IGraditoVisualizzaRecensioni.this));
+		Long user_id = Long.parseLong(UserIdUtils
+				.getUserId(IGraditoVisualizzaRecensioni.this));
 
 		if (review_size > 0) {
 			// count the average of this dish voto reviews
@@ -306,7 +306,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			if (reviewListAdapter == null) {
 				// intialize the adapter
 				reviewListAdapter = new ReviewListAdapter(this,
-						SharedPreferencesUtils.getUserID(this), reviews);
+						UserIdUtils.getUserId(this), reviews);
 				giudiziListview.setAdapter(reviewListAdapter);
 			} else {
 				// clear and add the reviews at the adapter

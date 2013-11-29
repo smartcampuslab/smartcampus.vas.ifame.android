@@ -56,4 +56,55 @@ public class Mensa implements Serializable {
 		this.mensa_link_offline = mensa_link_offline;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((mensa_id == null) ? 0 : mensa_id.hashCode());
+		result = prime
+				* result
+				+ ((mensa_link_offline == null) ? 0 : mensa_link_offline
+						.hashCode());
+		result = prime
+				* result
+				+ ((mensa_link_online == null) ? 0 : mensa_link_online
+						.hashCode());
+		result = prime * result
+				+ ((mensa_nome == null) ? 0 : mensa_nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mensa other = (Mensa) obj;
+		if (mensa_id == null) {
+			if (other.mensa_id != null)
+				return false;
+		} else if (!mensa_id.equals(other.mensa_id))
+			return false;
+		if (mensa_link_offline == null) {
+			if (other.mensa_link_offline != null)
+				return false;
+		} else if (!mensa_link_offline.equals(other.mensa_link_offline))
+			return false;
+		if (mensa_link_online == null) {
+			if (other.mensa_link_online != null)
+				return false;
+		} else if (!mensa_link_online.equals(other.mensa_link_online))
+			return false;
+		if (mensa_nome == null) {
+			if (other.mensa_nome != null)
+				return false;
+		} else if (!mensa_nome.equals(other.mensa_nome))
+			return false;
+		return true;
+	}
+
 }
