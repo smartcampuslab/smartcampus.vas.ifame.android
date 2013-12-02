@@ -25,7 +25,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
 import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
@@ -78,7 +77,7 @@ public class TipologiaInteroFragment extends SherlockFragment {
 
 		Intent i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(
-				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+				ComponiMenu.HAS_CALLED_TIPOLOGIE, false);
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_buyable);
 	

@@ -50,7 +50,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		String selected_menu = getIntent().getStringExtra(
-				Fai_il_tuo_menu.SELECTED_MENU);
+				ComponiMenu.SELECTED_MENU);
 
 		ArrayList<String> menu_compatibles = getIntent()
 				.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
@@ -103,6 +103,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 						|| lastMenuCompatible.equals(chosenMenu.Snack4.toString())){
 					
 					snackTab.select();
+					
 					return;
 				}else if (lastMenuCompatible.equals(chosenMenu.Ridotto1.toString())
 						|| lastMenuCompatible.equals(chosenMenu.Ridotto2.toString())

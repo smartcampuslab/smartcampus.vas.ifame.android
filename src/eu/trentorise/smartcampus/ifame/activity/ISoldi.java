@@ -1,5 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.util.ArrayList;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,6 +21,7 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
 import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
@@ -47,6 +50,10 @@ public class ISoldi extends SherlockActivity {
 	private MenuItem refreshButton;
 
 	private LinearLayout isoldi_layout_view;
+	
+	ArrayList<String> menuCompInteri;
+	ArrayList<String> menuCompRidotti;
+	ArrayList<String> menuCompSnack;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,7 @@ public class ISoldi extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				i.putStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES, menuCompInteri);
 				startActivity(i);
 			}
 		});
@@ -88,7 +96,7 @@ public class ISoldi extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
-				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, "Ridotto1234");
+				i.putStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES, menuCompRidotti);
 				startActivity(i);
 
 			}
@@ -98,7 +106,7 @@ public class ISoldi extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
-				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, "Snack1");
+				i.putStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES, menuCompSnack);
 				startActivity(i);
 
 			}
@@ -191,7 +199,7 @@ public class ISoldi extends SherlockActivity {
 
 		float amount = 0f;
 		boolean creditoInvalido = false;
-
+		
 		if (result != null) {
 			try {
 				amount = Float.parseFloat(result.getCredit());
@@ -202,6 +210,8 @@ public class ISoldi extends SherlockActivity {
 				creditoInvalido = true;
 			}
 		}
+		
+		ArrayList<String> menu_compatibles = new ArrayList<String>();
 
 		if (creditoInvalido) {
 
@@ -217,6 +227,19 @@ public class ISoldi extends SherlockActivity {
 			snackText.setVisibility(View.GONE);
 
 		} else if (amount >= 4.90f) {
+			
+			menuCompInteri = new ArrayList<String>();
+			menuCompInteri.add(chosenMenu.Intero.toString());
+			menuCompInteri.add(chosenMenu.Ridotto1.toString());
+			menuCompInteri.add(chosenMenu.Ridotto2.toString());
+			menuCompInteri.add(chosenMenu.Ridotto3.toString());
+			menuCompInteri.add(chosenMenu.Ridotto4.toString());
+			menuCompInteri.add(chosenMenu.Snack1.toString());
+			menuCompInteri.add(chosenMenu.Snack2.toString());
+			menuCompInteri.add(chosenMenu.Snack3.toString());
+			menuCompInteri.add(chosenMenu.Snack4.toString());
+			
+			menu_compatibles.addAll(menuCompInteri);
 
 			centerText.setText(result.getCredit());
 			centerText.setTextColor(Color.parseColor("#228B22"));
@@ -233,6 +256,18 @@ public class ISoldi extends SherlockActivity {
 			snackText.setVisibility(View.VISIBLE);
 
 		} else if (amount >= 4.40f && amount < 4.90f) {
+			
+			menuCompRidotti = new ArrayList<String>();
+			menuCompRidotti.add(chosenMenu.Ridotto1.toString());
+			menuCompRidotti.add(chosenMenu.Ridotto2.toString());
+			menuCompRidotti.add(chosenMenu.Ridotto3.toString());
+			menuCompRidotti.add(chosenMenu.Ridotto4.toString());
+			menuCompRidotti.add(chosenMenu.Snack1.toString());
+			menuCompRidotti.add(chosenMenu.Snack2.toString());
+			menuCompRidotti.add(chosenMenu.Snack3.toString());
+			menuCompRidotti.add(chosenMenu.Snack4.toString());
+			
+			menu_compatibles.addAll(menuCompRidotti);
 
 			centerText.setText(result.getCredit());
 			centerText.setTextColor(Color.parseColor("#FFCD00"));
@@ -248,6 +283,14 @@ public class ISoldi extends SherlockActivity {
 			snackText.setVisibility(View.VISIBLE);
 
 		} else if (amount >= 3.10f && amount < 4.40f) {
+			
+			menuCompSnack = new ArrayList<String>();
+			menuCompSnack.add(chosenMenu.Snack1.toString());
+			menuCompSnack.add(chosenMenu.Snack2.toString());
+			menuCompSnack.add(chosenMenu.Snack3.toString());
+			menuCompSnack.add(chosenMenu.Snack4.toString());
+			
+			menu_compatibles.addAll(menuCompSnack);
 
 			centerText.setText(result.getCredit());
 			centerText.setTextColor(Color.parseColor("#FF8800"));
@@ -421,7 +464,7 @@ public class ISoldi extends SherlockActivity {
 						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
-
+				
 				getAmount(result);
 
 				isoldi_layout_view.setVisibility(View.VISIBLE);

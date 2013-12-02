@@ -3,7 +3,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
@@ -13,12 +12,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu.chosenMenu;
 import eu.trentorise.smartcampus.ifame.utils.BuildMenuController;
 
 public class ComponiMenu extends SherlockActivity {
@@ -72,6 +68,8 @@ public class ComponiMenu extends SherlockActivity {
 	
 	public static HashMap<String, Boolean> mapCheckedMenuTrue;
 	
+	 public static final String SELECTED_MENU = "selected_menu";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -100,12 +98,40 @@ public class ComponiMenu extends SherlockActivity {
 					return;
 				}
 				
+				
 				menuCompatibles = checkMenu.getCompatiblesMenu();
 				mapCheckedMenuTrue = checkMenu.getCheckedItems(); 
+				
+				
+				
 				
 				// TODO Auto-generated method stub
 				Intent i = new Intent(ComponiMenu.this,
 						Tipologie_menu_fr.class);
+				
+				String menu = menuCompatibles.get(menuCompatibles.size()-1);           
+                if (menu.equals(chosenMenu.Intero))
+                	menu = "Intero";
+                else if (menu.equals(chosenMenu.Ridotto1))
+                	menu = "Ridotto";
+                else if (menu.equals(chosenMenu.Ridotto2))
+                	menu = "Ridotto";
+                else if (menu.equals(chosenMenu.Ridotto3))
+                	menu = "Ridotto";
+                else if (menu.equals(chosenMenu.Ridotto4))
+                	menu = "Ridotto";
+                else if (menu.equals(chosenMenu.Snack1))
+                	menu = "Snack";
+                else if (menu.equals(chosenMenu.Snack2))
+                	menu = "Snack";
+                else if (menu.equals(chosenMenu.Snack3))
+                	menu = "Snack";
+                else if (menu.equals(chosenMenu.Snack4))
+                	menu = "Snack";
+
+
+                i.putExtra(HAS_CALLED_TIPOLOGIE, true);
+                i.putExtra(SELECTED_MENU, menu);
 
 				i.putStringArrayListExtra(MENU_COMPATIBLES, menuCompatibles);
 				i.putExtra(MENU_CHECKED_TRUE, mapCheckedMenuTrue);

@@ -20,7 +20,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
 import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
@@ -100,7 +99,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 		i = getSherlockActivity().getIntent();
 		boolean isCalled = i.getBooleanExtra(
-				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+				ComponiMenu.HAS_CALLED_TIPOLOGIE, false);
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_buyable);
 
@@ -658,7 +657,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		}
 
 		// SNACK 4
-		if (selected_menu.contains(chosenMenu.Snack3.toString())) {
+		if (selected_menu.contains(chosenMenu.Snack4.toString())) {
 
 			TextView snack4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack4_titolo);
