@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -10,11 +11,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.activity.IFretta;
+import eu.trentorise.smartcampus.ifame.comparator.MensaComparator;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
-import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -76,7 +78,7 @@ public class MensaUtils {
 				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 
-		editor.putString(MENSA_LIST, JsonUtils.toJSON(mensaList));
+		editor.putString(MENSA_LIST, Utils.convertToJSON(mensaList));
 
 		// boolean isInit = editor.commit();
 		// editor.putBoolean(INIZIALIZED, isInit);
@@ -91,7 +93,7 @@ public class MensaUtils {
 		ArrayList<Mensa> listaMense = null;
 		if (pref.contains(MENSA_LIST)) {
 			String json = pref.getString(MENSA_LIST, null);
-			listaMense = (ArrayList<Mensa>) JsonUtils.toObjectList(json,
+			listaMense = (ArrayList<Mensa>) Utils.convertJSONToObjects(json,
 					Mensa.class);
 		}
 		// otherwise a check is required in the task or nullpointerexeption
@@ -106,7 +108,7 @@ public class MensaUtils {
 				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 
-		editor.putString(FAVOURITE_MENSA, JsonUtils.toJSON(mensa));
+		editor.putString(FAVOURITE_MENSA, Utils.convertToJSON(mensa));
 		editor.putString(FAVOURITE_MENSA_NAME, mensa.getMensa_nome());
 
 		return editor.commit();
@@ -117,8 +119,8 @@ public class MensaUtils {
 				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
 		if (pref.contains(FAVOURITE_MENSA)) {
-			return JsonUtils.toObject(pref.getString(FAVOURITE_MENSA, ""),
-					Mensa.class);
+			return Utils.convertJSONToObject(
+					pref.getString(FAVOURITE_MENSA, ""), Mensa.class);
 		}
 		return null;
 	}
@@ -176,8 +178,9 @@ public class MensaUtils {
 
 				if (response.getHttpStatus() == 200) {
 
-					ArrayList<Mensa> listfromTheWeb = (ArrayList<Mensa>) JsonUtils
-							.toObjectList(response.getBody(), Mensa.class);
+					ArrayList<Mensa> listfromTheWeb = (ArrayList<Mensa>) Utils
+							.convertJSONToObjects(response.getBody(),
+									Mensa.class);
 					ArrayList<Mensa> savedList = getMensaList(context);
 
 					// set last update
@@ -191,6 +194,9 @@ public class MensaUtils {
 					}
 
 					if (!savedListIsUpdated) {
+
+						Collections.sort(listfromTheWeb, new MensaComparator());
+
 						setMensaList(context, listfromTheWeb);
 						// set the first one as favourite because one is always
 						// required
