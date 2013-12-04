@@ -22,6 +22,7 @@ import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 /**
  * Custom dialog interface to add or edit own review
@@ -43,10 +44,11 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				getSherlockActivity());
 		// Inflate and set the layout for the dialog, pass null as the parent
 		// view because its going in the dialog layout
-		LayoutInflater inflator = getActivity().getLayoutInflater();
+		LayoutInflater inflator = getSherlockActivity().getLayoutInflater();
 		View dialogView = inflator.inflate(
 				R.layout.layout_igradito_dialog_insert_review, null);
 
@@ -54,9 +56,10 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 		Bundle argsBundle = getArguments();
 		final Mensa mensa = (Mensa) argsBundle.get(MENSA);
 		final Piatto piatto = (Piatto) argsBundle.get(PIATTO);
-		final String userId = argsBundle.getString(USERID);
 		String mioCommento = argsBundle.getString(COMMENTO);
 		Integer mioVoto = argsBundle.getInt(VOTO);
+
+		final String userId = UserIdUtils.getUserId(getSherlockActivity());
 
 		// Add a title to the dialog
 		builder.setTitle(mensa.getMensa_nome());
@@ -87,7 +90,7 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 						userReviewEditText.post(new Runnable() {
 							@Override
 							public void run() {
-								InputMethodManager imm = (InputMethodManager) getActivity()
+								InputMethodManager imm = (InputMethodManager) getSherlockActivity()
 										.getSystemService(
 												Context.INPUT_METHOD_SERVICE);
 								imm.showSoftInput(userReviewEditText,
@@ -98,22 +101,6 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				});
 		userReviewEditText.requestFocus();
 
-		// userReviewEditText.setOnKeyListener(new OnKeyListener() {
-		// public boolean onKey(View v, int keyCode, KeyEvent event) {
-		// if (event.getAction() == KeyEvent.ACTION_DOWN) {
-		// switch (keyCode) {
-		// case KeyEvent.KEYCODE_DPAD_CENTER:
-		// case KeyEvent.KEYCODE_ENTER:
-		//
-		// return true;
-		// default:
-		// break;
-		// }
-		// }
-		// return false;
-		// }
-		// });
-			
 		// Add Listener to valutation bar
 		barUserValutation
 				.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -147,13 +134,14 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 						giudizioDataToPost.voto = (float) voto;
 
 						new PostGiudizioAsyncTask(
-								(IGraditoVisualizzaRecensioni) getActivity(),
+								(IGraditoVisualizzaRecensioni) getSherlockActivity(),
 								giudizioDataToPost).execute(
 								mensa.getMensa_id(), piatto.getPiatto_id());
 
 						getDialog().cancel();
 					}
 				});
+
 		builder.setNegativeButton(
 				getString(R.string.iGradito_dialog_button_cancel_text),
 				new DialogInterface.OnClickListener() {
@@ -161,6 +149,7 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 						getDialog().cancel();
 					}
 				});
+
 		return builder.create();
 	}
 

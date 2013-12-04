@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_toast_favourite_mensa"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:drawable/toast_frame"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/iFretta_favourite_canteen_is"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/abs__bright_foreground_holo_dark" />
+
+    <TextView
+        android:id="@+id/text_favourite_canteen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowColor="#BB000000"
+        android:shadowRadius="2.75"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FF4040" />
+
+</LinearLayout>

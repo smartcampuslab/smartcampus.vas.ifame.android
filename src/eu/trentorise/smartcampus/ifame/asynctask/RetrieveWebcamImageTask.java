@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
@@ -16,7 +16,7 @@ import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 
 public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 
-	// private Context context;
+	private Context context;
 	private WebcamAspectRatioImageView img_view;
 	// private ProgressDialog progressDialog;
 
@@ -24,7 +24,7 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 
 	public RetrieveWebcamImageTask(Context context,
 			WebcamAspectRatioImageView img_view, MenuItem refresh) {
-		// this.context = context;
+		this.context = context;
 		this.img_view = img_view;
 		this.refreshButton = refresh;
 	}
@@ -64,10 +64,14 @@ public class RetrieveWebcamImageTask extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPostExecute(Bitmap result) {
 		if (result != null) {
-			img_view.setImageBitmap(result);
-		}
 
-		img_view.setVisibility(View.VISIBLE);
+			img_view.setImageBitmap(result);
+
+		} else {
+			Toast.makeText(context,
+					context.getString(R.string.errorLoadingWebcamImage),
+					Toast.LENGTH_SHORT).show();
+		}
 
 		if (refreshButton != null) {
 			refreshButton.collapseActionView();

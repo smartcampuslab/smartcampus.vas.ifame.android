@@ -24,21 +24,24 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 
 public class MensaUtils {
 
-	// 24 h * 60 m * 60 s * 1000 ms
-	private static final long ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
+	/**
+	 * This is the time between two updates of the canteens available list
+	 * 
+	 * 24 h * 60 m * 60 s * 1000 ms
+	 */
+	private static final long TIME_IN_MILLIS = 24 * 60 * 60 * 1000;
 
-	private final static String FAVOURITE_MENSA_SHARED_PREFERENCES_NAME = "favourite_mensa_shared_preferences";
+	private final static String FAVOURITE_MENSA_SHARED_PREFERENCES = "favourite_mensa_shared_preferences";
 
-	// private final static String INIZIALIZED = "is_inizialized";
 	private final static String MENSA_LIST = "mensa_list";
-	private final static String FAVOURITE_MENSA = "favourite_mensa";
-	private final static String FAVOURITE_MENSA_NAME = "favourite_mensa";
+	private final static String FAVOURITE_MENSA = "favourite_mensa_object";
+	private final static String FAVOURITE_MENSA_NAME = "favourite_mensa_name";
 
 	private final static String LAST_UPDATE = "get_last_update";
 
 	private static boolean setLastUpdateNow(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 
 		Long currentTimeInMillis = new Date().getTime();
@@ -50,45 +53,39 @@ public class MensaUtils {
 	/** returns true if an update is required false instead */
 	private static boolean updateRequired(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
 		if (pref.contains(LAST_UPDATE)) {
 
 			Long lastUpdate = pref.getLong(LAST_UPDATE, -1);
 			Long now = new Date().getTime();
 
-			return (now - lastUpdate) > ONE_DAY_IN_MILLIS;
+			return (now - lastUpdate) > TIME_IN_MILLIS;
 		} else {
 			return true;
 		}
 	}
 
-	// public static boolean isInit(Context context) {
-	// SharedPreferences pref = context.getSharedPreferences(
-	// FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-	// if (pref.contains(INIZIALIZED)) {
-	// return pref.getBoolean(INIZIALIZED, false);
-	// } else {
-	// return false;
-	// }
-	// }
-
 	private static boolean setMensaList(Context context, List<Mensa> mensaList) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 
 		editor.putString(MENSA_LIST, Utils.convertToJSON(mensaList));
 
-		// boolean isInit = editor.commit();
-		// editor.putBoolean(INIZIALIZED, isInit);
-
 		return editor.commit();
 	}
 
+	/**
+	 * 
+	 * When the app is initialized this will return always the canteens list
+	 * otherwise get the list empty is a signal that application requires the
+	 * initialization
+	 * 
+	 */
 	public static ArrayList<Mensa> getMensaList(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
 		ArrayList<Mensa> listaMense = null;
 		if (pref.contains(MENSA_LIST)) {
@@ -105,7 +102,7 @@ public class MensaUtils {
 
 	public static boolean setFavouriteMensa(Context context, Mensa mensa) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 
 		editor.putString(FAVOURITE_MENSA, Utils.convertToJSON(mensa));
@@ -116,7 +113,7 @@ public class MensaUtils {
 
 	public static Mensa getFavouriteMensa(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
 		if (pref.contains(FAVOURITE_MENSA)) {
 			return Utils.convertJSONToObject(
@@ -127,7 +124,7 @@ public class MensaUtils {
 
 	public static String getFavouriteMensaName(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(
-				FAVOURITE_MENSA_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+				FAVOURITE_MENSA_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
 		String name = "";
 		if (pref.contains(FAVOURITE_MENSA_NAME)) {
@@ -209,6 +206,7 @@ public class MensaUtils {
 						return false;
 					}
 				} else {
+					/** caso un po critico che non dovrebbe accadere */
 					// response != 200
 					return false;
 				}
@@ -220,8 +218,8 @@ public class MensaUtils {
 		}
 
 		@Override
-		protected void onPostExecute(Boolean menseAreUpdated) {
-			super.onPostExecute(menseAreUpdated);
+		protected void onPostExecute(Boolean showFavouriteMensaActivity) {
+			super.onPostExecute(showFavouriteMensaActivity);
 
 			if (progressdialog != null) {
 				progressdialog.dismiss();
@@ -229,7 +227,7 @@ public class MensaUtils {
 			// solo se mi ritorna true devofare qualcosa perche
 			// la lista è cambiata e devo far partire l' activity per settare
 			// la nuova mensa preferita e mostrare la lista aggiornata
-			if (menseAreUpdated) {
+			if (showFavouriteMensaActivity) {
 				Intent intent = new Intent(context, IFretta.class);
 				context.startActivity(intent);
 			}

@@ -3,9 +3,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.actionbarsherlock.app.SherlockActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +10,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu.chosenMenu;
 import eu.trentorise.smartcampus.ifame.utils.BuildMenuController;
 
 public class ComponiMenu extends SherlockActivity {
@@ -63,49 +61,58 @@ public class ComponiMenu extends SherlockActivity {
 	public static chosenMenu menu;
 	public static final String MENU_COMPATIBLES = "menu_compatibles";
 	public static final String MENU_CHECKED_TRUE = "menu_checked_true";
-	
+
 	public ArrayList<String> menuCompatibles;
-	
+
 	public BuildMenuController checkMenu;
 
 	public static final String HAS_CALLED_TIPOLOGIE = "has_called_tipologie";
-	
+
 	public static HashMap<String, Boolean> mapCheckedMenuTrue;
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.layout_fai_il_tuo_menu);
+
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		componiMenu();
 
-		
 		Button confirm = (Button) findViewById(R.id.confirm_menu_btn);
 		confirm.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-				if(checkMenu == null){
+
+				if (checkMenu == null) {
 					Toast.makeText(
-							getApplicationContext(), 
-							getResources().getString(R.string.error_compose_menu), 
-							Toast.LENGTH_LONG
-						).show();
-					
+							getApplicationContext(),
+							getResources().getString(
+									R.string.error_compose_menu),
+							Toast.LENGTH_LONG).show();
+
 					return;
 				}
-				
+
 				menuCompatibles = checkMenu.getCompatiblesMenu();
-				mapCheckedMenuTrue = checkMenu.getCheckedItems(); 
-				
+				mapCheckedMenuTrue = checkMenu.getCheckedItems();
+
 				// TODO Auto-generated method stub
-				Intent i = new Intent(ComponiMenu.this,
-						Tipologie_menu_fr.class);
+				Intent i = new Intent(ComponiMenu.this, Tipologie_menu_fr.class);
 
 				i.putStringArrayListExtra(MENU_COMPATIBLES, menuCompatibles);
 				i.putExtra(MENU_CHECKED_TRUE, mapCheckedMenuTrue);
@@ -113,26 +120,23 @@ public class ComponiMenu extends SherlockActivity {
 				startActivity(i);
 
 			}
-			
+
 		});
-	
 
 	}
 
 	public void onMenuCheckboxClicked(View view) {
 		// Is the view now checked?
 		boolean checked = ((CheckBox) view).isChecked();
-		
-		List<CheckBox> checkClickableUpdated = new ArrayList<CheckBox>();
-		
-		checkMenu = new BuildMenuController(primo,
-				pasta_station, insalatona, panino, trancio_pizza, pizza,
-				piatto_freddo, secondo, contorno1, contorno2, dessert, caffe,
-				acqua, salsa2, pane1, pane2);
-		
-		checkClickableUpdated = checkMenu.updatePossibilitiesMenu();
-		
 
+		List<CheckBox> checkClickableUpdated = new ArrayList<CheckBox>();
+
+		checkMenu = new BuildMenuController(primo, pasta_station, insalatona,
+				panino, trancio_pizza, pizza, piatto_freddo, secondo,
+				contorno1, contorno2, dessert, caffe, acqua, salsa2, pane1,
+				pane2);
+
+		checkClickableUpdated = checkMenu.updatePossibilitiesMenu();
 
 	}
 
@@ -187,9 +191,6 @@ public class ComponiMenu extends SherlockActivity {
 		final View salsa2_view = (View) findViewById(R.id.salsa2_include);
 		final View pane1_view = (View) findViewById(R.id.pane1_include);
 		final View pane2_view = (View) findViewById(R.id.pane2_include);
-
-
-		
 
 	}
 }

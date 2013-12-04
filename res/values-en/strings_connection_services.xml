@@ -7,7 +7,10 @@
     <string name="errorLikeNotDeleted">Oooops! Like not deleted. Try again</string>
     <string name="errorNotLiked">Oooops! Not liked. Try again</string>
     <string name="loading">Loading...</string>
+    <string name="initializing">Initializing the app...</string>
     <string name="errorLoginRequired">Login is required to use iFame</string>
+    <string name="errorLoadingWebcamImage">There was an error loading the webcam image. Check your connection and/or click the refresh button</string>
+    <string name="errorLoadingReviews">There was an error loading the reviews. Check your connection and retry</string>
     <!-- Toast connection -->
 
 </resources>

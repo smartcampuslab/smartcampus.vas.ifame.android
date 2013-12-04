@@ -20,7 +20,7 @@ import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.IGraditoPiattoListAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetPiattiIGraditoTask;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 
 /**
  * This Activity shows the list of dishes for a given mensa
@@ -29,8 +29,6 @@ import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
 public class IGradito extends SherlockActivity {
 
 	private IGraditoPiattoListAdapter piattiListAdapter;
-
-	// private MensaAdapter mensaAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,10 +39,10 @@ public class IGradito extends SherlockActivity {
 		// mensaAdapter = new MensaAdapter(IGradito.this);
 		piattiListAdapter = new IGraditoPiattoListAdapter(IGradito.this);
 
-		// // setup the spinner
-		// final Spinner menseSpinner = (Spinner)
-		// findViewById(R.id.spinner_portata);
-		// menseSpinner.setAdapter(mensaAdapter);
+		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
+			new GetPiattiIGraditoTask(IGradito.this, piattiListAdapter)
+					.execute();
+		}
 
 		// setup the listview
 		ListView piattiListView = (ListView) findViewById(R.id.list_view_igradito);
@@ -72,15 +70,6 @@ public class IGradito extends SherlockActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		if (ConnectionUtils.isUserConnectedToInternet(getApplicationContext())) {
-			// new GetMenseTask(IGradito.this, mensaAdapter).execute();
-			new GetPiattiIGraditoTask(IGradito.this, piattiListAdapter)
-					.execute();
-		} else {
-			ConnectionUtils
-					.errorToastTnternetConnectionNeeded(getApplicationContext());
-			finish();
-		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@
     android:id="@+id/list_ifretta"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
+    android:drawableRight="@drawable/ic_action_favourites_black"
     android:gravity="left|center_vertical"
-    android:padding="12dp"
+    android:padding="10dp"
     android:textAppearance="?android:attr/textAppearanceMedium" />

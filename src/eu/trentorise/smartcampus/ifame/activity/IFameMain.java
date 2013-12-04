@@ -17,6 +17,7 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
@@ -30,7 +31,10 @@ public class IFameMain extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.ifame_main, menu);
+		// se l'app è stata inizializzata mostro la stellina
+		if (!MensaUtils.getMensaList(IFameMain.this).isEmpty()) {
+			getSupportMenuInflater().inflate(R.menu.ifame_main, menu);
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -39,8 +43,11 @@ public class IFameMain extends SherlockActivity {
 		if (item.getItemId() == R.id.favourite_mensa_ifame_main) {
 			Intent selezionaMensa = new Intent(this, IFretta.class);
 			startActivity(selezionaMensa);
+			return true;
+
+		} else {
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -55,7 +62,6 @@ public class IFameMain extends SherlockActivity {
 				// retrieve the mensa list and save it just to have always the
 				// updated link and datas if there is somehow an update
 				MensaUtils.getAndSaveMensaList(IFameMain.this);
-
 				// get user id and save
 				UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
 			}
@@ -65,17 +71,7 @@ public class IFameMain extends SherlockActivity {
 		}
 
 		// Add the listeners to the 4 buttons in the home of iFame
-		Button iFrettaButton = (Button) findViewById(R.id.iFretta_button);
-		iFrettaButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				Intent i = new Intent(IFameMain.this, IFrettaDetails.class);
-				startActivity(i);
-			}
-		});
-
+		// iDECISO
 		Button iDecisoButton = (Button) findViewById(R.id.iDeciso_button);
 		iDecisoButton.setOnClickListener(new OnClickListener() {
 
@@ -85,29 +81,42 @@ public class IFameMain extends SherlockActivity {
 				startActivity(i);
 			}
 		});
+		// iFRETTA
+		Button iFrettaButton = (Button) findViewById(R.id.iFretta_button);
+		iFrettaButton.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
+						IFrettaDetails.class);
+			}
+		});
+		// iGRADITO
 		Button iGraditoButton = (Button) findViewById(R.id.iGradito_button);
 		iGraditoButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(IFameMain.this, IGradito.class);
-				startActivity(i);
+				IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
+						IGradito.class);
 			}
 		});
-
+		// iSOLDI
 		Button iSoldiButton = (Button) findViewById(R.id.iSoldi_button);
 		iSoldiButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(IFameMain.this, ISoldi.class);
-				startActivity(i);
+				IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
+						ISoldi.class);
 			}
 		});
 
 	}
 
+	// *******************************************************************************
+	// still required also with the login in the launcher??????????????
+	// *******************************************************************************
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -130,6 +139,8 @@ public class IFameMain extends SherlockActivity {
 			}
 		}
 	}
+
+	// *******************************************************************************
 
 	public static SCAccessProvider getAccessProvider() {
 		if (accessProvider == null)

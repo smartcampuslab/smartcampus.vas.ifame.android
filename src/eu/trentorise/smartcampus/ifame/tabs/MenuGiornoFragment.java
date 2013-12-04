@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -15,7 +16,7 @@ import eu.trentorise.smartcampus.ifame.adapter.MenuDelGiornoPiattiAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetMenuDelGiornoTask;
 import eu.trentorise.smartcampus.ifame.dialog.WebSearchDialog;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 
 public class MenuGiornoFragment extends SherlockFragment {
 
@@ -26,13 +27,15 @@ public class MenuGiornoFragment extends SherlockFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dialog = new WebSearchDialog();
-		mPiattiAdapter = new MenuDelGiornoPiattiAdapter(getActivity());
-		if (ConnectionUtils.isUserConnectedToInternet(getActivity())) {
-			new GetMenuDelGiornoTask(getActivity(), mPiattiAdapter).execute();
+		mPiattiAdapter = new MenuDelGiornoPiattiAdapter(getSherlockActivity());
+		if (IFameUtils.isUserConnectedToInternet(getSherlockActivity())) {
+			new GetMenuDelGiornoTask(getSherlockActivity(), mPiattiAdapter)
+					.execute();
 		} else {
-			ConnectionUtils.errorToastTnternetConnectionNeeded(getActivity()
-					.getApplicationContext());
-			getActivity().finish();
+			Toast.makeText(getSherlockActivity(),
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
+			getSherlockActivity().finish();
 		}
 	}
 
@@ -46,8 +49,8 @@ public class MenuGiornoFragment extends SherlockFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		// setup the listview
-		ListView lista_piatti_view = (ListView) getActivity().findViewById(
-				R.id.lista_piatti);
+		ListView lista_piatti_view = (ListView) getSherlockActivity()
+				.findViewById(R.id.lista_piatti);
 		lista_piatti_view.setAdapter(mPiattiAdapter);
 		lista_piatti_view.setOnItemClickListener(new OnItemClickListener() {
 			@Override

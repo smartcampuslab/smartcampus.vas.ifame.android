@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -14,11 +19,10 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaAdapter;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
+import eu.trentorise.smartcampus.ifame.utils.ListViewUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 
 public class IFretta extends SherlockActivity {
-
-	// public final static String IS_THE_FIRST_TIME = "first_time_or_update";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,12 @@ public class IFretta extends SherlockActivity {
 
 		// initialize and setup the adapter with the listener
 		final MensaAdapter adapterMensaList = new MensaAdapter(this);
+
+		ArrayList<Mensa> lista = MensaUtils.getMensaList(this);
+		for (Mensa mensa : lista) {
+			adapterMensaList.add(mensa);
+		}
+
 		mListViewMensa.setAdapter(adapterMensaList);
 		mListViewMensa.setOnItemClickListener(new OnItemClickListener() {
 
@@ -46,18 +56,45 @@ public class IFretta extends SherlockActivity {
 			}
 		});
 
-		ArrayList<Mensa> lista = MensaUtils.getMensaList(this);
-		for (Mensa mensa : lista) {
-			adapterMensaList.add(mensa);
-		}
-		adapterMensaList.notifyDataSetChanged();
+		ListViewUtils.setListViewHeightBasedOnChildren(mListViewMensa);
+
+		Button done = (Button) findViewById(R.id.favourite_mensa_select_done);
+		done.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				showToastFavouriteCanteen();
+				onBackPressed();
+			}
+		});
+	}
+
+	private void showToastFavouriteCanteen() {
+
+		View toastLayout = getLayoutInflater().inflate(
+				R.layout.layout_custom_toast_favourite_mensa,
+				(ViewGroup) findViewById(R.id.custom_toast_favourite_mensa));
+
+		TextView mensaName = (TextView) toastLayout
+				.findViewById(R.id.text_favourite_canteen);
+		mensaName.setText(MensaUtils.getFavouriteMensaName(IFretta.this));
+
+		Toast customToast = new Toast(IFretta.this);
+		customToast.setDuration(Toast.LENGTH_SHORT);
+		customToast.setView(toastLayout);
+		customToast.show();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
 			onBackPressed();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 }

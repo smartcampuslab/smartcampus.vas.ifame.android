@@ -15,11 +15,11 @@ import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 public class MensaAdapter extends ArrayAdapter<Mensa> {
 
 	private LayoutInflater inflater;
-	Drawable icon;
+	private Drawable icon_selected;
 
 	public MensaAdapter(Context context) {
 		super(context, android.R.layout.simple_list_item_1);
-		icon = context.getResources().getDrawable(
+		icon_selected = context.getResources().getDrawable(
 				R.drawable.ic_action_favourite_selected);
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,29 +40,30 @@ public class MensaAdapter extends ArrayAdapter<Mensa> {
 				.getFavouriteMensaName(getContext()))) {
 			text_view_nome_mensa.setTextColor(Color.parseColor("#CC0000"));
 			text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null,
-					null, icon, null);
+					null, icon_selected, null);
 			// text_view_nome_mensa.setTypeface(null, Typeface.BOLD);
 		} else {
-			text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null,
-					null, null, null);
+			// text_view_nome_mensa.setCompoundDrawablesWithIntrinsicBounds(null,
+			// null, null, null);
 			text_view_nome_mensa.setTextColor(Color.BLACK);
 		}
 
 		return convertView;
 	}
 
-	@Override
-	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		View spinView;
-
-		spinView = inflater.inflate(
-				R.layout.layout_igradito_spinner_mensa_dropdown, null);
-
-		Mensa mensa = (Mensa) getItem(position);
-		TextView nome_mensa = (TextView) spinView
-				.findViewById(R.id.textview_nome_mensa);
-		nome_mensa.setText(mensa.getMensa_nome());
-
-		return spinView;
-	}
+	// @Override
+	// public View getDropDownView(int position, View convertView, ViewGroup
+	// parent) {
+	// View spinView;
+	//
+	// spinView = inflater.inflate(
+	// R.layout.layout_igradito_spinner_mensa_dropdown, null);
+	//
+	// Mensa mensa = (Mensa) getItem(position);
+	// TextView nome_mensa = (TextView) spinView
+	// .findViewById(R.id.textview_nome_mensa);
+	// nome_mensa.setText(mensa.getMensa_nome());
+	//
+	// return spinView;
+	// }
 }

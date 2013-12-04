@@ -42,7 +42,6 @@ public class MensaSpinnerAdapter extends ArrayAdapter<Mensa> {
 		text_view_nome_mensa.setTextSize(20);
 
 		Mensa mensa = getItem(position);
-
 		text_view_nome_mensa.setText(mensa.getMensa_nome());
 
 		return convertView;
@@ -61,7 +60,8 @@ public class MensaSpinnerAdapter extends ArrayAdapter<Mensa> {
 		// se è la preferita metto il testo rosso
 		if (mensa.getMensa_nome().equalsIgnoreCase(
 				MensaUtils.getFavouriteMensaName(getContext()))) {
-			nome_mensa.setTextColor(Color.parseColor("#CC0000"));
+			convertView.setBackgroundColor(Color.parseColor("#CC0000"));
+			// nome_mensa.setTextColor();
 		}
 
 		nome_mensa.setText(mensa.getMensa_nome());

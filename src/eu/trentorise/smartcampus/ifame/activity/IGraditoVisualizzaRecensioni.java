@@ -25,12 +25,13 @@ import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
 import eu.trentorise.smartcampus.ifame.adapter.ReviewListAdapter;
-import eu.trentorise.smartcampus.ifame.asynctask.GetMenseTaskActionBar;
 import eu.trentorise.smartcampus.ifame.comparator.GiudizioComparator;
 import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
+import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
+import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
@@ -43,13 +44,13 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		implements OnNavigationListener {
 
-	public static final String MENSA = "mensa_extra";
 	public static final String PIATTO = "piatto_extra";
 
-	private MenuItem menuItem;
 	private ReviewListAdapter reviewListAdapter;
 	private Piatto piatto;
-	// private Mensa mensa;
+
+	private InsertReviewDialog insertReviewDialog;
+
 	private TextView giudizio_espresso_da_textview;
 	private TextView giudizio_medio_textview;
 	private TextView no_data_to_display_textview;
@@ -58,10 +59,10 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	private Integer mioVoto;
 	private String mioCommento;
 
-	// **********************************************
 	private MensaSpinnerAdapter mensaSpinnerAdapter;
 	private TextView nome_piatto_label;
-	private int currentPosition = 0;
+
+	private int currentTabSelected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,32 +86,27 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		nome_piatto_label.setText(piatto.getPiatto_nome());
 
 		mensaSpinnerAdapter = new MensaSpinnerAdapter(this);
-
-		// get list of comments
-		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-
-			new GetMenseTaskActionBar(this, mensaSpinnerAdapter).execute();
-
-			// just to be sure that userId is saved in sharedpreferences
-			UserIdUtils
-					.retrieveAndSaveUserId(IGraditoVisualizzaRecensioni.this);
-		} else {
-			Toast.makeText(IGraditoVisualizzaRecensioni.this,
-					getString(R.string.errorInternetConnectionRequired),
-					Toast.LENGTH_SHORT).show();
-			finish();
-			return;
+		List<Mensa> listaMense = MensaUtils.getMensaList(this);
+		for (Mensa mensa : listaMense) {
+			mensaSpinnerAdapter.add(mensa);
 		}
 
-		// setup actionbar (supportActionBar is initialized in super.onCreate())
-		ActionBar bar = getSupportActionBar();
-		bar.setDisplayShowTitleEnabled(false);
-		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		bar.setHomeButtonEnabled(true);
-		bar.setDisplayHomeAsUpEnabled(true);
-		// Set up the dropdown list navigation in the action bar.
-		bar.setListNavigationCallbacks(mensaSpinnerAdapter, this);
+		// just to be sure that userId is saved in sharedpreferences
+		UserIdUtils.retrieveAndSaveUserId(this);
 
+		// setup actionbar (supportActionBar is initialized in super.onCreate())
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
+		// Set up the dropdown list navigation in the action bar.
+		actionBar.setListNavigationCallbacks(mensaSpinnerAdapter, this);
+
+		// select favourite mensa by default
+		actionBar.setSelectedNavigationItem(mensaSpinnerAdapter
+				.getPosition(MensaUtils.getFavouriteMensa(this)));
 	}
 
 	@Override
@@ -123,9 +119,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_refresh:
-			onClickActionRefresh(item);
-			break;
 		case android.R.id.home:
 			onBackPressed();
 			break;
@@ -144,54 +137,30 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	private void showInsertReviewDialog() {
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		InsertReviewDialog insertReviewDialog = new InsertReviewDialog();
+
+		if (insertReviewDialog == null) {
+			insertReviewDialog = new InsertReviewDialog();
+		}
 
 		// put the data needed for showing the dialog in a bundle
 		Bundle dataForTheDialog = new Bundle();
 		dataForTheDialog.putSerializable(InsertReviewDialog.MENSA,
-				mensaSpinnerAdapter.getItem(currentPosition));
+				mensaSpinnerAdapter.getItem(getSupportActionBar()
+						.getSelectedNavigationIndex()));
 		dataForTheDialog.putSerializable(InsertReviewDialog.PIATTO, piatto);
 		dataForTheDialog.putInt(InsertReviewDialog.VOTO, mioVoto);
 		dataForTheDialog.putString(InsertReviewDialog.COMMENTO, mioCommento);
-		dataForTheDialog.putString(InsertReviewDialog.USERID,
-				UserIdUtils
-						.getUserId(IGraditoVisualizzaRecensioni.this));
 
 		// pass the bundle to the dialog and show
 		insertReviewDialog.setArguments(dataForTheDialog);
 		insertReviewDialog.show(fragmentManager, "insertReviewDialog");
 	}
 
-	private void onClickActionRefresh(MenuItem item) {
-		menuItem = item;
-		menuItem.setActionView(R.layout.actionbar_progressbar_circle);
-		menuItem.expandActionView();
-
-		// check for connection and get the reviews
-		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-			// clear the adapter
-			if (reviewListAdapter != null) {
-				reviewListAdapter.clear();
-				reviewListAdapter.notifyDataSetChanged();
-			}
-			// get the reviews
-			new GetGiudizioConnector().execute(
-					mensaSpinnerAdapter.getItem(currentPosition).getMensa_id(),
-					piatto.getPiatto_id());
-		} else {
-			Toast.makeText(IGraditoVisualizzaRecensioni.this,
-					getString(R.string.errorInternetConnectionRequired),
-					Toast.LENGTH_SHORT).show();
-			menuItem.collapseActionView();
-			menuItem.setActionView(null);
-		}
-	}
-
 	/**
 	 * CONNECTOR TO GET THE LIST OF COMMENTS
 	 */
 
-	private class GetGiudizioConnector extends
+	private class RetrieveGiudiziTask extends
 			AsyncTask<Long, Void, List<Giudizio>> {
 
 		private ProgressDialog progressDialog;
@@ -199,11 +168,12 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog
-					.show(IGraditoVisualizzaRecensioni.this, "iGradito",
-							"Loading...");
-			// progressDialog.setCancelable(true);
-			// progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog = ProgressDialog.show(
+					IGraditoVisualizzaRecensioni.this,
+					getString(R.string.iGradito_title_activity),
+					getString(R.string.loading));
+			progressDialog.setCancelable(true);
+			progressDialog.setCanceledOnTouchOutside(false);
 		}
 
 		@Override
@@ -247,9 +217,9 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			if (result == null) {
 				progressDialog.dismiss();
 				Toast.makeText(IGraditoVisualizzaRecensioni.this,
-						getString(R.string.errorSomethingWentWrong),
+						getString(R.string.errorLoadingReviews),
 						Toast.LENGTH_SHORT).show();
-				finish();
+				// finish();
 			} else {
 				createGiudiziList(result);
 				progressDialog.dismiss();
@@ -257,7 +227,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		}
 	}
 
-	/*
+	/**
 	 * 
 	 * METHOD CALLED AFTER POST OR GET GIUDIZI FROM THE EWB
 	 */
@@ -284,10 +254,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			avg = avg / (float) review_size;
 			giudizio_medio_textview.setText(ReviewListAdapter
 					.formatUserVoto(avg));
-
-			// check per scrivere 4 users or 4 utenti
-			// se è inglese (en, en_US, en_UK, en_CA) allora inglese altrimenti
-			// italiano
 
 			giudizio_espresso_da_textview.setText(review_size
 					+ " "
@@ -332,25 +298,42 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			// no review are avaiable
 			mioCommento = "";
 			mioVoto = 5;
+
 			giudiziListview.setVisibility(View.GONE);
+
 			no_data_to_display_textview
 					.setText(getString(R.string.iGradito_no_reviews_available));
 			no_data_to_display_textview.setVisibility(View.VISIBLE);
+
+			String notAvailable = getString(R.string.iGradito_not_available);
+
+			giudizio_medio_textview.setText(notAvailable);
+			giudizio_espresso_da_textview.setText(notAvailable);
 		}
 
-		// PER IL CARICAMENTO NELL ACTION BAR
-		if (menuItem != null) {
-			menuItem.collapseActionView();
-			menuItem.setActionView(null);
-		}
 	}
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		currentPosition = itemPosition;
-		new GetGiudizioConnector().execute(
-				mensaSpinnerAdapter.getItem(itemPosition).getMensa_id(),
-				piatto.getPiatto_id());
+		// se sono connesso richiedo i giudizi
+		if (IFameUtils.isUserConnectedToInternet(this)) {
+			currentTabSelected = itemPosition;
+			new RetrieveGiudiziTask().execute(
+					mensaSpinnerAdapter.getItem(itemPosition).getMensa_id(),
+					piatto.getPiatto_id());
+		} else {
+			// non sono connesso mostro il toast e torno alla tab precedente
+			// controllo l'item per evitare la ricorsione di chiamate
+			if (currentTabSelected != itemPosition) {
+
+				getSupportActionBar().setSelectedNavigationItem(
+						currentTabSelected);
+
+				Toast.makeText(IGraditoVisualizzaRecensioni.this,
+						getString(R.string.errorInternetConnectionRequired),
+						Toast.LENGTH_SHORT).show();
+			}
+		}
 		return false;
 	}
 }

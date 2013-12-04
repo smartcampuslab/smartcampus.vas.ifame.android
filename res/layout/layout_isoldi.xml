@@ -39,24 +39,23 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="left|center"
-                android:text="444"
                 android:textSize="40sp" />
         </LinearLayout>
 
-<!--         <TextView -->
-<!--             android:id="@+id/isoldi_demo_text" -->
-<!--             android:layout_width="match_parent" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:gravity="center" -->
-<!--             android:text="(only for demonstration purpose)" -->
-<!--             android:textSize="10sp" /> -->
+        <!-- <TextView -->
+        <!-- android:id="@+id/isoldi_demo_text" -->
+        <!-- android:layout_width="match_parent" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:gravity="center" -->
+        <!-- android:text="(only for demonstration purpose)" -->
+        <!-- android:textSize="10sp" /> -->
 
         <TextView
             android:id="@+id/isoldi_bottom_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="ricarica"
+            android:text="@string/iSoldi_devi_ricaricare"
             android:textSize="25sp" />
 
         <TextView
@@ -65,9 +64,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
+            android:drawableRight="@drawable/arrow_dark"
             android:text="@string/iDeciso_menu_types_intero"
             android:textSize="21sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/isoldi_ridotto_text"
@@ -75,9 +75,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
+            android:drawableRight="@drawable/arrow_dark"
             android:text="@string/iDeciso_menu_types_ridotto"
             android:textSize="21sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/isoldi_snack_text"
@@ -85,12 +86,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
+            android:drawableRight="@drawable/arrow_dark"
             android:text="@string/iDeciso_menu_types_snack"
             android:textSize="21sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <ToggleButton
-            android:visibility="gone"
             android:id="@+id/isoldi_statistics_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,7 +99,8 @@
             android:background="#2BA63B"
             android:textColor="#FFFFFF"
             android:textOff="@string/iSoldi_statistic_button_text"
-            android:textOn="@string/iSoldi_statistic_button_text" />
+            android:textOn="@string/iSoldi_statistic_button_text"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/user_stats"

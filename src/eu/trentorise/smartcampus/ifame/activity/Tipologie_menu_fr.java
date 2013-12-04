@@ -8,7 +8,6 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
@@ -24,43 +23,29 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 	};
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
 			onBackPressed();
-		}
-		return super.onOptionsItemSelected(item);
+			return true;
 
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		String selected_menu = getIntent().getStringExtra(
-				Fai_il_tuo_menu.SELECTED_MENU);
-
-		ArrayList<String> menu_compatibles = getIntent()
-				.getStringArrayListExtra(ComponiMenu.MENU_COMPATIBLES);
-		
-		HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) getIntent().getSerializableExtra(ComponiMenu.MENU_CHECKED_TRUE);
-
-		// getSupportActionBar().setDisplayShowHomeEnabled(false);
-		// getSupportActionBar().setDisplayShowTitleEnabled(true);
 		setContentView(R.layout.empty_layout);
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// setup the sctionbar
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		if (getSupportActionBar().getNavigationMode() != ActionBar.NAVIGATION_MODE_TABS) {
+			getSupportActionBar().setNavigationMode(
+					ActionBar.NAVIGATION_MODE_TABS);
+		}
 
 		// intero tab
 		Tab interoTab = getSupportActionBar().newTab();
@@ -87,38 +72,62 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 
 		snackTab.setText(R.string.iDeciso_menu_types_snack);
 		getSupportActionBar().addTab(snackTab);
-		
-		if (getSupportActionBar().getNavigationMode() != ActionBar.NAVIGATION_MODE_TABS) {
-			getSupportActionBar().setNavigationMode(
-					ActionBar.NAVIGATION_MODE_TABS);
+
+		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			return;
 		}
+
+		// gestione chiamata da componi il tuo menu
+		ArrayList<String> menu_compatibles = extras
+				.getStringArrayList(ComponiMenu.MENU_COMPATIBLES);
+
+		HashMap<String, Boolean> mapCheckedItems = (HashMap<String, Boolean>) extras
+				.getSerializable(ComponiMenu.MENU_CHECKED_TRUE);
+
+		// gestione chiamata da isoldi
+		String callFromISoldi = extras.getString(ISoldi.SELECTED_MENU);
 
 		if (menu_compatibles != null) {
 
-			String lastMenuCompatible = menu_compatibles.get(menu_compatibles.size()-1);
-			
-				if (lastMenuCompatible.equals(chosenMenu.Snack1.toString())
-						|| lastMenuCompatible.equals(chosenMenu.Snack2.toString())
-						|| lastMenuCompatible.equals(chosenMenu.Snack3.toString())
-						|| lastMenuCompatible.equals(chosenMenu.Snack4.toString())){
-					
-					snackTab.select();
-					return;
-				}else if (lastMenuCompatible.equals(chosenMenu.Ridotto1.toString())
-						|| lastMenuCompatible.equals(chosenMenu.Ridotto2.toString())
-						|| lastMenuCompatible.equals(chosenMenu.Ridotto3.toString())
-						|| lastMenuCompatible.equals(chosenMenu.Ridotto4.toString())){
-					ridottoTab.select();
-					return;
-				}else if (lastMenuCompatible.equals(chosenMenu.Intero.toString())){
+			String lastMenuCompatible = menu_compatibles.get(menu_compatibles
+					.size() - 1);
 
-					interoTab.select();
-					return;
-				}
-			
+			if (lastMenuCompatible.equals(chosenMenu.Snack1.toString())
+					|| lastMenuCompatible.equals(chosenMenu.Snack2.toString())
+					|| lastMenuCompatible.equals(chosenMenu.Snack3.toString())
+					|| lastMenuCompatible.equals(chosenMenu.Snack4.toString())) {
+
+				snackTab.select();
+
+			} else if (lastMenuCompatible
+					.equals(chosenMenu.Ridotto1.toString())
+					|| lastMenuCompatible
+							.equals(chosenMenu.Ridotto2.toString())
+					|| lastMenuCompatible
+							.equals(chosenMenu.Ridotto3.toString())
+					|| lastMenuCompatible
+							.equals(chosenMenu.Ridotto4.toString())) {
+
+				ridottoTab.select();
+
+			} else if (lastMenuCompatible.equals(chosenMenu.Intero.toString())) {
+
+				interoTab.select();
+			}
+			// end if (menu_compatibles != null)
+		} else if (callFromISoldi != null) {
+
+			if (callFromISoldi.equals(ISoldi.RIDOTTO)) {
+				ridottoTab.select();
+
+			} else if (callFromISoldi.equals(ISoldi.SNACK)) {
+				snackTab.select();
+
+			} else if (callFromISoldi.equals(ISoldi.INTERO)) {
+				interoTab.select();
+			}
+
 		}
-
-
-
 	}
 }

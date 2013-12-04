@@ -49,8 +49,8 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 		progressDialog = ProgressDialog.show(activity,
 				activity.getString(R.string.iGradito_title_activity),
 				activity.getString(R.string.loading));
-		// progressDialog.setCancelable(true);
-		// progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.setCancelable(true);
+		progressDialog.setCanceledOnTouchOutside(false);
 	}
 
 	@Override

@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -28,7 +30,7 @@ import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -44,15 +46,15 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 	private Calendar mCalendar;
 	private SimpleDateFormat dateFormat;
 
-	//private MenuItem refresh;
+	private MenuItem refreshMenuItem;
 
-	// @Override
-	// public boolean onCreateOptionsMenu(Menu menu) {
-	// MenuInflater inflater = getSupportMenuInflater();
-	// inflater.inflate(R.menu.menu_only_loading, menu);
-	// refresh = menu.findItem(R.id.action_refresh);
-	// return true;
-	// }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.menu_only_loading_progress, menu);
+		refreshMenuItem = menu.findItem(R.id.action_refresh);
+		return true;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +65,8 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		mCalendar = Calendar.getInstance();
 		dateFormat = new SimpleDateFormat("dd/MM/yy");
 
-		if (ConnectionUtils.isUserConnectedToInternet(this)) {
+		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
 			new MenuDelMeseConnector().execute();
-		} else {
-			ConnectionUtils
-					.errorToastTnternetConnectionNeeded(getApplicationContext());
-			finish();
-			return;
 		}
 
 		// setup title
@@ -135,11 +132,14 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
 			onBackPressed();
-		}
-		return super.onOptionsItemSelected(item);
+			return true;
 
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/*
@@ -164,21 +164,11 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// DISPLAY A PROGRESSDIALOG
-			progressDialog = ProgressDialog.show(MenuDelMeseActivity.this,
+			progressDialog = IFameUtils.getCustomProgressDialog(
+					MenuDelMeseActivity.this,
 					getString(R.string.iDeciso_home_monthly_menu),
-					getString(R.string.loading));
-			// progressDialog.setCancelable(true);
-			// progressDialog.setCanceledOnTouchOutside(false);
-			// progressDialog.setOnCancelListener(new OnCancelListener() {
-			// @Override
-			// public void onCancel(DialogInterface dialog) {
-			// onBackPressed();
-			// }
-			// });
-			// if (refresh != null) {
-			// refresh.setActionView(R.layout.actionbar_progressbar_circle);
-			// refresh.expandActionView();
-			// }
+					refreshMenuItem);
+			progressDialog.show();
 		}
 
 		@Override
@@ -186,7 +176,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
 					getApplicationContext(), APP_TOKEN);
 			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					"getmenudelmese");
+					"/getmenudelmese");
 			request.setMethod(Method.GET);
 			try {
 				MessageResponse response = mProtocolCarrier.invokeSync(request,
@@ -199,35 +189,31 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				Log.e(MenuDelMeseConnector.class.getName(),
 						"Failed to get the monthly menu: " + e.getMessage());
 			}
-
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(MenuDelMese mdm) {
 			super.onPostExecute(mdm);
-			// if (refresh != null) {
-			// refresh.setActionView(null);
-			// refresh.collapseActionView();
-			// }
+
 			if (mdm == null) {
-				progressDialog.dismiss();
+				// c'è stato un errore nel ricevere il menu del mese
 				Toast.makeText(getApplicationContext(),
 						getString(R.string.errorSomethingWentWrong),
 						Toast.LENGTH_SHORT).show();
-				finish();
+
 			} else {
 				// setto il menu del mese ricevuto come variabile di classe
-				menuDelMese = mdm;
+				setMenuDelMese(mdm);
 				// cerco la settimana corrente e la mostro
 				int currentDay = mCalendar.get(Calendar.DAY_OF_MONTH);
 				// ciclo sulle settimane e prendo tutti i piatti della settimana
 				int weekCount = 0;
 				int spinnerPosition = 0;
 				for (MenuDellaSettimana m : mdm.getMenuDellaSettimana()) {
+
 					int start_day = m.getStart_day();
 					int end_day = m.getEnd_day();
-
 					// setto l'item dello spinner
 					mSpinnerAdapter.add(dayToMyFormat(start_day, end_day));
 					// se il giorno corrente è tra il giorno iniziale e quelo
@@ -240,9 +226,23 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				}
 				mSpinner.setSelection(spinnerPosition);
 				mSpinner.setVisibility(View.VISIBLE);
-				progressDialog.dismiss();
+			}
+
+			progressDialog.dismiss();
+
+			if (refreshMenuItem != null) {
+				refreshMenuItem.setActionView(null);
+				refreshMenuItem.collapseActionView();
 			}
 		}
+	}
+
+	private MenuDelMese getMenuDelMese() {
+		return this.menuDelMese;
+	}
+
+	private void setMenuDelMese(MenuDelMese mdm) {
+		this.menuDelMese = mdm;
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		mPiattiListAdapter.clear();
 		// mPiattiListAdapter.notifyDataSetChanged();
 		// prendo la lista di menu della settimana
-		List<MenuDellaSettimana> menuOfTheWeekList = menuDelMese
+		List<MenuDellaSettimana> menuOfTheWeekList = getMenuDelMese()
 				.getMenuDellaSettimana();
 		// per ogni giorno della settimana
 		for (MenuDellaSettimana mds : menuOfTheWeekList) {

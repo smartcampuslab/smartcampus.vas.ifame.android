@@ -24,13 +24,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageViewId"
             android:gravity="center"
-            android:padding="25dp" >
+            android:padding="20dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
-                android:gravity="center"
+                android:gravity="fill"
                 android:text="@string/iFretta_webcam_details"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>

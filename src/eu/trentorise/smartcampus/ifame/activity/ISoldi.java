@@ -1,8 +1,11 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -20,7 +23,7 @@ import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Saldo;
-import eu.trentorise.smartcampus.ifame.utils.ConnectionUtils;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -31,7 +34,12 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class ISoldi extends SherlockActivity {
 
-	public final static String GET_AMOUNT_MONEY = "get_money";
+	/** per gestire la chiamata da isoldi */
+	public static final String SELECTED_MENU = "menu_selezionato";
+
+	public static final String INTERO = "menu_intero";
+	public static final String RIDOTTO = "menu_ridotto";
+	public static final String SNACK = "menu_snack";
 
 	private TextView centerText;
 	private TextView bottomText;
@@ -63,23 +71,12 @@ public class ISoldi extends SherlockActivity {
 
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 
-		if (ConnectionUtils.isUserConnectedToInternet(this)) {
-
-			new ISoldiConnector().execute();
-
-		} else {
-			Toast.makeText(getApplicationContext(),
-					getString(R.string.errorInternetConnectionRequired),
-					Toast.LENGTH_SHORT).show();
-			finish();
-			return;
-		}
-
 		interoText.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				i.putExtra(SELECTED_MENU, INTERO);
 				startActivity(i);
 			}
 		});
@@ -88,7 +85,7 @@ public class ISoldi extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
-				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, "Ridotto1234");
+				i.putExtra(SELECTED_MENU, RIDOTTO);
 				startActivity(i);
 
 			}
@@ -98,7 +95,7 @@ public class ISoldi extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
-				i.putExtra(Fai_il_tuo_menu.SELECTED_MENU, "Snack1");
+				i.putExtra(SELECTED_MENU, SNACK);
 				startActivity(i);
 
 			}
@@ -110,6 +107,10 @@ public class ISoldi extends SherlockActivity {
 		// showUserStats();
 		// }
 		// });
+
+		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
+			new ISoldiConnector().execute();
+		}
 
 		// actionBarSherlock is initialized in super.onCreate()
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -133,7 +134,13 @@ public class ISoldi extends SherlockActivity {
 			return true;
 
 		case R.id.action_refresh:
-			new ISoldiConnector().execute();
+			if (IFameUtils.isUserConnectedToInternet(this)) {
+				new ISoldiConnector().execute();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						getString(R.string.errorInternetConnectionRequired),
+						Toast.LENGTH_SHORT).show();
+			}
 			return true;
 
 		default:
@@ -212,9 +219,15 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 			bottomText.setText(getString(R.string.iSoldi_devi_ricaricare));
 
-			interoText.setVisibility(View.GONE);
-			ridottoText.setVisibility(View.GONE);
-			snackText.setVisibility(View.GONE);
+			interoText.setPaintFlags(interoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			ridottoText.setPaintFlags(ridottoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			snackText.setPaintFlags(snackText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			// interoText.setVisibility(View.GONE);
+			// ridottoText.setVisibility(View.GONE);
+			// snackText.setVisibility(View.GONE);
 
 		} else if (amount >= 4.90f) {
 
@@ -243,7 +256,9 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setTextColor(Color.parseColor("#FFFFFF"));
 
-			interoText.setVisibility(View.GONE);
+			interoText.setPaintFlags(interoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			// interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.VISIBLE);
 			snackText.setVisibility(View.VISIBLE);
 
@@ -258,8 +273,12 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
 
-			interoText.setVisibility(View.GONE);
-			ridottoText.setVisibility(View.GONE);
+			interoText.setPaintFlags(interoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			ridottoText.setPaintFlags(ridottoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			// interoText.setVisibility(View.GONE);
+			// ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.VISIBLE);
 
 		} else if (amount >= 0f && amount < 3.10f) {
@@ -273,13 +292,18 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
 
-			interoText.setVisibility(View.GONE);
-			ridottoText.setVisibility(View.GONE);
-			snackText.setVisibility(View.GONE);
+			interoText.setPaintFlags(interoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			ridottoText.setPaintFlags(ridottoText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			snackText.setPaintFlags(snackText.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
+			// interoText.setVisibility(View.GONE);
+			// ridottoText.setVisibility(View.GONE);
+			// snackText.setVisibility(View.GONE);
 
-		}
-		// amount < 0 errore mostro -> login con google non va bene
-		else {
+		} else {
+			// amount < 0 errore mostro -> login con google non va bene
 
 			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.GONE);
@@ -359,8 +383,27 @@ public class ISoldi extends SherlockActivity {
 			progressDialog = ProgressDialog.show(ISoldi.this,
 					getString(R.string.iSoldi_title_activity),
 					getString(R.string.loading));
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
 
-			isoldi_layout_view.setVisibility(View.GONE);
+				@Override
+				public void onCancel(DialogInterface dialog) {
+
+					Toast.makeText(ISoldi.this,
+							getString(R.string.iSoldi_press_again_to_exit),
+							Toast.LENGTH_SHORT).show();
+
+					if (refreshButton != null) {
+						refreshButton
+								.setActionView(R.layout.actionbar_progressbar_circle);
+						refreshButton.expandActionView();
+					}
+				}
+			});
+
+			if (isoldi_layout_view != null)
+				isoldi_layout_view.setVisibility(View.GONE);
 
 			if (refreshButton != null) {
 				refreshButton
@@ -424,8 +467,10 @@ public class ISoldi extends SherlockActivity {
 
 				getAmount(result);
 
-				isoldi_layout_view.setVisibility(View.VISIBLE);
 				progressDialog.dismiss();
+
+				if (isoldi_layout_view != null)
+					isoldi_layout_view.setVisibility(View.VISIBLE);
 			}
 		}
 	}

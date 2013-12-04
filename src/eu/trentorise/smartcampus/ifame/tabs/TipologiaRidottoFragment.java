@@ -12,13 +12,11 @@ package eu.trentorise.smartcampus.ifame.tabs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,11 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
+
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
-import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -96,41 +94,45 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 		i = getSherlockActivity().getIntent();
 
-		boolean isCalled = i.getBooleanExtra(
-				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+		boolean isCalled = false;
+		// i.getBooleanExtra(
+		// Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
 
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_ridotto_buyable);
 
 		/*
 		 * 
-		 * se � stata chiamata da "componi menu" allora prendiamo l'importo
-		 * dei soldi presenti nella tessera, e modifichiamo la textview di
+		 * se � stata chiamata da "componi menu" allora prendiamo l'importo dei
+		 * soldi presenti nella tessera, e modifichiamo la textview di
 		 * conseguenza
 		 */
 
 		if (isCalled) {
 
-			SharedPreferences pref = getSherlockActivity()
-					.getSharedPreferences(
-							getString(R.string.iFretta_preference_file),
-							Context.MODE_PRIVATE);
-			if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
-				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
-				if (cash >= 4.20) {
-					buyable.setVisibility(View.VISIBLE);
-					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_sufficiente)
-							+ cash);
-					buyable.setTextColor(Color.parseColor("#08D126"));
-				} else {
-					float difference = 4.20f - cash;
-					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente));
-					buyable.setTextColor(Color.parseColor("#CF323C"));
-				}
+			// ****************************************
+			// NON CI SONO PIU DA UN PO STE PREFERENCES
+			// ****************************************
+			// SharedPreferences pref = getSherlockActivity()
+			// .getSharedPreferences(
+			// getString(R.string.iFretta_preference_file),
+			// Context.MODE_PRIVATE);
+			// if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
+			// float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
+			// if (cash >= 4.20) {
+			// buyable.setVisibility(View.VISIBLE);
+			// buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_sufficiente)
+			// + cash);
+			// buyable.setTextColor(Color.parseColor("#08D126"));
+			// } else {
+			// float difference = 4.20f - cash;
+			// buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente));
+			// buyable.setTextColor(Color.parseColor("#CF323C"));
+			// }
+			//
+			// } else
 
-			} else
-
-				buyable.setVisibility(View.GONE);
+			buyable.setVisibility(View.GONE);
 		} else {
 			buyable.setVisibility(View.GONE);
 
@@ -259,9 +261,9 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 					+ getString(R.string.iDeciso_compose_menu_checkbox_pane1)
 					+ ",");
 			pane13t.setTypeface(null, Typeface.BOLD);
-			
+
 			// ridotto 4
-			
+
 			TextView ridotto4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto4_titolo);
 			ridotto4Title.setText(chosenMenu.Ridotto4.toString());
@@ -272,39 +274,31 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 				ridotto4Title.setBackgroundDrawable(theContainer.getResources()
 						.getDrawable(R.drawable.shape_title_componimenu));
 
-			
-				TextView pizzat = (TextView) theContainer
-						.findViewById(R.id.tipologia_ridotto_pizza4);
-				pizzat.setText("- "
-						+ getString(R.string.iDeciso_compose_menu_checkbox_pizza)
-						+ ",");
-				pizzat.setTypeface(null, Typeface.BOLD);
+			TextView pizzat = (TextView) theContainer
+					.findViewById(R.id.tipologia_ridotto_pizza4);
+			pizzat.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_pizza)
+					+ ",");
+			pizzat.setTypeface(null, Typeface.BOLD);
 
+			TextView contorno_dessert = (TextView) theContainer
+					.findViewById(R.id.tipologia_ridotto_contorno14_dessert4);
+			contorno_dessert
+					.setText("- "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
+							+ " / "
+							+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
+							+ ",");
+			contorno_dessert.setTypeface(null, Typeface.BOLD);
 
-
-				TextView contorno_dessert = (TextView) theContainer
-						.findViewById(R.id.tipologia_ridotto_contorno14_dessert4);
-				contorno_dessert
-						.setText("- "
-								+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
-								+ " / "
-								+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
-								+ ",");
-				contorno_dessert.setTypeface(null, Typeface.BOLD);
-			
-
-
-				TextView caffe_acqua = (TextView) theContainer
-						.findViewById(R.id.tipologia_ridotto_caffe4_acqua4);
-				caffe_acqua
-						.setText("- "
-								+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
-								+ " / "
-								+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
-								+ ",");
-				caffe_acqua.setTypeface(null, Typeface.BOLD);
-			
-			
+			TextView caffe_acqua = (TextView) theContainer
+					.findViewById(R.id.tipologia_ridotto_caffe4_acqua4);
+			caffe_acqua.setText("- "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
+					+ " / "
+					+ getString(R.string.iDeciso_compose_menu_checkbox_acqua)
+					+ ",");
+			caffe_acqua.setTypeface(null, Typeface.BOLD);
 
 			super.onResume();
 

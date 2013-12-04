@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,8 +18,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Fai_il_tuo_menu;
-import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
 /*
@@ -32,7 +28,6 @@ import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 public class TipologiaSnackFragment extends SherlockFragment {
 
 	ViewGroup theContainer;
-	Intent i;
 	TextView primo1;
 	TextView contorno1;
 	TextView dessert1;
@@ -98,42 +93,45 @@ public class TipologiaSnackFragment extends SherlockFragment {
 	@Override
 	public void onResume() {
 
-		i = getSherlockActivity().getIntent();
-		boolean isCalled = i.getBooleanExtra(
-				Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+		Intent i = getSherlockActivity().getIntent();
+
+		boolean isCalled = false;
+		// i.getBooleanExtra(
+		// Fai_il_tuo_menu.HAS_CALLED_TIPOLOGIE, false);
+
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_buyable);
 
 		/*
 		 * 
-		 * se � stata chiamata da "componi menu" allora prendiamo l'importo
-		 * dei soldi presenti nella tessera, e modifichiamo la textview di
+		 * se � stata chiamata da "componi menu" allora prendiamo l'importo dei
+		 * soldi presenti nella tessera, e modifichiamo la textview di
 		 * conseguenza
 		 */
 		if (isCalled) {
 
-			SharedPreferences pref = getSherlockActivity()
-					.getSharedPreferences(
-							getString(R.string.iFretta_preference_file),
-							Context.MODE_PRIVATE);
-			if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
-				float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
-				if (cash >= 2.90) {
-					buyable.setVisibility(View.VISIBLE);
-					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_sufficiente)
-							+ cash);
-					buyable.setTextColor(Color.parseColor("#08D126"));
-				} else {
-					float difference = 2.90f - cash;
-					buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente));
-					buyable.setTextColor(Color.parseColor("#CF323C"));
+			// SharedPreferences pref = getSherlockActivity()
+			// .getSharedPreferences(
+			// getString(R.string.iFretta_preference_file),
+			// Context.MODE_PRIVATE);
+			// if (pref.contains(ISoldi.GET_AMOUNT_MONEY)) {
+			// float cash = pref.getFloat(ISoldi.GET_AMOUNT_MONEY, 0);
+			// if (cash >= 2.90) {
+			// buyable.setVisibility(View.VISIBLE);
+			// buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_sufficiente)
+			// + cash);
+			// buyable.setTextColor(Color.parseColor("#08D126"));
+			// } else {
+			// float difference = 2.90f - cash;
+			// buyable.setText(getString(R.string.iDeciso_tipologie_menu_credito_insufficiente));
+			// buyable.setTextColor(Color.parseColor("#CF323C"));
+			//
+			// /* +"\nDevi ricaricare almeno: "+difference */
+			// }
+			//
+			// } else
 
-					/* +"\nDevi ricaricare almeno: "+difference */
-				}
-
-			} else
-
-				buyable.setVisibility(View.GONE);
+			buyable.setVisibility(View.GONE);
 		} else {
 			buyable.setVisibility(View.GONE);
 

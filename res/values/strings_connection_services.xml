@@ -13,7 +13,10 @@
     <string name="errorLikeNotDeleted">Oooops! Like non eliminato. Riprova</string>
     <string name="errorNotLiked">Oooops! Like non riuscito. Riprova</string>
     <string name="loading">Caricamento...</string>
+    <string name="initializing">Inizializzazione dell\' app...</string>
     <string name="errorLoginRequired">Il login e\' obbligatorio per utilizzare iFame</string>
+    <string name="errorLoadingWebcamImage">Immagine non caricata correttamente. Controlla la tua connessione e/o clicca il bottone ricarica</string>
+    <string name="errorLoadingReviews">Recensioni non caricate correttamente. Controlla la tua connessione e riprova</string>
     <!-- Toast connection -->
 
 </resources>

@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -29,12 +29,13 @@
 
 
     <!-- iFretta -->
+    <string name="iFretta_label_select_favourite_mensa">Please select your favourite canteen to have a quicker access to all iFame functionalities</string>
     <string name="iFretta_title_activity">iFretta</string>
     <string name="iFretta_details_title_activity">Canteen webcam</string>
     <string name="iFretta_search_in_ViviTrento">Search in ViviTrento</string>
-    <string name="iFretta_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
-    <string name="iFretta_details_set_favourite_canteen">You favourite canteen is: </string>
-    <string name="iFretta_webcam_details">Everyday from 12 to 14 you can check, in real time, the queue at your canteen to choose the best moment to have dinner</string>
+    <string name="iFretta_webcam_details">Everyday from 12 to 14 you can check, in real time, the queue at your canteen to choose the best moment to have lunch</string>
+    <string name="iFretta_favourite_selection_done">Done</string>
+    <string name="iFretta_favourite_canteen_is">Your favourite canteen is:</string>
     <!-- /iFretta -->
 
 
@@ -148,7 +149,7 @@
     <string name="iGradito_user_voto_label">Vote: </string>
     <string name="iGradito_insert_comment_here">Write here your review</string>
     <string name="iGradito_spinner_label_excelent">Excellent</string>
-    <string name="iGradito_spinner_label_bad">Terrible</string>
+    <string name="iGradito_spinner_label_bad">Poor</string>
     <string name="iGradito_dialog_button_add_text">Add</string>
     <string name="iGradito_dialog_button_cancel_text">Cancel</string>
     <string name="iGradito_user">User</string>
@@ -165,6 +166,7 @@
     <string name="iSoldi_euro_char">€</string>
     <string name="iSoldi_credit_status_not_available">Not available</string>
     <string name="iSoldi_unitn_login_required">To display your credit you must be logged with Unitn</string>
+    <string name="iSoldi_press_again_to_exit">Press back button again to exit</string>
     <!-- /iSoldi -->
 
 
