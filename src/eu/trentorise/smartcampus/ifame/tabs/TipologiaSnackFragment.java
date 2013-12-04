@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,9 +18,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
-import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 
 /*
  * 
@@ -99,8 +95,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 		Intent i = getSherlockActivity().getIntent();
 
-		boolean isCalled = i.getBooleanExtra(
-				ComponiMenu.HAS_CALLED_TIPOLOGIE, false);
+		boolean isCalled = i.getBooleanExtra(ComponiMenu.HAS_CALLED_TIPOLOGIE,
+				false);
 
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_snack_buyable);
@@ -659,7 +655,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		}
 
 		// SNACK 4
-		if (selected_menu.contains(chosenMenu.Snack3.toString())) {
+		if (selected_menu.contains(chosenMenu.Snack4.toString())) {
 
 			TextView snack4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack4_titolo);

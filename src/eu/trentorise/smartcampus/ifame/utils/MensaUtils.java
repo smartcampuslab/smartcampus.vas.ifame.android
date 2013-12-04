@@ -155,7 +155,7 @@ public class MensaUtils {
 			if (getMensaList(context).isEmpty()) {
 				progressdialog = ProgressDialog.show(context,
 						context.getString(R.string.iFame_main_title_activity),
-						context.getString(R.string.loading));
+						context.getString(R.string.initializing));
 			}
 		}
 

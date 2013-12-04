@@ -29,7 +29,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

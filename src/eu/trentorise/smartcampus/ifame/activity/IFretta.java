@@ -65,7 +65,8 @@ public class IFretta extends SherlockActivity {
 			public void onClick(View v) {
 
 				showToastFavouriteCanteen();
-				onBackPressed();
+				setResult(RESULT_OK);
+				finish();
 			}
 		});
 	}

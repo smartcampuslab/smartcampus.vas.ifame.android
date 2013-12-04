@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -25,9 +23,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu;
-import eu.trentorise.smartcampus.ifame.activity.Tipologie_menu_fr;
 import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
-import eu.trentorise.smartcampus.ifame.activity.ISoldi;
 
 public class TipologiaInteroFragment extends SherlockFragment {
 
@@ -78,8 +74,8 @@ public class TipologiaInteroFragment extends SherlockFragment {
 
 		Intent i = getSherlockActivity().getIntent();
 
-		boolean isCalled = i.getBooleanExtra(
-				ComponiMenu.HAS_CALLED_TIPOLOGIE, false);
+		boolean isCalled = i.getBooleanExtra(ComponiMenu.HAS_CALLED_TIPOLOGIE,
+				false);
 
 		TextView buyable = (TextView) theContainer
 				.findViewById(R.id.tipologia_intero_buyable);
