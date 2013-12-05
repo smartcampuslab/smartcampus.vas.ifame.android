@@ -34,7 +34,7 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 	public static final String COMMENTO = "mio_commento";
 	public static final String VOTO = "mio_voto";
 	public static final String PIATTO = "piatto_extra";
-	public static final String USERID = "user_id";
+	// public static final String USERID = "user_id";
 
 	private EditText userReviewEditText;
 	private TextView piattoNameTextView;
@@ -133,10 +133,12 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 						giudizioDataToPost.userId = Long.parseLong(userId);
 						giudizioDataToPost.voto = (float) voto;
 
-						new PostGiudizioAsyncTask(
-								(IGraditoVisualizzaRecensioni) getSherlockActivity(),
-								giudizioDataToPost).execute(
-								mensa.getMensa_id(), piatto.getPiatto_id());
+						IGraditoVisualizzaRecensioni iGraditoVisualizzaRecensioni = (IGraditoVisualizzaRecensioni) getSherlockActivity();
+						new PostGiudizioAsyncTask(iGraditoVisualizzaRecensioni,
+								giudizioDataToPost,
+								iGraditoVisualizzaRecensioni.getRefreshButton())
+								.execute(mensa.getMensa_id(),
+										piatto.getPiatto_id());
 
 						getDialog().cancel();
 					}

@@ -1,8 +1,9 @@
 package eu.trentorise.smartcampus.ifame.asynctask;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -11,6 +12,7 @@ import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.MenuDelGiornoPiattiAdapter;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -24,9 +26,10 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
-	private ProgressDialog progressDialog;
 	private Activity activity;
 	private MenuDelGiornoPiattiAdapter mPiattiAdapter;
+
+	private LinearLayout progressBarLayout;
 
 	public GetMenuDelGiornoTask(Activity activity,
 			MenuDelGiornoPiattiAdapter piattiAdapter) {
@@ -40,11 +43,7 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 		// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-		progressDialog = ProgressDialog.show(activity,
-				activity.getString(R.string.iDeciso_home_daily_menu),
-				activity.getString(R.string.loading));
-		// progressDialog.setCancelable(true);
-		//	progressDialog.setCanceledOnTouchOutside(false);
+		progressBarLayout = IFameUtils.setProgressBarLayout(activity);
 	}
 
 	@Override
@@ -78,12 +77,14 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 	@Override
 	protected void onPostExecute(MenuDelGiorno result) {
 		super.onPostExecute(result);
-		progressDialog.dismiss();
+
 		if (result == null) {
 			Toast.makeText(activity,
 					activity.getString(R.string.errorSomethingWentWrong),
 					Toast.LENGTH_SHORT).show();
 			activity.finish();
+			return;
+
 		} else {
 			int i = 0;
 			mPiattiAdapter.clear();
@@ -102,5 +103,6 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 			}
 			mPiattiAdapter.notifyDataSetChanged();
 		}
+		progressBarLayout.setVisibility(View.GONE);
 	}
 }

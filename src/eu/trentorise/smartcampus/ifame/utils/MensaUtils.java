@@ -25,19 +25,19 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 public class MensaUtils {
 
 	/**
-	 * This is the time between two updates of the canteens available list
+	 * This is the time between two updates of the canteens available list and
+	 * is set by default to one day
 	 * 
 	 * 24 h * 60 m * 60 s * 1000 ms
 	 */
 	private static final long TIME_IN_MILLIS = 24 * 60 * 60 * 1000;
+	private final static String LAST_UPDATE = "get_last_update";
 
 	private final static String FAVOURITE_MENSA_SHARED_PREFERENCES = "favourite_mensa_shared_preferences";
 
 	private final static String MENSA_LIST = "mensa_list";
 	private final static String FAVOURITE_MENSA = "favourite_mensa_object";
 	private final static String FAVOURITE_MENSA_NAME = "favourite_mensa_name";
-
-	private final static String LAST_UPDATE = "get_last_update";
 
 	private static boolean setLastUpdateNow(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(

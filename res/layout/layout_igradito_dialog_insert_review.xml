@@ -55,7 +55,7 @@
         android:focusable="true"
         android:hint="@string/iGradito_insert_comment_here"
         android:imeOptions="actionDone"
-        android:inputType="textCapSentences|textMultiLine"
+        android:inputType="textCapSentences|textImeMultiLine"
         android:selectAllOnFocus="true" >
     </EditText>
 

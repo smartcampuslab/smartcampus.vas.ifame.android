@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -140,7 +140,7 @@
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
     <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
-    <string name="iGradito_no_one_left_comment">Nobody left a comment yet. Add a comment to this dish by clicking the plus button.</string>
+    <string name="iGradito_no_one_left_comment">Somebody vote this dish but nobody left a comment yet. Add a review or a comment to this dish by clicking the plus button.</string>
     <string name="iGradito_no_reviews_available">Nobody left a review yet. Add a review to this dish by clicking the plus button.</string>
     <string name="iGradito_review_header">Reviews</string>
     <string name="iGradito_not_available">Not available</string>
@@ -166,7 +166,8 @@
     <string name="iSoldi_euro_char">€</string>
     <string name="iSoldi_credit_status_not_available">Not available</string>
     <string name="iSoldi_unitn_login_required">To display your credit you must be logged with Unitn</string>
-    <string name="iSoldi_press_again_to_exit">Press back button again to exit</string>
+    <string name="iSoldi_press_again_to_exit">Still loading. Press back button to exit</string>
+    <string name="iSoldi_message_credit_not_updated">The credit can be not updated at the transactions of the last 12 hours</string>
     <!-- /iSoldi -->
 
 

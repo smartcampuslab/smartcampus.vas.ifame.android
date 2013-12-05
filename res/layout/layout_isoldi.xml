@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <LinearLayout
         android:id="@+id/isoldi_layout"
@@ -42,13 +42,13 @@
                 android:textSize="40sp" />
         </LinearLayout>
 
-        <!-- <TextView -->
-        <!-- android:id="@+id/isoldi_demo_text" -->
-        <!-- android:layout_width="match_parent" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:gravity="center" -->
-        <!-- android:text="(only for demonstration purpose)" -->
-        <!-- android:textSize="10sp" /> -->
+        <TextView
+            android:id="@+id/isoldi_credit_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/iSoldi_message_credit_not_updated"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/isoldi_bottom_text"
@@ -109,6 +109,11 @@
             android:layout_below="@id/isoldi_statistics_button"
             layout="@layout/stats_layout"
             android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TextView>
     </LinearLayout>
 
 </ScrollView>

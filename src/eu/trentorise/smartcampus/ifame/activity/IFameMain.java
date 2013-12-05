@@ -25,26 +25,15 @@ public class IFameMain extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// se l'app è stata inizializzata mostro la stellina
-		if (!MensaUtils.getFavouriteMensaName(this).equalsIgnoreCase("")) {
-			getSupportMenuInflater().inflate(R.menu.ifame_main, menu);
-		}
+		getSupportMenuInflater().inflate(R.menu.ifame_main, menu);
 		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		// redraw the action bar because when is not initialized the app the
-		// favourite button is not displayed
-		supportInvalidateOptionsMenu();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.favourite_mensa_ifame_main) {
-			Intent selezionaMensa = new Intent(this, IFretta.class);
-			startActivity(selezionaMensa);
+			IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
+					IFretta.class);
 			return true;
 
 		} else {
@@ -56,19 +45,6 @@ public class IFameMain extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifame_main);
-
-		// *********************************************************
-		// sta roba qui serve ancora anche col login nel launcher???
-		// *********************************************************
-		// // check if the user is logged otherwise open login window
-		// try {
-		// if (!getAccessProvider().login(IFameMain.this, null)) {
-		// }
-		// } catch (AACException e) {
-		// Log.e(TAG, "Failed to login: " + e.getMessage());
-		// // TODO handle the failure, e.g., notify the user close the app
-		// }
-		// *********************************************************
 
 		context = getApplicationContext();
 
@@ -125,6 +101,33 @@ public class IFameMain extends SherlockActivity {
 
 	}
 
+	public static SCAccessProvider getAccessProvider() {
+		if (accessProvider == null)
+			accessProvider = SCAccessProvider.getInstance(context);
+		return accessProvider;
+	}
+
+	public static String getAuthToken() throws AACException {
+		String mToken;
+		mToken = getAccessProvider().readToken(context);
+		return mToken;
+	}
+
+	// ----------------------------------------------------------------
+	// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
+	// ****************************************************************
+	// still required also with the login in the launcher??????????????
+	// ****************************************************************
+	// // check if the user is logged otherwise open login window
+	// try {
+	// if (!getAccessProvider().login(IFameMain.this, null)) {
+	// }
+	// } catch (AACException e) {
+	// Log.e(TAG, "Failed to login: " + e.getMessage());
+	// // TODO handle the failure, e.g., notify the user close the app
+	// }
+	// ----------------------------------------------------------------
+
 	// *******************************************************************************
 	// still required also with the login in the launcher??????????????
 	// *******************************************************************************
@@ -153,15 +156,4 @@ public class IFameMain extends SherlockActivity {
 	// }
 	// *******************************************************************************
 
-	public static SCAccessProvider getAccessProvider() {
-		if (accessProvider == null)
-			accessProvider = SCAccessProvider.getInstance(context);
-		return accessProvider;
-	}
-
-	public static String getAuthToken() throws AACException {
-		String mToken;
-		mToken = getAccessProvider().readToken(context);
-		return mToken;
-	}
 }

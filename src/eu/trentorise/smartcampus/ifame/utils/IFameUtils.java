@@ -3,11 +3,13 @@ package eu.trentorise.smartcampus.ifame.utils;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
@@ -46,34 +48,43 @@ public class IFameUtils {
 		}
 	}
 
-	public static ProgressDialog getCustomProgressDialog(
-			final Activity context, String progressTitle,
-			final MenuItem refreshMenuItem) {
+	public static LinearLayout setProgressBarLayout(Activity activity) {
 
-		String message = context.getString(R.string.loading);
+		LinearLayout progressBarLayout = new LinearLayout(activity);
+		progressBarLayout.setGravity(Gravity.CENTER);
+		ProgressBar spinner = new ProgressBar(activity);
+		progressBarLayout.addView(spinner);
+		activity.addContentView(progressBarLayout, new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
+		return progressBarLayout;
+	}
+
+	public static ProgressDialog getProgressDialog(Context context,
+			String progressTitle) {
+
+		String loading = context.getString(R.string.loading);
 		ProgressDialog progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle(progressTitle);
-		progressDialog.setMessage(message);
+		progressDialog.setMessage(loading);
 		progressDialog.setCancelable(true);
 		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.setOnCancelListener(new OnCancelListener() {
 
-			@Override
-			public void onCancel(DialogInterface dialog) {
-
-				Toast.makeText(context,
-						context.getString(R.string.iSoldi_press_again_to_exit),
-						Toast.LENGTH_SHORT).show();
-
-				if (refreshMenuItem != null) {
-					refreshMenuItem
-							.setActionView(R.layout.actionbar_progressbar_circle);
-					refreshMenuItem.expandActionView();
-				}
-			}
-		});
 		return progressDialog;
+	}
+
+	public static void setActionBarLoading(MenuItem refreshButton) {
+		if (refreshButton != null) {
+			refreshButton.setActionView(R.layout.actionbar_progressbar_circle);
+			refreshButton.expandActionView();
+		}
+	}
+
+	public static void removeActionBarLoading(MenuItem refreshButton) {
+		if (refreshButton != null) {
+			refreshButton.collapseActionView();
+			refreshButton.setActionView(null);
+		}
 	}
 
 }

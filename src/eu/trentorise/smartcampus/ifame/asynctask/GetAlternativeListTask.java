@@ -3,29 +3,27 @@ package eu.trentorise.smartcampus.ifame.asynctask;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.AlternativePiattiAdapter;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> {
 
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
-	private ProgressDialog progressDialog;
+	private LinearLayout progressBarLayout;
 	private Activity activity;
 	private AlternativePiattiAdapter piattiAdapter;
 
@@ -42,11 +40,7 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 	protected void onPreExecute() {
 		super.onPreExecute();
 		// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-		progressDialog = ProgressDialog.show(activity,
-				activity.getString(R.string.iDeciso_home_daily_menu),
-				activity.getString(R.string.loading));
-		// progressDialog.setCancelable(true);
-		//	progressDialog.setCanceledOnTouchOutside(false);
+		progressBarLayout = IFameUtils.setProgressBarLayout(activity);
 	}
 
 	@Override
@@ -60,19 +54,13 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 			MessageResponse response = mProtocolCarrier.invokeSync(request,
 					APP_TOKEN, IFameMain.getAuthToken());
 			if (response.getHttpStatus() == 200) {
+
 				return Utils.convertJSONToObjects(response.getBody(),
 						Piatto.class);
 			}
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (AACException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -80,12 +68,12 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 	protected void onPostExecute(List<Piatto> resultList) {
 		super.onPostExecute(resultList);
 		if (resultList == null) {
-			progressDialog.dismiss();
-
 			Toast.makeText(activity,
 					activity.getString(R.string.errorSomethingWentWrong),
 					Toast.LENGTH_SHORT).show();
 			activity.finish();
+			return;
+
 		} else {
 			piattiAdapter.clear();
 			int i = 0;
@@ -110,8 +98,7 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 			}
 			// piattiAdapter.addAll(addHeadersAlternative(resultList));
 			piattiAdapter.notifyDataSetChanged();
-
-			progressDialog.dismiss();
 		}
+		progressBarLayout.setVisibility(View.GONE);
 	}
 }

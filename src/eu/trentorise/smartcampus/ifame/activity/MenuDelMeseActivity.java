@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,13 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -46,16 +44,6 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 	private Calendar mCalendar;
 	private SimpleDateFormat dateFormat;
 
-	private MenuItem refreshMenuItem;
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.menu_only_loading_progress, menu);
-		refreshMenuItem = menu.findItem(R.id.action_refresh);
-		return true;
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +55,12 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 
 		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
 			new MenuDelMeseConnector().execute();
+		} else {
+			Toast.makeText(MenuDelMeseActivity.this,
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
+			finish();
+			return;
 		}
 
 		// setup title
@@ -150,37 +144,27 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 	private class MenuDelMeseConnector extends
 			AsyncTask<Void, Void, MenuDelMese> {
 
-		private ProgressDialog progressDialog;
-
-		private final String URL_BASE_WEB_IFAME;
-		private final String APP_TOKEN;
-
-		public MenuDelMeseConnector() {
-			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
-			APP_TOKEN = getString(R.string.APP_TOKEN);
-		}
+		private LinearLayout progressBarLayout;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// DISPLAY A PROGRESSDIALOG
-			progressDialog = IFameUtils.getCustomProgressDialog(
-					MenuDelMeseActivity.this,
-					getString(R.string.iDeciso_home_monthly_menu),
-					refreshMenuItem);
-			progressDialog.show();
+			progressBarLayout = IFameUtils
+					.setProgressBarLayout(MenuDelMeseActivity.this);
 		}
 
 		@Override
 		protected MenuDelMese doInBackground(Void... params) {
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
-					getApplicationContext(), APP_TOKEN);
-			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					"/getmenudelmese");
+					getApplicationContext(), getString(R.string.APP_TOKEN));
+			MessageRequest request = new MessageRequest(
+					getString(R.string.URL_BASE_WEB_IFAME), "/getmenudelmese");
 			request.setMethod(Method.GET);
 			try {
-				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, IFameMain.getAuthToken());
+				MessageResponse response = mProtocolCarrier
+						.invokeSync(request, getString(R.string.APP_TOKEN),
+								IFameMain.getAuthToken());
 				if (response.getHttpStatus() == 200) {
 					return Utils.convertJSONToObject(response.getBody(),
 							MenuDelMese.class);
@@ -201,6 +185,8 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				Toast.makeText(getApplicationContext(),
 						getString(R.string.errorSomethingWentWrong),
 						Toast.LENGTH_SHORT).show();
+				finish();
+				return;
 
 			} else {
 				// setto il menu del mese ricevuto come variabile di classe
@@ -228,12 +214,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 				mSpinner.setVisibility(View.VISIBLE);
 			}
 
-			progressDialog.dismiss();
-
-			if (refreshMenuItem != null) {
-				refreshMenuItem.setActionView(null);
-				refreshMenuItem.collapseActionView();
-			}
+			progressBarLayout.setVisibility(View.GONE);
 		}
 	}
 

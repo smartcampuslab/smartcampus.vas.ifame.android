@@ -2,6 +2,7 @@
     android:id="@+id/spinner_mense_textview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:singleLine="true"
+    android:drawableRight="@drawable/ic_action_favourites"
+    android:gravity="center_vertical"
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:textColor="@android:color/white" />

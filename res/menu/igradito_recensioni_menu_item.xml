@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_add_comments"
-        android:icon="@drawable/plus_icon"
-        android:showAsAction="always"
-        android:title="@string/iGradito_add_comment"/>
-    <!--
-    <item
         android:id="@+id/action_refresh"
-        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="1"
         android:showAsAction="always"
-        android:title="@string/refresh"/>
+        android:title=""/>
+    <item
+        android:id="@+id/action_add_comments"
+        android:icon="@drawable/plus_icon"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/iGradito_add_comment"/>
 
+    <!--
     <item
         android:id="@+id/igradito_recensioni_option_menu"
         android:icon="@drawable/abs__ic_menu_moreoverflow_normal_holo_light"

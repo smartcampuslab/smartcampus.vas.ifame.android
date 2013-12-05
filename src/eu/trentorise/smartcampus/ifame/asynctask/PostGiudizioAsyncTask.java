@@ -2,9 +2,11 @@ package eu.trentorise.smartcampus.ifame.asynctask;
 
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.actionbarsherlock.view.MenuItem;
+
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
@@ -12,6 +14,7 @@ import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -24,16 +27,19 @@ public class PostGiudizioAsyncTask extends
 		AsyncTask<Long, Void, List<Giudizio>> {
 
 	private IGraditoVisualizzaRecensioni visualizzaRecensioniActivity;
-	private ProgressDialog progressDialog;
 	private GiudizioDataToPost data;
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
+	private MenuItem refreshButton;
+
 	public PostGiudizioAsyncTask(
 			IGraditoVisualizzaRecensioni visualizzaRecensioniActivity,
-			GiudizioDataToPost data) {
+			GiudizioDataToPost data, MenuItem refreshButton) {
 		this.visualizzaRecensioniActivity = visualizzaRecensioniActivity;
 		this.data = data;
+		this.refreshButton = refreshButton;
+
 		URL_BASE_WEB_IFAME = visualizzaRecensioniActivity
 				.getString(R.string.URL_BASE_WEB_IFAME);
 		APP_TOKEN = visualizzaRecensioniActivity.getString(R.string.APP_TOKEN);
@@ -42,12 +48,7 @@ public class PostGiudizioAsyncTask extends
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progressDialog = ProgressDialog.show(visualizzaRecensioniActivity,
-				visualizzaRecensioniActivity
-						.getString(R.string.iGradito_title_activity),
-				"Loading...");
-		// progressDialog.setCancelable(true);
-		// progressDialog.setCanceledOnTouchOutside(false);
+		IFameUtils.setActionBarLoading(refreshButton);
 	}
 
 	@Override
@@ -76,7 +77,6 @@ public class PostGiudizioAsyncTask extends
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (AACException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -93,10 +93,10 @@ public class PostGiudizioAsyncTask extends
 					Toast.LENGTH_SHORT).show();
 		} else {
 			visualizzaRecensioniActivity.createGiudiziList(result);
-			progressDialog.dismiss();
 			Toast.makeText(visualizzaRecensioniActivity,
 					"Recensione aggiunta correttamente", Toast.LENGTH_LONG)
 					.show();
 		}
+		IFameUtils.setActionBarLoading(refreshButton);
 	}
 }

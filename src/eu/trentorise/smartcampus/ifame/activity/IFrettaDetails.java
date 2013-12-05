@@ -1,8 +1,13 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.io.InputStream;
 import java.util.Calendar;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -14,7 +19,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
-import eu.trentorise.smartcampus.ifame.asynctask.RetrieveWebcamImageTask;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
@@ -31,10 +35,14 @@ public class IFrettaDetails extends SherlockActivity implements
 	private MensaSpinnerAdapter adapter;
 	private int currentTabSelected;
 
+	WebcamAspectRatioImageView webcamImage;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ifretta_details);
+
+		webcamImage = (WebcamAspectRatioImageView) findViewById(R.id.imageViewId);
 
 		adapter = new MensaSpinnerAdapter(IFrettaDetails.this);
 		for (Mensa mensa : MensaUtils.getMensaList(IFrettaDetails.this)) {
@@ -88,7 +96,6 @@ public class IFrettaDetails extends SherlockActivity implements
 	}
 
 	private void loadWebcamImage(Mensa mensa) {
-		WebcamAspectRatioImageView webcamImage = (WebcamAspectRatioImageView) findViewById(R.id.imageViewId);
 
 		if (IFameUtils.isUserConnectedToInternet(IFrettaDetails.this)) {
 			// get current hour
@@ -96,16 +103,16 @@ public class IFrettaDetails extends SherlockActivity implements
 
 			if (START_HOUR <= currentHour && currentHour < END_HOUR) {
 				// retrieve the online image website: only between 12 and 14
-				new RetrieveWebcamImageTask(IFrettaDetails.this, webcamImage,
-						refreshButton).execute(mensa.getMensa_link_online());
+				new RetrieveWebcamImageTask().execute(mensa
+						.getMensa_link_online());
 			} else {
 				// otherwise retrieve the offline image
-				new RetrieveWebcamImageTask(IFrettaDetails.this, webcamImage,
-						refreshButton).execute(mensa.getMensa_link_offline());
+				new RetrieveWebcamImageTask().execute(mensa
+						.getMensa_link_offline());
 			}
 		} else {
 			// show image image not avaiable
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(IFrettaDetails.this,
 					getString(R.string.errorInternetConnectionRequired),
 					Toast.LENGTH_SHORT).show();
 		}
@@ -130,8 +137,51 @@ public class IFrettaDetails extends SherlockActivity implements
 						Toast.LENGTH_SHORT).show();
 			}
 		}
-
 		return false;
+	}
+
+	private class RetrieveWebcamImageTask extends
+			AsyncTask<String, Void, Bitmap> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			IFameUtils.setActionBarLoading(refreshButton);
+		}
+
+		@Override
+		protected Bitmap doInBackground(String... urls) {
+			String urldisplay = urls[0];
+			Bitmap bmap_image = null;
+
+			try {
+
+				InputStream in = new java.net.URL(urldisplay).openStream();
+				bmap_image = BitmapFactory.decodeStream(in);
+
+			} catch (Exception e) {
+				Log.e(getClass().getName(), e.getMessage());
+				return null;
+			}
+			return bmap_image;
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap result) {
+
+			if (result != null) {
+				webcamImage.setImageBitmap(result);
+
+			} else {
+				Toast.makeText(IFrettaDetails.this,
+						getString(R.string.errorLoadingWebcamImage),
+						Toast.LENGTH_SHORT).show();
+				webcamImage.setImageDrawable(getResources().getDrawable(
+						R.drawable.image_not_available));
+			}
+
+			IFameUtils.removeActionBarLoading(refreshButton);
+		}
 	}
 
 }

@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
@@ -14,6 +15,7 @@ import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.adapter.IGraditoPiattoListAdapter;
 import eu.trentorise.smartcampus.ifame.comparator.PiattoComparator;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -26,7 +28,7 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 
 	private Activity activity;
 	private IGraditoPiattoListAdapter adapter;
-	private ProgressDialog progressDialog;
+	private LinearLayout progressBarLayout;
 
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
@@ -45,12 +47,8 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-		progressDialog = ProgressDialog.show(activity,
-				activity.getString(R.string.iGradito_title_activity),
-				activity.getString(R.string.loading));
-		progressDialog.setCancelable(true);
-		progressDialog.setCanceledOnTouchOutside(false);
+		// DISPLAY A PROGRESSBAR
+		progressBarLayout = IFameUtils.setProgressBarLayout(activity);
 	}
 
 	@Override
@@ -115,7 +113,6 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 	protected void onPostExecute(List<Piatto> result) {
 		if (result == null) {
 			// something went wrong
-			progressDialog.dismiss();
 			Toast.makeText(activity,
 					activity.getString(R.string.errorSomethingWentWrong),
 					Toast.LENGTH_SHORT).show();
@@ -123,16 +120,14 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 			return;
 
 		} else {
-
 			adapter.complete_list = result;
 			adapter.clear();
-
 			for (Piatto p : result) {
 				adapter.add(p);
 			}
 			adapter.notifyDataSetChanged();
-
-			progressDialog.dismiss();
 		}
+
+		progressBarLayout.setVisibility(View.GONE);
 	}
 }

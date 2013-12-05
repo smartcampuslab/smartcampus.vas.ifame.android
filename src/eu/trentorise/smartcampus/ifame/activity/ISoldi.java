@@ -1,8 +1,5 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
@@ -48,6 +44,7 @@ public class ISoldi extends SherlockActivity {
 	private TextView ridottoText;
 	private TextView snackText;
 	private TextView isoldi_euro_txt;
+	private TextView credit_message_label;
 	// private TextView val_textview2;
 	// private TextView val_textview1;
 	// private TextView val_textview3;
@@ -68,8 +65,20 @@ public class ISoldi extends SherlockActivity {
 		centerText = (TextView) findViewById(R.id.isoldi_center_text);
 		bottomText = (TextView) findViewById(R.id.isoldi_bottom_text);
 		isoldi_euro_txt = (TextView) findViewById(R.id.isoldi_euro_text);
+		credit_message_label = (TextView) findViewById(R.id.isoldi_credit_message_text);
 
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
+		isoldi_layout_view.setVisibility(View.GONE);
+
+		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
+			new ISoldiConnector().execute();
+		} else {
+			Toast.makeText(ISoldi.this,
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
+			finish();
+			return;
+		}
 
 		interoText.setOnClickListener(new OnClickListener() {
 
@@ -108,22 +117,9 @@ public class ISoldi extends SherlockActivity {
 		// }
 		// });
 
-		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
-			new ISoldiConnector().execute();
-		}
-
 		// actionBarSherlock is initialized in super.onCreate()
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.menu_only_loading, menu);
-
-		refreshButton = menu.findItem(R.id.action_refresh);
-
-		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -133,20 +129,9 @@ public class ISoldi extends SherlockActivity {
 			onBackPressed();
 			return true;
 
-		case R.id.action_refresh:
-			if (IFameUtils.isUserConnectedToInternet(this)) {
-				new ISoldiConnector().execute();
-			} else {
-				Toast.makeText(getApplicationContext(),
-						getString(R.string.errorInternetConnectionRequired),
-						Toast.LENGTH_SHORT).show();
-			}
-			return true;
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-
 	}
 
 	private void getAmount(Saldo result) {
@@ -308,6 +293,7 @@ public class ISoldi extends SherlockActivity {
 			interoText.setVisibility(View.GONE);
 			ridottoText.setVisibility(View.GONE);
 			snackText.setVisibility(View.GONE);
+			credit_message_label.setVisibility(View.GONE);
 
 			centerText.setText(R.string.iSoldi_credit_status_not_available);
 			centerText.setTextSize(27);
@@ -322,7 +308,86 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setVisibility(View.GONE);
 			isoldi_euro_txt.setVisibility(View.GONE);
-			// isoldi_euro_txt.setText("");
+		}
+	}
+
+	/*
+	 * 
+	 * CONNECTOR TO TO GET DATA
+	 */
+	private class ISoldiConnector extends AsyncTask<Void, Void, Saldo> {
+
+		private LinearLayout progressBarLayout;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
+			progressBarLayout = IFameUtils.setProgressBarLayout(ISoldi.this);
+
+			IFameUtils.setActionBarLoading(refreshButton);
+		}
+
+		@Override
+		protected Saldo doInBackground(Void... saldo) {
+
+			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(ISoldi.this,
+					getString(R.string.APP_TOKEN));
+			MessageRequest request = new MessageRequest(
+					getString(R.string.URL_BASE_WEB_IFAME),
+					getString(R.string.PATH_ISOLDI_GETSOLDI));
+			request.setMethod(Method.GET);
+
+			try {
+
+				MessageResponse response = mProtocolCarrier
+						.invokeSync(request, getString(R.string.APP_TOKEN),
+								IFameMain.getAuthToken());
+
+				if (response.getHttpStatus() == 200) {
+					return Utils.convertJSONToObject(response.getBody(),
+							Saldo.class);
+				}
+			} catch (ConnectionException e) {
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				e.printStackTrace();
+
+				// gestine del login con google e mostrare errore
+				Saldo saldoError = new Saldo();
+				saldoError.setCredit("-1");
+				return saldoError;
+
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (AACException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Saldo result) {
+			super.onPostExecute(result);
+
+			if (result == null) {
+				Toast.makeText(ISoldi.this,
+						getString(R.string.errorSomethingWentWrong),
+						Toast.LENGTH_SHORT).show();
+				finish();
+				return;
+
+			} else {
+				getAmount(result);
+			}
+
+			// setup the view
+			if (isoldi_layout_view != null) {
+				isoldi_layout_view.setVisibility(View.VISIBLE);
+			}
+			progressBarLayout.setVisibility(View.GONE);
+			IFameUtils.removeActionBarLoading(refreshButton);
 		}
 	}
 
@@ -356,123 +421,5 @@ public class ISoldi extends SherlockActivity {
 	// }
 	// });
 	// }
-
-	/*
-	 * 
-	 * CONNECTOR TO TO GET DATA
-	 */
-	private class ISoldiConnector extends AsyncTask<Void, Void, Saldo> {
-
-		private ProgressDialog progressDialog;
-
-		private final String URL_BASE_WEB_IFAME;
-		private final String URL_ISOLDI_GETSOLDI;
-		private final String APP_TOKEN;
-
-		public ISoldiConnector() {
-
-			URL_BASE_WEB_IFAME = getString(R.string.URL_BASE_WEB_IFAME);
-			APP_TOKEN = getString(R.string.APP_TOKEN);
-			URL_ISOLDI_GETSOLDI = getString(R.string.PATH_ISOLDI_GETSOLDI);
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			// DISPLAY A PROGRESSDIALOG AND GET THE USER TOKEN
-			progressDialog = ProgressDialog.show(ISoldi.this,
-					getString(R.string.iSoldi_title_activity),
-					getString(R.string.loading));
-			progressDialog.setCanceledOnTouchOutside(false);
-			progressDialog.setCancelable(true);
-			progressDialog.setOnCancelListener(new OnCancelListener() {
-
-				@Override
-				public void onCancel(DialogInterface dialog) {
-
-					Toast.makeText(ISoldi.this,
-							getString(R.string.iSoldi_press_again_to_exit),
-							Toast.LENGTH_SHORT).show();
-
-					if (refreshButton != null) {
-						refreshButton
-								.setActionView(R.layout.actionbar_progressbar_circle);
-						refreshButton.expandActionView();
-					}
-				}
-			});
-
-			if (isoldi_layout_view != null)
-				isoldi_layout_view.setVisibility(View.GONE);
-
-			if (refreshButton != null) {
-				refreshButton
-						.setActionView(R.layout.actionbar_progressbar_circle);
-				refreshButton.expandActionView();
-			}
-		}
-
-		@Override
-		protected Saldo doInBackground(Void... saldo) {
-
-			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(ISoldi.this,
-					APP_TOKEN);
-			MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-					URL_ISOLDI_GETSOLDI);
-			request.setMethod(Method.GET);
-
-			try {
-				MessageResponse response = mProtocolCarrier.invokeSync(request,
-						APP_TOKEN, IFameMain.getAuthToken());
-
-				if (response.getHttpStatus() == 200) {
-					return Utils.convertJSONToObject(response.getBody(),
-							Saldo.class);
-				}
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-
-				// gestine del login con google e mostrare errore
-				Saldo saldoError = new Saldo();
-				saldoError.setCredit("-1");
-				return saldoError;
-
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (AACException e) {
-				e.printStackTrace();
-			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Saldo result) {
-			super.onPostExecute(result);
-
-			if (refreshButton != null) {
-				refreshButton.collapseActionView();
-				refreshButton.setActionView(null);
-			}
-
-			if (result == null) {
-				progressDialog.dismiss();
-				Toast.makeText(ISoldi.this,
-						getString(R.string.errorSomethingWentWrong),
-						Toast.LENGTH_SHORT).show();
-				finish();
-			} else {
-
-				getAmount(result);
-
-				progressDialog.dismiss();
-
-				if (isoldi_layout_view != null)
-					isoldi_layout_view.setVisibility(View.VISIBLE);
-			}
-		}
-	}
 
 }

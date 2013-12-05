@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +19,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
@@ -37,9 +35,6 @@ import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		implements OnNavigationListener {
@@ -59,10 +54,44 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	private Integer mioVoto;
 	private String mioCommento;
 
+	private MenuItem refreshButton;
+
 	private MensaSpinnerAdapter mensaSpinnerAdapter;
 	private TextView nome_piatto_label;
 
 	private int currentTabSelected;
+
+	public MenuItem getRefreshButton() {
+		return refreshButton;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.igradito_recensioni_menu_item, menu);
+		refreshButton = menu.findItem(R.id.action_refresh);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+
+		case R.id.action_refresh:
+			return true;
+
+		case R.id.action_add_comments:
+			showInsertReviewDialog();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,28 +138,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 				.getPosition(MensaUtils.getFavouriteMensa(this)));
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.igradito_recensioni_menu_item, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			onBackPressed();
-			break;
-		case R.id.action_add_comments:
-			showInsertReviewDialog();
-			break;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
-
 	/**
 	 * Show dialog for insert or edit a review
 	 */
@@ -163,17 +170,11 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	private class RetrieveGiudiziTask extends
 			AsyncTask<Long, Void, List<Giudizio>> {
 
-		private ProgressDialog progressDialog;
-
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(
-					IGraditoVisualizzaRecensioni.this,
-					getString(R.string.iGradito_title_activity),
-					getString(R.string.loading));
-			progressDialog.setCancelable(true);
-			progressDialog.setCanceledOnTouchOutside(false);
+
+			IFameUtils.setActionBarLoading(refreshButton);
 		}
 
 		@Override
@@ -194,18 +195,10 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 								IFameMain.getAuthToken());
 
 				if (response.getHttpStatus() == 200) {
-					String body = response.getBody();
-					List<Giudizio> list = Utils.convertJSONToObjects(body,
+					return Utils.convertJSONToObjects(response.getBody(),
 							Giudizio.class);
-					return list;
 				}
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (AACException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
@@ -215,15 +208,14 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		protected void onPostExecute(List<Giudizio> result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				progressDialog.dismiss();
 				Toast.makeText(IGraditoVisualizzaRecensioni.this,
 						getString(R.string.errorLoadingReviews),
 						Toast.LENGTH_SHORT).show();
-				// finish();
 			} else {
 				createGiudiziList(result);
-				progressDialog.dismiss();
 			}
+			IFameUtils.removeActionBarLoading(refreshButton);
+			refreshButton.setEnabled(false);
 		}
 	}
 
