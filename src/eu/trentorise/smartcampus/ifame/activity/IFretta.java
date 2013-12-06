@@ -27,7 +27,7 @@ public class IFretta extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ifretta);
+		setContentView(R.layout.layout_ifretta);
 
 		ListView mListViewMensa = (ListView) findViewById(R.id.ifretta_page_list);
 

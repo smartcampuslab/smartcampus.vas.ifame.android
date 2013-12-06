@@ -20,7 +20,7 @@ public class MenuDelGiorno extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.empty_layout);
+		// setContentView(R.layout.empty_layout);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMMM yyyy");
 		String dateStringTitle = dateFormat.format(new Date());

@@ -154,7 +154,9 @@
     <string name="iGradito_dialog_button_cancel_text">Cancel</string>
     <string name="iGradito_user">User</string>
     <string name="iGradito_users">Users</string>
-    <!-- /iGradito -->
+    <string name="iGradito_recensione_aggiunta_correttamente">Your review is successfully added</string>
+    <string name="iGradito_recensione_non_aggiunta">Unfortunately your review wasn\'t added successfully. Please retry</string>
+   <!-- /iGradito -->
 
 
     <!-- iSoldi -->
@@ -172,6 +174,9 @@
 
 
     <!-- others -->
+    <string name="view_review">Show reviews</string>
+    <string name="rate_dish">Vote or review</string>
+    <string name="search_on_google">Search on Google</string>
     <string name="app_uid_label">SmartCampus</string>
     <string name="app_name">iFame</string>
     <string name="menu_settings">Settings</string>

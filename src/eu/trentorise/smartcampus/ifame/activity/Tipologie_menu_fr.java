@@ -37,7 +37,7 @@ public class Tipologie_menu_fr extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.empty_layout);
+		// setContentView(R.layout.empty_layout);
 
 		// setup the sctionbar
 		getSupportActionBar().setHomeButtonEnabled(true);

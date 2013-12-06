@@ -11,10 +11,11 @@ import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
@@ -22,6 +23,7 @@ import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
+import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 /**
@@ -39,7 +41,12 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 	private EditText userReviewEditText;
 	private TextView piattoNameTextView;
 	private SeekBar barUserValutation;
-	private int voto = 0;
+	// private int voto;
+
+	private Mensa mensa;
+	private SherlockFragmentActivity activity;
+
+	private MenuItem refreshButton;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -54,12 +61,16 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 
 		// get the arguments passed invoking the dialog
 		Bundle argsBundle = getArguments();
-		final Mensa mensa = (Mensa) argsBundle.get(MENSA);
-		final Piatto piatto = (Piatto) argsBundle.get(PIATTO);
+		mensa = (Mensa) argsBundle.getSerializable(MENSA);
+		final Piatto piatto = (Piatto) argsBundle.getSerializable(PIATTO);
 		String mioCommento = argsBundle.getString(COMMENTO);
 		Integer mioVoto = argsBundle.getInt(VOTO);
 
 		final String userId = UserIdUtils.getUserId(getSherlockActivity());
+
+		if (mensa == null) {
+			mensa = MensaUtils.getFavouriteMensa(getSherlockActivity());
+		}
 
 		// Add a title to the dialog
 		builder.setTitle(mensa.getMensa_nome());
@@ -78,10 +89,14 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 		if (mioCommento != null) {
 			userReviewEditText.setText(mioCommento);
 		}
+
 		if (mioVoto != null) {
 			barUserValutation.setProgress(mioVoto);
+		} else {
+			barUserValutation.setProgress(5);
 		}
-		voto = barUserValutation.getProgress();
+		// voto = barUserValutation.getProgress();
+
 		// SHOW KEYBOARD
 		userReviewEditText
 				.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -101,44 +116,53 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				});
 		userReviewEditText.requestFocus();
 
-		// Add Listener to valutation bar
-		barUserValutation
-				.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
-					@Override
-					public void onStopTrackingTouch(SeekBar seekBar) {
-					}
-
-					@Override
-					public void onStartTrackingTouch(SeekBar seekBar) {
-					}
-
-					@Override
-					public void onProgressChanged(SeekBar seekBar,
-							int progress, boolean fromUser) {
-						voto = progress;
-					}
-				});
+		// // Add Listener to valutation bar
+		// barUserValutation
+		// .setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		//
+		// @Override
+		// public void onStopTrackingTouch(SeekBar seekBar) {
+		// }
+		//
+		// @Override
+		// public void onStartTrackingTouch(SeekBar seekBar) {
+		// }
+		//
+		// @Override
+		// public void onProgressChanged(SeekBar seekBar,
+		// int progress, boolean fromUser) {
+		// voto = progress;
+		// }
+		// });
 
 		builder.setView(dialogView);
+
+		activity = getSherlockActivity();
+
+		if (activity instanceof IGraditoVisualizzaRecensioni) {
+			refreshButton = ((IGraditoVisualizzaRecensioni) activity)
+					.getRefreshButton();
+		} else {
+			refreshButton = null;
+		}
+
 		// Add action buttons
 		builder.setPositiveButton(
 				getString(R.string.iGradito_dialog_button_add_text),
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+
 						GiudizioDataToPost giudizioDataToPost = new GiudizioDataToPost();
 						giudizioDataToPost.commento = userReviewEditText
 								.getText().toString();
 						giudizioDataToPost.userId = Long.parseLong(userId);
-						giudizioDataToPost.voto = (float) voto;
+						giudizioDataToPost.voto = (float) barUserValutation
+								.getProgress();
 
-						IGraditoVisualizzaRecensioni iGraditoVisualizzaRecensioni = (IGraditoVisualizzaRecensioni) getSherlockActivity();
-						new PostGiudizioAsyncTask(iGraditoVisualizzaRecensioni,
-								giudizioDataToPost,
-								iGraditoVisualizzaRecensioni.getRefreshButton())
-								.execute(mensa.getMensa_id(),
-										piatto.getPiatto_id());
+						new PostGiudizioAsyncTask(activity, giudizioDataToPost,
+								refreshButton).execute(mensa.getMensa_id(),
+								piatto.getPiatto_id());
 
 						getDialog().cancel();
 					}
@@ -148,7 +172,6 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				getString(R.string.iGradito_dialog_button_cancel_text),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						getDialog().cancel();
 					}
 				});
 

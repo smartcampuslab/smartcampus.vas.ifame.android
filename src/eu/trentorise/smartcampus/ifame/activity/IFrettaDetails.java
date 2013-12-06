@@ -40,7 +40,7 @@ public class IFrettaDetails extends SherlockActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ifretta_details);
+		setContentView(R.layout.layout_ifretta_details);
 
 		webcamImage = (WebcamAspectRatioImageView) findViewById(R.id.imageViewId);
 

@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -106,8 +105,10 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 
 		// Get extras parameters from the igradito activity
 		Bundle extras = getIntent().getExtras();
-		piatto = (Piatto) extras.get(PIATTO);
+		piatto = (Piatto) extras.getSerializable(PIATTO);
 
+		Toast.makeText(this, piatto.getPiatto_nome() + piatto.getPiatto_id(),	Toast.LENGTH_SHORT).show();
+		
 		mioVoto = 5;
 		mioCommento = "";
 
@@ -143,24 +144,22 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	 */
 	private void showInsertReviewDialog() {
 
-		FragmentManager fragmentManager = getSupportFragmentManager();
-
 		if (insertReviewDialog == null) {
 			insertReviewDialog = new InsertReviewDialog();
 		}
 
 		// put the data needed for showing the dialog in a bundle
-		Bundle dataForTheDialog = new Bundle();
-		dataForTheDialog.putSerializable(InsertReviewDialog.MENSA,
-				mensaSpinnerAdapter.getItem(getSupportActionBar()
-						.getSelectedNavigationIndex()));
-		dataForTheDialog.putSerializable(InsertReviewDialog.PIATTO, piatto);
-		dataForTheDialog.putInt(InsertReviewDialog.VOTO, mioVoto);
-		dataForTheDialog.putString(InsertReviewDialog.COMMENTO, mioCommento);
+		Bundle args = new Bundle();
+		args.putSerializable(InsertReviewDialog.MENSA, mensaSpinnerAdapter
+				.getItem(getSupportActionBar().getSelectedNavigationIndex()));
+		args.putSerializable(InsertReviewDialog.PIATTO, piatto);
+		args.putInt(InsertReviewDialog.VOTO, mioVoto);
+		args.putString(InsertReviewDialog.COMMENTO, mioCommento);
 
 		// pass the bundle to the dialog and show
-		insertReviewDialog.setArguments(dataForTheDialog);
-		insertReviewDialog.show(fragmentManager, "insertReviewDialog");
+		insertReviewDialog.setArguments(args);
+		insertReviewDialog.show(getSupportFragmentManager(),
+				"insertReviewDialog");
 	}
 
 	/**

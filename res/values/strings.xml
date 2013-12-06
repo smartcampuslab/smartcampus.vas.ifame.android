@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -148,9 +148,11 @@
     <string name="iGradito_spinner_label_excelent">Ottimo</string>
     <string name="iGradito_spinner_label_bad">Pessimo</string>
     <string name="iGradito_dialog_button_add_text">Aggiungi</string>
-    <string name="iGradito_dialog_button_cancel_text">Annulla</string>
+    <string name="iGradito_dialog_button_cancel_text">Chiudi</string>
     <string name="iGradito_user">Utente</string>
     <string name="iGradito_users">Utenti</string>
+    <string name="iGradito_recensione_aggiunta_correttamente">La tua recensione e\' stata aggiunta correttamente</string>
+    <string name="iGradito_recensione_non_aggiunta">Purtroppo la tua recensione non e\' stata aggiunta correttamente. Riprova</string>
     <!-- /iGradito -->
 
 
@@ -170,6 +172,9 @@
 
 
     <!-- others -->
+    <string name="view_review">Visualizza le recensioni</string>
+    <string name="rate_dish">Recensisci o vota</string>
+    <string name="search_on_google">Cerca in Google</string>
     <string name="app_uid_label">SmartCampus</string>
     <string name="app_name">iFame</string>
     <string name="menu_settings">Settings</string>

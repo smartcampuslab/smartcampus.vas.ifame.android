@@ -1,5 +1,8 @@
 package eu.trentorise.smartcampus.ifame.tabs;
 
+import android.app.SearchManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +15,28 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
 import eu.trentorise.smartcampus.ifame.adapter.MenuDelGiornoPiattiAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetMenuDelGiornoTask;
-import eu.trentorise.smartcampus.ifame.dialog.WebSearchDialog;
+import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
+import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog;
+import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog.OptionsMenuDialogListener;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 
-public class MenuGiornoFragment extends SherlockFragment {
+public class MenuGiornoFragment extends SherlockFragment implements
+		OptionsMenuDialogListener {
 
-	private WebSearchDialog dialog;
+	// private WebSearchDialog webSearchDialog;
+	private OptionsMenuDialog optionsDialog;
+	private InsertReviewDialog insertReviewDialog;
+
 	private MenuDelGiornoPiattiAdapter mPiattiAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dialog = new WebSearchDialog();
+		// dialog = new WebSearchDialog();
 		mPiattiAdapter = new MenuDelGiornoPiattiAdapter(getSherlockActivity());
 		if (IFameUtils.isUserConnectedToInternet(getSherlockActivity())) {
 			new GetMenuDelGiornoTask(getSherlockActivity(), mPiattiAdapter)
@@ -56,23 +66,78 @@ public class MenuGiornoFragment extends SherlockFragment {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int pos,
 					long id) {
-
-				String piatto_name = ((Piatto) adapter.getItemAtPosition(pos))
-						.getPiatto_nome();
-				// assure that search is not valid for numbers, since we use
-				// numbers(1, 2, 3) as sentinels
-				if (!piatto_name.matches("[0-9]+")) {
-					showWebSearchDialog(piatto_name);
+				Piatto piatto = (Piatto) adapter.getItemAtPosition(pos);
+				// check because there are some fake piatti as header
+				if (!piatto.getPiatto_nome().matches("[0-9]+")) {
+					// showWebSearchDialog(piattoName);
+					showOptionsDialog(piatto);
 				}
 			}
 		});
 	}
 
-	private void showWebSearchDialog(String piatto_name) {
+	/** display dialog options */
+	private void showOptionsDialog(Piatto piatto) {
+
+		if (optionsDialog == null) {
+			optionsDialog = new OptionsMenuDialog();
+		}
+
 		Bundle args = new Bundle();
-		args.putString(WebSearchDialog.PIATTO_NAME, piatto_name);
-		dialog.setArguments(args);
-		dialog.show(getFragmentManager(), "StartWebSearchDialog");
+		args.putSerializable(OptionsMenuDialog.PIATTO, piatto);
+
+		optionsDialog.setArguments(args);
+		optionsDialog.show(getSherlockActivity().getSupportFragmentManager(),
+				"OptionsMenuDialog");
+	}
+
+	/**
+	 * Show dialog for insert or edit a review
+	 */
+	private void showInsertReviewDialog(Piatto piatto) {
+
+		if (insertReviewDialog == null) {
+			insertReviewDialog = new InsertReviewDialog();
+		}
+
+		// put the data needed for showing the dialog in a bundle
+		Bundle args = new Bundle();
+		args.putSerializable(InsertReviewDialog.PIATTO, piatto);
+		args.putInt(InsertReviewDialog.VOTO, 5);
+		args.putString(InsertReviewDialog.COMMENTO, "");
+
+		// pass the bundle to the dialog and show
+		insertReviewDialog.setArguments(args);
+		insertReviewDialog.show(getSherlockActivity()
+				.getSupportFragmentManager(), "insertReviewDialog");
+	}
+
+	@Override
+	public void onClickOptionsMenuDialog(DialogInterface dialog, int position,
+			Piatto piatto) {
+		switch (position) {
+
+		case OptionsMenuDialog.VIEW_REVIEW:
+			Intent viewReviews = new Intent(getSherlockActivity(),
+					IGraditoVisualizzaRecensioni.class);
+			viewReviews.putExtra(IGraditoVisualizzaRecensioni.PIATTO, piatto);
+			startActivity(viewReviews);
+			break;
+
+		case OptionsMenuDialog.RATE_OR_REVIEW:
+			showInsertReviewDialog(piatto);
+			break;
+
+		case OptionsMenuDialog.SEARCH_GOOGLE:
+			Intent searchGoogle = new Intent(Intent.ACTION_WEB_SEARCH);
+			searchGoogle.putExtra(SearchManager.QUERY, piatto.getPiatto_nome());
+			startActivity(searchGoogle);
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 }

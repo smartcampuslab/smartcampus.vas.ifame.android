@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.SearchManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +26,9 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.PiattoKcalListAdapter;
-import eu.trentorise.smartcampus.ifame.dialog.WebSearchDialog;
+import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
+import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog;
+import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog.OptionsMenuDialogListener;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
@@ -34,26 +39,30 @@ import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 
-public class MenuDelMeseActivity extends SherlockFragmentActivity {
+public class MenuDelMeseActivity extends SherlockFragmentActivity implements
+		OptionsMenuDialogListener {
 
 	private Spinner mSpinner;
 	private MenuDelMese menuDelMese;
 	private PiattoKcalListAdapter mPiattiListAdapter;
-	private WebSearchDialog webSearchDialog;
+
 	private ArrayAdapter<String> mSpinnerAdapter;
 	private Calendar mCalendar;
 	private SimpleDateFormat dateFormat;
+
+	// private WebSearchDialog webSearchDialog;
+	private OptionsMenuDialog optionsDialog;
+	private InsertReviewDialog insertReviewDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_menu_mese);
 
-		webSearchDialog = new WebSearchDialog();
 		mCalendar = Calendar.getInstance();
 		dateFormat = new SimpleDateFormat("dd/MM/yy");
 
-		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
+		if (IFameUtils.isUserConnectedToInternet(MenuDelMeseActivity.this)) {
 			new MenuDelMeseConnector().execute();
 		} else {
 			Toast.makeText(MenuDelMeseActivity.this,
@@ -91,13 +100,13 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		piattiListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View arg1,
+			public void onItemClick(AdapterView<?> adapter, View arg1,
 					int position, long arg3) {
-				String piattoName = ((Piatto) parent
-						.getItemAtPosition(position)).getPiatto_nome();
+				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
 				// check because there are some fake piatti as header
-				if (!piattoName.matches("[0-9]+")) {
-					showWebSearchDialog(piattoName);
+				if (!piatto.getPiatto_nome().matches("[0-9]+")) {
+					// showWebSearchDialog(piattoName);
+					showOptionsDialog(piatto);
 				}
 			}
 		});
@@ -157,7 +166,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		@Override
 		protected MenuDelMese doInBackground(Void... params) {
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
-					getApplicationContext(), getString(R.string.APP_TOKEN));
+					MenuDelMeseActivity.this, getString(R.string.APP_TOKEN));
 			MessageRequest request = new MessageRequest(
 					getString(R.string.URL_BASE_WEB_IFAME), "/getmenudelmese");
 			request.setMethod(Method.GET);
@@ -182,7 +191,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 
 			if (mdm == null) {
 				// c'è stato un errore nel ricevere il menu del mese
-				Toast.makeText(getApplicationContext(),
+				Toast.makeText(MenuDelMeseActivity.this,
 						getString(R.string.errorSomethingWentWrong),
 						Toast.LENGTH_SHORT).show();
 				finish();
@@ -291,12 +300,67 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity {
 		mPiattiListAdapter.notifyDataSetChanged();
 	}
 
-	/** display dialog search on Google the selected dish name */
-	private void showWebSearchDialog(String piatto_name) {
+	/** display dialog options */
+	private void showOptionsDialog(Piatto piatto) {
+
+		if (optionsDialog == null) {
+			optionsDialog = new OptionsMenuDialog();
+		}
+
 		Bundle args = new Bundle();
-		args.putString(WebSearchDialog.PIATTO_NAME, piatto_name);
-		webSearchDialog.setArguments(args);
-		webSearchDialog.show(getSupportFragmentManager(),
-				"StartWebSearchDialog");
+		args.putSerializable(OptionsMenuDialog.PIATTO, piatto);
+
+		optionsDialog.setArguments(args);
+		optionsDialog.show(getSupportFragmentManager(), "OptionsMenuDialog");
 	}
+
+	/**
+	 * Show dialog for insert or edit a review
+	 */
+	private void showInsertReviewDialog(Piatto piatto) {
+
+		if (insertReviewDialog == null) {
+			insertReviewDialog = new InsertReviewDialog();
+		}
+
+		// put the data needed for showing the dialog in a bundle
+		Bundle args = new Bundle();
+		args.putSerializable(InsertReviewDialog.PIATTO, piatto);
+		args.putInt(InsertReviewDialog.VOTO, 5);
+		args.putString(InsertReviewDialog.COMMENTO, "");
+
+		// pass the bundle to the dialog and show
+		insertReviewDialog.setArguments(args);
+		insertReviewDialog.show(getSupportFragmentManager(),
+				"insertReviewDialog");
+	}
+
+	@Override
+	public void onClickOptionsMenuDialog(DialogInterface dialog, int position,
+			Piatto piatto) {
+		switch (position) {
+
+		case OptionsMenuDialog.VIEW_REVIEW:
+			Intent viewReviews = new Intent(MenuDelMeseActivity.this,
+					IGraditoVisualizzaRecensioni.class);
+			viewReviews.putExtra(IGraditoVisualizzaRecensioni.PIATTO, piatto);
+			startActivity(viewReviews);
+			break;
+
+		case OptionsMenuDialog.RATE_OR_REVIEW:
+			showInsertReviewDialog(piatto);
+			break;
+
+		case OptionsMenuDialog.SEARCH_GOOGLE:
+			Intent searchGoogle = new Intent(Intent.ACTION_WEB_SEARCH);
+			searchGoogle.putExtra(SearchManager.QUERY, piatto.getPiatto_nome());
+			startActivity(searchGoogle);
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
 }

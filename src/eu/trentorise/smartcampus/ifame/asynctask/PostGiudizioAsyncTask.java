@@ -2,6 +2,7 @@ package eu.trentorise.smartcampus.ifame.asynctask;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -26,35 +27,34 @@ import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 public class PostGiudizioAsyncTask extends
 		AsyncTask<Long, Void, List<Giudizio>> {
 
-	private IGraditoVisualizzaRecensioni visualizzaRecensioniActivity;
+	private Activity activity;
 	private GiudizioDataToPost data;
 	private final String URL_BASE_WEB_IFAME;
 	private final String APP_TOKEN;
 
 	private MenuItem refreshButton;
 
-	public PostGiudizioAsyncTask(
-			IGraditoVisualizzaRecensioni visualizzaRecensioniActivity,
-			GiudizioDataToPost data, MenuItem refreshButton) {
-		this.visualizzaRecensioniActivity = visualizzaRecensioniActivity;
+	public PostGiudizioAsyncTask(Activity activity, GiudizioDataToPost data,
+			MenuItem refreshButton) {
+		this.activity = activity;
 		this.data = data;
 		this.refreshButton = refreshButton;
 
-		URL_BASE_WEB_IFAME = visualizzaRecensioniActivity
-				.getString(R.string.URL_BASE_WEB_IFAME);
-		APP_TOKEN = visualizzaRecensioniActivity.getString(R.string.APP_TOKEN);
+		URL_BASE_WEB_IFAME = activity.getString(R.string.URL_BASE_WEB_IFAME);
+		APP_TOKEN = activity.getString(R.string.APP_TOKEN);
 	}
 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+
 		IFameUtils.setActionBarLoading(refreshButton);
 	}
 
 	@Override
 	protected List<Giudizio> doInBackground(Long... params) {
-		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
-				visualizzaRecensioniActivity, APP_TOKEN);
+		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
+				APP_TOKEN);
 
 		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
 				"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio/add");
@@ -85,18 +85,25 @@ public class PostGiudizioAsyncTask extends
 	@Override
 	protected void onPostExecute(List<Giudizio> result) {
 		super.onPostExecute(result);
+
 		if (result == null) {
 			Toast.makeText(
-					visualizzaRecensioniActivity,
-					visualizzaRecensioniActivity
-							.getString(R.string.errorSomethingWentWrong),
+					activity,
+					activity.getString(R.string.iGradito_recensione_non_aggiunta),
 					Toast.LENGTH_SHORT).show();
 		} else {
-			visualizzaRecensioniActivity.createGiudiziList(result);
-			Toast.makeText(visualizzaRecensioniActivity,
-					"Recensione aggiunta correttamente", Toast.LENGTH_LONG)
-					.show();
+
+			if (activity instanceof IGraditoVisualizzaRecensioni) {
+				((IGraditoVisualizzaRecensioni) activity)
+						.createGiudiziList(result);
+			}
+
+			Toast.makeText(
+					activity,
+					activity.getString(R.string.iGradito_recensione_aggiunta_correttamente),
+					Toast.LENGTH_LONG).show();
 		}
-		IFameUtils.setActionBarLoading(refreshButton);
+
+		IFameUtils.removeActionBarLoading(refreshButton);
 	}
 }
