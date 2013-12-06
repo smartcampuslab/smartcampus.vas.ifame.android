@@ -19,6 +19,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
+import eu.trentorise.smartcampus.ifame.activity.MenuDelGiornoActivity;
+import eu.trentorise.smartcampus.ifame.activity.MenuDelMeseActivity;
 import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
@@ -116,31 +118,17 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				});
 		userReviewEditText.requestFocus();
 
-		// // Add Listener to valutation bar
-		// barUserValutation
-		// .setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-		//
-		// @Override
-		// public void onStopTrackingTouch(SeekBar seekBar) {
-		// }
-		//
-		// @Override
-		// public void onStartTrackingTouch(SeekBar seekBar) {
-		// }
-		//
-		// @Override
-		// public void onProgressChanged(SeekBar seekBar,
-		// int progress, boolean fromUser) {
-		// voto = progress;
-		// }
-		// });
-
 		builder.setView(dialogView);
 
 		activity = getSherlockActivity();
 
 		if (activity instanceof IGraditoVisualizzaRecensioni) {
 			refreshButton = ((IGraditoVisualizzaRecensioni) activity)
+					.getRefreshButton();
+		} else if (activity instanceof MenuDelMeseActivity) {
+			refreshButton = ((MenuDelMeseActivity) activity).getRefreshButton();
+		} else if (activity instanceof MenuDelGiornoActivity) {
+			refreshButton = ((MenuDelGiornoActivity) activity)
 					.getRefreshButton();
 		} else {
 			refreshButton = null;

@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
@@ -49,6 +50,8 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 	private ArrayAdapter<String> mSpinnerAdapter;
 	private Calendar mCalendar;
 	private SimpleDateFormat dateFormat;
+
+	private MenuItem refreshButton;
 
 	// private WebSearchDialog webSearchDialog;
 	private OptionsMenuDialog optionsDialog;
@@ -131,6 +134,14 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 				// DO NOTHING
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.menu_only_loading_progress,
+				menu);
+		setRefreshButton(menu.findItem(R.id.action_refresh));
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -227,12 +238,20 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 		}
 	}
 
-	private MenuDelMese getMenuDelMese() {
+	public MenuDelMese getMenuDelMese() {
 		return this.menuDelMese;
 	}
 
 	private void setMenuDelMese(MenuDelMese mdm) {
 		this.menuDelMese = mdm;
+	}
+
+	public MenuItem getRefreshButton() {
+		return refreshButton;
+	}
+
+	public void setRefreshButton(MenuItem refreshButton) {
+		this.refreshButton = refreshButton;
 	}
 
 	/**

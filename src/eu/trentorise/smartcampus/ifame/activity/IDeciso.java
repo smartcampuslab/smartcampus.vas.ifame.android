@@ -50,7 +50,7 @@ public class IDeciso extends SherlockActivity {
 				switch (position) {
 				case 0:
 					IFameUtils.checkInitBeforeLaunchActivity(IDeciso.this,
-							MenuDelGiorno.class);
+							MenuDelGiornoActivity.class);
 					break;
 				case 1:
 					i = new Intent(IDeciso.this, Tipologie_menu_fr.class);

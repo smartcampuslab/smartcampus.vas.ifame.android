@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
@@ -22,11 +23,13 @@ import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoAlternativeFragment;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TabListener;
 
-public class MenuDelGiorno extends SherlockFragmentActivity implements
+public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 		OptionsMenuDialogListener {
 
 	private OptionsMenuDialog optionsDialog;
 	private InsertReviewDialog insertReviewDialog;
+
+	private MenuItem refreshButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,22 @@ public class MenuDelGiorno extends SherlockFragmentActivity implements
 		}
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	public MenuItem getRefreshButton() {
+		return refreshButton;
+	}
+
+	private void setRefreshButton(MenuItem refreshButton) {
+		this.refreshButton = refreshButton;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.menu_only_loading_progress,
+				menu);
+		setRefreshButton(menu.findItem(R.id.action_refresh));
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -116,7 +135,7 @@ public class MenuDelGiorno extends SherlockFragmentActivity implements
 		switch (position) {
 
 		case OptionsMenuDialog.VIEW_REVIEW:
-			Intent viewReviews = new Intent(MenuDelGiorno.this,
+			Intent viewReviews = new Intent(MenuDelGiornoActivity.this,
 					IGraditoVisualizzaRecensioni.class);
 			viewReviews.putExtra(IGraditoVisualizzaRecensioni.PIATTO, piatto);
 			startActivity(viewReviews);

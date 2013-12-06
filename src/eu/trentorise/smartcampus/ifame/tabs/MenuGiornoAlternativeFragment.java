@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.activity.MenuDelGiorno;
+import eu.trentorise.smartcampus.ifame.activity.MenuDelGiornoActivity;
 import eu.trentorise.smartcampus.ifame.adapter.AlternativePiattiAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetAlternativeListTask;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
@@ -60,7 +60,7 @@ public class MenuGiornoAlternativeFragment extends SherlockFragment {
 				// check because there are some fake piatti as header
 				if (!piatto.getPiatto_nome().matches("[0-9]+")) {
 					// showWebSearchDialog(piattoName);
-					((MenuDelGiorno) getSherlockActivity())
+					((MenuDelGiornoActivity) getSherlockActivity())
 							.showOptionsDialog(piatto);
 				}
 			}
