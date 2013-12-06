@@ -7,6 +7,7 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,10 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	private TextView giudizio_espresso_da_textview;
 	private TextView giudizio_medio_textview;
 	private TextView no_data_to_display_textview;
+
 	private ListView giudiziListview;
+
+	private LinearLayout no_data_to_display_wrapper;
 
 	private Integer mioVoto;
 	private String mioCommento;
@@ -101,14 +105,17 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 
 		giudizio_espresso_da_textview = (TextView) findViewById(R.id.giudizio_espresso_da_value);
 		giudizio_medio_textview = (TextView) findViewById(R.id.giudizio_voto_medio_value);
+
 		no_data_to_display_textview = (TextView) findViewById(R.id.giudizio_no_data_to_display);
+		no_data_to_display_wrapper = (LinearLayout) findViewById(R.id.giudizio_no_data_to_display_wrapper_layout);
 
 		// Get extras parameters from the igradito activity
 		Bundle extras = getIntent().getExtras();
 		piatto = (Piatto) extras.getSerializable(PIATTO);
 
-		Toast.makeText(this, piatto.getPiatto_nome() + piatto.getPiatto_id(),	Toast.LENGTH_SHORT).show();
-		
+		// Toast.makeText(this, piatto.getPiatto_nome() + piatto.getPiatto_id(),
+		// Toast.LENGTH_SHORT).show();
+
 		mioVoto = 5;
 		mioCommento = "";
 
@@ -265,6 +272,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 				reviewListAdapter = new ReviewListAdapter(this,
 						UserIdUtils.getUserId(this), reviews);
 				giudiziListview.setAdapter(reviewListAdapter);
+
 			} else {
 				// clear and add the reviews at the adapter
 				reviewListAdapter.clear();
@@ -280,9 +288,12 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 				no_data_to_display_textview
 						.setText(getString(R.string.iGradito_no_one_left_comment));
 				no_data_to_display_textview.setVisibility(View.VISIBLE);
+				no_data_to_display_wrapper.setVisibility(View.VISIBLE);
 			} else {
 				giudiziListview.setVisibility(View.VISIBLE);
+
 				no_data_to_display_textview.setVisibility(View.GONE);
+				no_data_to_display_wrapper.setVisibility(View.GONE);
 			}
 
 		} else {
@@ -295,6 +306,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			no_data_to_display_textview
 					.setText(getString(R.string.iGradito_no_reviews_available));
 			no_data_to_display_textview.setVisibility(View.VISIBLE);
+			no_data_to_display_wrapper.setVisibility(View.VISIBLE);
 
 			String notAvailable = getString(R.string.iGradito_not_available);
 

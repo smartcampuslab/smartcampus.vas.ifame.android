@@ -4,27 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!--
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+    -->
+
     <TextView
         android:id="@+id/nome_piatto_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
         android:text="@string/iGradito_review_header"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#CC0000"
-        android:textSize="24sp" />
+        android:textSize="22sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp" >
 
         <TextView
             android:id="@+id/giudizio_voto_medio_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:padding="5dp"
             android:paddingBottom="0dp"
+            android:paddingRight="20dp"
             android:text="@string/iGradito_average_vote"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="20sp" />
@@ -34,7 +49,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/giudizio_voto_medio_label"
-            android:padding="5dp"
             android:paddingBottom="0dp"
             android:text="@string/iGradito_not_available"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -44,14 +58,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp" >
 
         <TextView
             android:id="@+id/giudizio_espresso_da_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:padding="5dp"
+            android:paddingRight="20dp"
             android:text="@string/iGradito_expressed_by"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="20sp" />
@@ -61,12 +77,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/giudizio_espresso_da_label"
-            android:padding="5dp"
             android:text="@string/iGradito_not_available"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#CC0000"
             android:textSize="20sp" />
     </RelativeLayout>
+    <!--
+    </LinearLayout>
+    </ScrollView>
+    -->
 
     <TextView
         android:id="@+id/recensioni_label"
@@ -83,16 +102,25 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/giudizio_no_data_to_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="fill|bottom"
-        android:padding="5dp"
-        android:paddingTop="25dp"
-        android:text="@string/iGradito_no_reviews_available"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="20sp"
-        android:visibility="visible" />
+    <LinearLayout
+        android:id="@+id/giudizio_no_data_to_display_wrapper_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/giudizio_no_data_to_display"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/iGradito_no_reviews_available"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp"
+            android:visibility="visible" />
+    </LinearLayout>
 
 </LinearLayout>

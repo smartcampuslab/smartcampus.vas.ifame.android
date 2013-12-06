@@ -3,6 +3,9 @@ package eu.trentorise.smartcampus.ifame.activity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.SearchManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -11,11 +14,19 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
+import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog;
+import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog.OptionsMenuDialogListener;
+import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoAlternativeFragment;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TabListener;
 
-public class MenuDelGiorno extends SherlockFragmentActivity {
+public class MenuDelGiorno extends SherlockFragmentActivity implements
+		OptionsMenuDialogListener {
+
+	private OptionsMenuDialog optionsDialog;
+	private InsertReviewDialog insertReviewDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,69 @@ public class MenuDelGiorno extends SherlockFragmentActivity {
 			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
+
+	}
+
+	/** display dialog options */
+	public void showOptionsDialog(Piatto piatto) {
+
+		if (optionsDialog == null) {
+			optionsDialog = new OptionsMenuDialog();
+		}
+
+		Bundle args = new Bundle();
+		args.putSerializable(OptionsMenuDialog.PIATTO, piatto);
+
+		optionsDialog.setArguments(args);
+		optionsDialog.show(getSupportFragmentManager(), "OptionsMenuDialog");
+	}
+
+	/**
+	 * Show dialog for insert or edit a review
+	 */
+	private void showInsertReviewDialog(Piatto piatto) {
+
+		if (insertReviewDialog == null) {
+			insertReviewDialog = new InsertReviewDialog();
+		}
+
+		// put the data needed for showing the dialog in a bundle
+		Bundle args = new Bundle();
+		args.putSerializable(InsertReviewDialog.PIATTO, piatto);
+		args.putInt(InsertReviewDialog.VOTO, 5);
+		args.putString(InsertReviewDialog.COMMENTO, "");
+
+		// pass the bundle to the dialog and show
+		insertReviewDialog.setArguments(args);
+		insertReviewDialog.show(getSupportFragmentManager(),
+				"insertReviewDialog");
+	}
+
+	@Override
+	public void onClickOptionsMenuDialog(DialogInterface dialog, int position,
+			Piatto piatto) {
+		switch (position) {
+
+		case OptionsMenuDialog.VIEW_REVIEW:
+			Intent viewReviews = new Intent(MenuDelGiorno.this,
+					IGraditoVisualizzaRecensioni.class);
+			viewReviews.putExtra(IGraditoVisualizzaRecensioni.PIATTO, piatto);
+			startActivity(viewReviews);
+			break;
+
+		case OptionsMenuDialog.RATE_OR_REVIEW:
+			showInsertReviewDialog(piatto);
+			break;
+
+		case OptionsMenuDialog.SEARCH_GOOGLE:
+			Intent searchGoogle = new Intent(Intent.ACTION_WEB_SEARCH);
+			searchGoogle.putExtra(SearchManager.QUERY, piatto.getPiatto_nome());
+			startActivity(searchGoogle);
+			break;
+
+		default:
+			break;
+		}
 
 	}
 

@@ -19,6 +19,7 @@ public class OptionsMenuDialog extends SherlockDialogFragment {
 	public static final int RATE_OR_REVIEW = 1;
 	public static final int SEARCH_GOOGLE = 2;
 
+	/** this is the key of the serializable piatto object required */
 	public static final String PIATTO = "get_piatto_selected";
 
 	private OptionsMenuDialogListener mListener;

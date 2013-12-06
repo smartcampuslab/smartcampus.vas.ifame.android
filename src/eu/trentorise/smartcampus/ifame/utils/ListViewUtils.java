@@ -17,6 +17,7 @@ public class ListViewUtils {
 		int totalHeight = 0;
 		for (int i = 0; i < listAdapter.getCount(); i++) {
 			View listItem = listAdapter.getView(i, null, listView);
+
 			listItem.measure(0, 0);
 			totalHeight += listItem.getMeasuredHeight();
 		}
@@ -26,6 +27,7 @@ public class ListViewUtils {
 				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 		listView.requestLayout();
+		// listView.scrollTo(0, 0);
 	}
 
 }
