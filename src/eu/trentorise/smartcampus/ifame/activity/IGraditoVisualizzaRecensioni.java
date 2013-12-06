@@ -271,6 +271,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 				// intialize the adapter
 				reviewListAdapter = new ReviewListAdapter(this,
 						UserIdUtils.getUserId(this), reviews);
+
 				giudiziListview.setAdapter(reviewListAdapter);
 
 			} else {
