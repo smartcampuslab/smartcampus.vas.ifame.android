@@ -15,6 +15,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
+import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 public class IDeciso extends SherlockActivity {
 
@@ -53,7 +54,7 @@ public class IDeciso extends SherlockActivity {
 							MenuDelGiornoActivity.class);
 					break;
 				case 1:
-					i = new Intent(IDeciso.this, Tipologie_menu_fr.class);
+					i = new Intent(IDeciso.this, TipologieMenu.class);
 					startActivity(i);
 					break;
 				case 2:

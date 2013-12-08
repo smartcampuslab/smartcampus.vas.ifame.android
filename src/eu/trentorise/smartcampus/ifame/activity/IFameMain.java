@@ -33,7 +33,7 @@ public class IFameMain extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.favourite_mensa_ifame_main) {
 			IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
-					IFretta.class);
+					MensaPreferita.class);
 			return true;
 
 		} else {
@@ -47,15 +47,6 @@ public class IFameMain extends SherlockActivity {
 		setContentView(R.layout.layout_ifame_main);
 
 		context = getApplicationContext();
-
-		if (IFameUtils.isUserConnectedToInternet(this)) {
-			// retrieve the mensa list and save it just to have always
-			// the
-			// updated link and datas if there is somehow an update
-			MensaUtils.getAndSaveMensaList(IFameMain.this);
-			// get user id and save
-			UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
-		}
 
 		// Add the listeners to the 4 buttons in the home of iFame
 		// iDECISO
@@ -75,7 +66,7 @@ public class IFameMain extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
-						IFrettaDetails.class);
+						IFretta.class);
 			}
 		});
 		// iGRADITO
@@ -99,6 +90,14 @@ public class IFameMain extends SherlockActivity {
 			}
 		});
 
+		if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
+			// retrieve the mensa list and save it just to keep always
+			// the updated link and datas if there is somehow an update
+			// to the webcam objects
+			MensaUtils.getAndSaveMensaList(IFameMain.this);
+			// get user id and save
+			UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
+		}
 	}
 
 	public static SCAccessProvider getAccessProvider() {

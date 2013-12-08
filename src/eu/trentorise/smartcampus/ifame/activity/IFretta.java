@@ -1,90 +1,78 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.util.Calendar;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.adapter.MensaAdapter;
+import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
-import eu.trentorise.smartcampus.ifame.utils.ListViewUtils;
+import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
+import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 
-public class IFretta extends SherlockActivity {
+public class IFretta extends SherlockActivity implements
+		OnNavigationListener {
+
+	private static final int START_HOUR = 12;
+	private static final int END_HOUR = 14;
+
+	// private Mensa mensa;
+	private MenuItem refreshButton;
+	private MensaSpinnerAdapter adapter;
+	private int currentTabSelected;
+
+	WebcamAspectRatioImageView webcamImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_ifretta);
+		setContentView(R.layout.layout_ifretta_details);
 
-		ListView mListViewMensa = (ListView) findViewById(R.id.ifretta_page_list);
+		webcamImage = (WebcamAspectRatioImageView) findViewById(R.id.imageViewId);
 
-		// setup actionbar (supportActionBar is initialized in super.onCreate())
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// initialize and setup the adapter with the listener
-		final MensaAdapter adapterMensaList = new MensaAdapter(this);
-
-		ArrayList<Mensa> lista = MensaUtils.getMensaList(this);
-		for (Mensa mensa : lista) {
-			adapterMensaList.add(mensa);
+		adapter = new MensaSpinnerAdapter(IFretta.this);
+		for (Mensa mensa : MensaUtils.getMensaList(IFretta.this)) {
+			adapter.add(mensa);
 		}
+		// setup actionbar (supportActionBar is initialized in super.onCreate())
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		mListViewMensa.setAdapter(adapterMensaList);
-		mListViewMensa.setOnItemClickListener(new OnItemClickListener() {
+		// Set up the dropdown list navigation in the action bar.
+		actionBar.setListNavigationCallbacks(adapter, IFretta.this);
 
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View v,
-					int position, long id) {
-
-				MensaUtils.setFavouriteMensa(IFretta.this,
-						(Mensa) adapter.getItemAtPosition(position));
-				adapterMensaList.notifyDataSetChanged();
-			}
-		});
-
-		ListViewUtils.setListViewHeightBasedOnChildren(mListViewMensa);
-
-		Button done = (Button) findViewById(R.id.favourite_mensa_select_done);
-		done.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				showToastFavouriteCanteen();
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
+		// select current mensa
+		int selected = adapter.getPosition(MensaUtils
+				.getFavouriteMensa(IFretta.this));
+		actionBar.setSelectedNavigationItem(selected);
 	}
 
-	private void showToastFavouriteCanteen() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// NOT YET IMPLEMENTED FAVOURITE MENSA FUNCTIONALITY
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.menu_only_loading, menu);
 
-		View toastLayout = getLayoutInflater().inflate(
-				R.layout.layout_custom_toast_favourite_mensa,
-				(ViewGroup) findViewById(R.id.custom_toast_favourite_mensa));
+		refreshButton = menu.findItem(R.id.action_refresh);
 
-		TextView mensaName = (TextView) toastLayout
-				.findViewById(R.id.text_favourite_canteen);
-		mensaName.setText(MensaUtils.getFavouriteMensaName(IFretta.this));
-
-		Toast customToast = new Toast(IFretta.this);
-		customToast.setDuration(Toast.LENGTH_SHORT);
-		customToast.setView(toastLayout);
-		customToast.show();
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -94,8 +82,106 @@ public class IFretta extends SherlockActivity {
 			onBackPressed();
 			return true;
 
+		case R.id.action_refresh:
+			// a check if happens that favourite canteens are not set
+			int index = getSupportActionBar().getSelectedNavigationIndex();
+			if (index >= 0) {
+				loadWebcamImage(adapter.getItem(index));
+			}
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+	private void loadWebcamImage(Mensa mensa) {
+
+		if (IFameUtils.isUserConnectedToInternet(IFretta.this)) {
+			// get current hour
+			int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+			if (START_HOUR <= currentHour && currentHour < END_HOUR) {
+				// retrieve the online image website: only between 12 and 14
+				new RetrieveWebcamImageTask().execute(mensa
+						.getMensa_link_online());
+			} else {
+				// otherwise retrieve the offline image
+				new RetrieveWebcamImageTask().execute(mensa
+						.getMensa_link_offline());
+			}
+		} else {
+			// show image image not avaiable
+			Toast.makeText(IFretta.this,
+					getString(R.string.errorInternetConnectionRequired),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		// se sono connesso richiedo i giudizi
+		if (IFameUtils.isUserConnectedToInternet(IFretta.this)) {
+			currentTabSelected = itemPosition;
+			loadWebcamImage(adapter.getItem(itemPosition));
+		} else {
+			// non sono connesso mostro il toast e torno alla tab precedente
+			// controllo l'item per evitare la ricorsione di chiamate
+			if (currentTabSelected != itemPosition) {
+
+				getSupportActionBar().setSelectedNavigationItem(
+						currentTabSelected);
+
+				Toast.makeText(IFretta.this,
+						getString(R.string.errorInternetConnectionRequired),
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+		return false;
+	}
+
+	private class RetrieveWebcamImageTask extends
+			AsyncTask<String, Void, Bitmap> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			IFameUtils.setActionBarLoading(refreshButton);
+		}
+
+		@Override
+		protected Bitmap doInBackground(String... urls) {
+			String urldisplay = urls[0];
+			Bitmap bmap_image = null;
+
+			try {
+
+				InputStream in = new java.net.URL(urldisplay).openStream();
+				bmap_image = BitmapFactory.decodeStream(in);
+
+			} catch (Exception e) {
+				Log.e(getClass().getName(), e.getMessage());
+				return null;
+			}
+			return bmap_image;
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap result) {
+
+			if (result != null) {
+				webcamImage.setImageBitmap(result);
+
+			} else {
+				Toast.makeText(IFretta.this,
+						getString(R.string.errorLoadingWebcamImage),
+						Toast.LENGTH_SHORT).show();
+				webcamImage.setImageDrawable(getResources().getDrawable(
+						R.drawable.image_not_available));
+			}
+
+			IFameUtils.removeActionBarLoading(refreshButton);
+		}
+	}
+
 }

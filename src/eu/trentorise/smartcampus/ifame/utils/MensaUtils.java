@@ -14,7 +14,7 @@ import android.util.Log;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
-import eu.trentorise.smartcampus.ifame.activity.IFretta;
+import eu.trentorise.smartcampus.ifame.activity.MensaPreferita;
 import eu.trentorise.smartcampus.ifame.comparator.MensaComparator;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
@@ -228,7 +228,7 @@ public class MensaUtils {
 			// la lista è cambiata e devo far partire l' activity per settare
 			// la nuova mensa preferita e mostrare la lista aggiornata
 			if (showFavouriteMensaActivity) {
-				Intent intent = new Intent(context, IFretta.class);
+				Intent intent = new Intent(context, MensaPreferita.class);
 				context.startActivity(intent);
 			}
 		}

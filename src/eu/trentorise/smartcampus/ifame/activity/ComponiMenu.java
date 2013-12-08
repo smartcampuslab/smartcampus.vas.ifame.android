@@ -112,7 +112,7 @@ public class ComponiMenu extends SherlockActivity {
 				menuCompatibles = checkMenu.getCompatiblesMenu();
 				mapCheckedMenuTrue = checkMenu.getCheckedItems();
 
-				Intent i = new Intent(ComponiMenu.this, Tipologie_menu_fr.class);
+				Intent i = new Intent(ComponiMenu.this, TipologieMenu.class);
 				// =======
 				//
 				//

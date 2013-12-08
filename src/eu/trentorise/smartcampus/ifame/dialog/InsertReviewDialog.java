@@ -50,6 +50,11 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 
 	private MenuItem refreshButton;
 
+	public InsertReviewDialog() {
+		// just to be sure to have it before add the review
+		UserIdUtils.retrieveAndSaveUserId(getSherlockActivity());
+	}
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -67,8 +72,6 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 		final Piatto piatto = (Piatto) argsBundle.getSerializable(PIATTO);
 		String mioCommento = argsBundle.getString(COMMENTO);
 		Integer mioVoto = argsBundle.getInt(VOTO);
-
-		final String userId = UserIdUtils.getUserId(getSherlockActivity());
 
 		if (mensa == null) {
 			mensa = MensaUtils.getFavouriteMensa(getSherlockActivity());
@@ -140,6 +143,9 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+
+						String userId = UserIdUtils
+								.getUserId(getSherlockActivity());
 
 						GiudizioDataToPost giudizioDataToPost = new GiudizioDataToPost();
 						giudizioDataToPost.commento = userReviewEditText

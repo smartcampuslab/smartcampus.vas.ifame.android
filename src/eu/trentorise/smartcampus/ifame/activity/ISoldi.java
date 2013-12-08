@@ -84,7 +84,7 @@ public class ISoldi extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				Intent i = new Intent(ISoldi.this, TipologieMenu.class);
 				i.putExtra(SELECTED_MENU, INTERO);
 				startActivity(i);
 			}
@@ -93,7 +93,7 @@ public class ISoldi extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				Intent i = new Intent(ISoldi.this, TipologieMenu.class);
 				i.putExtra(SELECTED_MENU, RIDOTTO);
 				startActivity(i);
 
@@ -103,7 +103,7 @@ public class ISoldi extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(ISoldi.this, Tipologie_menu_fr.class);
+				Intent i = new Intent(ISoldi.this, TipologieMenu.class);
 				i.putExtra(SELECTED_MENU, SNACK);
 				startActivity(i);
 

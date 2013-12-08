@@ -128,9 +128,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			mensaSpinnerAdapter.add(mensa);
 		}
 
-		// just to be sure that userId is saved in sharedpreferences
-		UserIdUtils.retrieveAndSaveUserId(this);
-
 		// setup actionbar (supportActionBar is initialized in super.onCreate())
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);

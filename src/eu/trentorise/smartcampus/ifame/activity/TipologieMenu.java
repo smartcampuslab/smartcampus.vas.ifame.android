@@ -16,7 +16,7 @@ import eu.trentorise.smartcampus.ifame.tabs.TipologiaInteroFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TipologiaRidottoFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TipologiaSnackFragment;
 
-public class Tipologie_menu_fr extends SherlockFragmentActivity {
+public class TipologieMenu extends SherlockFragmentActivity {
 
 	public enum chosenMenu {
 		Intero, Ridotto1, Ridotto2, Ridotto3, Ridotto4, Snack1, Snack2, Snack3, Snack4
