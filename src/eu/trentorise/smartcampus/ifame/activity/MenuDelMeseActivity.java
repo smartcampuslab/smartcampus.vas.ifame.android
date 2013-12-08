@@ -68,8 +68,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 
 		if (IFameUtils.isUserConnectedToInternet(MenuDelMeseActivity.this)) {
 			new MenuDelMeseConnector().execute();
-			// just to be sure to have it before add the review
-			UserIdUtils.retrieveAndSaveUserId(MenuDelMeseActivity.this);
+
 		} else {
 			Toast.makeText(MenuDelMeseActivity.this,
 					getString(R.string.errorInternetConnectionRequired),
@@ -137,6 +136,9 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 				// DO NOTHING
 			}
 		});
+
+		// just to be sure to have it before add the review
+		UserIdUtils.retrieveAndSaveUserId(MenuDelMeseActivity.this);
 	}
 
 	@Override
