@@ -148,7 +148,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.menu_only_loading_progress,
 				menu);
-		setRefreshButton(menu.findItem(R.id.action_refresh));
+		refreshButton = menu.findItem(R.id.action_refresh);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -252,14 +252,6 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 
 	private void setMenuDelMese(MenuDelMese mdm) {
 		this.menuDelMese = mdm;
-	}
-
-	public MenuItem getRefreshButton() {
-		return refreshButton;
-	}
-
-	public void setRefreshButton(MenuItem refreshButton) {
-		this.refreshButton = refreshButton;
 	}
 
 	/**

@@ -68,10 +68,6 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 
 	private int currentTabSelected;
 
-	public MenuItem getRefreshButton() {
-		return refreshButton;
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
