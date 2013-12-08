@@ -6,4 +6,14 @@ public class GiudizioDataToPost {
 	public Float voto;
 	public Long userId;
 
+	public GiudizioDataToPost() {
+	}
+
+	public GiudizioDataToPost(String commento, Float voto, Long userId) {
+		super();
+		this.commento = commento;
+		this.voto = voto;
+		this.userId = userId;
+	}
+
 }

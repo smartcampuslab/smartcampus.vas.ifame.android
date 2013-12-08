@@ -15,9 +15,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
+import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
+import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog.InsertReviewDialogListener;
 import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog;
 import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog.OptionsMenuDialogListener;
+import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoAlternativeFragment;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment;
@@ -25,7 +28,7 @@ import eu.trentorise.smartcampus.ifame.tabs.TabListener;
 import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
-		OptionsMenuDialogListener {
+		OptionsMenuDialogListener, InsertReviewDialogListener {
 
 	private OptionsMenuDialog optionsDialog;
 	private InsertReviewDialog insertReviewDialog;
@@ -35,7 +38,6 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.empty_layout);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMMM yyyy");
 		String dateStringTitle = dateFormat.format(new Date());
@@ -73,19 +75,11 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 		UserIdUtils.retrieveAndSaveUserId(MenuDelGiornoActivity.this);
 	}
 
-	public MenuItem getRefreshButton() {
-		return refreshButton;
-	}
-
-	private void setRefreshButton(MenuItem refreshButton) {
-		this.refreshButton = refreshButton;
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.menu_only_loading_progress,
 				menu);
-		setRefreshButton(menu.findItem(R.id.action_refresh));
+		refreshButton = menu.findItem(R.id.action_refresh);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -95,7 +89,6 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
-
 	}
 
 	/** display dialog options */
@@ -161,4 +154,15 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 
 	}
 
+	@Override
+	public void postReview(DialogInterface dialog, String commento, int voto,
+			Long mensaId, Long piattoId) {
+
+		Long userId = Long.parseLong(UserIdUtils.getUserId(this));
+		GiudizioDataToPost data = new GiudizioDataToPost(commento,
+				(float) voto, userId);
+
+		new PostGiudizioAsyncTask(MenuDelGiornoActivity.this, data,
+				refreshButton, mensaId, piattoId).execute();
+	}
 }

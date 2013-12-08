@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
-import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
@@ -20,12 +19,9 @@ import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ConnectionException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.SecurityException;
 
 public class PostGiudizioAsyncTask extends
-		AsyncTask<Long, Void, List<Giudizio>> {
+		AsyncTask<Void, Void, List<Giudizio>> {
 
 	private Activity activity;
 	private GiudizioDataToPost data;
@@ -33,12 +29,15 @@ public class PostGiudizioAsyncTask extends
 	private final String APP_TOKEN;
 
 	private MenuItem refreshButton;
+	private Long mensaId, piattoId;
 
 	public PostGiudizioAsyncTask(Activity activity, GiudizioDataToPost data,
-			MenuItem refreshButton) {
+			MenuItem refreshButton, Long mensaId, Long piattoId) {
 		this.activity = activity;
 		this.data = data;
 		this.refreshButton = refreshButton;
+		this.mensaId = mensaId;
+		this.piattoId = piattoId;
 
 		URL_BASE_WEB_IFAME = activity.getString(R.string.URL_BASE_WEB_IFAME);
 		APP_TOKEN = activity.getString(R.string.APP_TOKEN);
@@ -52,12 +51,12 @@ public class PostGiudizioAsyncTask extends
 	}
 
 	@Override
-	protected List<Giudizio> doInBackground(Long... params) {
+	protected List<Giudizio> doInBackground(Void... params) {
 		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
 				APP_TOKEN);
 
 		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-				"mensa/" + params[0] + "/piatto/" + params[1] + "/giudizio/add");
+				"mensa/" + mensaId + "/piatto/" + piattoId + "/giudizio/add");
 
 		request.setMethod(Method.POST);
 		request.setBody(Utils.convertToJSON(data));
@@ -70,15 +69,10 @@ public class PostGiudizioAsyncTask extends
 				return Utils.convertJSONToObjects(response.getBody(),
 						Giudizio.class);
 			}
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (AACException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 
@@ -93,6 +87,7 @@ public class PostGiudizioAsyncTask extends
 					Toast.LENGTH_SHORT).show();
 		} else {
 
+			// if review is posted in visualizza review show reviews
 			if (activity instanceof IGraditoVisualizzaRecensioni) {
 				((IGraditoVisualizzaRecensioni) activity)
 						.createGiudiziList(result);

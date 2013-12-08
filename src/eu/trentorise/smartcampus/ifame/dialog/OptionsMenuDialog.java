@@ -13,7 +13,7 @@ import eu.trentorise.smartcampus.ifame.model.Piatto;
 
 public class OptionsMenuDialog extends SherlockDialogFragment {
 
-	private static final int ITEMS = 3;
+	private static final int MENU_ITEMS = 3;
 
 	public static final int VIEW_REVIEW = 0;
 	public static final int RATE_OR_REVIEW = 1;
@@ -51,7 +51,7 @@ public class OptionsMenuDialog extends SherlockDialogFragment {
 
 		builder.setTitle(piatto.getPiatto_nome());
 
-		String[] items = new String[ITEMS];
+		String[] items = new String[MENU_ITEMS];
 		items[VIEW_REVIEW] = getString(R.string.view_review);
 		items[RATE_OR_REVIEW] = getString(R.string.rate_dish);
 		items[SEARCH_GOOGLE] = getString(R.string.search_on_google);

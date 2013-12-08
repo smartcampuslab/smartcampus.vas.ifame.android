@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -23,9 +24,12 @@ import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
 import eu.trentorise.smartcampus.ifame.adapter.ReviewListAdapter;
+import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.comparator.GiudizioComparator;
 import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
+import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog.InsertReviewDialogListener;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
+import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
@@ -37,7 +41,7 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 
 public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
-		implements OnNavigationListener {
+		implements OnNavigationListener, InsertReviewDialogListener {
 
 	public static final String PIATTO = "piatto_extra";
 
@@ -337,4 +341,17 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		}
 		return false;
 	}
+
+	@Override
+	public void postReview(DialogInterface dialog, String commento, int voto,
+			Long mensa, Long piatto) {
+
+		Long userId = Long.parseLong(UserIdUtils.getUserId(this));
+		GiudizioDataToPost data = new GiudizioDataToPost(commento,
+				(float) voto, userId);
+
+		new PostGiudizioAsyncTask(IGraditoVisualizzaRecensioni.this, data,
+				refreshButton, mensa, piatto).execute();
+	}
+
 }

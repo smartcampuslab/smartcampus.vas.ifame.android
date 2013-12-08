@@ -27,9 +27,12 @@ import com.actionbarsherlock.view.MenuItem;
 import eu.trentorise.smartcampus.android.common.Utils;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.PiattoKcalListAdapter;
+import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;
+import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog.InsertReviewDialogListener;
 import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog;
 import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog.OptionsMenuDialogListener;
+import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
@@ -42,7 +45,7 @@ import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageResponse;
 
 public class MenuDelMeseActivity extends SherlockFragmentActivity implements
-		OptionsMenuDialogListener {
+		OptionsMenuDialogListener, InsertReviewDialogListener {
 
 	private Spinner mSpinner;
 	private MenuDelMese menuDelMese;
@@ -385,6 +388,18 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 			break;
 		}
 
+	}
+
+	@Override
+	public void postReview(DialogInterface dialog, String commento, int voto,
+			Long mensa, Long piatto) {
+
+		Long userId = Long.parseLong(UserIdUtils.getUserId(this));
+		GiudizioDataToPost data = new GiudizioDataToPost(commento,
+				(float) voto, userId);
+
+		new PostGiudizioAsyncTask(MenuDelMeseActivity.this, data,
+				refreshButton, mensa, piatto).execute();
 	}
 
 }

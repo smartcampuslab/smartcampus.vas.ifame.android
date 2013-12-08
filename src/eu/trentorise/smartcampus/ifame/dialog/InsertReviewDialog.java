@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,19 +15,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
-import eu.trentorise.smartcampus.ifame.activity.MenuDelGiornoActivity;
-import eu.trentorise.smartcampus.ifame.activity.MenuDelMeseActivity;
-import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
-import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
-import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 /**
  * Custom dialog interface to add or edit own review
@@ -38,17 +31,32 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 	public static final String COMMENTO = "mio_commento";
 	public static final String VOTO = "mio_voto";
 	public static final String PIATTO = "piatto_extra";
-	// public static final String USERID = "user_id";
 
 	private EditText userReviewEditText;
 	private TextView piattoNameTextView;
 	private SeekBar barUserValutation;
-	// private int voto;
 
 	private Mensa mensa;
-	private SherlockFragmentActivity activity;
+	private Piatto piatto;
 
-	private MenuItem refreshButton;
+	private InsertReviewDialogListener mListener;
+
+	public interface InsertReviewDialogListener {
+
+		public void postReview(DialogInterface dialog, String commento,
+				int voto, Long mensaId, Long piattoId);
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (InsertReviewDialogListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement InsertReviewDialogListener");
+		}
+	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -60,42 +68,41 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 		LayoutInflater inflator = getSherlockActivity().getLayoutInflater();
 		View dialogView = inflator.inflate(
 				R.layout.layout_igradito_dialog_insert_review, null);
-
-		// get the arguments passed invoking the dialog
-		Bundle argsBundle = getArguments();
-		mensa = (Mensa) argsBundle.getSerializable(MENSA);
-		final Piatto piatto = (Piatto) argsBundle.getSerializable(PIATTO);
-		String mioCommento = argsBundle.getString(COMMENTO);
-		Integer mioVoto = argsBundle.getInt(VOTO);
-
-		if (mensa == null) {
-			mensa = MensaUtils.getFavouriteMensa(getSherlockActivity());
-		}
-
-		// Add a title to the dialog
-		builder.setTitle(mensa.getMensa_nome());
 		// Get Header TextView-> Mensa name
 		piattoNameTextView = (TextView) dialogView
 				.findViewById(R.id.custom_dialog_header);
-		// set text to the name of the mensa
-		piattoNameTextView.setText(piatto.getPiatto_nome());
 		// Get editText associated with this view
 		userReviewEditText = (EditText) dialogView
 				.findViewById(R.id.custom_dialog_etext);
-
 		// Get the seekbar asscociated with this view
 		barUserValutation = (SeekBar) dialogView
 				.findViewById(R.id.recensioni_seekbar);
+
+		// get the arguments passed invoking the dialog
+		Bundle argsBundle = getArguments();
+		// get mensa and piatto and setup titles
+		mensa = (Mensa) argsBundle.getSerializable(MENSA);
+		piatto = (Piatto) argsBundle.getSerializable(PIATTO);
+		// get favourite mensa if not passed
+		if (mensa == null) {
+			mensa = MensaUtils.getFavouriteMensa(getSherlockActivity());
+		}
+		// Add a title to the dialog
+		builder.setTitle(mensa.getMensa_nome());
+		// set text to the name of the mensa
+		piattoNameTextView.setText(piatto.getPiatto_nome());
+		// get my comment and vote if available
+		String mioCommento = argsBundle.getString(COMMENTO);
+		Integer mioVoto = argsBundle.getInt(VOTO);
+		// fill the fields
 		if (mioCommento != null) {
 			userReviewEditText.setText(mioCommento);
 		}
-
 		if (mioVoto != null) {
 			barUserValutation.setProgress(mioVoto);
 		} else {
 			barUserValutation.setProgress(5);
 		}
-		// voto = barUserValutation.getProgress();
 
 		// SHOW KEYBOARD
 		userReviewEditText
@@ -115,22 +122,8 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 					}
 				});
 		userReviewEditText.requestFocus();
-
+		// set the view
 		builder.setView(dialogView);
-
-		activity = getSherlockActivity();
-
-		if (activity instanceof IGraditoVisualizzaRecensioni) {
-			refreshButton = ((IGraditoVisualizzaRecensioni) activity)
-					.getRefreshButton();
-		} else if (activity instanceof MenuDelMeseActivity) {
-			refreshButton = ((MenuDelMeseActivity) activity).getRefreshButton();
-		} else if (activity instanceof MenuDelGiornoActivity) {
-			refreshButton = ((MenuDelGiornoActivity) activity)
-					.getRefreshButton();
-		} else {
-			refreshButton = null;
-		}
 
 		// Add action buttons
 		builder.setPositiveButton(
@@ -139,21 +132,13 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						String userId = UserIdUtils
-								.getUserId(getSherlockActivity());
+						String commento = userReviewEditText.getText()
+								.toString();
+						int voto = barUserValutation.getProgress();
 
-						GiudizioDataToPost giudizioDataToPost = new GiudizioDataToPost();
-						giudizioDataToPost.commento = userReviewEditText
-								.getText().toString();
-						giudizioDataToPost.userId = Long.parseLong(userId);
-						giudizioDataToPost.voto = (float) barUserValutation
-								.getProgress();
+						mListener.postReview(dialog, commento, voto,
+								mensa.getMensa_id(), piatto.getPiatto_id());
 
-						new PostGiudizioAsyncTask(activity, giudizioDataToPost,
-								refreshButton).execute(mensa.getMensa_id(),
-								piatto.getPiatto_id());
-
-						getDialog().cancel();
 					}
 				});
 
@@ -161,10 +146,10 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 				getString(R.string.iGradito_dialog_button_cancel_text),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
+
 					}
 				});
 
 		return builder.create();
 	}
-
 }

@@ -27,7 +27,6 @@ public class ListViewUtils {
 				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 		listView.requestLayout();
-		// listView.scrollTo(0, 0);
 	}
 
 }

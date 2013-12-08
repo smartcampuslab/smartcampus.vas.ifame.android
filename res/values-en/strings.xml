@@ -150,7 +150,7 @@
     <string name="iGradito_insert_comment_here">Write here your review</string>
     <string name="iGradito_spinner_label_excelent">Excellent</string>
     <string name="iGradito_spinner_label_bad">Poor</string>
-    <string name="iGradito_dialog_button_add_text">Add</string>
+    <string name="iGradito_dialog_button_add_text">Post Review</string>
     <string name="iGradito_dialog_button_cancel_text">Cancel</string>
     <string name="iGradito_user">User</string>
     <string name="iGradito_users">Users</string>
