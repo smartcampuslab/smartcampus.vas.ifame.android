@@ -68,7 +68,7 @@ public class UserIdUtils {
 	}
 
 	/** save the user id in the shared preferences */
-	public static boolean setUserId(Context context, String userId) {
+	private static boolean setUserId(Context context, String userId) {
 		setLastUpdateNow(context);
 
 		SharedPreferences pref = context.getSharedPreferences(
@@ -136,7 +136,7 @@ public class UserIdUtils {
 					if (bp != null) {
 						// save the userId in sharedpreferences. Will be used to
 						// or edit reviews
-						UserIdUtils.setUserId(context, bp.getUserId());
+						setUserId(context, bp.getUserId());
 						Log.i(TAG, "UserId: " + bp.getUserId());
 					}
 				} catch (SecurityException se) {

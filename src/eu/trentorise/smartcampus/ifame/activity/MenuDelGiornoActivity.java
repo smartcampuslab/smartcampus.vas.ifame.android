@@ -70,7 +70,7 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// just to be sure to have it before add the review
-		UserIdUtils.retrieveAndSaveUserId(this);
+		UserIdUtils.retrieveAndSaveUserId(MenuDelGiornoActivity.this);
 	}
 
 	public MenuItem getRefreshButton() {
