@@ -50,11 +50,6 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 
 	private MenuItem refreshButton;
 
-	public InsertReviewDialog() {
-		// just to be sure to have it before add the review
-		UserIdUtils.retrieveAndSaveUserId(getSherlockActivity());
-	}
-
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 

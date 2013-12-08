@@ -113,8 +113,8 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		Bundle extras = getIntent().getExtras();
 		piatto = (Piatto) extras.getSerializable(PIATTO);
 
-		// Toast.makeText(this, piatto.getPiatto_nome() + piatto.getPiatto_id(),
-		// Toast.LENGTH_SHORT).show();
+		// just to be sure to have it before add the review
+		UserIdUtils.retrieveAndSaveUserId(this);
 
 		mioVoto = 5;
 		mioCommento = "";

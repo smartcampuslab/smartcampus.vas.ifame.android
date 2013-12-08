@@ -35,6 +35,7 @@ import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
 import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
+import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 import eu.trentorise.smartcampus.protocolcarrier.ProtocolCarrier;
 import eu.trentorise.smartcampus.protocolcarrier.common.Constants.Method;
 import eu.trentorise.smartcampus.protocolcarrier.custom.MessageRequest;
@@ -67,6 +68,8 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 
 		if (IFameUtils.isUserConnectedToInternet(MenuDelMeseActivity.this)) {
 			new MenuDelMeseConnector().execute();
+			// just to be sure to have it before add the review
+			UserIdUtils.retrieveAndSaveUserId(MenuDelMeseActivity.this);
 		} else {
 			Toast.makeText(MenuDelMeseActivity.this,
 					getString(R.string.errorInternetConnectionRequired),

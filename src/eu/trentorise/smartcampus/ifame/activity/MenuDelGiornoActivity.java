@@ -22,6 +22,7 @@ import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoAlternativeFragment;
 import eu.trentorise.smartcampus.ifame.tabs.MenuGiornoFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TabListener;
+import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 		OptionsMenuDialogListener {
@@ -67,6 +68,9 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 		}
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		// just to be sure to have it before add the review
+		UserIdUtils.retrieveAndSaveUserId(this);
 	}
 
 	public MenuItem getRefreshButton() {
