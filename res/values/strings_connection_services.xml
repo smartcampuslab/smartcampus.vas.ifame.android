@@ -2,8 +2,8 @@
 <resources>
 
     <string name="APP_TOKEN">test smartcampus</string>
-     
-    <string name="URL_BASE_WEB_IFAME">https://smartcampuswebifame.app.smartcampuslab.it</string>
+     <!-- <string name="URL_BASE_WEB_IFAME">https://smartcampuswebifame.app.smartcampuslab.it</string> -->
+    <string name="URL_BASE_WEB_IFAME">http://192.168.43.240:8080/web-ifame</string>
     
     <string name="PATH_ISOLDI_GETSOLDI">/isoldi/getsoldi</string>
     <string name="PATH_IFRETTA_GETMENSE">/getmense</string>
