@@ -1,11 +1,14 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -47,6 +50,22 @@ public class IFameMain extends SherlockActivity {
 		setContentView(R.layout.layout_ifame_main);
 
 		context = getApplicationContext();
+
+		// ----------------------------------------------------------------
+		// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
+		// ****************************************************************
+		// still required also with the login in the launcher??????????????
+		// ****************************************************************
+		// check if the user is logged otherwise open login window
+		try {
+			if (!getAccessProvider().login(IFameMain.this, null)) {
+
+			}
+		} catch (AACException e) {
+			Log.e(getClass().getName(), "Failed to login: " + e.getMessage());
+			// TODO handle the failure, e.g., notify the user close the app
+		}
+		// ----------------------------------------------------------------
 
 		// Add the listeners to the 4 buttons in the home of iFame
 		// iDECISO
@@ -112,47 +131,34 @@ public class IFameMain extends SherlockActivity {
 		return mToken;
 	}
 
-	// ----------------------------------------------------------------
-	// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
-	// ****************************************************************
+	// *******************************************************************************
 	// still required also with the login in the launcher??????????????
-	// ****************************************************************
-	// // check if the user is logged otherwise open login window
-	// try {
-	// if (!getAccessProvider().login(IFameMain.this, null)) {
-	// }
-	// } catch (AACException e) {
-	// Log.e(TAG, "Failed to login: " + e.getMessage());
-	// // TODO handle the failure, e.g., notify the user close the app
-	// }
-	// ----------------------------------------------------------------
+	// *******************************************************************************
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		// check the result of the authentication
+		if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == Activity.RESULT_OK) {
+				if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
+					// retrieve the mensa list and save it just to have always
+					// the
+					// updated link and datas if there is somehow an update
+					MensaUtils.getAndSaveMensaList(IFameMain.this);
 
-	// *******************************************************************************
-	// still required also with the login in the launcher??????????????
-	// *******************************************************************************
-	// @Override
-	// protected void onActivityResult(int requestCode, int resultCode, Intent
-	// data) {
-	// super.onActivityResult(requestCode, resultCode, data);
-	// // check the result of the authentication
-	// if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
-	// if (resultCode == Activity.RESULT_OK) {
-	// // retrieve the mensa list and save it just to have always the
-	// // updated link and datas if there is somehow an update
-	// MensaUtils.getAndSaveMensaList(IFameMain.this);
-	//
-	// // get user id and save
-	// UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
-	// } else {
-	// // or any other case close the app
-	// Toast.makeText(IFameMain.this,
-	// getString(R.string.errorLoginRequired),
-	// Toast.LENGTH_SHORT).show();
-	// finish();
-	// return;
-	// }
-	// }
-	// }
+					// get user id and save
+					UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
+				}
+			} else {
+				// or any other case close the app
+				Toast.makeText(IFameMain.this,
+						getString(R.string.errorLoginRequired),
+						Toast.LENGTH_SHORT).show();
+				finish();
+				return;
+			}
+		}
+	}
 	// *******************************************************************************
 
 }
