@@ -51,12 +51,6 @@ public class IFameMain extends SherlockActivity {
 
 		context = getApplicationContext();
 
-		// ----------------------------------------------------------------
-		// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
-		// ****************************************************************
-		// still required also with the login in the launcher??????????????
-		// ****************************************************************
-		// check if the user is logged otherwise open login window
 		try {
 			if (!getAccessProvider().login(IFameMain.this, null)) {
 
@@ -65,7 +59,6 @@ public class IFameMain extends SherlockActivity {
 			Log.e(getClass().getName(), "Failed to login: " + e.getMessage());
 			// TODO handle the failure, e.g., notify the user close the app
 		}
-		// ----------------------------------------------------------------
 
 		// Add the listeners to the 4 buttons in the home of iFame
 		// iDECISO
@@ -131,9 +124,6 @@ public class IFameMain extends SherlockActivity {
 		return mToken;
 	}
 
-	// *******************************************************************************
-	// still required also with the login in the launcher??????????????
-	// *******************************************************************************
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -159,6 +149,5 @@ public class IFameMain extends SherlockActivity {
 			}
 		}
 	}
-	// *******************************************************************************
 
 }
