@@ -134,8 +134,9 @@ public class MensaUtils {
 	}
 
 	/** before call this method the mensa list must be in the sharedpreferences */
-	public static void getAndSaveMensaList(Context context) {
-		if (updateRequired(context)) {
+	public static void getAndSaveMensaList(Context context,
+			Boolean forceUpdateNow) {
+		if (updateRequired(context) || forceUpdateNow) {
 			new GetMensaList(context).execute();
 		}
 	}

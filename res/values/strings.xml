@@ -25,6 +25,7 @@
     <string name="iFame_set_favourite_canteen_fragment">setFavouriteCanteenFragment</string>
     <string name="iFame_main_title_activity">iFame</string>
     <string name="iFameMain_favourite_mensa">Mensa Preferita</string>
+    <string name="mense_updated">Sono state aggiornate le mense! Seleziona la tua mensa abituale</string>
     <!-- /iFameMain -->
 
 

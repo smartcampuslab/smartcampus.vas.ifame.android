@@ -35,7 +35,7 @@ public class IFameUtils {
 			// check if the application is initialized
 			if (MensaUtils.getMensaList(ctx).isEmpty()) {
 				// initialize the webcam list
-				MensaUtils.getAndSaveMensaList(ctx);
+				MensaUtils.getAndSaveMensaList(ctx, false);
 			} else {
 				// start the activity
 				Intent i = new Intent(ctx, activity);

@@ -1,7 +1,9 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,19 +26,22 @@ import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 
 public class MensaPreferita extends SherlockActivity {
 
+	private MensaAdapter adapterMensaList;
+	private ListView mListViewMensa;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_ifretta);
 
-		ListView mListViewMensa = (ListView) findViewById(R.id.ifretta_page_list);
+		mListViewMensa = (ListView) findViewById(R.id.ifretta_page_list);
 
 		// setup actionbar (supportActionBar is initialized in super.onCreate())
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// initialize and setup the adapter with the listener
-		final MensaAdapter adapterMensaList = new MensaAdapter(this);
+		adapterMensaList = new MensaAdapter(this);
 
 		ArrayList<Mensa> lista = MensaUtils.getMensaList(this);
 		for (Mensa mensa : lista) {
@@ -69,6 +74,25 @@ public class MensaPreferita extends SherlockActivity {
 				finish();
 			}
 		});
+		MensaUtils.getAndSaveMensaList(this, true);
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		if (adapterMensaList == null) {
+			adapterMensaList = new MensaAdapter(this);
+			mListViewMensa.setAdapter(adapterMensaList);
+		}
+
+		adapterMensaList.clear();
+		List<Mensa> list = MensaUtils.getMensaList(this);
+		for (Mensa m : list) {
+			adapterMensaList.add(m);
+		}
+		adapterMensaList.notifyDataSetChanged();
+		Toast.makeText(this, getString(R.string.mense_updated),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	private void showToastFavouriteCanteen() {
@@ -79,7 +103,8 @@ public class MensaPreferita extends SherlockActivity {
 
 		TextView mensaName = (TextView) toastLayout
 				.findViewById(R.id.text_favourite_canteen);
-		mensaName.setText(MensaUtils.getFavouriteMensaName(MensaPreferita.this));
+		mensaName
+				.setText(MensaUtils.getFavouriteMensaName(MensaPreferita.this));
 
 		Toast customToast = new Toast(MensaPreferita.this);
 		customToast.setDuration(Toast.LENGTH_SHORT);

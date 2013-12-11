@@ -94,7 +94,7 @@ public class IFameMain extends SherlockActivity {
 			// retrieve the mensa list and save it just to keep always
 			// the updated link and datas if there is somehow an update
 			// to the webcam objects
-			MensaUtils.getAndSaveMensaList(IFameMain.this);
+			MensaUtils.getAndSaveMensaList(IFameMain.this, false);
 			// get user id and save
 			UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
 		}

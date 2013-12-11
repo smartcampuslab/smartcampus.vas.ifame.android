@@ -85,7 +85,8 @@
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.MensaPreferita"
             android:configChanges="screenSize"
-            android:label="@string/iFretta_title_activity" >
+            android:label="@string/iFretta_title_activity"
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IDeciso"
