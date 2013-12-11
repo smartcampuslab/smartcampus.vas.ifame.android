@@ -98,8 +98,8 @@ public class TipologiaSnackFragment extends SherlockFragment {
 		boolean isCalled = i.getBooleanExtra(ComponiMenu.HAS_CALLED_TIPOLOGIE,
 				false);
 
-		TextView buyable = (TextView) theContainer
-				.findViewById(R.id.tipologia_snack_buyable);
+		// TextView buyable = (TextView) theContainer
+		// .findViewById(R.id.tipologia_snack_buyable);
 
 		/*
 		 * 
@@ -130,21 +130,22 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			//
 			// } elses
 
-			buyable.setVisibility(View.GONE);
+			// buyable.setVisibility(View.GONE);
 		} else {
-			buyable.setVisibility(View.GONE);
+			// buyable.setVisibility(View.GONE);
 
 			// snack 1
 
 			TextView snack1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack1_titolo);
 			snack1Title.setText(chosenMenu.Snack1.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack1Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack1Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack1Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack1Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack1Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView paninot = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_panino);
@@ -181,12 +182,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack2Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack2_titolo);
 			snack2Title.setText(chosenMenu.Snack2.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack2Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack2Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack2Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack2Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack2Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView maint = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_primo1_pastastation1);
@@ -227,12 +229,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack3Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack3_titolo);
 			snack3Title.setText(chosenMenu.Snack3.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack3Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack3Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack3Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack3Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack3Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView maint4 = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_secondo1_piattofreddo1);
@@ -271,12 +274,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack4_titolo);
 			snack4Title.setText(chosenMenu.Snack4.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack4Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack4Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack4Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack4Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack4Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView tranciot = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_tranciopizza1);
@@ -324,12 +328,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack1_titolo);
 			snack1Title.setText(chosenMenu.Snack1.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack1Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack1Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack1Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack1Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack1Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(PANINO_TEXT)) {
 				TextView panino = (TextView) theContainer
@@ -423,12 +428,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack2Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack2_titolo);
 			snack2Title.setText(chosenMenu.Snack2.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack2Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack2Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack2Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack2Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack2Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(PRIMO_TEXT)
 					|| mapCheckedItems.containsKey(PASTA_STATION_TEXT)) {
@@ -548,12 +554,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack3Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack3_titolo);
 			snack3Title.setText(chosenMenu.Snack3.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack3Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack3Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack3Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack3Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack3Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(SECONDO_TEXT)
 					|| mapCheckedItems.containsKey(PIATTO_FREDDO_TEXT)) {
@@ -660,12 +667,13 @@ public class TipologiaSnackFragment extends SherlockFragment {
 			TextView snack4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack4_titolo);
 			snack4Title.setText(chosenMenu.Snack4.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				snack4Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				snack4Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			snack4Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// snack4Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// snack4Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(TRANCIO_PIZZA_TEXT)) {
 				TextView trancio = (TextView) theContainer

@@ -77,8 +77,8 @@ public class TipologiaInteroFragment extends SherlockFragment {
 		boolean isCalled = i.getBooleanExtra(ComponiMenu.HAS_CALLED_TIPOLOGIE,
 				false);
 
-		TextView buyable = (TextView) theContainer
-				.findViewById(R.id.tipologia_intero_buyable);
+		// TextView buyable = (TextView) theContainer
+		// .findViewById(R.id.tipologia_intero_buyable);
 
 		if (isCalled) {
 
@@ -104,21 +104,23 @@ public class TipologiaInteroFragment extends SherlockFragment {
 			// }
 			// } else
 
-			buyable.setVisibility(View.GONE);
+			// buyable.setVisibility(View.GONE);
 		} else {
 
-			buyable.setVisibility(View.GONE);
+			// buyable.setVisibility(View.GONE);
 
 			TextView intero1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_intero1_titolo);
 			intero1Title.setText(chosenMenu.Intero.toString());
-			intero1Title.setPadding(5, 2, 5, 2);
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				intero1Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				intero1Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			intero1Title.setVisibility(View.VISIBLE);
+
+			// intero1Title.setPadding(5, 2, 5, 2);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// intero1Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// intero1Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView primot = (TextView) theContainer
 					.findViewById(R.id.tipologia_intero_primo);
@@ -172,13 +174,15 @@ public class TipologiaInteroFragment extends SherlockFragment {
 			TextView intero1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_intero1_titolo);
 			intero1Title.setText(chosenMenu.Intero.toString());
-			intero1Title.setPadding(5, 2, 5, 2);
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				intero1Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				intero1Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			intero1Title.setVisibility(View.VISIBLE);
+
+			// intero1Title.setPadding(5, 2, 5, 2);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// intero1Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// intero1Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			// ///////////////////////////////////
 			// //////////////////////////////////

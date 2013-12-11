@@ -94,11 +94,11 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 
 		i = getSherlockActivity().getIntent();
 
-		boolean isCalled = i.getBooleanExtra(
-				ComponiMenu.HAS_CALLED_TIPOLOGIE, false);
+		boolean isCalled = i.getBooleanExtra(ComponiMenu.HAS_CALLED_TIPOLOGIE,
+				false);
 
-		TextView buyable = (TextView) theContainer
-				.findViewById(R.id.tipologia_ridotto_buyable);
+		// TextView buyable = (TextView) theContainer
+		// .findViewById(R.id.tipologia_ridotto_buyable);
 
 		/*
 		 * 
@@ -131,20 +131,21 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			//
 			// } else
 
-			buyable.setVisibility(View.GONE);
+			// buyable.setVisibility(View.GONE);
 		} else {
-			buyable.setVisibility(View.GONE);
+			// buyable.setVisibility(View.GONE);
 
 			// ridotto1
 			TextView ridotto1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto1_titolo);
 			ridotto1Title.setText(chosenMenu.Ridotto1.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto1Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto1Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto1Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto1Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto1Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView primot = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto_primo1);
@@ -179,13 +180,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto2Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto2_titolo);
 			ridotto2Title.setText(chosenMenu.Ridotto2.toString());
-
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto2Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto2Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto2Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto2Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto2Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView secondot = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto_secondo2);
@@ -220,12 +221,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto3Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto3_titolo);
 			ridotto3Title.setText(chosenMenu.Ridotto3.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto3Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto3Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto3Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto3Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto3Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView main = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto_piattofreddo_pastastation_insalatona3);
@@ -266,12 +268,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto4_titolo);
 			ridotto4Title.setText(chosenMenu.Ridotto4.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto4Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto4Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto4Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto4Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto4Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			TextView pizzat = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto_pizza4);
@@ -316,12 +319,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto1Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto1_titolo);
 			ridotto1Title.setText(chosenMenu.Ridotto1.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto1Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto1Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto1Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto1Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto1Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(PRIMO_TEXT)) {
 				TextView primo = (TextView) theContainer
@@ -405,12 +409,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto2Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto2_titolo);
 			ridotto2Title.setText(chosenMenu.Ridotto2.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto2Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto2Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto2Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto2Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto2Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(SECONDO_TEXT)) {
 				TextView primo = (TextView) theContainer
@@ -493,12 +498,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto3Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto3_titolo);
 			ridotto3Title.setText(chosenMenu.Ridotto3.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto3Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto3Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto3Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto3Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto3Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(PIATTO_FREDDO_TEXT)
 					|| mapCheckedItems.containsKey(PASTA_STATION_TEXT)
@@ -603,12 +609,13 @@ public class TipologiaRidottoFragment extends SherlockFragment {
 			TextView ridotto4Title = (TextView) theContainer
 					.findViewById(R.id.tipologia_ridotto4_titolo);
 			ridotto4Title.setText(chosenMenu.Ridotto4.toString());
-			if (android.os.Build.VERSION.SDK_INT >= 16)
-				ridotto4Title.setBackground(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
-			else
-				ridotto4Title.setBackgroundDrawable(theContainer.getResources()
-						.getDrawable(R.drawable.shape_title_componimenu));
+			ridotto4Title.setVisibility(View.VISIBLE);
+			// if (android.os.Build.VERSION.SDK_INT >= 16)
+			// ridotto4Title.setBackground(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
+			// else
+			// ridotto4Title.setBackgroundDrawable(theContainer.getResources()
+			// .getDrawable(R.drawable.shape_title_componimenu));
 
 			if (mapCheckedItems.containsKey(PIZZA_TEXT)) {
 				TextView pizza = (TextView) theContainer

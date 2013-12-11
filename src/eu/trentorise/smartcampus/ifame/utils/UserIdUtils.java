@@ -82,9 +82,9 @@ public class UserIdUtils {
 
 	/** Retrieve and save in the shared preferences the user id */
 	public static void retrieveAndSaveUserId(Context context) {
-		if (updateRequired(context)) {
-			new LoadAndSaveUserIdFromACServiceTask(context).execute();
-		}
+		// if (updateRequired(context)) {
+		new LoadAndSaveUserIdFromACServiceTask(context).execute();
+		// }
 	}
 
 	/**
