@@ -144,7 +144,7 @@ public class MensaUtils {
 	private static class GetMensaList extends AsyncTask<Void, Void, Boolean> {
 
 		private Context context;
-		ProgressDialog progressdialog;
+		private ProgressDialog progressdialog;
 
 		public GetMensaList(Context context) {
 			this.context = context;
@@ -193,6 +193,7 @@ public class MensaUtils {
 
 					if (!savedListIsUpdated) {
 
+						Log.i(getClass().getName(), "Updating canteens!");
 						Collections.sort(listfromTheWeb, new MensaComparator());
 
 						setMensaList(context, listfromTheWeb);

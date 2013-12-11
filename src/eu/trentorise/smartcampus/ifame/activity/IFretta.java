@@ -2,6 +2,7 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,18 +25,13 @@ import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 
-public class IFretta extends SherlockActivity implements
-		OnNavigationListener {
+public class IFretta extends SherlockActivity implements OnNavigationListener {
 
-	private static final int START_HOUR = 12;
-	private static final int END_HOUR = 14;
-
-	// private Mensa mensa;
 	private MenuItem refreshButton;
 	private MensaSpinnerAdapter adapter;
 	private int currentTabSelected;
 
-	WebcamAspectRatioImageView webcamImage;
+	private WebcamAspectRatioImageView webcamImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +94,10 @@ public class IFretta extends SherlockActivity implements
 	private void loadWebcamImage(Mensa mensa) {
 
 		if (IFameUtils.isUserConnectedToInternet(IFretta.this)) {
-			// get current hour
-			int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-			if (START_HOUR <= currentHour && currentHour < END_HOUR) {
-				// retrieve the online image website: only between 12 and 14
+			Date now = new Date();
+			if (now.after(getStart()) && now.before(getEnd())) {
+				// retrieve the online image
 				new RetrieveWebcamImageTask().execute(mensa
 						.getMensa_link_online());
 			} else {
@@ -116,6 +111,20 @@ public class IFretta extends SherlockActivity implements
 					getString(R.string.errorInternetConnectionRequired),
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private static Date getStart() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 11);
+		c.set(Calendar.MINUTE, 55);
+		return c.getTime();
+	}
+
+	private static Date getEnd() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 14);
+		c.set(Calendar.MINUTE, 30);
+		return c.getTime();
 	}
 
 	@Override
