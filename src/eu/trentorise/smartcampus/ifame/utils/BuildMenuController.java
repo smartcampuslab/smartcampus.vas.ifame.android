@@ -1,14 +1,13 @@
 package eu.trentorise.smartcampus.ifame.utils;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 import android.widget.CheckBox;
+import eu.trentorise.smartcampus.ifame.activity.ComponiMenu.chosenMenu;
 
 public class BuildMenuController {
 

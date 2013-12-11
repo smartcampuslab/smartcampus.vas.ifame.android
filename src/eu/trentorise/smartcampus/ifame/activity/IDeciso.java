@@ -15,7 +15,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
-import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 public class IDeciso extends SherlockActivity {
 
