@@ -137,7 +137,6 @@
     <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
-    <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <string name="iGradito_no_one_left_comment">Qualcuno ha dato un voto a questo piatto ma non ha lasciato nessun commento.  Aggiungi tu una recensione o un commento cliccando il bottone in alto</string>
     <string name="iGradito_no_reviews_available">Nessuno ha ancora inserito una recensione a questo piatto. Aggiungi tu una recensione o un commento cliccando il bottone in alto</string>
     <string name="iGradito_review_header">Recensioni</string>

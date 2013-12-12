@@ -140,7 +140,6 @@
     <string name="iGradito_recensioni_title_activity">Recensioni_Activity</string>
     <string name="iGradito_Activity">iGradito</string>
     <string name="iGradito_Piatti_activity">iGradito</string>
-    <string name="iGradito_preference_file">eu.trentorise.smartcampus.ifame.PREFERENCE_FILE</string>
     <string name="iGradito_no_one_left_comment">Somebody vote this dish but nobody left a comment yet. Add a review or a comment to this dish by clicking the plus button.</string>
     <string name="iGradito_no_reviews_available">Nobody left a review yet. Add a review to this dish by clicking the plus button.</string>
     <string name="iGradito_review_header">Reviews</string>
