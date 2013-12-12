@@ -45,16 +45,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity"
             android:launchMode="singleTask" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="eu.trentorise.smartcampus.START" /> -->
-
-<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
-<!--             </intent-filter> -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="eu.trentorise.smartcampus.START" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>            
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.dropbox.client2.android.AuthActivity"
