@@ -61,10 +61,10 @@
     <string name="iDeciso_compose_menu_checkbox_tranciopizza">Slice maxi pizza</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">Pizza</string>
     <string name="iDeciso_compose_menu_title_primi">First courses</string>
-    <string name="iDeciso_compose_menu_title_secondicontorni">Second courses / contours</string>
+    <string name="iDeciso_compose_menu_title_secondicontorni">Second courses / Side dishes</string>
     <string name="iDeciso_compose_menu_checkbox_piattofreddo">Cold dish</string>
     <string name="iDeciso_compose_menu_checkbox_caffe">Coffee</string>
-    <string name="iDeciso_compose_menu_checkbox_pane2">2 breads</string>
+    <string name="iDeciso_compose_menu_checkbox_pane2">2 Breads</string>
     <string name="iDeciso_compose_menu_checkbox_second">Second course</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Side dish A</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Side dish B</string>
@@ -85,7 +85,7 @@
     <string name="iDeciso_alternative_secondi">SECOND COURSE</string>
     <string name="iDeciso_alternative_contorni">WARM SIDE DISHES</string>
     <string name="iDeciso_alternative_menu">Alternatives to the daily menu</string>
-    <string name="iDeciso_compose_menu_checkbox_pizza">Pizza Menu</string>
+    <string name="iDeciso_compose_menu_checkbox_pizza">Pizza menu</string>
     <string name="iDeciso_compose_menu_title_altro">Other</string>
     <string name="iDeciso_2contorni">2 Side dishes</string>
     <string name="iDeciso_pane">Bread</string>

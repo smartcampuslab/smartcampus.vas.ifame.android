@@ -44,7 +44,7 @@
     <string name="iDeciso_title_activity">iFame</string>
     <string name="iDeciso_home_daily_menu">Menù del giorno</string>
     <string name="iDeciso_home_menu_types">Tipologie di menù</string>
-    <string name="iDeciso_home_compose_menu">Componi il tuo menu</string>
+    <string name="iDeciso_home_compose_menu">Componi il tuo menù</string>
     <string name="iDeciso_home_monthly_menu">Menù del mese</string>
     <string name="iDeciso_tipologie_menu_fragment_intero">tipologiaInteroFragment</string>
     <string name="iDeciso_tipologie_menu_fragment_ridotto">tipologiaRidottoFragment</string>
@@ -63,7 +63,7 @@
     <string name="iDeciso_compose_menu_title_secondicontorni">Secondi / Contorni</string>
     <string name="iDeciso_compose_menu_checkbox_piattofreddo">Piatto freddo</string>
     <string name="iDeciso_compose_menu_checkbox_caffe">Caffè</string>
-    <string name="iDeciso_compose_menu_checkbox_pane2">2 pane</string>
+    <string name="iDeciso_compose_menu_checkbox_pane2">2 Pane</string>
     <string name="iDeciso_compose_menu_title_altro">Altro</string>
     <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno A</string>
