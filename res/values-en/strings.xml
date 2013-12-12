@@ -69,11 +69,11 @@
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Side dish A</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Side dish B</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_pane1">1 bread</string>
-    <string name="iDeciso_compose_menu_checkbox_acqua">water (50cl)</string>
-    <string name="iDeciso_compose_menu_checkbox_salsa2">2 sauces</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno1">1 contour</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno2">2 contours</string>
+    <string name="iDeciso_compose_menu_checkbox_pane1">1 Bread</string>
+    <string name="iDeciso_compose_menu_checkbox_acqua">Water (50cl)</string>
+    <string name="iDeciso_compose_menu_checkbox_salsa2">2 Sauces</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno1">1 Side dish</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno2">2 Side dishes</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calculate</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Mixed salad</string>
     <string name="iDeciso_alternative_btn">Alternatives</string>
@@ -85,17 +85,17 @@
     <string name="iDeciso_alternative_secondi">SECOND COURSE</string>
     <string name="iDeciso_alternative_contorni">WARM SIDE DISHES</string>
     <string name="iDeciso_alternative_menu">Alternatives to the daily menu</string>
-    <string name="iDeciso_compose_menu_checkbox_pizza">Pizza menu</string>
+    <string name="iDeciso_compose_menu_checkbox_pizza">Pizza Menu</string>
     <string name="iDeciso_compose_menu_title_altro">Other</string>
     <string name="iDeciso_2contorni">2 Side dishes</string>
     <string name="iDeciso_pane">Bread</string>
     <string name="iDeciso_acqua">Water</string>
-    <string name="iDeciso_caffe_o_2_salse">Coffee or 2 sauces</string>
-    <string name="iDeciso_contorno_o_dessert">Side dish or dessert</string>
+    <string name="iDeciso_caffe_o_2_salse">Coffee or 2 Sauces</string>
+    <string name="iDeciso_contorno_o_dessert">Side dish or Dessert</string>
     <string name="iDeciso_pizza_trancio">Pizza slice</string>
-    <string name="iDeciso_acqua_o_caffe">Water or coffee</string>
+    <string name="iDeciso_acqua_o_caffe">Water or Coffee</string>
     <string name="iDeciso_panino">Bread</string>
-    <string name="iDeciso_2a_scelta_tra">2 choices between</string>
+    <string name="iDeciso_2a_scelta_tra">2 Choices between</string>
     <string name="iDeciso_contorni">Side dishes</string>
     <string name="iDeciso_pizza">Pizza</string>
     <string name="iDeciso_menu_types_intero">FULL</string>
@@ -176,8 +176,8 @@
 
     <!-- others -->
     <string name="view_review">Show reviews</string>
-    <string name="rate_dish">Vote or review</string>
-    <string name="search_on_google">Search on Google</string>
+    <string name="rate_dish">Post a review</string>
+    <string name="search_on_google">Search on internet</string>
     <string name="app_uid_label">SmartCampus</string>
     <string name="app_name">iFame</string>
     <string name="menu_settings">Settings</string>

@@ -60,19 +60,19 @@
     <string name="iDeciso_compose_menu_checkbox_tranciopizza">Trancio maxi pizza</string>
     <string name="iDeciso_compose_menu_checkbox_pizza">Pizza</string>
     <string name="iDeciso_compose_menu_title_primi">Primi piatti</string>
-    <string name="iDeciso_compose_menu_title_secondicontorni">Secondi / contorni</string>
+    <string name="iDeciso_compose_menu_title_secondicontorni">Secondi / Contorni</string>
     <string name="iDeciso_compose_menu_checkbox_piattofreddo">Piatto freddo</string>
     <string name="iDeciso_compose_menu_checkbox_caffe">Caffè</string>
-    <string name="iDeciso_compose_menu_checkbox_pane2">2 pani</string>
+    <string name="iDeciso_compose_menu_checkbox_pane2">2 pane</string>
     <string name="iDeciso_compose_menu_title_altro">Altro</string>
     <string name="iDeciso_compose_menu_checkbox_second">Secondo Piatto</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Contorno A</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno1">1 contorno</string>
-    <string name="iDeciso_compose_menu_checkbox_contorno2">2 contorni</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno1">1 Contorno</string>
+    <string name="iDeciso_compose_menu_checkbox_contorno2">2 Contorni</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_pane1">1 pane</string>
+    <string name="iDeciso_compose_menu_checkbox_pane1">1 Pane</string>
     <string name="iDeciso_compose_menu_checkbox_acqua">Acqua (50cl)</string>
-    <string name="iDeciso_compose_menu_checkbox_salsa2">2 salse</string>
+    <string name="iDeciso_compose_menu_checkbox_salsa2">2 Salse</string>
     <string name="iDeciso_compose_menu_calcola_btn">Calcola!</string>
     <string name="iDeciso_compose_menu_checkbox_insalatona">Insalatona</string>
     <string name="iDeciso_alternative_btn">Alternative</string>
@@ -90,7 +90,7 @@
     <string name="iDeciso_acqua">Acqua</string>
     <string name="iDeciso_pizza_trancio">Pizza (trancio)</string>
     <string name="iDeciso_contorno_o_dessert">Contorno o Dessert</string>
-    <string name="iDeciso_acqua_o_caffe">Acqua o caffè</string>
+    <string name="iDeciso_acqua_o_caffe">Acqua o Caffè</string>
     <string name="iDeciso_panino">Panino</string>
     <string name="iDeciso_2a_scelta_tra">2 a scelta tra</string>
     <string name="iDeciso_contorni">Contorni</string>
@@ -174,8 +174,8 @@
 
     <!-- others -->
     <string name="view_review">Visualizza le recensioni</string>
-    <string name="rate_dish">Recensisci o vota</string>
-    <string name="search_on_google">Cerca in Google</string>
+    <string name="rate_dish">Dai un giudizio</string>
+    <string name="search_on_google">Cerca su internet</string>
     <string name="app_uid_label">SmartCampus</string>
     <string name="app_name">iFame</string>
     <string name="menu_settings">Settings</string>
