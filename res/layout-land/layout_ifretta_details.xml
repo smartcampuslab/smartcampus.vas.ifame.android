@@ -16,14 +16,6 @@
             android:layout_height="match_parent"
             android:layout_weight="0.6" >
 
-            <ProgressBar
-                android:id="@+id/progressBar1"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true" />
-
             <eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView
                 android:id="@+id/imageViewId"
                 android:layout_width="match_parent"
@@ -31,6 +23,15 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/image_not_available"
                 android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="visible" />
         </RelativeLayout>
 
         <RelativeLayout
