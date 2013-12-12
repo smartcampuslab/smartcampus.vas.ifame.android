@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -31,6 +33,8 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 	private MensaSpinnerAdapter adapter;
 	private int currentTabSelected;
 
+	private ProgressBar progress;
+
 	private WebcamAspectRatioImageView webcamImage;
 
 	@Override
@@ -39,6 +43,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		setContentView(R.layout.layout_ifretta_details);
 
 		webcamImage = (WebcamAspectRatioImageView) findViewById(R.id.imageViewId);
+		progress = (ProgressBar) findViewById(R.id.progressBar1);
 
 		adapter = new MensaSpinnerAdapter(IFretta.this);
 		for (Mensa mensa : MensaUtils.getMensaList(IFretta.this)) {
@@ -156,6 +161,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			IFameUtils.setActionBarLoading(refreshButton);
+			progress.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -180,15 +186,14 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 
 			if (result != null) {
 				webcamImage.setImageBitmap(result);
+				webcamImage.setVisibility(View.VISIBLE);
 
 			} else {
 				Toast.makeText(IFretta.this,
 						getString(R.string.errorLoadingWebcamImage),
 						Toast.LENGTH_SHORT).show();
-				webcamImage.setImageDrawable(getResources().getDrawable(
-						R.drawable.image_not_available));
 			}
-
+			progress.setVisibility(View.GONE);
 			IFameUtils.removeActionBarLoading(refreshButton);
 		}
 	}
