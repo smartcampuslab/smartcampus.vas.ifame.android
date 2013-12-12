@@ -64,12 +64,12 @@
     <string name="iDeciso_compose_menu_title_secondicontorni">Second courses / Side dishes</string>
     <string name="iDeciso_compose_menu_checkbox_piattofreddo">Cold dish</string>
     <string name="iDeciso_compose_menu_checkbox_caffe">Coffee</string>
-    <string name="iDeciso_compose_menu_checkbox_pane2">2 Breads</string>
+    <string name="iDeciso_compose_menu_checkbox_pane2">2 Loaves</string>
     <string name="iDeciso_compose_menu_checkbox_second">Second course</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_caldo">Side dish A</string>
     <string name="iDeciso_compose_menu_checkbox_contorno_freddo">Side dish B</string>
     <string name="iDeciso_compose_menu_checkbox_dessert">Dessert</string>
-    <string name="iDeciso_compose_menu_checkbox_pane1">1 Bread</string>
+    <string name="iDeciso_compose_menu_checkbox_pane1">1 Loaf</string>
     <string name="iDeciso_compose_menu_checkbox_acqua">Water (50cl)</string>
     <string name="iDeciso_compose_menu_checkbox_salsa2">2 Sauces</string>
     <string name="iDeciso_compose_menu_checkbox_contorno1">1 Side dish</string>
