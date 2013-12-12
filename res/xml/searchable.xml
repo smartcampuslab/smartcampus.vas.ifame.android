@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
     android:label="@string/iGradito_title_activity"
-    android:hint="@string/iGradito_search" >
+    android:hint="@string/iGradito_search" 
+ >
 </searchable>

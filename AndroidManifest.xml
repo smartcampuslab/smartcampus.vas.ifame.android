@@ -21,7 +21,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ifame_logo"
+        android:icon="@drawable/launcher_ifame48x48"
+        android:logo="@drawable/ifame_logo"        
         android:label="@string/iFame_main_title_activity"
         android:theme="@style/Theme.Ifamestyle" >
         <meta-data
@@ -44,6 +45,7 @@
             android:name="eu.trentorise.smartcampus.ifame.activity.IFameMain"
             android:configChanges="orientation|screenSize"
             android:label="@string/iFame_main_title_activity"
+                android:logo="@drawable/ifame_logo"   
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.START" />
@@ -85,17 +87,20 @@
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.MensaPreferita"
             android:configChanges="screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iFretta_title_activity"
             android:launchMode="singleTask" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IDeciso"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IGradito"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iGradito_title_activity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -108,36 +113,43 @@
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.ISoldi"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iSoldi_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.ComponiMenu"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_home_compose_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.MenuDelMeseActivity"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_home_monthly_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFretta"
             android:configChanges="screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iFretta_details_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.MenuDelGiornoActivity"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_home_daily_menu" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iGradito_recensioni_title_activity" >
         </activity>
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.TipologieMenu"
             android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_home_menu_types" >
         </activity>
     </application>

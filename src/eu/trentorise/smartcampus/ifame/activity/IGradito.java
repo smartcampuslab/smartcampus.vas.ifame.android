@@ -95,6 +95,8 @@ public class IGradito extends SherlockActivity {
 					.getSearchableInfo(getComponentName()));
 			searchViewActionBar.setIconifiedByDefault(false);
 		}
+		
+		getSupportActionBar().setIcon(R.drawable.ifame_logo); 
 
 		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 
