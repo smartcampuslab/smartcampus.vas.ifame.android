@@ -2,7 +2,6 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -204,15 +203,20 @@ public class ISoldi extends SherlockActivity {
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 			bottomText.setText(getString(R.string.iSoldi_devi_ricaricare));
 
-			interoText.setPaintFlags(interoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			ridottoText.setPaintFlags(ridottoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			snackText.setPaintFlags(snackText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			// interoText.setVisibility(View.GONE);
-			// ridottoText.setVisibility(View.GONE);
-			// snackText.setVisibility(View.GONE);
+			interoText.setTextColor(Color.LTGRAY);
+			ridottoText.setTextColor(Color.LTGRAY);
+			snackText.setTextColor(Color.LTGRAY);
+
+			interoText.setCompoundDrawables(null, null, null, null);
+			ridottoText.setCompoundDrawables(null, null, null, null);
+			snackText.setCompoundDrawables(null, null, null, null);
+
+			// interoText.setPaintFlags(interoText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
+			// ridottoText.setPaintFlags(ridottoText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
+			// snackText.setPaintFlags(snackText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
 
 		} else if (amount >= 4.90f) {
 
@@ -241,11 +245,8 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setTextColor(Color.parseColor("#FFFFFF"));
 
-			interoText.setPaintFlags(interoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			// interoText.setVisibility(View.GONE);
-			ridottoText.setVisibility(View.VISIBLE);
-			snackText.setVisibility(View.VISIBLE);
+			interoText.setTextColor(Color.LTGRAY);
+			interoText.setCompoundDrawables(null, null, null, null);
 
 		} else if (amount >= 3.10f && amount < 4.40f) {
 
@@ -258,13 +259,15 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
 
-			interoText.setPaintFlags(interoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			ridottoText.setPaintFlags(ridottoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			// interoText.setVisibility(View.GONE);
-			// ridottoText.setVisibility(View.GONE);
-			snackText.setVisibility(View.VISIBLE);
+			interoText.setTextColor(Color.LTGRAY);
+			ridottoText.setTextColor(Color.LTGRAY);
+			interoText.setCompoundDrawables(null, null, null, null);
+			ridottoText.setCompoundDrawables(null, null, null, null);
+
+			// interoText.setPaintFlags(interoText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
+			// ridottoText.setPaintFlags(ridottoText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
 
 		} else if (amount >= 0f && amount < 3.10f) {
 
@@ -277,15 +280,20 @@ public class ISoldi extends SherlockActivity {
 
 			// statsButton.setBackgroundColor(Color.parseColor("#FF8800"));
 
-			interoText.setPaintFlags(interoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			ridottoText.setPaintFlags(ridottoText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			snackText.setPaintFlags(snackText.getPaintFlags()
-					| Paint.STRIKE_THRU_TEXT_FLAG);
-			// interoText.setVisibility(View.GONE);
-			// ridottoText.setVisibility(View.GONE);
-			// snackText.setVisibility(View.GONE);
+			// interoText.setPaintFlags(interoText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
+			// ridottoText.setPaintFlags(ridottoText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
+			// snackText.setPaintFlags(snackText.getPaintFlags()
+			// | Paint.STRIKE_THRU_TEXT_FLAG);
+
+			interoText.setTextColor(Color.LTGRAY);
+			ridottoText.setTextColor(Color.LTGRAY);
+			snackText.setTextColor(Color.LTGRAY);
+
+			interoText.setCompoundDrawables(null, null, null, null);
+			ridottoText.setCompoundDrawables(null, null, null, null);
+			snackText.setCompoundDrawables(null, null, null, null);
 
 		} else {
 			// amount < 0 errore mostro -> login con google non va bene
