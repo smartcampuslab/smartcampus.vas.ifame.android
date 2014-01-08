@@ -48,7 +48,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/iSoldi_message_credit_not_updated"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/isoldi_bottom_text"
