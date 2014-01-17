@@ -35,7 +35,6 @@ import eu.trentorise.smartcampus.ifame.dialog.OptionsMenuDialog.OptionsMenuDialo
 import eu.trentorise.smartcampus.ifame.model.GiudizioDataToPost;
 import eu.trentorise.smartcampus.ifame.model.MenuDelGiorno;
 import eu.trentorise.smartcampus.ifame.model.MenuDelMese;
-import eu.trentorise.smartcampus.ifame.model.MenuDellaSettimana;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
@@ -224,16 +223,16 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 				// ciclo sulle settimane e prendo tutti i piatti della settimana
 				int weekCount = 0;
 				int spinnerPosition = 0;
-				for (MenuDellaSettimana m : mdm.getMenuDellaSettimana()) {
+				for (MenuDelGiorno m : mdm.getMenuDelGg()) {
 
-					int start_day = m.getStart_day();
-					int end_day = m.getEnd_day();
+					int day = m.getDay();
+					int end_day = day + 7;
 					// setto l'item dello spinner
-					mSpinnerAdapter.add(dayToMyFormat(start_day, end_day));
+					mSpinnerAdapter.add(dayToMyFormat(day, end_day));
 					// se il giorno corrente è tra il giorno iniziale e quelo
 					// finale
 					// della settimana sono nella settimana che mi interessa
-					if (currentDay >= start_day && currentDay <= end_day) {
+					if (currentDay <= end_day) {
 						spinnerPosition = weekCount;
 					}
 					weekCount++;
@@ -289,16 +288,17 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 		mPiattiListAdapter.clear();
 		// mPiattiListAdapter.notifyDataSetChanged();
 		// prendo la lista di menu della settimana
-		List<MenuDellaSettimana> menuOfTheWeekList = getMenuDelMese()
-				.getMenuDellaSettimana();
+		List<MenuDelGiorno> menuOfDayList = getMenuDelMese()
+				.getMenuDelGg();
 		// per ogni giorno della settimana
-		for (MenuDellaSettimana mds : menuOfTheWeekList) {
-			if (weekStartDay == mds.getStart_day()) {
-				// sono nella settimana interessata ciclo sui menu del
-				// giorno poi esco dal ciclo
-				ArrayList<MenuDelGiorno> menuOfTheDayList = (ArrayList<MenuDelGiorno>) mds
-						.getMenuDelGiorno();
-				for (MenuDelGiorno mdg : menuOfTheDayList) {
+		for(int i = 0; i < 7; i++){
+		//for (MenuDellaSettimana mds : menuOfTheWeekList) {
+//			if (weekStartDay == menuOfDayList.get(0).getDay()) {
+//				// sono nella settimana interessata ciclo sui menu del
+//				// giorno poi esco dal ciclo
+//				ArrayList<MenuDelGiorno> menuOfTheDayList = (ArrayList<MenuDelGiorno>) mds
+//						.getMenuDelGiorno();
+				for (MenuDelGiorno mdg : menuOfDayList) {
 					// ATTENZIONE AL MAGHEGGIO
 					Piatto piattoSentinella = new Piatto();
 					// setto come nome del piatto il numero del giorno
@@ -311,10 +311,10 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 					for (Piatto p : mdg.getPiattiDelGiorno()) {
 						mPiattiListAdapter.add(p);
 					}
+					break;
 				}
 				// esco dal ciclo
-				break;
-			}
+			
 		}
 		mPiattiListAdapter.notifyDataSetChanged();
 	}
@@ -384,7 +384,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void postReview(DialogInterface dialog, String commento, int voto,
-			Long mensa, Long piatto) {
+			String mensa, Long piatto) {
 
 		Long userId = Long.parseLong(UserIdUtils.getUserId(this));
 		GiudizioDataToPost data = new GiudizioDataToPost(commento,

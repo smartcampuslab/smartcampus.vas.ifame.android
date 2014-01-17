@@ -171,7 +171,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 	 */
 
 	private class RetrieveGiudiziTask extends
-			AsyncTask<Long, Void, List<Giudizio>> {
+			AsyncTask<String, Void, List<Giudizio>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -181,7 +181,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		}
 
 		@Override
-		protected List<Giudizio> doInBackground(Long... params) {
+		protected List<Giudizio> doInBackground(String... params) {
 
 			ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(
 					IGraditoVisualizzaRecensioni.this,
@@ -321,7 +321,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 			currentTabSelected = itemPosition;
 			new RetrieveGiudiziTask().execute(
 					mensaSpinnerAdapter.getItem(itemPosition).getMensa_id(),
-					piatto.getPiatto_id());
+					piatto.getPiatto_id()+"");
 		} else {
 			// non sono connesso mostro il toast e torno alla tab precedente
 			// controllo l'item per evitare la ricorsione di chiamate
@@ -340,7 +340,7 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 
 	@Override
 	public void postReview(DialogInterface dialog, String commento, int voto,
-			Long mensa, Long piatto) {
+			String mensa, Long piatto) {
 
 		Long userId = Long.parseLong(UserIdUtils.getUserId(this));
 		GiudizioDataToPost data = new GiudizioDataToPost(commento,

@@ -1,17 +1,25 @@
 package eu.trentorise.smartcampus.ifame.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Mensa implements Serializable {
 
-	private Long mensa_id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String mensa_id;
 
 	private String mensa_nome;
 
 	private String mensa_link_online;
 
 	private String mensa_link_offline;
-
+	
+	private List<CanteenOpeningTimes> times;
+	
 	public Mensa() {
 		super();
 	}
@@ -24,11 +32,11 @@ public class Mensa implements Serializable {
 		this.mensa_link_offline = mensa_link_offline;
 	}
 
-	public Long getMensa_id() {
+	public String getMensa_id() {
 		return mensa_id;
 	}
 
-	public void setMensa_id(Long mensa_id) {
+	public void setMensa_id(String mensa_id) {
 		this.mensa_id = mensa_id;
 	}
 
@@ -105,6 +113,14 @@ public class Mensa implements Serializable {
 		} else if (!mensa_nome.equals(other.mensa_nome))
 			return false;
 		return true;
+	}
+
+	public List<CanteenOpeningTimes> getTimes() {
+		return times;
+	}
+
+	public void setTimes(List<CanteenOpeningTimes> times) {
+		this.times = times;
 	}
 
 }

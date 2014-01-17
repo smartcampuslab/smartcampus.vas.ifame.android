@@ -44,7 +44,7 @@ public class InsertReviewDialog extends SherlockDialogFragment {
 	public interface InsertReviewDialogListener {
 
 		public void postReview(DialogInterface dialog, String commento,
-				int voto, Long mensaId, Long piattoId);
+				int voto, String mensaId, Long piattoId);
 	}
 
 	@Override

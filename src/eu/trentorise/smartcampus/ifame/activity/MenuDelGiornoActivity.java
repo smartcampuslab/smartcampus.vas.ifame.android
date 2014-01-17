@@ -156,7 +156,7 @@ public class MenuDelGiornoActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void postReview(DialogInterface dialog, String commento, int voto,
-			Long mensaId, Long piattoId) {
+			String mensaId, Long piattoId) {
 
 		Long userId = Long.parseLong(UserIdUtils.getUserId(this));
 		GiudizioDataToPost data = new GiudizioDataToPost(commento,

@@ -29,10 +29,10 @@ public class PostGiudizioAsyncTask extends
 	private final String APP_TOKEN;
 
 	private MenuItem refreshButton;
-	private Long mensaId, piattoId;
-
+	private Long piattoId;
+	private String mensaId;
 	public PostGiudizioAsyncTask(Activity activity, GiudizioDataToPost data,
-			MenuItem refreshButton, Long mensaId, Long piattoId) {
+			MenuItem refreshButton, String mensaId, Long piattoId) {
 		this.activity = activity;
 		this.data = data;
 		this.refreshButton = refreshButton;
