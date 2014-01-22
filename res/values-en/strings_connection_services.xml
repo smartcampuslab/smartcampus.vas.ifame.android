@@ -3,6 +3,7 @@
 
     <!-- Toast connection -->
     <string name="errorInternetConnectionRequired">An internet connection is required to use iFame</string>
+    <string name="noCamera">The image is not available</string>
     <string name="errorSomethingWentWrong">Ooops! Something went wrong!</string>
     <string name="errorLikeNotDeleted">Oooops! Like not deleted. Try again</string>
     <string name="errorNotLiked">Oooops! Not liked. Try again</string>

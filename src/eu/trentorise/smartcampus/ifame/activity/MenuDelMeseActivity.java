@@ -2,6 +2,8 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.SearchManager;
@@ -129,6 +131,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 					int position, long id) {
 				String customFormatDateString = (String) adapter
 						.getItemAtPosition(position);
+				//refreshPiattiList(Calendar.DAY_OF_MONTH);
 				refreshPiattiList(spinnerStringToStartDayOfTheWeek(customFormatDateString));
 			}
 
@@ -217,26 +220,27 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 			} else {
 				// setto il menu del mese ricevuto come variabile di classe
 				setMenuDelMese(mdm);
-				// cerco la settimana corrente e la mostro
 				int currentDay = mCalendar.get(Calendar.DAY_OF_MONTH);
-				// ciclo sulle settimane e prendo tutti i piatti della settimana
-				int weekCount = 0;
-				int spinnerPosition = 0;
-				for (MenuDelGiorno m : mdm.getMenuDelGg()) {
-
+				int daysInMonth = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+				MenuDelGiorno m = mdm.getMenuDelGg().get(0);
+				//for (MenuDelGiorno m : mdm.getMenuDelGg()) {
 					int day = m.getDay();
-					int end_day = day + 7;
-					// setto l'item dello spinner
-					mSpinnerAdapter.add(dayToMyFormat(day, end_day));
-					// se il giorno corrente è tra il giorno iniziale e quelo
-					// finale
-					// della settimana sono nella settimana che mi interessa
-					if (currentDay <= end_day) {
-						spinnerPosition = weekCount;
+					for (int i = 0; i<daysInMonth; i++){
+					if ((day >= currentDay)){
+						if(day +7 <= daysInMonth){
+							mSpinnerAdapter.add(dayToMyFormat(day, day +7));
+							day = day + 7;
+						}
+						else{
+							mSpinnerAdapter.add(dayToMyFormat(day, daysInMonth));
+							break;
+						}
 					}
-					weekCount++;
+					
+					day++;
 				}
-				mSpinner.setSelection(spinnerPosition);
+				
+				mSpinner.setSelection(0);
 				mSpinner.setVisibility(View.VISIBLE);
 			}
 
@@ -285,20 +289,12 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 	 */
 	private void refreshPiattiList(int weekStartDay) {
 		mPiattiListAdapter.clear();
-		// mPiattiListAdapter.notifyDataSetChanged();
-		// prendo la lista di menu della settimana
 		List<MenuDelGiorno> menuOfDayList = getMenuDelMese()
 				.getMenuDelGg();
-		// per ogni giorno della settimana
-		for(int i = 0; i < 7; i++){
-		//for (MenuDellaSettimana mds : menuOfTheWeekList) {
-//			if (weekStartDay == menuOfDayList.get(0).getDay()) {
-//				// sono nella settimana interessata ciclo sui menu del
-//				// giorno poi esco dal ciclo
-//				ArrayList<MenuDelGiorno> menuOfTheDayList = (ArrayList<MenuDelGiorno>) mds
-//						.getMenuDelGiorno();
-				for (MenuDelGiorno mdg : menuOfDayList) {
-					// ATTENZIONE AL MAGHEGGIO
+		
+		for (MenuDelGiorno mdg : menuOfDayList) {
+			if ((weekStartDay <= mdg.getDay())&&(mdg.getDay() <= weekStartDay + 7 )) {
+//			// ATTENZIONE AL MAGHEGGIO
 					Piatto piattoSentinella = new Piatto();
 					// setto come nome del piatto il numero del giorno
 					piattoSentinella.setPiatto_nome(mdg.getDay() + "");
@@ -310,14 +306,13 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 					for (Piatto p : mdg.getPiattiDelGiorno()) {
 						mPiattiListAdapter.add(p);
 					}
-					break;
 				}
-				// esco dal ciclo
 			
 		}
 		mPiattiListAdapter.notifyDataSetChanged();
 	}
 
+	
 	/** display dialog options */
 	private void showOptionsDialog(Piatto piatto) {
 

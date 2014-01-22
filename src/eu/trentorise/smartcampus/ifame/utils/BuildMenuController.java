@@ -617,8 +617,7 @@ public class BuildMenuController {
 	}
 
 	public HashMap<String, Boolean> getCheckedItems() {
-		// TODO Auto-generated method stub
-		
+
 		return mapCheckedMenuTrue;
 	}
 

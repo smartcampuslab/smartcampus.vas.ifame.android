@@ -19,7 +19,7 @@ public class Giudizio {
 
 	private String user_name;
 
-	private Long mensa_id;
+	private String mensa_id;
 
 	private Long piatto_id;
 
@@ -93,11 +93,11 @@ public class Giudizio {
 		this.user_name = user_name;
 	}
 
-	public Long getMensa_id() {
+	public String getMensa_id() {
 		return mensa_id;
 	}
 
-	public void setMensa_id(Long mensa_id) {
+	public void setMensa_id(String mensa_id) {
 		this.mensa_id = mensa_id;
 	}
 

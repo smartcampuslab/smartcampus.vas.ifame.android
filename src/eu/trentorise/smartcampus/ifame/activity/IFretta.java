@@ -99,16 +99,22 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 	private void loadWebcamImage(Mensa mensa) {
 
 		if (IFameUtils.isUserConnectedToInternet(IFretta.this)) {
-
-			Date now = new Date();
-			if (now.after(getStart()) && now.before(getEnd())) {
-				// retrieve the online image
-				new RetrieveWebcamImageTask().execute(mensa
-						.getMensa_link_online());
+			if ((mensa.getMensa_link_offline() == null)
+					|| (mensa.getMensa_link_online() == null)) {
+				Toast.makeText(IFretta.this,
+						getString(R.string.noCamera),
+						Toast.LENGTH_SHORT).show();
 			} else {
-				// otherwise retrieve the offline image
-				new RetrieveWebcamImageTask().execute(mensa
-						.getMensa_link_offline());
+				Date now = new Date();
+				if (now.after(getStart()) && now.before(getEnd())) {
+					// retrieve the online image
+					new RetrieveWebcamImageTask().execute(mensa
+							.getMensa_link_online());
+				} else {
+					// otherwise retrieve the offline image
+					new RetrieveWebcamImageTask().execute(mensa
+							.getMensa_link_offline());
+				}
 			}
 		} else {
 			// show image image not avaiable
@@ -116,6 +122,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 					getString(R.string.errorInternetConnectionRequired),
 					Toast.LENGTH_SHORT).show();
 		}
+
 	}
 
 	private static Date getStart() {
@@ -175,7 +182,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 				bmap_image = BitmapFactory.decodeStream(in);
 
 			} catch (Exception e) {
-				Log.e(getClass().getName(), e.getMessage());
+				// Log.e(getClass().getName(), e.getMessage());
 				return null;
 			}
 			return bmap_image;

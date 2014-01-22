@@ -112,6 +112,20 @@ public class IFameMain extends SherlockActivity {
 		return mToken;
 	}
 
+	// IN TEST
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		try {
+//			getAccessProvider().readToken(IFameMain.this);
+//		} catch (AACException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		super.onResume();
+//	}
+	//TEST
+	
 	// ----------------------------------------------------------------
 	// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
 	// ****************************************************************

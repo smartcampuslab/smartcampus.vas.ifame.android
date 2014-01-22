@@ -51,7 +51,7 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 		ProtocolCarrier mProtocolCarrier = new ProtocolCarrier(activity,
 				APP_TOKEN);
 		MessageRequest request = new MessageRequest(URL_BASE_WEB_IFAME,
-				"getmenudelgiorno");
+				"/getmenudelgiorno");
 		request.setMethod(Method.GET);
 		try {
 			MessageResponse response = mProtocolCarrier.invokeSync(request,
