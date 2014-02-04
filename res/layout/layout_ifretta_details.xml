@@ -20,6 +20,7 @@
             android:visibility="invisible" />
 
         <RelativeLayout
+            android:id="@+id/relativeLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageViewId"
@@ -27,13 +28,17 @@
             android:padding="20dp" >
 
             <TextView
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="@string/iFretta_webcam_details"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+
         </RelativeLayout>
+
         <!-- fix mega temporaneo -->
 
         <ProgressBar
@@ -44,6 +49,24 @@
             android:layout_alignBottom="@+id/imageViewId"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="70dp" />
-    </RelativeLayout>
+        
+        <ListView
+            android:id="@+id/listViewOrari"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_centerHorizontal="true" 
+            >
+        </ListView>
 
+        <TextView
+            android:id="@+id/textViewOrari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/listViewOrari"
+            android:layout_alignParentLeft="true"
+            android:text="Giorni di apertura:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </RelativeLayout>
 </ScrollView>

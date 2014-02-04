@@ -1,6 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -22,6 +22,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
+import eu.trentorise.smartcampus.ifame.model.CanteenOpeningTimes;
 import eu.trentorise.smartcampus.ifame.model.Mensa;
 import eu.trentorise.smartcampus.ifame.model.WebcamAspectRatioImageView;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
@@ -63,6 +64,81 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		int selected = adapter.getPosition(MensaUtils
 				.getFavouriteMensa(IFretta.this));
 		actionBar.setSelectedNavigationItem(selected);
+
+	}
+
+	private void isCanteenOpen() {
+		// orari
+		Date datan = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+		String data = sdf.format(datan);
+		Boolean openMes1 = false;
+		Boolean openMes2 = false;
+		Boolean openPovo1 = false;
+		Boolean openPovoV = false;
+		Boolean openTG = false;
+		Boolean openZan = false;
+		//int index = getSupportActionBar().getSelectedNavigationIndex();
+
+		// per ogni mensa
+		for (Mensa mensa : MensaUtils.getMensaList(IFretta.this)) {
+			// if
+			// (mensa.getMensa_nome().compareTo(MensaUtils.getMensaList(IFretta.this).get(index).getMensa_nome())==0){
+			for (CanteenOpeningTimes ot : mensa.getTimes()) {
+				if ((mensa.getMensa_nome().compareTo("Mesiano 1") == 0)
+						&& (ot.getType().compareTo("Pranzo") == 0)) {
+					for (String orari : ot.getDates()) {
+						System.out.println(orari);
+						if (orari.compareTo(data.toString()) == 0)
+							openMes1 = true;
+					}
+				}
+				if ((mensa.getMensa_nome().compareTo("Mesiano 1") == 0)
+						&& (ot.getType().compareTo("Bar (orario 7:30-18)") == 0)) {
+					for (String orari : ot.getDates()) {
+						System.out.println(orari);
+						if (orari.compareTo(data.toString()) == 0)
+							openMes2 = true;
+					}
+				}
+
+				if ((mensa.getMensa_nome().compareTo("Povo Mensa Veloce") == 0)
+						&& (ot.getType().compareTo("Pranzo (linea standard)") == 0)) {
+					for (String orari : ot.getDates()) {
+						System.out.println(orari);
+						if (orari.compareTo(data.toString()) == 0)
+							openPovo1 = true;
+					}
+				}
+				if ((mensa.getMensa_nome().compareTo("Povo Mensa Veloce") == 0)
+						&& (ot.getType().compareTo("Pranzo (linea veloce)") == 0)) {
+					for (String orari : ot.getDates()) {
+						System.out.println(orari);
+						if (orari.compareTo(data.toString()) == 0)
+							openPovoV = true;
+					}
+
+				}
+				if ((mensa.getMensa_nome().compareTo("Tommaso Gar.") == 0)
+						&& (ot.getType().compareTo("Pranzo (linea standard)") == 0)) {
+					for (String orari : ot.getDates()) {
+						System.out.println(orari);
+						if (orari.compareTo(data.toString()) == 0)
+							openTG = true;
+					}
+
+				}
+				if ((mensa.getMensa_nome().compareTo("Zanella") == 0)
+						&& (ot.getType().compareTo("Pranzo") == 0)) {
+					for (String orari : ot.getDates()) {
+						System.out.println(orari);
+						if (orari.compareTo(data.toString()) == 0)
+							openZan = true;
+					}
+				}
+
+			}
+		}
 	}
 
 	@Override
@@ -101,8 +177,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		if (IFameUtils.isUserConnectedToInternet(IFretta.this)) {
 			if ((mensa.getMensa_link_offline() == null)
 					|| (mensa.getMensa_link_online() == null)) {
-				Toast.makeText(IFretta.this,
-						getString(R.string.noCamera),
+				Toast.makeText(IFretta.this, getString(R.string.noCamera),
 						Toast.LENGTH_SHORT).show();
 			} else {
 				Date now = new Date();
@@ -145,6 +220,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		if (IFameUtils.isUserConnectedToInternet(IFretta.this)) {
 			currentTabSelected = itemPosition;
 			loadWebcamImage(adapter.getItem(itemPosition));
+			isCanteenOpen();
 		} else {
 			// non sono connesso mostro il toast e torno alla tab precedente
 			// controllo l'item per evitare la ricorsione di chiamate
