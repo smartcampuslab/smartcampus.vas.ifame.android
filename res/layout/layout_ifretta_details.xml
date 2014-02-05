@@ -63,9 +63,9 @@
             android:id="@+id/textViewOrari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/listViewOrari"
-            android:layout_alignParentLeft="true"
-            android:text="Giorni di apertura:"
+            android:layout_alignLeft="@+id/listViewOrari"
+            android:layout_alignTop="@+id/listViewOrari"
+            android:layout_marginLeft="14dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>

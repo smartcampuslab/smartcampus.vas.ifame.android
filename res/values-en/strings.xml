@@ -37,6 +37,8 @@
     <string name="iFretta_webcam_details">Everyday from 12 to 14 you can check, in real time, the queue at your canteen to choose the best moment to have lunch</string>
     <string name="iFretta_favourite_selection_done">Done</string>
     <string name="iFretta_favourite_canteen_is">Your favourite canteen is:</string>
+        <string name="iFretta_open_mensa">Today the canteen is open</string>
+    <string name="iFretta_close_mensa">Today the canteen is close</string>
     <!-- /iFretta -->
 
 

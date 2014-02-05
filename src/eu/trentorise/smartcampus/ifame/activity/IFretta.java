@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -33,10 +34,12 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 	private MenuItem refreshButton;
 	private MensaSpinnerAdapter adapter;
 	private int currentTabSelected;
-
+	private int selectedMensa;
 	private ProgressBar progress;
 
 	private WebcamAspectRatioImageView webcamImage;
+	
+	private TextView textViewOrari;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +64,12 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		actionBar.setListNavigationCallbacks(adapter, IFretta.this);
 
 		// select current mensa
-		int selected = adapter.getPosition(MensaUtils
+		selectedMensa = adapter.getPosition(MensaUtils
 				.getFavouriteMensa(IFretta.this));
-		actionBar.setSelectedNavigationItem(selected);
+		actionBar.setSelectedNavigationItem(selectedMensa);
+		
+		// check opening 
+		isCanteenOpen();
 
 	}
 
@@ -78,6 +84,8 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		Boolean openPovoV = false;
 		Boolean openTG = false;
 		Boolean openZan = false;
+		
+		textViewOrari = (TextView)findViewById(R.id.textViewOrari);
 		//int index = getSupportActionBar().getSelectedNavigationIndex();
 
 		// per ogni mensa
@@ -139,6 +147,53 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 
 			}
 		}
+		
+		switch(selectedMensa){
+		
+		case 0:
+			if(openMes1){
+				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
+			}else{
+				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			}
+			case 1:
+			if(openMes2){
+				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
+			}else{
+				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			}
+		case 2:
+			if(openPovo1){
+				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
+			}else{
+				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			}
+		case 3:
+			if(openPovoV){
+				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
+			}else{
+				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			}
+		case 4:
+			if(openTG){
+				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
+			}else{
+				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			}
+		case 5:
+			if(openZan){
+				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
+			}else{
+				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			}
+			
+		}
 	}
 
 	@Override
@@ -164,6 +219,9 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 			int index = getSupportActionBar().getSelectedNavigationIndex();
 			if (index >= 0) {
 				loadWebcamImage(adapter.getItem(index));
+				selectedMensa = adapter.getPosition(MensaUtils
+						.getFavouriteMensa(IFretta.this));
+				isCanteenOpen();
 			}
 			return true;
 
