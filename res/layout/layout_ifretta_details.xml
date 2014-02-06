@@ -66,7 +66,7 @@
             android:layout_alignLeft="@+id/listViewOrari"
             android:layout_alignTop="@+id/listViewOrari"
             android:layout_marginLeft="14dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>
 </ScrollView>

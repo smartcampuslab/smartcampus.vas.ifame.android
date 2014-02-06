@@ -76,7 +76,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 	private void isCanteenOpen() {
 		// orari
 		Date datan = new Date(System.currentTimeMillis());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String data = sdf.format(datan);
 		Boolean openMes1 = false;
 		Boolean openMes2 = false;

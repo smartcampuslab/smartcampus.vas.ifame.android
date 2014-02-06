@@ -58,7 +58,7 @@
                 android:layout_alignBottom="@+id/textView1"
                 android:layout_alignLeft="@+id/textView1"
                 android:layout_marginBottom="52dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20sp" />
         </RelativeLayout>
 
