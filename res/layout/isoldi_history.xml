@@ -14,7 +14,8 @@
             android:layout_marginTop="14dp"
             android:text="@string/iSoldi_History_text"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="visible" 
+            android:paddingBottom="14dp"/>
      <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"

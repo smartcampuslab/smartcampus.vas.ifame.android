@@ -127,7 +127,7 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 			}
 			adapter.notifyDataSetChanged();
 		}
-
+		adapter.setIndexer();
 		progressBarLayout.setVisibility(View.GONE);
 	}
 }

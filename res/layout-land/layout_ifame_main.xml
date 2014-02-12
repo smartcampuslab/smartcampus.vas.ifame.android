@@ -1,0 +1,84 @@
+<!--
+  <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+-->
+<!--
+     <RelativeLayout 
+    android:id="@+id/home_relative_layout_ifame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    tools:context=".IFameMain"
+-->
+
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/homelayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingTop="20dp"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/iDeciso_button"
+            style="@style/iFameHomeButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:drawableTop="@drawable/ideciso_red"
+            android:text="@string/iDeciso_title_activity"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/iFretta_button"
+            style="@style/iFameHomeButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:drawableTop="@drawable/ifretta_red"
+            android:text="@string/iFretta_title_activity"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingTop="20dp"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/iSoldi_button"
+            style="@style/iFameHomeButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:drawableTop="@drawable/isoldi_red"
+            android:text="@string/iSoldi_title_activity"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/iGradito_button"
+            style="@style/iFameHomeButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:drawableTop="@drawable/igradito_red"
+            android:text="@string/iGradito_title_activity"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+</LinearLayout>
+<!-- </RelativeLayout> -->
+<!-- </ScrollView> -->
+

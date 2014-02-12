@@ -100,6 +100,18 @@ public class IFameMain extends SherlockActivity {
 		}
 	}
 
+//	@Override
+//	protected void onResume() {
+//		try {
+//			getAuthToken();
+//		} catch (AACException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		// TODO Auto-generated method stub
+//		super.onResume();
+//	}
+	
 	public static SCAccessProvider getAccessProvider() {
 		if (accessProvider == null)
 			accessProvider = SCAccessProvider.getInstance(context);

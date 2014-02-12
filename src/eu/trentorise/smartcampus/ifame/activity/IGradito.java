@@ -43,6 +43,7 @@ public class IGradito extends SherlockActivity {
 		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
 			new GetPiattiIGraditoTask(IGradito.this, piattiListAdapter)
 					.execute();
+			
 		} else {
 			Toast.makeText(this,
 					getString(R.string.errorInternetConnectionRequired),

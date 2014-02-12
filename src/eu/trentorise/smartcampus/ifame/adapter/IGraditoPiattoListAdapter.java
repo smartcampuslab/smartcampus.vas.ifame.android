@@ -1,30 +1,65 @@
 package eu.trentorise.smartcampus.ifame.adapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 
 public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
-		Filterable {
+		Filterable, SectionIndexer {
 
 	public List<Piatto> complete_list;
+
+	// ArrayList<String> myElements;
+	HashMap<String, Integer> alphaIndexer;
+
+	String[] sections;
 
 	public IGraditoPiattoListAdapter(Context context) {
 		super(context, android.R.layout.simple_list_item_1);
 
 		complete_list = new ArrayList<Piatto>();
+		
 	}
 
+	public void setIndexer(){
+		alphaIndexer = new HashMap<String, Integer>();
+		int size = complete_list.size();
+		for (int i = size - 1; i >= 0; i--) {
+			Piatto element = complete_list.get(i);
+			alphaIndexer.put(element.getPiatto_nome().substring(0, 1), i);
+
+		}
+		Set<String> keys = alphaIndexer.keySet();
+		Iterator<String> it = keys.iterator();
+		
+        ArrayList<String> keyList = new ArrayList<String>(); // list can be
+        // sorted
+        while (it.hasNext()) {
+                String key = it.next();
+                keyList.add(key);
+        }
+
+        Collections.sort(keyList);
+        sections = new String[keyList.size()];
+        keyList.toArray(sections);
+		
+	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) getContext()
@@ -127,6 +162,27 @@ public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
 		};
 		return filter;
 
+	}
+
+	@Override
+	public int getPositionForSection(int sectionIndex) {
+		// TODO Auto-generated method stub
+		String letter = sections[sectionIndex];
+		 
+        return alphaIndexer.get(letter);
+	}
+
+	@Override
+	public int getSectionForPosition(int position) {
+		// TODO Auto-generated method stub
+		 Log.v("getSectionForPosition", "called");
+		return 0;
+	}
+
+	@Override
+	public Object[] getSections() {
+		// TODO Auto-generated method stub
+		return sections;
 	}
 
 }
