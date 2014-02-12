@@ -170,6 +170,8 @@
     <string name="iSoldi_unitn_login_required">Per visualizzare il tuo credito devi essere loggato con Unitn</string>
     <string name="iSoldi_press_again_to_exit">Caricamento in corso. Premi indietro per uscire</string>
     <string name="iSoldi_message_credit_not_updated">Il credito può non essere aggiornato alle transazioni delle ultime 12 ore</string>
+    <string name="iSoldi_History">Movimenti</string>
+    <string name="iSoldi_History_text">Lista delle spese del mese corrente: </string>
     <!-- /iSoldi -->
 
 

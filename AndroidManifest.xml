@@ -157,6 +157,12 @@
                 android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_home_menu_types" >
         </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.HistoryActivity"
+            android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
+            android:label="@string/iSoldi_History" >
+        </activity>
     </application>
 
 </manifest>

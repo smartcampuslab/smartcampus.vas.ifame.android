@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class ISoldi extends SherlockActivity {
 	private TextView snackText;
 	private TextView isoldi_euro_txt;
 	private TextView credit_message_label;
+	private Button history;
+	private int payments;
 	// private TextView val_textview2;
 	// private TextView val_textview1;
 	// private TextView val_textview3;
@@ -68,7 +71,7 @@ public class ISoldi extends SherlockActivity {
 
 		isoldi_layout_view = (LinearLayout) findViewById(R.id.isoldi_layout);
 		isoldi_layout_view.setVisibility(View.GONE);
-
+		payments = 0;
 		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
 			new ISoldiConnector().execute();
 		} else {
@@ -108,14 +111,8 @@ public class ISoldi extends SherlockActivity {
 
 			}
 		});
-		// statsButton.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// showUserStats();
-		// }
-		// });
-
+		history = (Button) findViewById(R.id.button_history);
+		
 		// actionBarSherlock is initialized in super.onCreate()
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -134,52 +131,6 @@ public class ISoldi extends SherlockActivity {
 	}
 
 	private void getAmount(Saldo result) {
-
-		// if (result != null) {
-		// amount = Float.parseFloat(result.getCredit());
-		//
-		// val_textview1 = (TextView) findViewById(R.id.val_textview1);
-		// val_textview2 = (TextView) findViewById(R.id.val_textview2);
-		// val_textview3 = (TextView) findViewById(R.id.val_textview3);
-		//
-		// if (result.getPayments() != null) {
-		// // user has some payments
-		// if (result.getPayments().size() >= 1
-		// && result.getPayments().get(0) != null) {
-		// String text = result.getPayments().get(0).getPaymentDate()
-		// + " "
-		// + result.getPayments().get(0)
-		// .getProductDescription() + "  €"
-		// + result.getPayments().get(0).getProductPrice();
-		// val_textview1.setText(text);
-		// val_textview1.setVisibility(1);
-		// }
-		// if (result.getPayments().size() >= 2
-		// && result.getPayments().get(1) != null) {
-		// String text = result.getPayments().get(1).getPaymentDate()
-		// + " "
-		// + result.getPayments().get(1)
-		// .getProductDescription() + "  €"
-		// + result.getPayments().get(1).getProductPrice();
-		// val_textview2.setText(text);
-		// val_textview2.setVisibility(1);
-		// }
-		// if (result.getPayments().size() >= 3
-		// && result.getPayments().get(2) != null) {
-		// String text = result.getPayments().get(2).getPaymentDate()
-		// + " "
-		// + result.getPayments().get(2)
-		// .getProductDescription() + "  €"
-		// + result.getPayments().get(2).getProductPrice();
-		// val_textview3.setText(text);
-		// val_textview3.setVisibility(1);
-		// }
-		// } else {
-		// // there are no payments
-		// statsButton.setVisibility(View.GONE);
-		// }
-		// }
-
 		float amount = 0f;
 		boolean creditoInvalido = false;
 
@@ -314,6 +265,10 @@ public class ISoldi extends SherlockActivity {
 
 			bottomText.setTextColor(Color.parseColor("#CC0000"));
 
+			// se il credito non è disponibile non lo è nemmeno il saldo
+			// movimenti
+			history.setEnabled(false);
+
 			// statsButton.setVisibility(View.GONE);
 			isoldi_euro_txt.setVisibility(View.GONE);
 		}
@@ -388,6 +343,35 @@ public class ISoldi extends SherlockActivity {
 
 			} else {
 				getAmount(result);
+				if (result.getPayments()!=null){
+				if ((result.getPayments().isEmpty() == true)
+						|| (result.getPayments().get(0) == null)) {
+					payments = -1;
+				}
+				if (payments == 0) {
+					history.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Intent intent = new Intent(ISoldi.this,
+									HistoryActivity.class);
+							ISoldi.this.startActivity(intent);
+						}
+					});
+				} else {
+					history.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Toast.makeText(getApplicationContext(),
+									R.string.errorSomethingWentWrong,
+									Toast.LENGTH_SHORT).show();
+						}
+					});
+
+				}
+				}
+				
 			}
 
 			// setup the view
@@ -398,36 +382,4 @@ public class ISoldi extends SherlockActivity {
 			IFameUtils.removeActionBarLoading(refreshButton);
 		}
 	}
-
-	// private void showUserStats() {
-	//
-	// final View userStatsLayout = (View) findViewById(R.id.user_stats);
-	//
-	// ToggleButton showUserStats_button = (ToggleButton)
-	// findViewById(R.id.isoldi_statistics_button);
-	//
-	// if (showUserStats_button.isChecked()) {
-	// userStatsLayout.setVisibility(View.VISIBLE);
-	// } else {
-	// userStatsLayout.setVisibility(View.GONE);
-	// }
-	//
-	// showUserStats_button
-	// .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-	// {
-	// // private String token;
-	//
-	// @Override
-	// public void onCheckedChanged(CompoundButton buttonView,
-	// boolean isChecked) {
-	// if (isChecked) {
-	// userStatsLayout.setVisibility(View.VISIBLE);
-	//
-	// } else {
-	// userStatsLayout.setVisibility(View.GONE);
-	// }
-	// }
-	// });
-	// }
-
 }

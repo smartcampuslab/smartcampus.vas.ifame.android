@@ -172,6 +172,8 @@
     <string name="iSoldi_unitn_login_required">To display your credit you must be logged with Unitn</string>
     <string name="iSoldi_press_again_to_exit">Still loading. Press back button to exit</string>
     <string name="iSoldi_message_credit_not_updated">The credit can be not updated at the transactions of the last 12 hours</string>
+    <string name="iSoldi_History">History</string>
+     <string name="iSoldi_History_text">List of payments of the current month: </string>
     <!-- /iSoldi -->
 
 
