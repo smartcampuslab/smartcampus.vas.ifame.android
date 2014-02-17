@@ -192,7 +192,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			TextView maint = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_primo1_pastastation1);
-			maint.setText("+ "
+			maint.setText("- "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_first)
 					+ " / "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_pastastation)
@@ -201,7 +201,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			TextView maint2 = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_contorno11_dessert2);
-			maint2.setText("+ "
+			maint2.setText("- "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_contorno1)
 					+ " / "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_dessert)
@@ -217,7 +217,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			TextView maint3 = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_caffe2_salsa22);
-			maint3.setText("+ "
+			maint3.setText("- "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
 					+ " / "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
@@ -239,7 +239,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			TextView maint4 = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_secondo1_piattofreddo1);
-			maint4.setText("+ "
+			maint4.setText("- "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_second)
 					+ " / "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_piattofreddo)
@@ -263,7 +263,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			TextView maint5 = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_caffe3_salsa23);
-			maint5.setText("+ "
+			maint5.setText("- "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
 					+ " / "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
@@ -305,7 +305,7 @@ public class TipologiaSnackFragment extends SherlockFragment {
 
 			TextView main6t = (TextView) theContainer
 					.findViewById(R.id.tipologia_snack_caffe4_salsa24);
-			main6t.setText("+ "
+			main6t.setText("- "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_caffe)
 					+ " / "
 					+ getString(R.string.iDeciso_compose_menu_checkbox_salsa2)
