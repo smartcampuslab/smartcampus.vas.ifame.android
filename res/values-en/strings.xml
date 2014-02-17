@@ -39,6 +39,9 @@
     <string name="iFretta_favourite_canteen_is">Your favourite canteen is:</string>
         <string name="iFretta_open_mensa">Today the canteen is open</string>
     <string name="iFretta_close_mensa">Today the canteen is close</string>
+    <string name="iFretta_orari">Opening days</string>
+    <string name="iFretta_orari_dett">Opening days:</string>
+
     <!-- /iFretta -->
 
 

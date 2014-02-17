@@ -163,6 +163,12 @@
                 android:logo="@drawable/ifame_logo"   
             android:label="@string/iSoldi_History" >
         </activity>
+        <activity
+            android:name="eu.trentorise.smartcampus.ifame.activity.OrariAperturaActivity"
+            android:configChanges="orientation|screenSize"
+                android:logo="@drawable/ifame_logo"   
+            android:label="@string/iFretta_orari" >
+        </activity>
     </application>
 
 </manifest>

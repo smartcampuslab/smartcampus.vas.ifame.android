@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="460dp"
         android:gravity="center_horizontal"
         android:padding="4dp" >
 
@@ -35,7 +35,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="@string/iFretta_webcam_details"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>
 
@@ -49,24 +49,24 @@
             android:layout_alignBottom="@+id/imageViewId"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="70dp" />
-        
-        <ListView
-            android:id="@+id/listViewOrari"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayout1"
-            android:layout_centerHorizontal="true" 
-            >
-        </ListView>
 
         <TextView
             android:id="@+id/textViewOrari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/listViewOrari"
-            android:layout_alignTop="@+id/listViewOrari"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="14dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:paddingBottom="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/buttonOrari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewOrari"
+            android:layout_centerHorizontal="true"
+            android:text="@string/iFretta_orari" />
 
     </RelativeLayout>
 </ScrollView>

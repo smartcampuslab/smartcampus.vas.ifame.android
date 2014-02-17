@@ -2,14 +2,19 @@ package eu.trentorise.smartcampus.ifame.activity;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,9 +41,10 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 	private int currentTabSelected;
 	private int selectedMensa;
 	private ProgressBar progress;
-
+	private Button oraribtn;
 	private WebcamAspectRatioImageView webcamImage;
-	
+
+	private List<String> aperture;
 	private TextView textViewOrari;
 
 	@Override
@@ -67,9 +73,11 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		selectedMensa = adapter.getPosition(MensaUtils
 				.getFavouriteMensa(IFretta.this));
 		actionBar.setSelectedNavigationItem(selectedMensa);
-		
-		// check opening 
+		aperture = new ArrayList<String>();
+		oraribtn = (Button) findViewById(R.id.buttonOrari);
+		// check opening
 		isCanteenOpen();
+		
 
 	}
 
@@ -84,9 +92,9 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		Boolean openPovoV = false;
 		Boolean openTG = false;
 		Boolean openZan = false;
-		
-		textViewOrari = (TextView)findViewById(R.id.textViewOrari);
-		//int index = getSupportActionBar().getSelectedNavigationIndex();
+
+		textViewOrari = (TextView) findViewById(R.id.textViewOrari);
+		// int index = getSupportActionBar().getSelectedNavigationIndex();
 
 		// per ogni mensa
 		for (Mensa mensa : MensaUtils.getMensaList(IFretta.this)) {
@@ -95,104 +103,138 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 			for (CanteenOpeningTimes ot : mensa.getTimes()) {
 				if ((mensa.getMensa_nome().compareTo("Mesiano 1") == 0)
 						&& (ot.getType().compareTo("Pranzo") == 0)) {
+					aperture.clear();
 					for (String orari : ot.getDates()) {
-						System.out.println(orari);
+						aperture.add(orari);
+						
 						if (orari.compareTo(data.toString()) == 0)
 							openMes1 = true;
 					}
-				}
+				}else
 				if ((mensa.getMensa_nome().compareTo("Mesiano 1") == 0)
 						&& (ot.getType().compareTo("Bar (orario 7:30-18)") == 0)) {
 					for (String orari : ot.getDates()) {
-						System.out.println(orari);
+//						aperture.add(orari);
+//						System.out.println(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openMes2 = true;
 					}
 				}
-
+				else
 				if ((mensa.getMensa_nome().compareTo("Povo Mensa Veloce") == 0)
 						&& (ot.getType().compareTo("Pranzo (linea standard)") == 0)) {
 					for (String orari : ot.getDates()) {
-						System.out.println(orari);
+//						aperture.add(orari);
+//						System.out.println(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openPovo1 = true;
 					}
-				}
+				}else
 				if ((mensa.getMensa_nome().compareTo("Povo Mensa Veloce") == 0)
 						&& (ot.getType().compareTo("Pranzo (linea veloce)") == 0)) {
 					for (String orari : ot.getDates()) {
-						System.out.println(orari);
+//						aperture.add(orari);
+//						System.out.println(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openPovoV = true;
 					}
 
-				}
+				}else
 				if ((mensa.getMensa_nome().compareTo("Tommaso Gar.") == 0)
 						&& (ot.getType().compareTo("Pranzo (linea standard)") == 0)) {
 					for (String orari : ot.getDates()) {
-						System.out.println(orari);
+//						aperture.add(orari);
+//						System.out.println(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openTG = true;
 					}
 
-				}
+				}else
 				if ((mensa.getMensa_nome().compareTo("Zanella") == 0)
 						&& (ot.getType().compareTo("Pranzo") == 0)) {
 					for (String orari : ot.getDates()) {
-						System.out.println(orari);
+//						aperture.add(orari);
+//						System.out.println(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openZan = true;
 					}
 				}
+				
+				oraribtn.setOnClickListener(new OnClickListener() {
 
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+						intent.putStringArrayListExtra("aperture", (ArrayList<String>) aperture);
+						IFretta.this.startActivity(intent);
+					}
+				});
 			}
 		}
-		
-		switch(selectedMensa){
-		
+
+		switch (selectedMensa) {
+
 		case 0:
-			if(openMes1){
-				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
-			}else{
-				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
-				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			if (openMes1) {
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_open_mensa));
+			} else {
+				textViewOrari.setTextColor(getResources().getColor(
+						R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_close_mensa));
 			}
-			case 1:
-			if(openMes2){
-				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
-			}else{
-				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
-				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+		case 1:
+			if (openMes2) {
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_open_mensa));
+			} else {
+				textViewOrari.setTextColor(getResources().getColor(
+						R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_close_mensa));
 			}
 		case 2:
-			if(openPovo1){
-				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
-			}else{
-				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
-				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			if (openPovo1) {
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_open_mensa));
+			} else {
+				textViewOrari.setTextColor(getResources().getColor(
+						R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_close_mensa));
 			}
 		case 3:
-			if(openPovoV){
-				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
-			}else{
-				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
-				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			if (openPovoV) {
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_open_mensa));
+			} else {
+				textViewOrari.setTextColor(getResources().getColor(
+						R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_close_mensa));
 			}
 		case 4:
-			if(openTG){
-				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
-			}else{
-				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
-				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			if (openTG) {
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_open_mensa));
+			} else {
+				textViewOrari.setTextColor(getResources().getColor(
+						R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_close_mensa));
 			}
 		case 5:
-			if(openZan){
-				textViewOrari.setText(getResources().getText(R.string.iFretta_open_mensa));
-			}else{
-				textViewOrari.setTextColor(getResources().getColor(R.color.pressed_ifamestyle));
-				textViewOrari.setText(getResources().getText(R.string.iFretta_close_mensa));
+			if (openZan) {
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_open_mensa));
+			} else {
+				textViewOrari.setTextColor(getResources().getColor(
+						R.color.pressed_ifamestyle));
+				textViewOrari.setText(getResources().getText(
+						R.string.iFretta_close_mensa));
 			}
-			
+
 		}
 	}
 

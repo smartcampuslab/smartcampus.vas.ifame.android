@@ -60,6 +60,15 @@
                 android:layout_marginBottom="52dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonOrari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView1"
+                android:layout_alignParentBottom="true"
+                android:text="@string/iFretta_orari" />
+
         </RelativeLayout>
 
         <!-- fix mega temporaneo -->

@@ -39,6 +39,9 @@
     <string name="iFretta_favourite_canteen_is">La mensa impostata come preferita e\':</string>
     <string name="iFretta_open_mensa">Oggi la mensa è aperta</string>
     <string name="iFretta_close_mensa">Oggi la mensa è chiusa</string>
+    <string name="iFretta_orari">Giorni di apertura</string>
+    <string name="iFretta_orari_dett">Giorni di apertura:</string>
+     
     <!-- /iFretta -->
 
 
