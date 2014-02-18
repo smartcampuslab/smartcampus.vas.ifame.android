@@ -5,23 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/ifretta_orari_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="14dp"
-        android:paddingBottom="14dp"
-        android:text="@string/iFretta_orari_dett"
-        android:textSize="20sp"
-        android:visibility="visible" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="#CCE81313"
-        android:paddingTop="20dp" />
-
     <ListView
         android:id="@+id/list_view_orari"
         android:layout_width="match_parent"

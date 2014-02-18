@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -247,8 +248,9 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 				}
 			}
 			avg = avg / (float) review_size;
+			BigDecimal avgM = round(avg,2);
 			giudizio_medio_textview.setText(ReviewListAdapter
-					.formatUserVoto(avg));
+					.formatUserVoto(avgM.floatValue()));
 
 			giudizio_espresso_da_textview.setText(review_size
 					+ " "
@@ -349,5 +351,11 @@ public class IGraditoVisualizzaRecensioni extends SherlockFragmentActivity
 		new PostGiudizioAsyncTask(IGraditoVisualizzaRecensioni.this, data,
 				refreshButton, mensa, piatto).execute();
 	}
-
+	
+	
+	public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
+        return bd;
+    }
 }
