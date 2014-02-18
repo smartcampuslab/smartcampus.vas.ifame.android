@@ -92,6 +92,13 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 		Boolean openPovoV = false;
 		Boolean openTG = false;
 		Boolean openZan = false;
+		
+		final List<String> apertureMes1 = new ArrayList<String>();;
+		final List<String> apertureMes2 = new ArrayList<String>();;
+		final List<String> aperturePovo1 = new ArrayList<String>();;
+		final List<String> aperturePovoV = new ArrayList<String>();;
+		final List<String> apertureTG = new ArrayList<String>();;
+		final List<String> apertureZan = new ArrayList<String>();;
 
 		textViewOrari = (TextView) findViewById(R.id.textViewOrari);
 		// int index = getSupportActionBar().getSelectedNavigationIndex();
@@ -103,10 +110,8 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 			for (CanteenOpeningTimes ot : mensa.getTimes()) {
 				if ((mensa.getMensa_nome().compareTo("Mesiano 1") == 0)
 						&& (ot.getType().compareTo("Pranzo") == 0)) {
-					aperture.clear();
 					for (String orari : ot.getDates()) {
-						aperture.add(orari);
-						
+						apertureMes1.add(orari);						
 						if (orari.compareTo(data.toString()) == 0)
 							openMes1 = true;
 					}
@@ -114,8 +119,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 				if ((mensa.getMensa_nome().compareTo("Mesiano 1") == 0)
 						&& (ot.getType().compareTo("Bar (orario 7:30-18)") == 0)) {
 					for (String orari : ot.getDates()) {
-//						aperture.add(orari);
-//						System.out.println(orari);
+						apertureMes2.add(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openMes2 = true;
 					}
@@ -124,8 +128,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 				if ((mensa.getMensa_nome().compareTo("Povo Mensa Veloce") == 0)
 						&& (ot.getType().compareTo("Pranzo (linea standard)") == 0)) {
 					for (String orari : ot.getDates()) {
-//						aperture.add(orari);
-//						System.out.println(orari);
+						aperturePovo1.add(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openPovo1 = true;
 					}
@@ -133,8 +136,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 				if ((mensa.getMensa_nome().compareTo("Povo Mensa Veloce") == 0)
 						&& (ot.getType().compareTo("Pranzo (linea veloce)") == 0)) {
 					for (String orari : ot.getDates()) {
-//						aperture.add(orari);
-//						System.out.println(orari);
+						aperturePovoV.add(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openPovoV = true;
 					}
@@ -143,8 +145,7 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 				if ((mensa.getMensa_nome().compareTo("Tommaso Gar.") == 0)
 						&& (ot.getType().compareTo("Pranzo (linea standard)") == 0)) {
 					for (String orari : ot.getDates()) {
-//						aperture.add(orari);
-//						System.out.println(orari);
+						apertureTG.add(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openTG = true;
 					}
@@ -153,28 +154,29 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 				if ((mensa.getMensa_nome().compareTo("Zanella") == 0)
 						&& (ot.getType().compareTo("Pranzo") == 0)) {
 					for (String orari : ot.getDates()) {
-//						aperture.add(orari);
-//						System.out.println(orari);
+						apertureZan.add(orari);
 						if (orari.compareTo(data.toString()) == 0)
 							openZan = true;
 					}
 				}
 				
-				oraribtn.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
-						intent.putStringArrayListExtra("aperture", (ArrayList<String>) aperture);
-						IFretta.this.startActivity(intent);
-					}
-				});
+				
 			}
 		}
 
 		switch (selectedMensa) {
 
 		case 0:
+			oraribtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+					intent.putStringArrayListExtra("aperture", (ArrayList<String>) apertureMes1);
+					IFretta.this.startActivity(intent);
+				}
+			});
+			
 			if (openMes1) {
 				textViewOrari.setText(getResources().getText(
 						R.string.iFretta_open_mensa));
@@ -185,6 +187,15 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 						R.string.iFretta_close_mensa));
 			}
 		case 1:
+			oraribtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+					intent.putStringArrayListExtra("aperture", (ArrayList<String>) apertureMes2);
+					IFretta.this.startActivity(intent);
+				}
+			});
 			if (openMes2) {
 				textViewOrari.setText(getResources().getText(
 						R.string.iFretta_open_mensa));
@@ -195,6 +206,15 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 						R.string.iFretta_close_mensa));
 			}
 		case 2:
+			oraribtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+					intent.putStringArrayListExtra("aperture", (ArrayList<String>) aperturePovo1);
+					IFretta.this.startActivity(intent);
+				}
+			});
 			if (openPovo1) {
 				textViewOrari.setText(getResources().getText(
 						R.string.iFretta_open_mensa));
@@ -205,6 +225,15 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 						R.string.iFretta_close_mensa));
 			}
 		case 3:
+			oraribtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+					intent.putStringArrayListExtra("aperture", (ArrayList<String>) aperturePovoV);
+					IFretta.this.startActivity(intent);
+				}
+			});
 			if (openPovoV) {
 				textViewOrari.setText(getResources().getText(
 						R.string.iFretta_open_mensa));
@@ -215,6 +244,15 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 						R.string.iFretta_close_mensa));
 			}
 		case 4:
+			oraribtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+					intent.putStringArrayListExtra("aperture", (ArrayList<String>) apertureTG);
+					IFretta.this.startActivity(intent);
+				}
+			});
 			if (openTG) {
 				textViewOrari.setText(getResources().getText(
 						R.string.iFretta_open_mensa));
@@ -225,6 +263,15 @@ public class IFretta extends SherlockActivity implements OnNavigationListener {
 						R.string.iFretta_close_mensa));
 			}
 		case 5:
+			oraribtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(IFretta.this, OrariAperturaActivity.class);
+					intent.putStringArrayListExtra("aperture", (ArrayList<String>) apertureZan);
+					IFretta.this.startActivity(intent);
+				}
+			});
 			if (openZan) {
 				textViewOrari.setText(getResources().getText(
 						R.string.iFretta_open_mensa));

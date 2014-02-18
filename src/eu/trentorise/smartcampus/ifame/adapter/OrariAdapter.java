@@ -1,5 +1,6 @@
 package eu.trentorise.smartcampus.ifame.adapter;
 
+import java.text.BreakIterator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import eu.trentorise.smartcampus.ifame.R;
-
 
 public class OrariAdapter extends ArrayAdapter<String> {
 
@@ -41,23 +41,42 @@ public class OrariAdapter extends ArrayAdapter<String> {
 
 		TextView gg = (TextView) row.findViewById(R.id.gg);
 		TextView date = (TextView) row.findViewById(R.id.data);
-		
-		
+		View separator = row.findViewById(R.id.separator);
+
 		Date sToDate;
 		try {
-			sToDate= new SimpleDateFormat("yyyy-MM-dd", Locale.ITALIAN).parse(item);
+			sToDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALIAN)
+					.parse(item);
 			SimpleDateFormat dateFormatgg = new SimpleDateFormat("EEEE");
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateStringTitle = dateFormat.format(sToDate);
 			String dateStringDay = dateFormatgg.format(sToDate);
-			gg.setText(dateStringTitle);
-			date.setText(dateStringDay);
-			
+
+			String dateStringDayFormat = dateStringDay.substring(0, 1)
+					.toUpperCase() + dateStringDay.substring(1);
+
+			if (dateStringDayFormat.equals("Domenica")) {
+				separator.setVisibility(View.VISIBLE);
+			} 
+			else {
+				if (dateStringDayFormat.equals("Sabato")) {
+					separator.setVisibility(View.VISIBLE);
+				}
+				else{
+					if (dateStringDayFormat.equals("Venerdì")) {
+						separator.setVisibility(View.VISIBLE);
+					} 
+					else {
+						separator.setVisibility(View.GONE);
+					}
+				}
+			}
+			gg.setText(dateStringDayFormat);
+			date.setText(dateStringTitle);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return row;
 	}
 

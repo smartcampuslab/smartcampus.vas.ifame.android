@@ -51,16 +51,7 @@ public class HistoryAdapter extends ArrayAdapter<OperaPayment> {
 		if(item.getProductPrice().contains("4.90")){
 			type = "(Completo)";
 		}
-		content.setText(item.getProductPrice() + " € " + type  );
-//		HistoryItem prev = null;
-//		if (position > 0)
-//			prev = getItem(position - 1);
-//
-//		if (prev == null || !(prev.getTitle().equals(item.getTitle()))) {
-//			title.setVisibility(View.VISIBLE);
-//		} else {
-//			title.setVisibility(View.GONE);
-//		}
+		content.setText(item.getTotalPayment() + " € " + type  );
 		return row;
 	}
 
