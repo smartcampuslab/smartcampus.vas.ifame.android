@@ -47,6 +47,10 @@
             android:label="@string/iFame_main_title_activity"
                 android:logo="@drawable/ifame_logo"   
             android:launchMode="singleTask" >
+            <intent-filter> 
+                 <action android:name="android.intent.action.MAIN" /> 
+                 <category android:name="android.intent.category.LAUNCHER" /> 
+             </intent-filter> 
             <intent-filter>
                 <action android:name="eu.trentorise.smartcampus.START" />
 

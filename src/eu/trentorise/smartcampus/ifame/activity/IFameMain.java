@@ -13,6 +13,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.android.common.LauncherHelper;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
@@ -90,7 +91,8 @@ public class IFameMain extends SherlockActivity {
 			}
 		});
 
-		if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
+		if (LauncherHelper.isLauncherInstalled(this, true)
+				&& IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
 			// retrieve the mensa list and save it just to keep always
 			// the updated link and datas if there is somehow an update
 			// to the webcam objects
