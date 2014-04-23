@@ -152,6 +152,14 @@
                 android:logo="@drawable/ifame_logo"   
             android:label="@string/iDeciso_home_menu_types" >
         </activity>
+        <activity
+            android:name="com.github.espiandev.showcaseview.TourActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
+            android:theme="@style/TutorialTheme" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

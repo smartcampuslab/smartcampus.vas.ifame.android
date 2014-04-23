@@ -16,6 +16,7 @@ import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
+import eu.trentorise.smartcampus.ifame.utils.TutorialUtils;
 import eu.trentorise.smartcampus.ifame.utils.UserIdUtils;
 
 public class IFameMain extends SherlockActivity {
@@ -36,9 +37,11 @@ public class IFameMain extends SherlockActivity {
 					MensaPreferita.class);
 			return true;
 
-		} else {
-			return super.onOptionsItemSelected(item);
+		} else if (item.getItemId() == R.id.show_tutorial) {
+			TutorialUtils.enableTutorial(this);
+			showTutorials();
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -89,14 +92,34 @@ public class IFameMain extends SherlockActivity {
 						ISoldi.class);
 			}
 		});
+		if (!TutorialUtils.isTutorialEnabled(this)) {
+			if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
+				// retrieve the mensa list and save it just to keep always
+				// the updated link and datas if there is somehow an update
+				// to the webcam objects
+				MensaUtils.getAndSaveMensaList(IFameMain.this, false);
+				// get user id and save
+				UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
+			}
 
-		if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
-			// retrieve the mensa list and save it just to keep always
-			// the updated link and datas if there is somehow an update
-			// to the webcam objects
-			MensaUtils.getAndSaveMensaList(IFameMain.this, false);
-			// get user id and save
-			UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
+		}
+		else{
+			findViewById(R.id.iDeciso_button).postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					showTutorials();
+				}
+			},20);
+			
+		}
+
+	}
+
+	public void showTutorials() {
+		if (TutorialUtils.isTutorialEnabled(this)) {
+			TutorialUtils.getTutorial(this).showTutorials();
+			TutorialUtils.disableTutorial(this);
 		}
 	}
 
@@ -111,6 +134,14 @@ public class IFameMain extends SherlockActivity {
 		mToken = getAccessProvider().readToken(context);
 		return mToken;
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		TutorialUtils.getTutorial(this).onTutorialActivityResult(requestCode, resultCode, data);
+	}
+	
+	
 
 	// ----------------------------------------------------------------
 	// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
