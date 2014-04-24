@@ -119,7 +119,6 @@ public class IFameMain extends SherlockActivity {
 	public void showTutorials() {
 		if (TutorialUtils.isTutorialEnabled(this)) {
 			TutorialUtils.getTutorial(this).showTutorials();
-			TutorialUtils.disableTutorial(this);
 		}
 	}
 

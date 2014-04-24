@@ -9,6 +9,9 @@ import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 
 public class TutorialUtils {
@@ -73,7 +76,9 @@ public class TutorialUtils {
 					v = act.findViewById(R.id.iDeciso_button);
 					if(v!=null && v.isShown()){
 					v.getLocationOnScreen(location);
-					return new TutorialItem("search", location, v.getWidth(),
+					location[0]+=convertPixelsToDp((v.getWidth()/2)-5, act);
+					location[1]+=convertDpToPixel(8, act);
+					return new TutorialItem("search", location, (int) (v.getWidth()/2.5f),
 							act.getString(R.string.iFame_main_title_activity),
 							act.getString(R.string.tut_ifame));
 					}
@@ -81,8 +86,10 @@ public class TutorialUtils {
 				case 2:
 					v = act.findViewById(R.id.iFretta_button);
 					v.getLocationOnScreen(location);
+					location[0]+=convertPixelsToDp((v.getWidth()/2)-5, act);
+					location[1]+=convertDpToPixel(8, act);
 					if(v!=null && v.isShown()){
-					return new TutorialItem("search", location, v.getWidth(),
+					return new TutorialItem("search", location, (int) (v.getWidth()/2.5f),
 							act.getString(R.string.iFretta_details_title_activity),
 							act.getString(R.string.tut_ifame));
 					}
@@ -90,8 +97,10 @@ public class TutorialUtils {
 				case 3:
 					v = act.findViewById(R.id.iSoldi_button);
 					v.getLocationOnScreen(location);
+					location[0]+=convertPixelsToDp(v.getWidth()/2, act);
+					location[1]+=convertDpToPixel(5, act);
 					if(v!=null && v.isShown()){
-					return new TutorialItem("search", location, v.getWidth(),
+					return new TutorialItem("search", location,v.getWidth()/3,
 							act.getString(R.string.iSoldi_title_activity),
 							act.getString(R.string.tut_isoldi));
 					}
@@ -99,8 +108,10 @@ public class TutorialUtils {
 				case 4:
 					v = act.findViewById(R.id.iGradito_button);
 					v.getLocationOnScreen(location);
+					location[0]+=convertPixelsToDp((v.getWidth()/2)-5, act);
+					location[1]+=convertDpToPixel(8, act);
 					if(v!=null && v.isShown()){
-					return new TutorialItem("search", location, v.getWidth(),
+					return new TutorialItem("search", location, (int) (v.getWidth()/2.5f),
 							act.getString(R.string.iGradito_Activity),
 							act.getString(R.string.tut_igradito));
 					}
@@ -110,5 +121,42 @@ public class TutorialUtils {
 			}
 		};
 		return new TutorialHelper(act, tutProvider);
+	}
+	
+	/**
+	 * This method converts dp unit to equivalent pixels, depending on device
+	 * density.
+	 * 
+	 * @param dp
+	 *            A value in dp (density independent pixels) unit. Which we need
+	 *            to convert into pixels
+	 * @param context
+	 *            Context to get resources and device specific display metrics
+	 * @return A float value to represent px equivalent to dp depending on
+	 *         device density
+	 */
+	public static int convertDpToPixel(float dp, Context context) {
+		// Resources resources = context.getResources();
+		// DisplayMetrics metrics = resources.getDisplayMetrics();
+		// float px = dp * (metrics.densityDpi / 160f);
+		// return px;
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+	}
+
+	/**
+	 * This method converts device specific pixels to density independent
+	 * pixels.
+	 * 
+	 * @param px
+	 *            A value in px (pixels) unit. Which we need to convert into db
+	 * @param context
+	 *            Context to get resources and device specific display metrics
+	 * @return A float value to represent dp equivalent to px value
+	 */
+	public static float convertPixelsToDp(float px, Context context) {
+		Resources resources = context.getResources();
+		DisplayMetrics metrics = resources.getDisplayMetrics();
+		float dp = px / (metrics.densityDpi / 160f);
+		return dp;
 	}
 }
