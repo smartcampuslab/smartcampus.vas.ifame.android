@@ -40,6 +40,8 @@ public class IGradito extends SherlockActivity {
 		// mensaAdapter = new MensaAdapter(IGradito.this);
 		piattiListAdapter = new IGraditoPiattoListAdapter(IGradito.this);
 
+		
+		
 		if (IFameUtils.isUserConnectedToInternet(getApplicationContext())) {
 			new GetPiattiIGraditoTask(IGradito.this, piattiListAdapter)
 					.execute();

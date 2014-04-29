@@ -83,7 +83,9 @@ public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
 
 						if (p.getPiatto_nome().toUpperCase()
 								.contains(constraint.toString().toUpperCase())) {
-							piatti.add(p);
+
+								piatti.add(p);
+							
 							// System.out.println("Il piatto è: "+
 							// p.getPiatto().getPiatto_nome());
 
@@ -114,8 +116,8 @@ public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
 					@SuppressWarnings("unchecked")
 					List<Piatto> values = (List<Piatto>) results.values;
 					for (Piatto p : values) {
-
-						IGraditoPiattoListAdapter.this.add(p);
+						
+							IGraditoPiattoListAdapter.this.add(p);
 
 					}
 
@@ -128,5 +130,6 @@ public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements
 		return filter;
 
 	}
+	
 
 }

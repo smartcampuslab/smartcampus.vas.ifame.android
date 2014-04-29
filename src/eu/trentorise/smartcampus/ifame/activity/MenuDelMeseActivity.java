@@ -112,7 +112,7 @@ public class MenuDelMeseActivity extends SherlockFragmentActivity implements
 					int position, long arg3) {
 				Piatto piatto = (Piatto) adapter.getItemAtPosition(position);
 				// check because there are some fake piatti as header
-				if (!piatto.getPiatto_nome().matches("[0-9]+")) {
+				if ((!piatto.getPiatto_nome().matches("[0-9]+"))&&(piatto.getPiatto_nome().equals("Il servizio mensa e' sospeso")==false)) {
 					// showWebSearchDialog(piattoName);
 					showOptionsDialog(piatto);
 				}

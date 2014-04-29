@@ -123,6 +123,8 @@ public class GetPiattiIGraditoTask extends AsyncTask<Void, Void, List<Piatto>> {
 			adapter.complete_list = result;
 			adapter.clear();
 			for (Piatto p : result) {
+				if(!p.getPiatto_nome().equals(
+						"Il servizio mensa e' sospeso"))
 				adapter.add(p);
 			}
 			adapter.notifyDataSetChanged();
