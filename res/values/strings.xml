@@ -193,13 +193,4 @@
     <string name="refresh">Ricarica</string>
     <!-- /others -->
     
-    <!-- Tutorial -->
-    <string name="menu_title_tutorial">Tutorial</string>
-    <string name="tut_star">Seleziona la tua mensa preferita</string>
-    <string name="tut_ifame">Consulta I menu e verifica cosa comprendono</string>
-    <string name="tut_ifretta">Tieni d’occhio la coda in mensa</string>
-    <string name="tut_isoldi">Controlla il credito redisuo della tua card</string>
-    <string name="tut_igradito">Valuta le pietanze, scrivi una recensione o leggi i commenti degli altri utenti</string>
-
-    <!-- /Tutorial -->
 </resources>

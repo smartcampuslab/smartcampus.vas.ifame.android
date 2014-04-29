@@ -1,6 +1,8 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
+import eu.trentorise.smartcampus.android.common.LauncherHelper;
 import eu.trentorise.smartcampus.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
@@ -102,16 +105,31 @@ public class IFameMain extends SherlockActivity {
 				UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
 			}
 
-		}
-		else{
-			findViewById(R.id.iDeciso_button).postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-					showTutorials();
-				}
-			},20);
-			
+		} else {
+			if (LauncherHelper.isLauncherInstalled(this, true)) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(R.string.welcome_title)
+						.setMessage(R.string.welcome_msg)
+						.setOnCancelListener(
+								new DialogInterface.OnCancelListener() {
+
+									@Override
+									public void onCancel(DialogInterface arg0) {
+										showTutorials();
+									}
+								})
+						.setPositiveButton(getString(R.string.ok),
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										showTutorials(); 
+									}
+								});
+				builder.create().show();
+			}
+
 		}
 
 	}
@@ -137,10 +155,9 @@ public class IFameMain extends SherlockActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		TutorialUtils.getTutorial(this).onTutorialActivityResult(requestCode, resultCode, data);
+		TutorialUtils.getTutorial(this).onTutorialActivityResult(requestCode,
+				resultCode, data);
 	}
-	
-	
 
 	// ----------------------------------------------------------------
 	// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
