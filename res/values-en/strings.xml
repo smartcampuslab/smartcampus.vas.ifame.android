@@ -198,12 +198,7 @@
 
 
     <!-- Tutorial -->
-    <string name="menu_title_tutorial">Tutorial</string>
-    <string name="tut_star">Select your favourite canteen</string>
-    <string name="tut_ifame">Check the menus and see what each type includes</string>
-    <string name="tut_ifretta">Keep an eye on the queue at your canteen</string>
-    <string name="tut_isoldi">Check the available credit on your canteen card</string>
-    <string name="tut_igradito">Rate food, write a review, or read other users\’ comments</string>
+    
 
     <!-- /Tutorial -->
 
