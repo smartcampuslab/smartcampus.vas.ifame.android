@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 
 public class OptionsMenuDialog extends SherlockDialogFragment {

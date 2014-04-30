@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.MenuDelGiornoActivity;
 import eu.trentorise.smartcampus.ifame.adapter.AlternativePiattiAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetAlternativeListTask;

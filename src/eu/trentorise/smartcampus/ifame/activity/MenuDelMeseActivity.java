@@ -25,7 +25,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.PiattoKcalListAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;
 import eu.trentorise.smartcampus.ifame.dialog.InsertReviewDialog;

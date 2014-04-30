@@ -17,7 +17,7 @@ import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
 import eu.trentorise.smartcampus.android.common.LauncherHelper;
 //import eu.trentorise.smartcampus.android.common.LauncherHelper;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 import eu.trentorise.smartcampus.ifame.utils.TutorialUtils;

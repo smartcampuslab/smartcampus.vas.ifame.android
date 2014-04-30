@@ -12,7 +12,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import eu.trentorise.smartcampus.android.common.Utils;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.activity.MensaPreferita;
 import eu.trentorise.smartcampus.ifame.comparator.MensaComparator;

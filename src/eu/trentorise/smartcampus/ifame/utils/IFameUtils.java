@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 
 public class IFameUtils {
 

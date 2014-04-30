@@ -10,7 +10,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.tabs.TabListener;
 import eu.trentorise.smartcampus.ifame.tabs.TipologiaInteroFragment;
 import eu.trentorise.smartcampus.ifame.tabs.TipologiaRidottoFragment;

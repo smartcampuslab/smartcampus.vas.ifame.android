@@ -21,7 +21,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.MensaSpinnerAdapter;
 import eu.trentorise.smartcampus.ifame.adapter.ReviewListAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.PostGiudizioAsyncTask;

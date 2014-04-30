@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.android.common.Utils;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.ifame.activity.IGraditoVisualizzaRecensioni;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;

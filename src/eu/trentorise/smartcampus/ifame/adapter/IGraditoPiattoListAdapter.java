@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 
 public class IGraditoPiattoListAdapter extends ArrayAdapter<Piatto> implements

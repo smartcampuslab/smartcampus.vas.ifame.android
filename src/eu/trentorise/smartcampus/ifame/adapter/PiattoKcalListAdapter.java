@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import eu.trentorise.smartcampus.ifame.R;
-import eu.trentorise.smartcampus.ifame.R.layout;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.model.Piatto;
 
 public class PiattoKcalListAdapter extends ArrayAdapter<Piatto> {
@@ -45,7 +44,7 @@ public class PiattoKcalListAdapter extends ArrayAdapter<Piatto> {
 		if (p.getPiatto_nome().matches("[0-9]+")) {
 			// ho un piatto sentinella setto il testo come data
 			convertView = inflater.inflate(
-					layout.layout_row_header_menu_adapter, null);
+					R.layout.layout_row_header_menu_adapter, null);
 
 			TextView dayHeader = (TextView) convertView
 					.findViewById(R.id.menu_day_header_adapter);
@@ -63,7 +62,7 @@ public class PiattoKcalListAdapter extends ArrayAdapter<Piatto> {
 		} else {
 			// ho un piatto vero setto i campi coi valori corrispondenti
 			convertView = inflater
-					.inflate(layout.layout_row_menu_adapter, null);
+					.inflate(R.layout.layout_row_menu_adapter, null);
 			TextView name = (TextView) convertView
 					.findViewById(R.id.menu_name_adapter);
 			TextView kcal = (TextView) convertView

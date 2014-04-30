@@ -4,7 +4,7 @@ import com.github.espiandev.showcaseview.TutorialHelper;
 import com.github.espiandev.showcaseview.TutorialItem;
 import com.github.espiandev.showcaseview.TutorialHelper.TutorialProvider;
 
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import android.app.Activity;
 import android.content.Context;

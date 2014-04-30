@@ -17,7 +17,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.adapter.IGraditoPiattoListAdapter;
 import eu.trentorise.smartcampus.ifame.asynctask.GetPiattiIGraditoTask;
 import eu.trentorise.smartcampus.ifame.model.Piatto;

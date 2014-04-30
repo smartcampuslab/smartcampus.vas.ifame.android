@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import eu.trentorise.smartcampus.ifame.R;
+import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.asynctask.DeleteLikeTask;
 import eu.trentorise.smartcampus.ifame.asynctask.PostLikeTask;
 import eu.trentorise.smartcampus.ifame.model.Giudizio;
