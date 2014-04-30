@@ -90,8 +90,8 @@ public class TutorialUtils {
 					location[1]+=convertDpToPixel(8, act);
 					if(v!=null && v.isShown()){
 					return new TutorialItem("search", location, (int) (v.getWidth()/2.5f),
-							act.getString(R.string.iFretta_details_title_activity),
-							act.getString(R.string.tut_ifame));
+							act.getString(R.string.iFretta_title_activity),
+							act.getString(R.string.tut_ifretta));
 					}
 					break;
 				case 3:
