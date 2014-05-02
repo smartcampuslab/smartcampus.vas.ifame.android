@@ -116,7 +116,7 @@ public class IFameMain extends SherlockActivity {
 
 									@Override
 									public void onCancel(DialogInterface arg0) {
-										showTutorials();
+										arg0.dismiss();
 									}
 								})
 						.setPositiveButton(getString(R.string.ok),
@@ -125,9 +125,17 @@ public class IFameMain extends SherlockActivity {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int which) {
-										showTutorials(); 
+										dialog.dismiss(); 
 									}
-								});
+								})
+						.setNeutralButton(getString(R.string.begin_tut),
+								new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								showTutorials(); 
+							}
+						});
 				builder.create().show();
 			}
 
