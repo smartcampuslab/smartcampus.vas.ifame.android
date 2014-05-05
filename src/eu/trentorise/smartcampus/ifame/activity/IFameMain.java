@@ -143,6 +143,7 @@ public class IFameMain extends SherlockActivity {
 
 		} else {
 			if (LauncherHelper.isLauncherInstalled(this, true)) {
+				TutorialUtils.disableTutorial(IFameMain.this);
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle(R.string.welcome_title)
 						.setMessage(R.string.welcome_msg)
@@ -161,6 +162,7 @@ public class IFameMain extends SherlockActivity {
 									public void onClick(DialogInterface dialog,
 											int which) {
 										dialog.dismiss(); 
+										MensaUtils.getAndSaveMensaList(IFameMain.this, false);
 									}
 								})
 						.setNeutralButton(getString(R.string.begin_tut),
@@ -178,9 +180,7 @@ public class IFameMain extends SherlockActivity {
 	}
 
 	public void showTutorials() {
-		if (TutorialUtils.isTutorialEnabled(this)) {
-			TutorialUtils.getTutorial(this).showTutorials();
-		}
+		TutorialUtils.getTutorial(this).showTutorials();
 	}
 
 	public static SCAccessProvider getAccessProvider() {
