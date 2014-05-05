@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -201,5 +201,9 @@
     
 
     <!-- /Tutorial -->
+
+
+    <!-- Disclaimer -->
+    <string name="disclaimer">This app uses some of the data from your University of Trento account. In order to fully use all of the functions of this app, you will  first have to give the University permission to release your data to Smart Campus. Please go to the following website, sign into your UniTn account, and fill out the form:\n\n https://webapps.unitn.it/Apply/it/Web/GoHome/smartcampus/smartc</string>
 
 </resources>

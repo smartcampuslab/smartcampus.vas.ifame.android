@@ -96,6 +96,41 @@ public class IFameMain extends SherlockActivity {
 						ISoldi.class);
 			}
 		});
+		
+		if (TutorialUtils.isTutorialEnabled(this)) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder//.setTitle(R.string.welcome_title)
+					.setView(getLayoutInflater().inflate(R.layout.disclaimerdialog, null))
+					.setOnCancelListener(
+							new DialogInterface.OnCancelListener() {
+
+								@Override
+								public void onCancel(DialogInterface arg0) {
+									arg0.dismiss();
+									initDataOnFirstLaunch();
+								}
+							})
+					.setPositiveButton(getString(R.string.ok),
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.dismiss();
+									initDataOnFirstLaunch();
+								}
+							});
+			builder.create().show();
+		} else { 
+			initDataOnFirstLaunch();
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+	public void initDataOnFirstLaunch() {
 		if (!TutorialUtils.isTutorialEnabled(this)) {
 			if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
 				// retrieve the mensa list and save it just to keep always
@@ -140,7 +175,6 @@ public class IFameMain extends SherlockActivity {
 			}
 
 		}
-
 	}
 
 	public void showTutorials() {
