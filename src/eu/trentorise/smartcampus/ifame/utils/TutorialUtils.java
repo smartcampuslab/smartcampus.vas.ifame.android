@@ -1,18 +1,18 @@
 package eu.trentorise.smartcampus.ifame.utils;
 
-import com.github.espiandev.showcaseview.TutorialHelper;
-import com.github.espiandev.showcaseview.TutorialItem;
-import com.github.espiandev.showcaseview.TutorialHelper.TutorialProvider;
-
 import it.smartcampuslab.ifame.R;
-import eu.trentorise.smartcampus.ifame.activity.IFameMain;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+
+import com.github.espiandev.showcaseview.TutorialHelper;
+import com.github.espiandev.showcaseview.TutorialHelper.TutorialProvider;
+import com.github.espiandev.showcaseview.TutorialItem;
+
+import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 
 public class TutorialUtils {
 
