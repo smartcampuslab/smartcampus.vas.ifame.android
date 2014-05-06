@@ -74,7 +74,12 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 			activity.finish();
 			return;
 
-		} else {
+		} 
+		else {
+			if (GetMenuDelGiornoTask.state==true){
+				piattiAdapter.add(new Piatto("Il servizio mensa e' sospeso", ""));
+			}
+			else{
 			piattiAdapter.clear();
 			int i = 0;
 			for (Piatto piatto : resultList) {
@@ -100,5 +105,6 @@ public class GetAlternativeListTask extends AsyncTask<Void, Void, List<Piatto>> 
 			piattiAdapter.notifyDataSetChanged();
 		}
 		progressBarLayout.setVisibility(View.GONE);
+	}
 	}
 }

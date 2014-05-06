@@ -28,7 +28,7 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 
 	private Activity activity;
 	private MenuDelGiornoPiattiAdapter mPiattiAdapter;
-
+	public static boolean state;
 	private LinearLayout progressBarLayout;
 
 	public GetMenuDelGiornoTask(Activity activity,
@@ -88,6 +88,13 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 		} else {
 			int i = 0;
 			mPiattiAdapter.clear();
+			if (result.getPiattiDelGiorno().get(0).getPiatto_nome().compareTo("Il servizio mensa e' sospeso")==0){
+				state = true;
+				mPiattiAdapter.add(new Piatto("Il servizio mensa e' sospeso", ""));
+			}
+			else{
+				state = false;
+			
 			for (Piatto p : result.getPiattiDelGiorno()) {
 				i++;
 				if (i == 1) {
@@ -104,5 +111,6 @@ public class GetMenuDelGiornoTask extends AsyncTask<Void, Void, MenuDelGiorno> {
 			mPiattiAdapter.notifyDataSetChanged();
 		}
 		progressBarLayout.setVisibility(View.GONE);
+	}
 	}
 }
