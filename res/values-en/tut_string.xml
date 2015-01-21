@@ -2,7 +2,16 @@
 <resources>
 
     <string name="welcome_title">Welcome to iFame!</string>
-    <string name="welcome_msg">This app lets you browse University of Trento canteen menus, see how long the waiting line is, find out how much is left on your card, and even rate the canteen food.</string>
+<!--     <string name="welcome_msg">This app lets you browse University of Trento canteen menus, see how long the waiting line is, find out how much is left on your card, and even rate the canteen food.</string> -->
+    <string name="welcome_msg"><![CDATA[<div style="text-align:justify;font-family:Arial;font-size:18px;padding:4px">
+      Folllowing the successful completion of the <a href="http://www.smartcampuslab.it">Smart Campus</a> project, 
+      "iFame" keeps on accompanying its loyal users, thanks to the support of the 
+      <a href="http://www.smartcommunuitylab.it">Smart Community</a> by FBK.
+      <p>
+    To continue using the app we ask you to log in with your Google Account. If you are interested in 
+    recovering the reviews that you had entered with the UniTn account, we ask you to 
+    <a href="mailto:info@smartcommunitylab.it">contact</a> us.</p>
+      </div>]]></string>
     
     <string name="menu_title_tutorial">Tutorial</string>
     <string name="tut_star">Select your favourite canteen</string>

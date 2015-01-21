@@ -4,17 +4,17 @@ import java.util.Date;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.util.Log;
 import eu.trentorise.smartcampus.ac.AACException;
-import eu.trentorise.smartcampus.android.common.GlobalConfig;
 import eu.trentorise.smartcampus.ifame.activity.IFameMain;
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteConnector.CLIENT_TYPE;
 import eu.trentorise.smartcampus.profileservice.BasicProfileService;
-import eu.trentorise.smartcampus.profileservice.ProfileServiceException;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
-import eu.trentorise.smartcampus.protocolcarrier.exceptions.ProtocolException;
 
 public class UserIdUtils {
 
@@ -57,7 +57,7 @@ public class UserIdUtils {
 
 	/** returns the user id or the empty string */
 	public static String getUserId(Context context) {
-		String userId = "";
+		String userId = "-1";
 
 		SharedPreferences pref = context.getSharedPreferences(
 				USER_ID_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -93,6 +93,8 @@ public class UserIdUtils {
 	 */
 	private static class LoadAndSaveUserIdFromACServiceTask extends
 			AsyncTask<Void, Void, Void> {
+		private static final String PROFILE_URL = "eu.trentorise.smartcampus.account.AUTH_URL";
+
 		/** Logging tag */
 		private static final String TAG = "LoadAndSaveUserIdFromACServiceTask";
 
@@ -102,16 +104,13 @@ public class UserIdUtils {
 			this.context = context;
 		}
 
-		private String getAppUrl() {
-			String returnAppUrl = "";
-			try {
-				returnAppUrl = GlobalConfig.getAppUrl(context);
-				if (!returnAppUrl.endsWith("/"))
-					returnAppUrl = returnAppUrl.concat("/");
-			} catch (ProtocolException e) {
-				e.printStackTrace();
+		private String getProfileServiceUrl(Context ctx) throws NameNotFoundException {
+			ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+			if (info != null && info.metaData != null && info.metaData.containsKey(PROFILE_URL)) {
+				return info.metaData.getString(PROFILE_URL);
 			}
-			return returnAppUrl;
+
+			throw new NameNotFoundException("No metadata");
 		}
 
 		@Override
@@ -129,8 +128,7 @@ public class UserIdUtils {
 			// check if correctly get the token
 			if (userToken != null) {
 				try {
-					BasicProfileService service = new BasicProfileService(
-							getAppUrl() + "aac");
+					BasicProfileService service = new BasicProfileService(getProfileServiceUrl(context));
 					BasicProfile bp = service.getBasicProfile(userToken);
 
 					if (bp != null) {
@@ -139,11 +137,8 @@ public class UserIdUtils {
 						setUserId(context, bp.getUserId());
 						Log.i(TAG, "UserId: " + bp.getUserId());
 					}
-				} catch (SecurityException se) {
-					Log.e(TAG, "SecurityException: " + se.getMessage());
-					// TODO handle the exception
-				} catch (ProfileServiceException pse) {
-					Log.e(TAG, "ProfileServiceException: " + pse.getMessage());
+				} catch (Exception se) {
+					Log.e(TAG, "Exception: " + se.getMessage());
 					// TODO handle the exception
 				}
 			}

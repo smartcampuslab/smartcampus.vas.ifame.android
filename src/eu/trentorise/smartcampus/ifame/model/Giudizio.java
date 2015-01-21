@@ -11,7 +11,7 @@ public class Giudizio {
 
 	private String testo;
 
-	private boolean approved;
+	private State approved;
 
 	private Date ultimo_aggiornamento;
 
@@ -65,14 +65,7 @@ public class Giudizio {
 		this.testo = testo;
 	}
 
-	public boolean isApproved() {
-		return approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
+	
 	public void setUltimo_aggiornamento(Date ultimo_aggiornamento) {
 		this.ultimo_aggiornamento = ultimo_aggiornamento;
 	}
@@ -109,4 +102,11 @@ public class Giudizio {
 		this.piatto_id = piatto_id;
 	}
 
+	public State getApproved() {
+		return approved;
+	}
+
+	public void setApproved(State approved) {
+		this.approved = approved;
+	}
 }

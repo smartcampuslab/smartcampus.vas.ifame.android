@@ -1,9 +1,11 @@
 package eu.trentorise.smartcampus.ifame.utils;
 
+import it.smartcampuslab.ifame.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.Gravity;
@@ -14,9 +16,10 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
-import it.smartcampuslab.ifame.R;
-
 public class IFameUtils {
+
+	private static final String DISCLAMER_SHARED_PREFERENCES = "disclaimer_prefs";
+	private static final String DISCLAIMER_SHOWN = "shown";
 
 	public static boolean isUserConnectedToInternet(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context
@@ -87,4 +90,18 @@ public class IFameUtils {
 		}
 	}
 
+	public static boolean checkDisclaimer(Context context) {
+		SharedPreferences pref = context.getSharedPreferences(
+				DISCLAMER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		return pref.getBoolean(DISCLAIMER_SHOWN, false);
+	}
+
+	public static void disableDisclaimer(Context context) {
+		SharedPreferences pref = context.getSharedPreferences(
+				DISCLAMER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putBoolean(DISCLAIMER_SHOWN, true);
+		editor.commit();
+	}
+	
 }

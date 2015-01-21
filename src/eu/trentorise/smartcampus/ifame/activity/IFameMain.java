@@ -1,5 +1,7 @@
 package eu.trentorise.smartcampus.ifame.activity;
 
+import it.smartcampuslab.ifame.R;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -15,9 +19,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.trentorise.smartcampus.ac.AACException;
 import eu.trentorise.smartcampus.ac.SCAccessProvider;
-import eu.trentorise.smartcampus.android.common.LauncherHelper;
-//import eu.trentorise.smartcampus.android.common.LauncherHelper;
-import it.smartcampuslab.ifame.R;
 import eu.trentorise.smartcampus.ifame.utils.IFameUtils;
 import eu.trentorise.smartcampus.ifame.utils.MensaUtils;
 import eu.trentorise.smartcampus.ifame.utils.TutorialUtils;
@@ -27,7 +28,7 @@ public class IFameMain extends SherlockActivity {
 
 	private static SCAccessProvider accessProvider = null;
 	private static Context context;
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.ifame_main, menu);
@@ -92,38 +93,13 @@ public class IFameMain extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
-						ISoldi.class);
+				Toast.makeText(IFameMain.this, R.string.dialog_coming_soon, Toast.LENGTH_SHORT).show();;
+//				IFameUtils.checkInitBeforeLaunchActivity(IFameMain.this,
+//						ISoldi.class);
 			}
 		});
 		
-		if (TutorialUtils.isTutorialEnabled(this)) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder//.setTitle(R.string.welcome_title)
-					.setView(getLayoutInflater().inflate(R.layout.disclaimerdialog, null))
-					.setOnCancelListener(
-							new DialogInterface.OnCancelListener() {
-
-								@Override
-								public void onCancel(DialogInterface arg0) {
-									arg0.dismiss();
-									initDataOnFirstLaunch();
-								}
-							})
-					.setPositiveButton(getString(R.string.ok),
-							new DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									dialog.dismiss();
-									initDataOnFirstLaunch();
-								}
-							});
-			builder.create().show();
-		} else { 
-			initDataOnFirstLaunch();
-		}
+		initDataOnFirstLaunch();
 
 	}
 
@@ -131,55 +107,61 @@ public class IFameMain extends SherlockActivity {
 	 * 
 	 */
 	public void initDataOnFirstLaunch() {
-		if (!TutorialUtils.isTutorialEnabled(this)) {
-			if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
-				// retrieve the mensa list and save it just to keep always
-				// the updated link and datas if there is somehow an update
-				// to the webcam objects
-				MensaUtils.getAndSaveMensaList(IFameMain.this, false);
-				// get user id and save
-				UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
+		if (!IFameUtils.checkDisclaimer(this)) {
+			IFameUtils.disableDisclaimer(this);
+			showDisclaimer();
+			return;
+		}
+		try {
+			if (!getAccessProvider().isLoggedIn(this)) {
+				getAccessProvider().login(this, null);
+				return;
 			}
-
-		} else {
-			if (LauncherHelper.isLauncherInstalled(this, true)) {
-				TutorialUtils.disableTutorial(IFameMain.this);
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(R.string.welcome_title)
-						.setMessage(R.string.welcome_msg)
-						.setOnCancelListener(
-								new DialogInterface.OnCancelListener() {
-
-									@Override
-									public void onCancel(DialogInterface arg0) {
-										arg0.dismiss();
-										MensaUtils.getAndSaveMensaList(IFameMain.this, false);
-									}
-								})
-						.setPositiveButton(getString(R.string.begin_tut),
-										new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										showTutorials(); 
-									}
-								})
-						.setNeutralButton(getString(android.R.string.cancel),
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.dismiss(); 
-										MensaUtils.getAndSaveMensaList(IFameMain.this, false);
-									}
-								});
-				builder.create().show();
-			}
-
+		} catch (AACException e) {
+			Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
+			finish();
+		}
+		
+		if (IFameUtils.isUserConnectedToInternet(IFameMain.this)) {
+			// retrieve the mensa list and save it just to keep always
+			// the updated link and datas if there is somehow an update
+			// to the webcam objects
+			MensaUtils.getAndSaveMensaList(IFameMain.this, false);
+			// get user id and save
+			UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
 		}
 	}
 
+	private void showDisclaimer() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		WebView wv = new WebView(this);
+		wv.loadData(getString(R.string.welcome_msg), "text/html; charset=UTF-8", "utf-8");
+
+		builder.setTitle(R.string.welcome_title)
+				.setView(wv)
+//				.setMessage(R.string.welcome_msg)
+				.setOnCancelListener(
+						new DialogInterface.OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								initDataOnFirstLaunch();
+								arg0.dismiss();
+							}
+						})
+				.setPositiveButton(getString(android.R.string.ok),
+								new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								initDataOnFirstLaunch();
+								dialog.dismiss();
+							}
+						});
+		builder.create().show();
+	}
+
+	
 	public void showTutorials() {
 		TutorialUtils.getTutorial(this).showTutorials();
 	}
@@ -198,52 +180,32 @@ public class IFameMain extends SherlockActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
+			try {
+				if (resultCode == RESULT_OK) {
+					String mToken = data.getExtras().getString(AccountManager.KEY_AUTHTOKEN);
+					if (mToken == null) {
+						Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
+						finish();
+					} else {
+						initDataOnFirstLaunch(); 
+					}
+
+				} else if (resultCode == RESULT_CANCELED) {
+					Toast.makeText(this, getString(R.string.token_required), Toast.LENGTH_LONG).show();
+					finish();
+
+				} else {
+					Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+					// clean shared preferences
+					finish();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		super.onActivityResult(requestCode, resultCode, data);
 		TutorialUtils.getTutorial(this).onTutorialActivityResult(requestCode,
 				resultCode, data);
 	}
-
-	// ----------------------------------------------------------------
-	// THIS LINES WERE AT THE BEGINNING IN THE ONCREATE
-	// ****************************************************************
-	// still required also with the login in the launcher??????????????
-	// ****************************************************************
-	// // check if the user is logged otherwise open login window
-	// try {
-	// if (!getAccessProvider().login(IFameMain.this, null)) {
-	// }
-	// } catch (AACException e) {
-	// Log.e(TAG, "Failed to login: " + e.getMessage());
-	// // TODO handle the failure, e.g., notify the user close the app
-	// }
-	// ----------------------------------------------------------------
-
-	// *******************************************************************************
-	// still required also with the login in the launcher??????????????
-	// *******************************************************************************
-	// @Override
-	// protected void onActivityResult(int requestCode, int resultCode, Intent
-	// data) {
-	// super.onActivityResult(requestCode, resultCode, data);
-	// // check the result of the authentication
-	// if (requestCode == SCAccessProvider.SC_AUTH_ACTIVITY_REQUEST_CODE) {
-	// if (resultCode == Activity.RESULT_OK) {
-	// // retrieve the mensa list and save it just to have always the
-	// // updated link and datas if there is somehow an update
-	// MensaUtils.getAndSaveMensaList(IFameMain.this);
-	//
-	// // get user id and save
-	// UserIdUtils.retrieveAndSaveUserId(IFameMain.this);
-	// } else {
-	// // or any other case close the app
-	// Toast.makeText(IFameMain.this,
-	// getString(R.string.errorLoginRequired),
-	// Toast.LENGTH_SHORT).show();
-	// finish();
-	// return;
-	// }
-	// }
-	// }
-	// *******************************************************************************
-
 }

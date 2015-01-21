@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -194,6 +194,9 @@
     <!-- /others -->
     
     <!-- Disclaimer -->
-    <string name="disclaimer">Questa app utilizza alcuni dati provenienti dal tuo account UniTn. Per utilizzarne appieno le funzionalità, devi consentire all’Università di Trento di passare i tuoi dati a Smart Campus. Se non lo hai già fatto, per favore visita il seguente sito web, accedi con il tuo account UniTn e compila la scheda:\n\n https://webapps.unitn.it/Apply/it/Web/GoHome/smartcampus/smartc</string>
-  
+    <string name="auth_failed">Errore nell\'inizializzazione dell\'app. Riprova a breve.</string>
+    <string name="token_required">Si prega di effettuare il login prima di proseguire con l\'utilizzo delle app.</string>
+    
+    <string name="dialog_coming_soon">Non disponibile</string>
+    
 </resources>

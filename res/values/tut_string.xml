@@ -4,8 +4,16 @@
     
     
     <string name="welcome_title">Benvenuto in iFame! </string>
-    <string name="welcome_msg">Quest’app ti permetterà di consultare i menù delle mense universitarie di Trento, vedere quanto è lunga la coda, vedere quanto è rimasto sulla tua tessera e valutare il cibo della mensa.</string>
-    
+<!--     <string name="welcome_msg">Quest’app ti permetterà di consultare i menù delle mense universitarie di Trento, vedere quanto è lunga la coda, vedere quanto è rimasto sulla tua tessera e valutare il cibo della mensa.</string> -->
+    <string name="welcome_msg"><![CDATA[<div style="text-align:justify;font-family:Arial;font-size:18px;padding:4px">
+      Terminato con successo il progetto <a href="http://www.smartcampuslab.it">Smart Campus</a>, "iFame" 
+      continua a far compagnia ai suoi affezionati utenti, grazie al sostegno del progetto 
+      <a href="http://www.smartcommunitylab.it">Smart Community</a> della Fondazione Bruno Kessler.
+      <p>
+      Per continuare ad utilizzare la app ti chiediamo di fare log-in con il tuo account Google. 
+      Se sei interessato a recuperare le recensioni che avevi inserito con l\'account UniTn, 
+      ti chiediamo di <a href="mailto:info@smartcommunitylab.it" >contattarci</a>.</p>
+      </div>]]></string>
     <string name="menu_title_tutorial">Tutorial</string>
     <string name="tut_star">Seleziona la tua mensa preferita</string>
     <string name="tut_ifame">Consulta i menu e verifica cosa comprendono</string>

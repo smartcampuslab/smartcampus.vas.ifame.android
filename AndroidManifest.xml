@@ -3,8 +3,8 @@
     package="it.smartcampuslab.ifame"
     android:sharedUserId="it.smartcampuslab.launcher"
     android:sharedUserLabel="@string/app_uid_label"
-    android:versionCode="13"
-    android:versionName="0.12.3" >
+    android:versionCode="15"
+    android:versionName="0.12.5" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -27,20 +27,20 @@
         android:label="@string/iFame_main_title_activity"
         android:theme="@style/Theme.Ifamestyle" >
         <meta-data
+            android:name="eu.trentorise.smartcampus.account.CLIENT_ID"
+            android:value="@string/client_id" />
+        <meta-data
+            android:name="eu.trentorise.smartcampus.account.CLIENT_SECRET"
+            android:value="@string/client_secret" />
+        <meta-data
+            android:name="SHARED_PACKAGE"
+            android:value="it.smartcampuslab.ifame" />
+        <meta-data
             android:name="eu.trentorise.smartcampus.account.AUTH_URL"
-            android:value="https://ac.smartcampuslab.it/aac" />
+            android:value="https://tn.smartcommunitylab.it/aac" />
         <meta-data
-            android:name="eu.trentorise.smartcampus.account.ACCOUNT_TYPE"
-            android:value="eu.trentorise.smartcampus.account" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.ACCOUNT_NAME"
-            android:value="SmartCampus" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.ACCOUNT_LABEL"
-            android:value="SmartCampus" />
-        <meta-data
-            android:name="eu.trentorise.smartcampus.account.ACCOUNT_BASED_ACCESS"
-            android:value="true" />
+            android:name="eu.trentorise.smartcampus.account.AUTHORITY_ARRAY"
+            android:value="googlelocal" />
 
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.IFameMain"
@@ -68,24 +68,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="eu.trentorise.smartcampus.ac.embedded.EmbeddedAuthActivity" />
-
-        <service
-            android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticationService"
-            android:exported="true"
-            android:permission="eu.trentorise.smartcampus.ac.AUTHENTICATE" >
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
-        </service>
 
         <activity
-            android:name="eu.trentorise.smartcampus.ac.authenticator.AuthenticatorActivity"
-            android:configChanges="orientation|screenSize" />
+            android:name="eu.trentorise.smartcampus.ac.embedded.EmbeddedAuthActivity"
+            android:configChanges="orientation|screenSize"  />
+
         <activity
             android:name="eu.trentorise.smartcampus.ifame.activity.MensaPreferita"
             android:configChanges="screenSize"
